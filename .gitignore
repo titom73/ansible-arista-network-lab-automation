@@ -1,7 +1,5 @@
 *.retry
 *.log
-*/group_vars/*
-*/host_vars/*
 */intended/*
 */documentation/*
 

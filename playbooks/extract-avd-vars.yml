@@ -11,7 +11,7 @@
       tags: 'eos_l3ls_evpn'
       copy:
         content: '{{ hostvars[inventory_hostname] }}'
-        dest: 'output.variables/eos_l3ls_evpn-{{inventory_hostname}}.json'
+        dest: '../output.variables/eos_l3ls_evpn-{{inventory_hostname}}.json'
       delegate_to: localhost
     - name: generate intented variables
       tags: [cli]
@@ -21,5 +21,5 @@
       tags: ['cli']
       copy:
         content: '{{ hostvars[inventory_hostname] }}'
-        dest: 'output.variables/eos_cli_config_gen-{{inventory_hostname}}.json'
+        dest: '../output.variables/eos_cli_config_gen-{{inventory_hostname}}.json'
       delegate_to: localhost

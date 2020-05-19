@@ -30,6 +30,11 @@
 - `ansible-avd`: configured under ../ansible-avd
 - Ansible playbook debugger activated in ansible.cfg
 - Execution time configured
+- Default inventory is set to [`vlab-inventory/`](vlab-inventory/inventory.yml)
+- Playbooks are all saved under [playbooks](playbooks/)
+- AVD outputs are generated under [playbooks](playbooks/)
+
+> Inventory can be changed with following command: `make INVENTORY=<your inventory> ...`
 
 ## AVD Commands and Playbooks
 
@@ -42,7 +47,7 @@
 $ make avd-build
 
 # Ansible command
-$ ansible-playbook dc1-fabric-deploy-cvp.yml --tags build
+$ ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build
 ```
 
 #### Build offline configuration with ISIS as underlay protocol
@@ -52,7 +57,9 @@ $ ansible-playbook dc1-fabric-deploy-cvp.yml --tags build
 $ make avd-build-isis
 
 # Ansible command
-$ ansible-playbook dc1-fabric-deploy-cvp.yml --tags build --extra-vars "underlay_routing_protocol=ISIS"
+$ ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml \
+    --tags build \
+    --extra-vars "underlay_routing_protocol=ISIS"
 ```
 
 ### Provision Cloudvision
@@ -64,7 +71,7 @@ In this scenario, playbook do not execute pending tasks
 $ make avd-provision
 
 # Ansible command
-$ ansible-playbook dc1-fabric-deploy-cvp.yml --tags provision
+$ ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags provision
 ```
 
 ### Deploy AVD on Cloudvision
@@ -82,7 +89,7 @@ Set var to execute pending tasks
 $ make avd-deploy
 
 # Ansible command
-$ ansible-playbook dc1-fabric-deploy-cvp.yml \
+$ ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml \
     --extra-vars "execute_tasks=true" \
     --tags "build,provision,apply"
 ```
@@ -94,7 +101,7 @@ $ ansible-playbook dc1-fabric-deploy-cvp.yml \
 $ make avd-deploy-isis
 
 # Ansible command
-$ ansible-playbook dc1-fabric-deploy-cvp.yml \
+$ ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml \
     --extra-vars "execute_tasks=true underlay_routing_protocol=ISIS" \
     --tags "build,provision,apply"
 ```
@@ -106,7 +113,7 @@ $ ansible-playbook dc1-fabric-deploy-cvp.yml \
 $ make avd-reset
 
 # Ansible command
-$ ansible-playbook dc1-fabric-reset-cvp.yml
+$ ansible-playbook playbooks/dc1-fabric-reset-cvp.yml
 ```
 
 ## AVD Configlet Uploader
@@ -120,7 +127,7 @@ $ ansible-playbook dc1-fabric-reset-cvp.yml
 $ make configlet-upload
 
 # Ansible command
-$ ansible-playbook dc1-upload-configlets.yml
+$ ansible-playbook playbooks/dc1-upload-configlets.yml
 ```
 
 ### Delete configlets
@@ -132,7 +139,7 @@ $ ansible-playbook dc1-upload-configlets.yml
 $ make configlet-delete
 
 # Ansible command
-$ ansible-playbook dc1-remove-configlets.yml
+$ ansible-playbook playbooks/dc1-remove-configlets.yml
 ```
 
 ## Debug Playbooks
@@ -146,7 +153,7 @@ $ ansible-playbook dc1-remove-configlets.yml
 $ make avd-vars-input
 
 # Ansible command
-$ ansible-playbook extract-avd-vars.yml --tags eos_l3ls_evpn
+$ ansible-playbook playbooks/extract-avd-vars.yml --tags eos_l3ls_evpn
 ```
 
 #### EOS_CLI_CONFIG_GEN vars
@@ -156,5 +163,5 @@ $ ansible-playbook extract-avd-vars.yml --tags eos_l3ls_evpn
 $ make avd-vars-devices
 
 # Ansible command
-$ ansible-playbook extract-avd-vars.yml --tags cli
+$ ansible-playbook playbooks/extract-avd-vars.yml --tags cli
 ```

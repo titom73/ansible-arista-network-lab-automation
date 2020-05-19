@@ -6,7 +6,7 @@
   collections:
     - arista.cvp
   vars:
-    output_file: 'arista.cvp.facts.json'
+    output_file: '../output.variables/arista.cvp.facts.json'
   tasks:
     - name: "Gather CVP facts from {{inventory_hostname}}"
       arista.cvp.cv_facts:
