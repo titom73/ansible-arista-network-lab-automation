@@ -1,0 +1,34 @@
+- name: Container Management in Cloudvision
+  hosts: cv_server
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.avd
+    - arista.cvp
+  vars:
+    run_tasks: false
+    run_mode: merge
+    CVP_CONTAINERS:
+      DC2:
+        parent_container: Tenant
+      Leafs:
+        parent_container: DC2
+      Spines:
+        parent_container: DC2
+      POD01:
+        parent_container: Leafs
+
+  tasks:
+    - name: "collect CV facts on {{inventory_hostname}}"
+      arista.cvp.cv_facts:
+      register: CVP_FACTS
+
+    - name: 'running cv_container in {{run_mode}} on {{inventory_hostname}}'
+      arista.cvp.cv_container:
+        cvp_facts: "{{CVP_FACTS.ansible_facts}}"
+        topology: "{{CVP_CONTAINERS}}"
+        mode: '{{run_mode}}'
+      register: result
+
+    - debug:
+        msg: '{{result}}'

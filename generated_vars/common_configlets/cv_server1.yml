@@ -1,0 +1,6 @@
+---
+   'inetsix_demo01':
+      config: "alias c73 show version"
+      last_changed: 1589356645285
+      devices: []
+      containers: []

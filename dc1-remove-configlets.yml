@@ -1,0 +1,27 @@
+---
+- name: Build Switch configuration
+  hosts: cv_server
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.avd
+    - arista.cvp
+  vars:
+    CONFGILGET_TO_REMOVE:
+      ASE_GLOBAL-ALIASES: "{{lookup('file', 'configlets/GLOBAL-ALIASES.conf')}}"
+      ASE_GLOBAL-ALIASES2: "{{lookup('file', 'configlets/GLOBAL-ALIASES2.conf')}}"
+  tasks:
+    - name: "collect CV facts {{inventory_hostname}}"
+      arista.cvp.cv_facts:
+        facts:
+          configlets
+      register: CVP_FACTS
+    - name: 'delete configlets from cloudvision {{inventory_hostname}}'
+      arista.cvp.cv_configlet:
+        cvp_facts: "{{CVP_FACTS.ansible_facts}}"
+        configlets: "{{CONFGILGET_TO_REMOVE}}"
+        configlet_filter: ["GLOBAL"]
+        state: absent
+      register: result
+    - debug:
+        msg: '{{result}}'

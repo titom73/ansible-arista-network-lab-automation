@@ -1,0 +1,19 @@
+---
+- name: CV Facts
+  hosts: cv_server
+  connection: local
+  gather_facts: no
+  collections:
+    - arista.cvp
+  vars:
+    output_file: 'arista.cvp.facts.json'
+  tasks:
+    - name: "Gather CVP facts from {{inventory_hostname}}"
+      arista.cvp.cv_facts:
+      register: cvp_facts
+
+    - name: 'Create File with Facts from {{inventory_hostname}}'
+      copy:
+        content: '{{ cvp_facts }}'
+        dest: '{{output_file}}'
+      delegate_to: localhost

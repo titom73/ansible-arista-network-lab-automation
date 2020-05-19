@@ -1,0 +1,36 @@
+- name: Container Management in Cloudvision
+  hosts: cv_server
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.cvp
+  vars:
+    run_tasks: false
+    run_mode: merge
+    CVP_CONFIGLETS:
+      CONFIGLET_01: 'alias a{{999|random}} show version'
+
+  tasks:
+    - name: "collect CV facts on {{inventory_hostname}}"
+      arista.cvp.cv_facts:
+      register: CVP_FACTS
+
+    # - name: 'running cv_container in {{run_mode}} on {{inventory_hostname}}'
+    #   arista.cvp.cv_configlet_v1:
+    #     cvp_facts: "{{CVP_FACTS.ansible_facts}}"
+    #     configlets: "{{CVP_CONFIGLETS}}"
+    #     configlet_filter: ["CONFIGLET_"]
+    #   register: result
+
+    # - debug:
+    #     msg: '{{result}}'
+
+    - name: 'running cv_container in {{run_mode}} on {{inventory_hostname}}'
+      arista.cvp.cv_configlet:
+        cvp_facts: "{{CVP_FACTS.ansible_facts}}"
+        configlets: "{{CVP_CONFIGLETS}}"
+        configlet_filter: ["CONFIGLET_"]
+      register: result
+
+    - debug:
+        msg: '{{result}}'

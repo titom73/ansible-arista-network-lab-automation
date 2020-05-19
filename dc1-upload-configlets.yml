@@ -1,0 +1,19 @@
+---
+- name: Build Switch configuration
+  hosts: cv_server
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.avd
+    - arista.cvp
+  vars:
+    configlets_prefix_var: "ASE"
+    configlet_dir_var: "configlets/"
+  tasks:
+  - name: 'upload configlets from cloudvision {{inventory_hostname}}'
+    import_role:
+      name: cvp_configlet_upload
+    vars:
+      configlet_directory: '{{ configlet_dir_var }}'
+      configlets_cvp_prefix: '{{ configlets_prefix_var }}'
+      file_extension: 'conf'

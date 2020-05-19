@@ -1,0 +1,19 @@
+---
+inetsix_demo01:
+   source: "updated_by_common_master"
+   config: "alias c73 show version"
+   last_changed: 1589356909899
+   devices: []
+   containers: []
+shared_test:
+   source: "added_by_common_master"
+   config: "alias a7373 show version"
+   last_changed: 1589207754904
+   devices: []
+   containers: []
+shared_configlet:
+   source: "added_by_common_master"
+   config: "! test\nalias b350 show version"
+   last_changed: 1589215763115
+   devices: []
+   containers: []

@@ -1,0 +1,25 @@
+---
+- name: AVD Variabales
+  hosts: DC1
+  connection: local
+  gather_facts: no
+  collections:
+    - arista.cvp
+    - arista.avd
+  tasks:
+    - name: 'Create File with Facts from {{inventory_hostname}}'
+      tags: 'eos_l3ls_evpn'
+      copy:
+        content: '{{ hostvars[inventory_hostname] }}'
+        dest: 'output.variables/eos_l3ls_evpn-{{inventory_hostname}}.json'
+      delegate_to: localhost
+    - name: generate intented variables
+      tags: [cli]
+      import_role:
+        name: eos_l3ls_evpn
+    - name: 'Create File with Facts from {{inventory_hostname}}'
+      tags: ['cli']
+      copy:
+        content: '{{ hostvars[inventory_hostname] }}'
+        dest: 'output.variables/eos_cli_config_gen-{{inventory_hostname}}.json'
+      delegate_to: localhost

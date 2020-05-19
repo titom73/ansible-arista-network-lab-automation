@@ -1,0 +1,14 @@
+---
+- name: Shared Configlets across CVP clusters
+  hosts: cvp_sync
+  serial: true
+  gather_facts: no
+  collections:
+    - arista.cvp
+  tasks:
+    - name: 'Init Configlets Sync structure'
+      import_role:
+        name: configlets_sync
+      vars:
+        configlet_filter: 'inetsix'
+        action: sync
