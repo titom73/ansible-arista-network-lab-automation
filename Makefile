@@ -1,5 +1,4 @@
-DOCKER_NAME ?= arista/avd-cvp-demo
-FACTS_LOG ?= arista1.cvp.facts.json
+FACTS_LOG ?= ../cvp-debug-logs/arista.cvp.facts.json
 SHELL := /bin/bash
 INVENTORY ?= vlab-inventory
 
@@ -9,7 +8,7 @@ help: ## Display help message (*: main entry points / []: part of an entry point
 
 .PHONY: facts
 facts: ## Get facts from CVP and save locally
-	ansible-playbook extract-facts.yml --extra-vars "output_file=${FACTS_LOG}" -i $(INVENTORY)
+	ansible-playbook playbooks/extract-facts.yml --extra-vars "output_file=${FACTS_LOG}" -i $(INVENTORY)
 
 ################################################################################
 # AVD Commands

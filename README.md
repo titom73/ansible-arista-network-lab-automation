@@ -1,6 +1,6 @@
-# AVD Lab validation
+# Arista Validated Design Lab
 
-- [AVD Lab validation](#avd-lab-validation)
+- [Arista Validated Design Lab](#arista-validated-design-lab)
   - [Topology](#topology)
   - [Setup](#setup)
   - [Inventory Information](#inventory-information)
@@ -24,8 +24,9 @@
   - [Build ZTP Server](#build-ztp-server)
     - [Edit ZTP Information](#edit-ztp-information)
     - [Configure CV as ZTP](#configure-cv-as-ztp)
-  - [Debug Playbooks](#debug-playbooks)
-    - [Get variables](#get-variables)
+  - [Debugging Playbooks](#debugging-playbooks)
+    - [Get CVP Facts](#get-cvp-facts)
+    - [Get AVD variables](#get-avd-variables)
       - [EOS_L3LS_EVPN vars](#eosl3lsevpn-vars)
       - [EOS_CLI_CONFIG_GEN vars](#eoscliconfiggen-vars)
 
@@ -35,8 +36,8 @@
 
 ## Setup
 
-- `ansible-cvp`: configured under ../ansible-cvp
-- `ansible-avd`: configured under ../ansible-avd
+- [`ansible-cvp`](https://github.com/aristanetworks/ansible-cvp): configured under ../ansible-cvp
+- [`ansible-avd`](https://github.com/aristanetworks/ansible-avd): configured under ../ansible-avd
 - Ansible playbook debugger activated in ansible.cfg
 - Execution time configured
 - Default inventory is set to [`vlab-inventory/`](vlab-inventory/inventory.yml)
@@ -47,12 +48,12 @@
 
 ## Inventory Information
 
-- Cloudvision
+- __Cloudvision__
   - IP: 10.83.28.164
   - Username: ansible
   - Password: ansible
 
-- Devices:
+- __Devices:__
   - Out of band network: 10.255.0.0/24
   - Username: ansible
   - Password: ansible
@@ -239,9 +240,20 @@ $ make dhcp-configure
 $ ansible-playbook playbooks/dc1-ztp-configuration.yml
 ```
 
-## Debug Playbooks
+## Debugging Playbooks
 
-### Get variables
+### Get CVP Facts
+
+```shell
+# Makefile
+$ make facts
+
+# Ansible command
+$ ansible-playbook playbooks/extract-facts.yml \
+    --extra-vars "output_file=../cvp-debug-logs/arista.cvp.facts.json"
+```
+
+### Get AVD variables
 
 #### EOS_L3LS_EVPN vars
 
