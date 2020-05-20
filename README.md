@@ -4,6 +4,8 @@
   - [Topology](#topology)
   - [Setup](#setup)
   - [Inventory Information](#inventory-information)
+  - [Enable debugging](#enable-debugging)
+    - [Cloudvision collection](#cloudvision-collection)
   - [AVD Commands and Playbooks](#avd-commands-and-playbooks)
     - [AVD Build](#avd-build)
       - [Build offline configuration with default underlay protocol (BGP)](#build-offline-configuration-with-default-underlay-protocol-bgp)
@@ -54,6 +56,20 @@
   - Out of band network: 10.255.0.0/24
   - Username: ansible
   - Password: ansible
+
+## Enable debugging
+
+### Cloudvision collection
+
+```shell
+$ source activate-arista.cvp-logs.env
+
+export ANSIBLE_CVP_LOG_FILE=cvp-debug-logs/arista.cvp.debug.log
+export ANSIBLE_CVP_LOG_LEVEL=debug
+export ANSIBLE_CVP_LOG_APICALL=warning
+```
+
+Log folder: `cvp-debug-logs/`
 
 ## AVD Commands and Playbooks
 
