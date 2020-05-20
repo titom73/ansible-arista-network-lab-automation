@@ -12,6 +12,6 @@
 
 echo 'Cleaning up repository from previous run'
 echo '  - delete content in documentation/'
-rm -rf documentation/
+rm -rf playbooks/documentation/
 echo '  - delete content in intended/'
-rm -rf intended/
+rm -rf playbooks/intended/
