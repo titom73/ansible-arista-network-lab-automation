@@ -3,6 +3,7 @@
 - [AVD Lab validation](#avd-lab-validation)
   - [Topology](#topology)
   - [Setup](#setup)
+  - [Inventory Information](#inventory-information)
   - [AVD Commands and Playbooks](#avd-commands-and-playbooks)
     - [AVD Build](#avd-build)
       - [Build offline configuration with default underlay protocol (BGP)](#build-offline-configuration-with-default-underlay-protocol-bgp)
@@ -15,6 +16,12 @@
   - [AVD Configlet Uploader](#avd-configlet-uploader)
     - [Upload configlets](#upload-configlets)
     - [Delete configlets](#delete-configlets)
+  - [Container Validation](#container-validation)
+    - [Create container topology](#create-container-topology)
+    - [Delete container topology](#delete-container-topology)
+  - [Build ZTP Server](#build-ztp-server)
+    - [Edit ZTP Information](#edit-ztp-information)
+    - [Configure CV as ZTP](#configure-cv-as-ztp)
   - [Debug Playbooks](#debug-playbooks)
     - [Get variables](#get-variables)
       - [EOS_L3LS_EVPN vars](#eosl3lsevpn-vars)
@@ -35,6 +42,18 @@
 - AVD outputs are generated under [playbooks](playbooks/)
 
 > Inventory can be changed with following command: `make INVENTORY=<your inventory> ...`
+
+## Inventory Information
+
+- Cloudvision
+  - IP: 10.83.28.164
+  - Username: ansible
+  - Password: ansible
+
+- Devices:
+  - Out of band network: 10.255.0.0/24
+  - Username: ansible
+  - Password: ansible
 
 ## AVD Commands and Playbooks
 
@@ -142,11 +161,75 @@ $ make configlet-delete
 $ ansible-playbook playbooks/dc1-remove-configlets.yml
 ```
 
+## Container Validation
+
+### Create container topology
+
+```shell
+# Makefile
+$ make container-create
+
+# Ansible command
+$ ansible-playbook playbooks/cv-container-testing.yml --extra-vars "run_mode=merge"
+```
+
+### Delete container topology
+
+```shell
+# Makefile
+$ make container-delete
+
+# Ansible command
+$ ansible-playbook playbooks/cv-container-testing.yml --extra-vars "run_mode=delete"
+```
+
+## Build ZTP Server
+
+### Edit ZTP Information
+
+```yaml
+# vim $(INVENTORY)/group_vars/CVP.yml
+---
+ztp:
+  default:
+    registration: 'http://10.255.0.1/ztp/bootstrap'
+    gateway: 10.255.0.3
+    nameservers:
+      - '10.255.0.3'
+  general:
+    subnets:
+      - network: 10.255.0.0
+        netmask: 255.255.255.0
+        gateway: 10.255.0.3
+        nameservers:
+          - '10.255.0.3'
+        start: 10.255.0.200
+        end: 10.255.0.250
+        lease_time: 300
+  clients:
+  # AVD/CVP Integration
+    - name: DC1-SPINE1
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.255.0.11
+```
+
+### Configure CV as ZTP
+
+```shell
+# Makefile
+$ make dhcp-configure
+
+# Ansible command
+$ ansible-playbook playbooks/dc1-ztp-configuration.yml
+```
+
 ## Debug Playbooks
 
 ### Get variables
 
 #### EOS_L3LS_EVPN vars
+
+- Output folders: [`output_variables`](output_variables/)
 
 ```shell
 # Makefile
@@ -157,6 +240,8 @@ $ ansible-playbook playbooks/extract-avd-vars.yml --tags eos_l3ls_evpn
 ```
 
 #### EOS_CLI_CONFIG_GEN vars
+
+- Output folders: [`output_variables`](output_variables/)
 
 ```shell
 # Makefile
