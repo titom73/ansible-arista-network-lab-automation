@@ -1,17 +1,18 @@
 site_name: Arista CVP collection
 site_author: Arista Ansible Team
 site_description: Arista Cloudvision collection's documentation
-docs_dir: documentation/
+docs_dir: playbooks/documentation/
 # site_favicon: docs/_media/favicon.ico
 theme:
-  name: lumen
-  features:
-    - instant
-  font:
-    text: Ubuntu
-    code: Ubuntu Mono
-# extra_css:
-#   - docs/stylesheets/extra.css
+    name: cerulean
+    nav_style: dark
+#   # features:
+#   #   - instant
+#   font:
+#     text: Ubuntu
+#     code: Ubuntu Mono
+# # extra_css:
+# #   - docs/stylesheets/extra.css
 copyright: Copyright &copy; 2019 - 2020 Arista Networks
 repo_name: Github
 repo_url: https://github.com/aristanetworks/ansible-cvp
