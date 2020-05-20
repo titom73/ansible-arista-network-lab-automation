@@ -10,6 +10,7 @@
     - [AVD Build](#avd-build)
       - [Build offline configuration with default underlay protocol (BGP)](#build-offline-configuration-with-default-underlay-protocol-bgp)
       - [Build offline configuration with ISIS as underlay protocol](#build-offline-configuration-with-isis-as-underlay-protocol)
+      - [Run webserver for documentation](#run-webserver-for-documentation)
     - [Provision Cloudvision](#provision-cloudvision)
     - [Deploy AVD on Cloudvision](#deploy-avd-on-cloudvision)
       - [Deploy using default underlay protocol (BGP)](#deploy-using-default-underlay-protocol-bgp)
@@ -97,6 +98,22 @@ $ ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml \
     --tags build \
     --extra-vars "underlay_routing_protocol=ISIS"
 ```
+
+#### Run webserver for documentation
+
+> mkdocs MUST be installed using [`requirements.txt`](requirements.txt)
+
+```shell
+$ mkdocs serve
+INFO    -  Building documentation...
+INFO    -  Cleaning site directory
+INFO    -  Documentation built in 0.51 seconds
+[I 200520 09:45:42 server:296] Serving on http://127.0.0.1:8000
+INFO    -  Serving on http://127.0.0.1:8000
+...
+```
+
+Documentation available on [localhost](http://127.0.0.1:8000/DC1_FABRIC/DC1_FABRIC/)
 
 ### Provision Cloudvision
 
