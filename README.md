@@ -33,7 +33,7 @@
 
 ## Topology
 
-![Topology](inventories/emea/lab-topology.png)
+![Topology](inventories/emea/media/lab-topology.png)
 
 ## Setup
 
