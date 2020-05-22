@@ -33,7 +33,7 @@
 
 ## Topology
 
-![Topology](medias/lab-topology.png)
+![Topology](inventories/emea/lab-topology.png)
 
 ## Setup
 
@@ -41,7 +41,7 @@
 - [`ansible-avd`](https://github.com/aristanetworks/ansible-avd): configured under ../ansible-avd
 - Ansible playbook debugger activated in ansible.cfg
 - Execution time configured
-- Default inventory is set to [`vlab-inventory/`](vlab-inventory/inventory.yml)
+- Default inventory is set to [`inventories/emea/`](inventories/emea/inventory.yml)
 - Playbooks are all saved under [playbooks](playbooks/)
 - AVD outputs are generated under [playbooks](playbooks/)
 

@@ -1,6 +1,6 @@
 FACTS_LOG ?= ../cvp-debug-logs/arista.cvp.facts.json
 SHELL := /bin/bash
-INVENTORY ?= vlab-inventory
+INVENTORY ?= inventories/emea
 
 .PHONY: help
 help: ## Display help message (*: main entry points / []: part of an entry point)
