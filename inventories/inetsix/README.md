@@ -1,13 +1,8 @@
-# Virtual Lab 01
+# Home Lab
 
-![Topology](lab-topology.png)
+![Topology](media/lab-topology.png)
 
 ```yaml
-# CVP Servers definition
-cvp_sync:
-    hosts:
-    cv_server1:
-    cv_server2:
 CVP:
     hosts:
     cv_ztp:     # SSH Access
@@ -15,7 +10,7 @@ CVP:
 
 # DC1_Fabric - EVPN Fabric running in home lab
 DC1:
-    children:
+  children:
     DC1_FABRIC:
       children:
         DC1_SPINES:
@@ -29,30 +24,30 @@ DC1:
             DC1_LEAF1:
               hosts:
                 DC1-LEAF1A:
-                    ansible_host: 10.73.255.113
+                    ansible_host: 10.73.255.111
                 DC1-LEAF1B:
-                    ansible_host: 10.73.255.114
+                    ansible_host: 10.73.255.112
             DC1_LEAF2:
               hosts:
                 DC1-LEAF2A:
-                  ansible_host: 10.73.255.115
+                  ansible_host: 10.73.255.113
                 DC1-LEAF2B:
-                  ansible_host: 10.73.255.116
+                  ansible_host: 10.73.255.114
             DC1_BL01:
               hosts:
-                DC1-LEAF2A:
+                DC1-BL01A:
                   ansible_host: 10.73.255.115
-                DC1-LEAF2B:
+                DC1-BL01B:
                   ansible_host: 10.73.255.116
         DC1_L2LEAFS:
           children:
             DC1_L2LEAF1:
               hosts:
-                DC1-L2LEAF1A:
+                DC1-AGG01:
                   ansible_host: 10.73.255.121
             DC1_L2LEAF2:
               hosts:
-                DC1-L2LEAF2A:
+                DC1-AGG02:
                   ansible_host: 10.73.255.122
     DC1_TENANTS_NETWORKS:
       children:

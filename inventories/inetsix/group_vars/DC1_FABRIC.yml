@@ -5,6 +5,8 @@
 fabric_name: DC1_FABRIC
 
 underlay_routing_protocol: BGP
+
+# ISIS Parameters when underlay_routing_protocol=ISIS
 isis_area_id: "49.0001"
 isis_site_id: "0001"
 
@@ -49,10 +51,10 @@ spine:
   nodes:
     DC1-SPINE1:
       id: 1
-      mgmt_ip: 10.255.0.11/24
+      mgmt_ip: 10.73.255.101/24
     DC1-SPINE2:
       id: 2
-      mgmt_ip: 10.255.0.12/24
+      mgmt_ip: 10.73.255.102/24
 
 # Leaf switch groups
 # A maximum of two nodes can form a leaf group
@@ -80,24 +82,34 @@ l3leaf:
       nodes:
         DC1-LEAF1A:
           id: 1
-          mgmt_ip: 10.255.0.13/24
+          mgmt_ip: 10.73.255.111/24
           spine_interfaces: [Ethernet1, Ethernet1]
         DC1-LEAF1B:
           id: 2
-          mgmt_ip: 10.255.0.14/24
+          mgmt_ip: 10.73.255.112/24
           spine_interfaces: [Ethernet2, Ethernet2]
     DC1_LEAF2:
       bgp_as: 65102
       nodes:
         DC1-LEAF2A:
           id: 3
-          mgmt_ip: 10.255.0.15/24
+          mgmt_ip: 10.73.255.113/24
           spine_interfaces: [Ethernet3, Ethernet3]
         DC1-LEAF2B:
           id: 4
-          mgmt_ip: 10.255.0.16/24
+          mgmt_ip: 10.73.255.114/24
           spine_interfaces: [Ethernet4, Ethernet4]
-
+    DC1_BL01:
+      bgp_as: 65103
+      nodes:
+        DC1-BL01A:
+          id: 5
+          mgmt_ip: 10.73.255.115/24
+          spine_interfaces: [Ethernet5, Ethernet5]
+        DC1-BL01B:
+          id: 6
+          mgmt_ip: 10.73.255.116/24
+          spine_interfaces: [Ethernet6, Ethernet6]
 
 l2leaf:
   defaults:
@@ -115,9 +127,9 @@ l2leaf:
         tags: [ opzone, web, app ]
         # tags: [ border ]
       nodes:
-        DC1-L2LEAF1A:
-          id: 5
-          mgmt_ip: 10.255.0.17/24
+        DC1-AGG01:
+          id: 7
+          mgmt_ip: 10.73.255.121/24
           l3leaf_interfaces: [ Ethernet5, Ethernet5 ]
     DC1_L2LEAF2:
       parent_l3leafs: [ DC1-LEAF2A, DC1-LEAF2B ]
@@ -125,9 +137,9 @@ l2leaf:
         tenants: [ Tenant_A ]
         tags: [ opzone, web, app ]
       nodes:
-        DC1-L2LEAF2A:
-          id: 7
-          mgmt_ip: 10.255.0.18/24
+        DC1-AGG02:
+          id: 8
+          mgmt_ip: 10.73.255.122/24
           l3leaf_interfaces: [ Ethernet5, Ethernet5 ]
 
 #### Override for vEOS Lab Caveats ####
@@ -162,10 +174,10 @@ bfd_multihop:
 
 # List of additional CVP configlets to bind to devices and containers
 # Configlets MUST be configured on CVP before running AVD playbooks.
-cv_configlets:
-  containers:
-    DC1_L3LEAFS:
-      - ASE_GLOBAL-ALIASES
+# cv_configlets:
+#   containers:
+#     DC1_L3LEAFS:
+#       - ASE_GLOBAL-ALIASES
 #   devices:
 #     DC1-L2LEAF1A:
 #       - ASE_DEVICE-ALIASES.conf
