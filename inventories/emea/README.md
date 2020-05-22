@@ -1,6 +1,6 @@
 # Virtual Lab 01
 
-![Topology](lab-topology.png)
+![Topology](media/lab-topology.png)
 
 ```yaml
 # CVP Servers definition
