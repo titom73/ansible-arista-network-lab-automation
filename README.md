@@ -32,6 +32,9 @@
     - [Get AVD variables](#get-avd-variables)
       - [EOS_L3LS_EVPN vars](#eosl3lsevpn-vars)
       - [EOS_CLI_CONFIG_GEN vars](#eoscliconfiggen-vars)
+    - [Docker Environement](#docker-environement)
+      - [Build Docker image](#build-docker-image)
+      - [Run Docker container](#run-docker-container)
 
 ## Topology
 
@@ -312,4 +315,28 @@ $ make avd-vars-devices
 
 # Ansible command
 $ ansible-playbook playbooks/extract-avd-vars.yml --tags cli
+```
+
+### Docker Environement
+
+#### Build Docker image
+
+> Require to clone ansible-avd next to this repository
+
+```shell
+# Makefile
+$ make docker-build
+
+# Docker command
+$ docker build -f ../ansible-avd/development/Dockerfile -t avdteam/lab:latest ../ansible-avd/development/
+```
+
+#### Run Docker container
+
+```shell
+# Makefile
+$ make docker-run
+
+# Docker command
+$ docker run -it --rm -v ~/arista-ansible/lab-validation/../:/projects avdteam/lab:latest /bin/zsh
 ```
