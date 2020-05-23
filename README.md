@@ -4,6 +4,8 @@
   - [Topology](#topology)
   - [Setup](#setup)
   - [Inventory Information](#inventory-information)
+    - [EMEA Inventory](#emea-inventory)
+    - [Inetsix Inventory](#inetsix-inventory)
   - [Enable debugging](#enable-debugging)
     - [Cloudvision collection](#cloudvision-collection)
   - [AVD Commands and Playbooks](#avd-commands-and-playbooks)
@@ -33,7 +35,7 @@
 
 ## Topology
 
-![Topology](inventories/emea/media/lab-topology.png)
+![Topology](inventories/inetsix/media/lab-topology.png)
 
 ## Setup
 
@@ -41,13 +43,15 @@
 - [`ansible-avd`](https://github.com/aristanetworks/ansible-avd): configured under ../ansible-avd
 - Ansible playbook debugger activated in ansible.cfg
 - Execution time configured
-- Default inventory is set to [`inventories/emea/`](inventories/emea/inventory.yml)
+- Default inventory is set to [`inventories/inetsix/`](inventories/inetsix/inventory.yml)
 - Playbooks are all saved under [playbooks](playbooks/)
 - AVD outputs are generated under [playbooks](playbooks/)
 
 > Inventory can be changed with following command: `make INVENTORY=<your inventory> ...`
 
 ## Inventory Information
+
+### EMEA Inventory
 
 - __Cloudvision__
   - IP: 10.83.28.164
@@ -56,6 +60,18 @@
 
 - __Devices:__
   - Out of band network: 10.255.0.0/24
+  - Username: ansible
+  - Password: ansible
+
+### Inetsix Inventory
+
+- __Cloudvision__
+  - IP: 10.73.1.239
+  - Username: ansible
+  - Password: ansible
+
+- __Devices:__
+  - Out of band network: 10.73.255.0/24
   - Username: ansible
   - Password: ansible
 
@@ -220,6 +236,8 @@ $ ansible-playbook playbooks/cv-container-testing.yml --extra-vars "run_mode=del
 ## Build ZTP Server
 
 ### Edit ZTP Information
+
+> Only if DHCP service is running on Cloudvision. If not, please refer to [lab provisioning repository](https://github.com/titom73/lab-provisionning)
 
 ```yaml
 # vim $(INVENTORY)/group_vars/CVP.yml
