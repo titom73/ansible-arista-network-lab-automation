@@ -35,7 +35,7 @@
         name: eos_config_deploy_cvp
       vars:
         container_root: 'DC1_FABRIC'
-        configlets_prefix: 'DC1-AVD'
+        configlets_prefix: 'AVD'
         device_filter: 'DC1'
         execute_tasks: false
         state: present
