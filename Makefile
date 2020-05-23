@@ -1,7 +1,13 @@
-FACTS_LOG ?= ../cvp-debug-logs/arista.cvp.facts.json
-SHELL := /bin/bash
+# Generic Variables
+SHELL := /bin/zsh
+# Ansible variables
 INVENTORY ?= inventories/inetsix
 INVENTORY_FILE = inventory.yml
+FACTS_LOG ?= ../cvp-debug-logs/arista.cvp.facts.json
+# Docker variables
+CURRENT_DIR = $(shell pwd)
+DOCKER_NAME ?= avdteam/lab
+DOCKER_TAG ?= latest
 
 .PHONY: help
 help: ## Display help message (*: main entry points / []: part of an entry point)
@@ -34,7 +40,6 @@ avd-deploy: ## Run ansible playbook to deploy EVPN Fabric.
 .PHONY: avd-deploy-isis
 avd-deploy-isis: ## Run ansible playbook to deploy EVPN Fabric.
 	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --extra-vars "underlay_routing_protocol=ISIS execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
-
 
 .PHONY: avd-reset
 avd-reset: ## Run ansible playbook to reset all devices.
@@ -92,3 +97,19 @@ repo-rebuild: ## Delete previously generated outputs
 .PHONY: repo-clean
 repo-clean: ## Delete previously generated outputs
 	sh playbooks/repository-cleanup.sh
+
+################################################################################
+# Docker Runner
+################################################################################
+
+.PHONY: docker-run
+docker-run: ## Connect to docker container
+	docker run -it --rm -v $(CURRENT_DIR)/../:/projects $(DOCKER_NAME):$(DOCKER_TAG) $(SHELL)
+
+.PHONY: docker-inetsix
+docker-inetsix: ## Connect to docker container (inetsix/ansible)
+	docker run -it --rm -v $(CURRENT_DIR)/../:/projects inetsix/ansible $(SHELL)
+
+.PHONY: docker-build
+docker-build: ## Build docker image based on latest supported Python version
+	docker build -f ../ansible-avd/development/Dockerfile -t $(DOCKER_NAME):$(DOCKER_TAG) ../ansible-avd/development/
