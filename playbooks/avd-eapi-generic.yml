@@ -1,8 +1,6 @@
 ---
 - name: Build Switch configuration
   hosts: all
-  connection: local
-  gather_facts: false
   collections:
     - arista.avd
     - arista.cvp
@@ -11,6 +9,8 @@
       tags: [build]
       import_role:
         name: build_output_folders
+      vars:
+        fabric_dir_name: '{{fabric_name}}'
     - name: generate intented variables
       tags: [build]
       import_role:
@@ -19,4 +19,7 @@
       tags: [build]
       import_role:
         name: eos_cli_config_gen
-
+    - name: deploy configuration to device
+      tags: [deploy, never]
+      import_role:
+         name: arista.avd.eos_config_deploy_eapi
