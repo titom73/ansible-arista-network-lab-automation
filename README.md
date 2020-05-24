@@ -49,7 +49,7 @@
 - [`ansible-avd`](https://github.com/aristanetworks/ansible-avd): configured under ../ansible-avd
 - Ansible playbook debugger activated in ansible.cfg
 - Execution time configured
-- Default inventory is set to [`inventories/inetsix/`](inventories/inetsix/inventory.yml)
+- Default inventory is set to [`inventories/inetsix-cvp/`](inventories/inetsix-cvp/inventory.yml)
 - Playbooks are all saved under [playbooks](playbooks/)
 - AVD outputs are generated under [playbooks](${INVENTORY}/)
 
