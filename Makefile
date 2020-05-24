@@ -18,15 +18,15 @@ facts: ## Get facts from CVP and save locally
 	ansible-playbook playbooks/extract-facts.yml --extra-vars "output_file=${FACTS_LOG}" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 ################################################################################
-# AVD Commands
+# AVD Commands for DC1 & Cloudvision
 ################################################################################
 
 .PHONY: avd-build
-avd-build: ## Run ansible playbook to build EVPN Fabric configuration.
+avd-build: ## Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
 	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: avd-build-isis
-avd-build-isis: ## Run ansible playbook to build EVPN Fabric configuration with ISIS as underlay.
+avd-build-isis: ## Run ansible playbook to build EVPN Fabric configuration with ISIS as underlay with DC1 and CV
 	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build --extra-vars "underlay_routing_protocol=ISIS" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: avd-provision
@@ -53,6 +53,13 @@ avd-vars-input: ## Run ansible playbook to extract EVPN Fabric variables.
 avd-vars-devices: ## Run ansible playbook to extract Devices variables.
 	ansible-playbook playbooks/extract-avd-vars.yml --tags cli -i $(INVENTORY)/$(INVENTORY_FILE)
 
+################################################################################
+# AVD Commands for Generic Inventory and NO CV instance
+################################################################################
+
+.PHONY: generic-build
+generic-build: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
+	ansible-playbook playbooks/avd-generic-build.yml --tags build -i $(INVENTORY)/$(INVENTORY_FILE)
 
 ################################################################################
 # Configlet Management

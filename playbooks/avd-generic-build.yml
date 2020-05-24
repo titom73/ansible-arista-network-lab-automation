@@ -1,0 +1,22 @@
+---
+- name: Build Switch configuration
+  hosts: all
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.avd
+    - arista.cvp
+  tasks:
+    - name: build local folders
+      tags: [build]
+      import_role:
+        name: build_output_folders
+    - name: generate intented variables
+      tags: [build]
+      import_role:
+        name: eos_l3ls_evpn
+    - name: generate device intended config and documention
+      tags: [build]
+      import_role:
+        name: eos_cli_config_gen
+

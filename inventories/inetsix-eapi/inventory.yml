@@ -1,0 +1,60 @@
+---
+all:
+  children:
+    # DC1_Fabric - EVPN Fabric running in home lab
+    DC1:
+      children:
+        DC1_FABRIC:
+          children:
+            DC1_SPINES:
+              hosts:
+                DC1-SPINE1:
+                    ansible_host: 10.73.254.1
+                DC1-SPINE2:
+                    ansible_host: 10.73.254.2
+            DC1_L3LEAFS:
+              children:
+                DC1_LEAF1:
+                  hosts:
+                    DC1-LEAF1A:
+                        ansible_host: 10.73.254.11
+                    DC1-LEAF1B:
+                        ansible_host: 10.73.254.12
+                DC1_LEAF2:
+                  hosts:
+                    DC1-LEAF2A:
+                      ansible_host: 10.73.254.13
+                    DC1-LEAF2B:
+                      ansible_host: 10.73.254.14
+                DC1_LEAF3:
+                  hosts:
+                    DC1-LEAF3A:
+                      ansible_host: 10.73.254.17
+                DC1_LEAF4:
+                  hosts:
+                    DC1-LEAF4A:
+                      ansible_host: 10.73.254.18
+                DC1_BL01:
+                  hosts:
+                    DC1-BL01A:
+                      ansible_host: 10.73.254.15
+                    DC1-BL01B:
+                      ansible_host: 10.73.254.16
+            DC1_L2LEAFS:
+              children:
+                DC1_L2LEAF1:
+                  hosts:
+                    DC1-AGG01:
+                      ansible_host: 10.73.254.21
+                DC1_L2LEAF2:
+                  hosts:
+                    DC1-AGG02:
+                      ansible_host: 10.73.254.22
+        DC1_TENANTS_NETWORKS:
+          children:
+            DC1_L3LEAFS:
+            DC1_L2LEAFS:
+        DC1_SERVERS:
+          children:
+            DC1_L3LEAFS:
+            DC1_L2LEAFS:
