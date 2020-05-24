@@ -6,7 +6,7 @@
 
 | Management Interface | description | VRF | IP Address | Gateway |
 | -------------------- | ----------- | --- | ---------- | ------- |
-| Management1 | oob_management | MGMT | 10.73.254.12/24 | 10.73.255.2 |
+| Management1 | oob_management | MGMT | 10.73.254.12/24 | 10.73.254.253 |
 
 ### Management Interfaces Device Configuration
 
@@ -24,20 +24,7 @@ No Hardware Counters defined
 
 ## TerminAttr Daemon
 
-### TerminAttr Daemon Summary
-
-| CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF |
-| -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- |
-| gzip | 10.73.255.1:9910 |  | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT |
-
-### TerminAttr Daemon Device Configuration
-
-```eos
-daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=10.73.255.1:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
-   no shutdown
-!
-```
+TerminAttr Daemon not defined
 
 ## Internal VLAN allocation Policy
 
@@ -60,12 +47,12 @@ vlan internal order ascending range 1006 1199
 
 | Name Server | Source VRF |
 | ----------- | ---------- |
-| 10.73.255.2 | MGMT |
+| 10.73.254.253 | MGMT |
 
 ### Name Servers Device Configuration
 
 ```eos
-ip name-server vrf MGMT 10.73.255.2
+ip name-server vrf MGMT 10.73.254.253
 !
 ```
 
@@ -78,13 +65,13 @@ VRF: MGMT
 
 | Node | Primary |
 | ---- | ------- |
-| 10.73.255.2 | True |
+| 10.73.254.253 | True |
 
 ### NTP Device Configuration
 
 ```eos
 ntp local-interface vrf MGMT Management1
-ntp server vrf MGMT 10.73.255.2 prefer
+ntp server vrf MGMT 10.73.254.253 prefer
 !
 ```
 
@@ -141,7 +128,7 @@ username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 110 | PR01-DMZ | none  |
-| 112 | PR02-DMZ | none  |
+| 112 | PR02-DMZ-ORANGE | none  |
 | 201 | B-ELAN-201 | none  |
 | 3010 | MLAG_iBGP_TENANT_A_PROJECT01 | LEAF_PEER_L3  |
 | 3011 | MLAG_iBGP_TENANT_A_PROJECT02 | LEAF_PEER_L3  |
@@ -155,7 +142,7 @@ vlan 110
    name PR01-DMZ
 !
 vlan 112
-   name PR02-DMZ
+   name PR02-DMZ-ORANGE
 !
 vlan 201
    name B-ELAN-201
@@ -317,7 +304,7 @@ interface Loopback100
 | Interface | Description | VRF | IP Address | IP Address Virtual | IP Router Virtual Address (vARP) |
 | --------- | ----------- | --- | ---------- | ------------------ | -------------------------------- |
 | Vlan110 | PR01-DMZ | TENANT_A_PROJECT01 | - | 10.1.10.254/24 | - |
-| Vlan112 | PR02-DMZ | TENANT_A_PROJECT02 | - | 10.1.12.254/24 | - |
+| Vlan112 | PR02-DMZ-ORANGE | TENANT_A_PROJECT02 | - | 10.1.12.254/24 | - |
 | Vlan3010 | MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01 | TENANT_A_PROJECT01 | 10.255.251.1/31 | - | - |
 | Vlan3011 | MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT02 | TENANT_A_PROJECT02 | 10.255.251.1/31 | - | - |
 | Vlan4093 | MLAG_PEER_L3_PEERING | Global Routing Table | 10.255.251.1/31 | - | - |
@@ -332,7 +319,7 @@ interface Vlan110
    ip address virtual 10.1.10.254/24
 !
 interface Vlan112
-   description PR02-DMZ
+   description PR02-DMZ-ORANGE
    vrf TENANT_A_PROJECT02
    ip address virtual 10.1.12.254/24
 !
@@ -419,12 +406,12 @@ ip address virtual source-nat vrf TENANT_A_PROJECT02 address 10.1.255.4
 
 | VRF | Destination Prefix | Fowarding Address / Interface |
 | --- | ------------------ | ----------------------------- |
-| MGMT | 0.0.0.0/0 | 10.73.255.2 |
+| MGMT | 0.0.0.0/0 | 10.73.254.253 |
 
 ### Static Routes Device Configuration
 
 ```eos
-ip route vrf MGMT 0.0.0.0/0 10.73.255.2
+ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 !
 ```
 

@@ -18,6 +18,7 @@
       - [Deploy using default underlay protocol (BGP)](#deploy-using-default-underlay-protocol-bgp)
       - [Deploy using ISIS as underlay protocol](#deploy-using-isis-as-underlay-protocol)
     - [Reset lab to ZTP mode](#reset-lab-to-ztp-mode)
+  - [Generic AVD Builder](#generic-avd-builder)
   - [AVD Configlet Uploader](#avd-configlet-uploader)
     - [Upload configlets](#upload-configlets)
     - [Delete configlets](#delete-configlets)
@@ -48,7 +49,7 @@
 - Execution time configured
 - Default inventory is set to [`inventories/inetsix/`](inventories/inetsix/inventory.yml)
 - Playbooks are all saved under [playbooks](playbooks/)
-- AVD outputs are generated under [playbooks](playbooks/)
+- AVD outputs are generated under [playbooks](${INVENTORY}/)
 
 > Inventory can be changed with following command: `make INVENTORY=<your inventory> ...`
 
@@ -77,6 +78,8 @@
   - Out of band network: 10.73.255.0/24
   - Username: ansible
   - Password: ansible
+
+Available [here](inventories/inetsix-cvp/README.md)
 
 ## Enable debugging
 
@@ -186,6 +189,18 @@ $ make avd-reset
 
 # Ansible command
 $ ansible-playbook playbooks/dc1-fabric-reset-cvp.yml
+```
+
+## Generic AVD Builder
+
+To build configuration offline with a generic topology and no Cloudvision instance, use following Make:
+
+```shell
+# Makefile
+$ make generic-build INVENTORY=inventories/inetsix-eapi
+
+# Ansible command
+$ ansible-playbook playbooks/avd-generic-build.yml --tags build -i inventories/inetsix-eapi/inventory.yml
 ```
 
 ## AVD Configlet Uploader

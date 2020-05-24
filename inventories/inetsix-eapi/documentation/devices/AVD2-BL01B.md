@@ -1,4 +1,4 @@
-# DC1-BL01B
+# AVD2-BL01B
 
 ## Management Interfaces
 
@@ -179,13 +179,13 @@ bfd multihop interval 1200 min_rx 1200 multiplier 3
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | VRF | IP Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | --- | ---------- |
-| Port-Channel3 | MLAG_PEER_DC1-BL01A_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - |
+| Port-Channel3 | MLAG_PEER_AVD2-BL01A_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
 ```eos
 interface Port-Channel3
-   description MLAG_PEER_DC1-BL01A_Po3
+   description MLAG_PEER_AVD2-BL01A_Po3
    switchport trunk allowed vlan 2-4094
    switchport mode trunk
    switchport trunk group LEAF_PEER_L3
@@ -199,10 +199,10 @@ interface Port-Channel3
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | P2P_LINK_TO_DC1-SPINE1_Ethernet6 | 1500 | routed | access | - | - | - | 172.31.255.29/31 | - | - |
-| Ethernet2 | P2P_LINK_TO_DC1-SPINE2_Ethernet6 | 1500 | routed | access | - | - | - | 172.31.255.31/31 | - | - |
-| Ethernet3 | MLAG_PEER_DC1-BL01A_Ethernet3 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
-| Ethernet4 | MLAG_PEER_DC1-BL01A_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
+| Ethernet1 | P2P_LINK_TO_AVD2-SPINE1_Ethernet6 | 1500 | routed | access | - | - | - | 172.31.255.29/31 | - | - |
+| Ethernet2 | P2P_LINK_TO_AVD2-SPINE2_Ethernet6 | 1500 | routed | access | - | - | - | 172.31.255.31/31 | - | - |
+| Ethernet3 | MLAG_PEER_AVD2-BL01A_Ethernet3 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
+| Ethernet4 | MLAG_PEER_AVD2-BL01A_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
 
 *Inherited from Port-Channel Interface
 
@@ -210,21 +210,21 @@ interface Port-Channel3
 
 ```eos
 interface Ethernet1
-   description P2P_LINK_TO_DC1-SPINE1_Ethernet6
+   description P2P_LINK_TO_AVD2-SPINE1_Ethernet6
    no switchport
    ip address 172.31.255.29/31
 !
 interface Ethernet2
-   description P2P_LINK_TO_DC1-SPINE2_Ethernet6
+   description P2P_LINK_TO_AVD2-SPINE2_Ethernet6
    no switchport
    ip address 172.31.255.31/31
 !
 interface Ethernet3
-   description MLAG_PEER_DC1-BL01A_Ethernet3
+   description MLAG_PEER_AVD2-BL01A_Ethernet3
    channel-group 3 mode active
 !
 interface Ethernet4
-   description MLAG_PEER_DC1-BL01A_Ethernet4
+   description MLAG_PEER_AVD2-BL01A_Ethernet4
    channel-group 3 mode active
 !
 ```
@@ -382,13 +382,13 @@ ip prefix-list PL-P2P-UNDERLAY
 
 | domain-id | local-interface | peer-address | peer-link |
 | --------- | --------------- | ------------ | --------- |
-| DC1_BL01 | Vlan4094 | 10.255.252.12 | Port-Channel3 |
+| AVD2_BL01 | Vlan4094 | 10.255.252.12 | Port-Channel3 |
 
 ### MLAG Device Configuration
 
 ```eos
 mlag configuration
-   domain-id DC1_BL01
+   domain-id AVD2_BL01
    local-interface Vlan4094
    peer-address 10.255.252.12
    peer-address heartbeat 10.73.254.15 vrf MGMT

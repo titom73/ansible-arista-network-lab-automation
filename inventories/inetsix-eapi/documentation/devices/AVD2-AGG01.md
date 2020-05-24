@@ -1,4 +1,4 @@
-# DC1-AGG01
+# AVD2-AGG01
 
 ## Management Interfaces
 
@@ -176,13 +176,13 @@ bfd multihop interval 1200 min_rx 1200 multiplier 3
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | VRF | IP Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | --- | ---------- |
-| Port-Channel1 | DC1-LEAF1A_Po5 | 1500 | switched | trunk | 110,201 | - | 1 | - | - |
+| Port-Channel1 | AVD2-LEAF1A_Po5 | 1500 | switched | trunk | 110,201 | - | 1 | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
 ```eos
 interface Port-Channel1
-   description DC1-LEAF1A_Po5
+   description AVD2-LEAF1A_Po5
    switchport trunk allowed vlan 110,201
    switchport mode trunk
    mlag 1
@@ -195,10 +195,8 @@ interface Port-Channel1
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | DC1-LEAF1A_Ethernet5 | *1500 | *switched | *trunk | *110,201 | - | - | - | 1 | active |
-| Ethernet2 | DC1-LEAF1B_Ethernet5 | *1500 | *switched | *trunk | *110,201 | - | - | - | 1 | active |
-| Ethernet3 | A-PR01-DMZ-POD01_Eth0 | 1500 | switched | access | 110 | - | - | - | - | - |
-| Ethernet4 | B-ELAN-201-POD01_Eth0 | 1500 | switched | access | 201 | - | - | - | - | - |
+| Ethernet1 | AVD2-LEAF1A_Ethernet5 | *1500 | *switched | *trunk | *110,201 | - | - | - | 1 | active |
+| Ethernet2 | AVD2-LEAF1B_Ethernet5 | *1500 | *switched | *trunk | *110,201 | - | - | - | 1 | active |
 
 *Inherited from Port-Channel Interface
 
@@ -206,20 +204,12 @@ interface Port-Channel1
 
 ```eos
 interface Ethernet1
-   description DC1-LEAF1A_Ethernet5
+   description AVD2-LEAF1A_Ethernet5
    channel-group 1 mode active
 !
 interface Ethernet2
-   description DC1-LEAF1B_Ethernet5
+   description AVD2-LEAF1B_Ethernet5
    channel-group 1 mode active
-!
-interface Ethernet3
-   description A-PR01-DMZ-POD01_Eth0
-   switchport access vlan 110
-!
-interface Ethernet4
-   description B-ELAN-201-POD01_Eth0
-   switchport access vlan 201
 !
 ```
 

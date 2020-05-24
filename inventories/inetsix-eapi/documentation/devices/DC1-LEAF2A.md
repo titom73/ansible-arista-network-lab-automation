@@ -6,7 +6,7 @@
 
 | Management Interface | description | VRF | IP Address | Gateway |
 | -------------------- | ----------- | --- | ---------- | ------- |
-| Management1 | oob_management | MGMT | 10.73.254.13/24 | 10.73.255.2 |
+| Management1 | oob_management | MGMT | 10.73.254.13/24 | 10.73.254.253 |
 
 ### Management Interfaces Device Configuration
 
@@ -24,20 +24,7 @@ No Hardware Counters defined
 
 ## TerminAttr Daemon
 
-### TerminAttr Daemon Summary
-
-| CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF |
-| -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- |
-| gzip | 10.73.255.1:9910 |  | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT |
-
-### TerminAttr Daemon Device Configuration
-
-```eos
-daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=10.73.255.1:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
-   no shutdown
-!
-```
+TerminAttr Daemon not defined
 
 ## Internal VLAN allocation Policy
 
@@ -60,12 +47,12 @@ vlan internal order ascending range 1006 1199
 
 | Name Server | Source VRF |
 | ----------- | ---------- |
-| 10.73.255.2 | MGMT |
+| 10.73.254.253 | MGMT |
 
 ### Name Servers Device Configuration
 
 ```eos
-ip name-server vrf MGMT 10.73.255.2
+ip name-server vrf MGMT 10.73.254.253
 !
 ```
 
@@ -78,13 +65,13 @@ VRF: MGMT
 
 | Node | Primary |
 | ---- | ------- |
-| 10.73.255.2 | True |
+| 10.73.254.253 | True |
 
 ### NTP Device Configuration
 
 ```eos
 ntp local-interface vrf MGMT Management1
-ntp server vrf MGMT 10.73.255.2 prefer
+ntp server vrf MGMT 10.73.254.253 prefer
 !
 ```
 
@@ -391,12 +378,12 @@ ip virtual-router mac-address 00:1c:73:00:dc:01
 
 | VRF | Destination Prefix | Fowarding Address / Interface |
 | --- | ------------------ | ----------------------------- |
-| MGMT | 0.0.0.0/0 | 10.73.255.2 |
+| MGMT | 0.0.0.0/0 | 10.73.254.253 |
 
 ### Static Routes Device Configuration
 
 ```eos
-ip route vrf MGMT 0.0.0.0/0 10.73.255.2
+ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 !
 ```
 

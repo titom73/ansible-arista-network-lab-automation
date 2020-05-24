@@ -1,13 +1,14 @@
 # Generic Variables
 SHELL := /bin/zsh
 # Ansible variables
-INVENTORY ?= inventories/inetsix
+INVENTORY ?= inventories/inetsix-cvp
 INVENTORY_FILE = inventory.yml
 FACTS_LOG ?= ../cvp-debug-logs/arista.cvp.facts.json
 # Docker variables
 CURRENT_DIR = $(shell pwd)
 DOCKER_NAME ?= avdteam/lab
 DOCKER_TAG ?= latest
+AVD_REPOSITORY ?= ../ansible-avd/development/
 
 .PHONY: help
 help: ## Display help message (*: main entry points / []: part of an entry point)
@@ -57,9 +58,13 @@ avd-vars-devices: ## Run ansible playbook to extract Devices variables.
 # AVD Commands for Generic Inventory and NO CV instance
 ################################################################################
 
-.PHONY: generic-build
-generic-build: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
-	ansible-playbook playbooks/avd-generic-build.yml --tags build -i $(INVENTORY)/$(INVENTORY_FILE)
+.PHONY: eapi-build
+eapi-build: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
+	ansible-playbook playbooks/avd-eapi-generic.yml --tags build --tags build -i $(INVENTORY)/$(INVENTORY_FILE)
+
+.PHONY: eapi-deploy
+eapi-deploy: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
+	ansible-playbook playbooks/avd-eapi-generic.yml --tags "build, deploy" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 ################################################################################
 # Configlet Management
@@ -119,4 +124,4 @@ docker-inetsix: ## Connect to docker container (inetsix/ansible)
 
 .PHONY: docker-build
 docker-build: ## Build docker image based on latest supported Python version
-	docker build -f ../ansible-avd/development/Dockerfile -t $(DOCKER_NAME):$(DOCKER_TAG) ../ansible-avd/development/
+	docker build -f $(AVD_REPOSITORY)/Dockerfile -t $(DOCKER_NAME):$(DOCKER_TAG) $(AVD_REPOSITORY)
