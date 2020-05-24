@@ -10,6 +10,11 @@ underlay_routing_protocol: BGP
 isis_area_id: "49.0001"
 isis_site_id: "0001"
 
+# OSPF Parameters when underlay_routing_protocol=OSPF
+underlay_ospf_process_id: 100
+underlay_ospf_area: 0.0.0.0
+underlay_ospf_max_lsa: 12000
+
 # Point to Point Network Summary range, assigned as /31 for each
 # uplink interfaces
 # Assign range larger then total [spines * total potential leafs * 2]

@@ -26,10 +26,6 @@ facts: ## Get facts from CVP and save locally
 avd-build: ## Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
 	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build -i $(INVENTORY)/$(INVENTORY_FILE)
 
-.PHONY: avd-build-isis
-avd-build-isis: ## Run ansible playbook to build EVPN Fabric configuration with ISIS as underlay with DC1 and CV
-	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build --extra-vars "underlay_routing_protocol=ISIS" -i $(INVENTORY)/$(INVENTORY_FILE)
-
 .PHONY: avd-provision
 avd-provision: ## Run ansible playbook to deploy EVPN Fabric.
 	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags provision -i $(INVENTORY)/$(INVENTORY_FILE)
@@ -38,13 +34,31 @@ avd-provision: ## Run ansible playbook to deploy EVPN Fabric.
 avd-deploy: ## Run ansible playbook to deploy EVPN Fabric.
 	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --extra-vars "execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
 
+### Sub-scenario
+
+.PHONY: avd-build-isis
+avd-build-isis: ## Run ansible playbook to build EVPN Fabric configuration with ISIS as underlay with DC1 and CV
+	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build --extra-vars "underlay_routing_protocol=ISIS" -i $(INVENTORY)/$(INVENTORY_FILE)
+
 .PHONY: avd-deploy-isis
 avd-deploy-isis: ## Run ansible playbook to deploy EVPN Fabric.
 	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --extra-vars "underlay_routing_protocol=ISIS execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
 
+.PHONY: avd-build-ospf
+avd-build-isis: ## Run ansible playbook to build EVPN Fabric configuration with ISIS as underlay with DC1 and CV
+	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build --extra-vars "underlay_routing_protocol=OSPF" -i $(INVENTORY)/$(INVENTORY_FILE)
+
+.PHONY: avd-deploy-ospf
+avd-deploy-isis: ## Run ansible playbook to deploy EVPN Fabric.
+	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --extra-vars "underlay_routing_protocol=OSPF execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
+
+### Cleanup CVP
+
 .PHONY: avd-reset
 avd-reset: ## Run ansible playbook to reset all devices.
 	ansible-playbook playbooks/dc1-fabric-reset-cvp.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+
+### Debug Actions
 
 .PHONY: avd-vars-input
 avd-vars-input: ## Run ansible playbook to extract EVPN Fabric variables.
