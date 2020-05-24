@@ -5,7 +5,8 @@
   - [Setup](#setup)
   - [Inventory Information](#inventory-information)
     - [EMEA Inventory](#emea-inventory)
-    - [Inetsix Inventory](#inetsix-inventory)
+    - [Inetsix CVP Inventory](#inetsix-cvp-inventory)
+    - [Inetsix eAPI Inventory](#inetsix-eapi-inventory)
   - [Enable debugging](#enable-debugging)
     - [Cloudvision collection](#cloudvision-collection)
   - [AVD Commands and Playbooks](#avd-commands-and-playbooks)
@@ -36,6 +37,7 @@
     - [Docker Environement](#docker-environement)
       - [Build Docker image](#build-docker-image)
       - [Run Docker container](#run-docker-container)
+    - [Expose eAPI port with Jumphost](#expose-eapi-port-with-jumphost)
 
 ## Topology
 
@@ -67,7 +69,7 @@
   - Username: ansible
   - Password: ansible
 
-### Inetsix Inventory
+### Inetsix CVP Inventory
 
 - __Cloudvision__
   - IP: 10.73.1.239
@@ -80,6 +82,17 @@
   - Password: ansible
 
 Available [here](inventories/inetsix-cvp/README.md)
+
+### Inetsix eAPI Inventory
+
+- __Devices:__
+  - Out of band network: 10.73.254.0/24
+  - Username: ansible
+  - Password: ansible
+
+Available [here](inventories/inetsix-eapi/README.md)
+
+Jumphost and Iptables are used in this inventory and must be configured prior any test.
 
 ## Enable debugging
 
@@ -202,6 +215,8 @@ $ make generic-build INVENTORY=inventories/inetsix-eapi
 # Ansible command
 $ ansible-playbook playbooks/avd-generic-build.yml --tags build -i inventories/inetsix-eapi/inventory.yml
 ```
+
+If there is no routed access, use [iptables approach](#expose-eapi-port-with-jumphost)
 
 ## AVD Configlet Uploader
 
@@ -354,4 +369,20 @@ $ make docker-run
 
 # Docker command
 $ docker run -it --rm -v ~/arista-ansible/lab-validation/../:/projects avdteam/lab:latest /bin/zsh
+```
+
+### Expose eAPI port with Jumphost
+
+In case of no routed access, use [iptables](./iptables-port-forward.sh) to expose eAPI ports:
+
+```shell
+# On Jumphost
+
+# Edit Addresses
+$ vim iptables-port-forward.sh
+
+iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8022 -j DNAT --to-destination 10.73.254.22:443
+iptables -A FORWARD -p tcp -d 10.73.254.0/24 --dport 443 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+$ sudo sh iptables-port-forward.sh
 ```
