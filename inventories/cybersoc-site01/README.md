@@ -8,11 +8,25 @@
 
 Topology URL: [EVE-NG-02 EMEA LAB](https://eve-ng2.lon.aristanetworks.com/legacy/tgrimonet/BNP-AS-Engagement.unl/topology)
 
-### Authentication:
-  - Username:
-  - Password:
+### Authentication
+
+_EOS Admin:_
+
+- Username: `admin`
+- Password: `arista123`
+
+_Admin Username:_
+
+- Username: `ansible`
+- Password: `ansible`
 
 ### Topology Information
+
+### Jumphost
+
+VM uses DHCP for IP allocation on EMEA Lab so IP might change
+
+- IP: 10.83.31.71
 
 ### Out of band IP Addresses
 
