@@ -1,0 +1,64 @@
+---
+JUMPHOST:
+  hosts:
+    bnp_jumphost:
+      ansible_host: 10.83.31.71
+ZTP:
+  hosts:
+    bnp_jumphost:
+AVD2:
+  children:
+    AVD2_FABRIC:
+      children:
+        AVD2_SPINES:
+          hosts:
+            AVD2-SPINE1:
+              ansible_port: 8001
+            AVD2-SPINE2:
+              ansible_port: 8002
+        AVD2_L3LEAFS:
+          children:
+            AVD2_LEAF1:
+              hosts:
+                AVD2-LEAF1A:
+                  ansible_port: 8011
+                AVD2-LEAF1B:
+                  ansible_port: 8012
+            AVD2_LEAF2:
+              hosts:
+                AVD2-LEAF2A:
+                  ansible_port: 8013
+                AVD2-LEAF2B:
+                  ansible_port: 8014
+            AVD2_LEAF3:
+              hosts:
+                AVD2-LEAF3A:
+                  ansible_port: 8017
+            AVD2_LEAF4:
+              hosts:
+                AVD2-LEAF4A:
+                  ansible_port: 8018
+            AVD2_BL01:
+              hosts:
+                AVD2-BL01A:
+                  ansible_port: 8015
+                AVD2-BL01B:
+                  ansible_port: 8016
+        AVD2_L2LEAFS:
+          children:
+            AVD2_L2LEAF1:
+              hosts:
+                AVD2-AGG01:
+                  ansible_port: 8021
+            AVD2_L2LEAF2:
+              hosts:
+                AVD2-AGG02:
+                  ansible_port: 8022
+    AVD2_TENANTS_NETWORKS:
+      children:
+        AVD2_L3LEAFS:
+        AVD2_L2LEAFS:
+    AVD2_SERVERS:
+      children:
+        AVD2_L3LEAFS:
+        AVD2_L2LEAFS:
