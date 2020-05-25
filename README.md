@@ -32,8 +32,8 @@
   - [Debugging Playbooks](#debugging-playbooks)
     - [Get CVP Facts](#get-cvp-facts)
     - [Get AVD variables](#get-avd-variables)
-      - [EOS_L3LS_EVPN vars](#eosl3lsevpn-vars)
-      - [EOS_CLI_CONFIG_GEN vars](#eoscliconfiggen-vars)
+      - [EOS_L3LS_EVPN vars](#eos_l3ls_evpn-vars)
+      - [EOS_CLI_CONFIG_GEN vars](#eos_cli_config_gen-vars)
     - [Docker Environement](#docker-environement)
       - [Build Docker image](#build-docker-image)
       - [Run Docker container](#run-docker-container)
@@ -270,7 +270,7 @@ $ ansible-playbook playbooks/cv-container-testing.yml --extra-vars "run_mode=del
 
 ### Edit ZTP Information
 
-> Only if DHCP service is running on Cloudvision. If not, please refer to [lab provisioning repository](https://github.com/titom73/lab-provisionning)
+ZTP Server __MUST be__ in `ZTP` inventory group
 
 ```yaml
 # vim $(INVENTORY)/group_vars/CVP.yml

@@ -1,6 +1,6 @@
 ---
 - name: Configure ZTP service on CloudVision
-  hosts: cv_ztp
+  hosts: ZTP
   gather_facts: true
   tasks:
     - name: 'Execute ZTP configuration role'

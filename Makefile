@@ -41,15 +41,15 @@ avd-build-isis: ## Run ansible playbook to build EVPN Fabric configuration with 
 	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build --extra-vars "underlay_routing_protocol=ISIS" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: avd-deploy-isis
-avd-deploy-isis: ## Run ansible playbook to deploy EVPN Fabric.
+avd-deploy-isis: ## Run ansible playbook to deploy EVPN Fabric with ISIS as underlay.
 	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --extra-vars "underlay_routing_protocol=ISIS execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: avd-build-ospf
-avd-build-isis: ## Run ansible playbook to build EVPN Fabric configuration with ISIS as underlay with DC1 and CV
+avd-build-ospf: ## Run ansible playbook to build EVPN Fabric configuration with OSPF as underlay with DC1 and CV
 	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build --extra-vars "underlay_routing_protocol=OSPF" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: avd-deploy-ospf
-avd-deploy-isis: ## Run ansible playbook to deploy EVPN Fabric.
+avd-deploy-ospf: ## Run ansible playbook to deploy EVPN Fabric with OSPF as underlay.
 	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --extra-vars "underlay_routing_protocol=OSPF execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 ### Cleanup CVP
