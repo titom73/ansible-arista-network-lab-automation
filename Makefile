@@ -80,6 +80,14 @@ eapi-build: ## Run ansible playbook to build EVPN Fabric configuration for gener
 eapi-deploy: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
 	ansible-playbook playbooks/avd-eapi-generic.yml --tags "build, deploy" -i $(INVENTORY)/$(INVENTORY_FILE)
 
+.PHONY: eapi-build-isis
+eapi-build-isis: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with ISIS underlay
+	ansible-playbook playbooks/avd-eapi-generic.yml --tags build --tags build --extra-vars "underlay_routing_protocol=ISIS" -i $(INVENTORY)/$(INVENTORY_FILE)
+
+.PHONY: eapi-deploy-isis
+eapi-deploy-isis: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with ISIS underlay
+	ansible-playbook playbooks/avd-eapi-generic.yml --tags "build, deploy" --extra-vars "underlay_routing_protocol=ISIS" -i $(INVENTORY)/$(INVENTORY_FILE)
+
 ################################################################################
 # Configlet Management
 ################################################################################

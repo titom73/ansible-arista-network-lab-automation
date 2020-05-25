@@ -1,64 +1,46 @@
 ---
-JUMPHOST:
-  hosts:
-    bnp_jumphost:
-      ansible_host: 10.83.31.71
-ZTP:
-  hosts:
-    bnp_jumphost:
-AVD2:
+# JUMPHOST:
+#   hosts:
+#     bnp_jumphost:
+#       ansible_host: 10.83.31.71
+# ZTP:
+#   hosts:
+#     bnp_jumphost:
+CYBERSOC:
   children:
-    AVD2_FABRIC:
+    SITE01_FABRIC:
       children:
-        AVD2_SPINES:
+        SITE01_SPINES:
           hosts:
-            AVD2-SPINE1:
-              ansible_port: 8001
-            AVD2-SPINE2:
-              ansible_port: 8002
-        AVD2_L3LEAFS:
+            SITE01-SPINE1:
+              ansible_port: 3001
+            SITE01-SPINE2:
+              ansible_port: 3002
+        SITE01_L3LEAFS:
           children:
-            AVD2_LEAF1:
+            SITE01_LEAF1:
               hosts:
-                AVD2-LEAF1A:
-                  ansible_port: 8011
-                AVD2-LEAF1B:
-                  ansible_port: 8012
-            AVD2_LEAF2:
+                SITE01-LEAF1A:
+                  ansible_port: 3003
+                SITE01-LEAF1B:
+                  ansible_port: 3004
+            SITE01_LEAF2:
               hosts:
-                AVD2-LEAF2A:
-                  ansible_port: 8013
-                AVD2-LEAF2B:
-                  ansible_port: 8014
-            AVD2_LEAF3:
+                SITE01-LEAF2A:
+                  ansible_port: 3005
+                SITE01-LEAF2B:
+                  ansible_port: 3006
+            SITE01_BL01:
               hosts:
-                AVD2-LEAF3A:
-                  ansible_port: 8017
-            AVD2_LEAF4:
-              hosts:
-                AVD2-LEAF4A:
-                  ansible_port: 8018
-            AVD2_BL01:
-              hosts:
-                AVD2-BL01A:
-                  ansible_port: 8015
-                AVD2-BL01B:
-                  ansible_port: 8016
-        AVD2_L2LEAFS:
-          children:
-            AVD2_L2LEAF1:
-              hosts:
-                AVD2-AGG01:
-                  ansible_port: 8021
-            AVD2_L2LEAF2:
-              hosts:
-                AVD2-AGG02:
-                  ansible_port: 8022
-    AVD2_TENANTS_NETWORKS:
+                SITE01-BL01A:
+                  ansible_port: 3007
+                SITE01-BL01B:
+                  ansible_port: 3008
+    SITE01_TENANTS_NETWORKS:
       children:
-        AVD2_L3LEAFS:
-        AVD2_L2LEAFS:
-    AVD2_SERVERS:
+        SITE01_L3LEAFS:
+        SITE01_L2LEAFS:
+    SITE01_SERVERS:
       children:
-        AVD2_L3LEAFS:
-        AVD2_L2LEAFS:
+        SITE01_L3LEAFS:
+        SITE01_L2LEAFS:
