@@ -26,6 +26,8 @@
   - [Container Validation](#container-validation)
     - [Create container topology](#create-container-topology)
     - [Delete container topology](#delete-container-topology)
+  - [Pure EOS eAPI Playbooks](#pure-eos-eapi-playbooks)
+    - [Backup EOS Configuration](#backup-eos-configuration)
   - [Build ZTP Server](#build-ztp-server)
     - [Edit ZTP Information](#edit-ztp-information)
     - [Configure CV as ZTP](#configure-cv-as-ztp)
@@ -274,6 +276,20 @@ $ make container-delete
 # Ansible command
 $ ansible-playbook playbooks/cv-container-testing.yml --extra-vars "run_mode=delete"
 ```
+
+## Pure EOS eAPI Playbooks
+
+### Backup EOS Configuration
+
+```shell
+# Makefile
+$ make eos-backup
+
+# Ansible command
+$ ansible-playbook ansible-playbook playbooks/eos-configuration-backup.yml
+```
+
+Output is saved under `{{inventory_dir}}/config_backup/<DATE>`. It means `{{inventory_dir}}/config_backup/` __must__ be present first
 
 ## Build ZTP Server
 

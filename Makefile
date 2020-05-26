@@ -94,6 +94,15 @@ eapi-deploy-isis: ## Run ansible playbook to build EVPN Fabric configuration for
 	ansible-playbook playbooks/avd-eapi-generic.yml --tags "build, deploy" --extra-vars "underlay_routing_protocol=ISIS" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 ################################################################################
+# AVD Commands for Generic Inventory and NO CV instance
+################################################################################
+
+.PHONY: eos-backup
+eos-backup: ## Backup current running configuration
+	ansible-playbook playbooks/eos-configuration-backup.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
+
+################################################################################
 # Configlet Management
 ################################################################################
 

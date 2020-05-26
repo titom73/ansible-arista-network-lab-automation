@@ -1,0 +1,23 @@
+---
+  - name: EOS Configuration backup
+    hosts: all
+    vars:
+      backup_dir: "{{inventory_dir}}/config_backup/{{ lookup('pipe','date +%Y-%m-%d-%H-%M') }}"
+    tasks:
+      - name: 'create backup folder: {{backup_dir}}'
+        file:
+          path: '{{backup_dir}}'
+          state: directory
+          mode: 0755
+        delegate_to: localhost
+        run_once: True
+
+      - name: show running config
+        eos_command:
+          commands: "show running-config"
+        register: backup
+
+      - name: backup running config
+        copy:
+          content: "{{ backup.stdout[0] }}"
+          dest: "{{backup_dir}}/{{ inventory_hostname }}_running-config.conf"
