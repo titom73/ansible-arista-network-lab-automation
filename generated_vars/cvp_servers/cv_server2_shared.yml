@@ -1,5 +1,0 @@
----
-CVP_CONFIGLET:
-  inetsix_demo01: "alias c73 show version"
-  shared_test: "alias a7373 show version"
-  shared_configlet: "! test\nalias b350 show version"
