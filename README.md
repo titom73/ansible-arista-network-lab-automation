@@ -9,7 +9,7 @@
     - [Inetsix eAPI Inventory](#inetsix-eapi-inventory)
   - [Enable debugging](#enable-debugging)
     - [Cloudvision collection](#cloudvision-collection)
-  - [AVD Commands and Playbooks](#avd-commands-and-playbooks)
+  - [AVD Commands and Playbooks for CVP deployment](#avd-commands-and-playbooks-for-cvp-deployment)
     - [AVD Build](#avd-build)
       - [Build offline configuration with default underlay protocol (BGP)](#build-offline-configuration-with-default-underlay-protocol-bgp)
       - [Build offline configuration with ISIS as underlay protocol](#build-offline-configuration-with-isis-as-underlay-protocol)
@@ -19,7 +19,7 @@
       - [Deploy using default underlay protocol (BGP)](#deploy-using-default-underlay-protocol-bgp)
       - [Deploy using ISIS as underlay protocol](#deploy-using-isis-as-underlay-protocol)
     - [Reset lab to ZTP mode](#reset-lab-to-ztp-mode)
-  - [Generic AVD Builder](#generic-avd-builder)
+  - [Generic AVD Builder with eAPI](#generic-avd-builder-with-eapi)
   - [AVD Configlet Uploader](#avd-configlet-uploader)
     - [Upload configlets](#upload-configlets)
     - [Delete configlets](#delete-configlets)
@@ -108,7 +108,11 @@ export ANSIBLE_CVP_LOG_APICALL=warning
 
 Log folder: `cvp-debug-logs/`
 
-## AVD Commands and Playbooks
+## AVD Commands and Playbooks for CVP deployment
+
+__Available options:__
+
+- `INVENTORY`: Variable to target a specific inventory.
 
 ### AVD Build
 
@@ -204,7 +208,12 @@ $ make avd-reset
 $ ansible-playbook playbooks/dc1-fabric-reset-cvp.yml
 ```
 
-## Generic AVD Builder
+## Generic AVD Builder with eAPI
+
+__Available options:__
+
+- `ANSIBLE_ARGS`: Variable to send custom ansible options like `--check --diff` or `--limit`
+- `INVENTORY`: Variable to target a specific inventory.
 
 To build configuration offline with a generic topology and no Cloudvision instance, use following Make:
 
