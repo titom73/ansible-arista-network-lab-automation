@@ -1,7 +1,7 @@
 # Generic Variables
 SHELL := /bin/zsh
 # Ansible variables
-INVENTORY ?= inventories/inetsix-cvp
+INVENTORY ?= inventories/cybersoc-site01
 INVENTORY_FILE = inventory.yml
 ANSIBLE_ARGS ?=
 FACTS_LOG ?= ../cvp-debug-logs/arista.cvp.facts.json
