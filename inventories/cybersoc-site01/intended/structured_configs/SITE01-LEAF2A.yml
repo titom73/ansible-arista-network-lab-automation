@@ -29,10 +29,10 @@ hardware_counters:
 daemon_terminattr:
 
 vlan_internal_order:
-  allocation: ascending
+  allocation: descending
   range:
-    beginning: 1006
-    ending: 1199
+    beginning: 4000
+    ending: 4050
 
 ### Event Monitor ###
 event_monitor:
@@ -54,7 +54,8 @@ name_server:
   source:
     vrf: MGMT
   nodes:
-    - 10.255.1.1
+    - 1.1.1.1
+    - 8.8.8.8
 
 ### NTP Servers ###
 ntp_server:
@@ -62,7 +63,8 @@ ntp_server:
     vrf: MGMT
     interface: Management1
   nodes:
-    - 10.255.1.1
+    - uk.pool.ntp.org
+    - fr.pool.ntp.org
 
 ### Redundancy ###
 redundancy:
@@ -91,14 +93,6 @@ local_users:
     privilege: 15
     role: network-admin
     sha512_password: $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
-  cvpadmin:
-    privilege: 15
-    role: network-admin
-    sha512_password: $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
-  demo:
-    privilege: 15
-    role: network-admin
-    sha512_password: $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
   khelil:
     privilege: 15
     role: network-admin
@@ -110,6 +104,7 @@ local_users:
 
 ### Clock Timezone ###
 clock:
+  timezone: Europe/Paris
 
 ### VLANs ###
 vlans:
@@ -289,6 +284,12 @@ virtual_source_nat_vrfs:
 
 ### static routes ###
 static_routes:
+  - vrf: MGMT
+    destination_address_prefix: 10.255.2.0/24
+    gateway: 10.255.1.1
+  - vrf: MGMT
+    destination_address_prefix: 10.255.3.0/24
+    gateway: 10.255.1.1
   - vrf: MGMT
     destination_address_prefix: 0.0.0.0/0
     gateway: 10.255.1.1

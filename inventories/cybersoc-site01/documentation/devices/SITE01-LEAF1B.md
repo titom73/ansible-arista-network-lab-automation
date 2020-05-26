@@ -32,12 +32,12 @@ TerminAttr Daemon not defined
 
 | Policy Allocation | Range Beginning | Range Ending |
 | ------------------| --------------- | ------------ |
-| ascending | 1006 | 1199 |
+| descending | 4000 | 4050 |
 
 ### Internal VLAN Allocation Policy Configuration
 
 ```eos
-vlan internal order ascending range 1006 1199
+vlan internal order descending range 4000 4050
 !
 ```
 
@@ -47,12 +47,14 @@ vlan internal order ascending range 1006 1199
 
 | Name Server | Source VRF |
 | ----------- | ---------- |
-| 10.255.1.1 | MGMT |
+| 1.1.1.1 | MGMT |
+| 8.8.8.8 | MGMT |
 
 ### Name Servers Device Configuration
 
 ```eos
-ip name-server vrf MGMT 10.255.1.1
+ip name-server vrf MGMT 1.1.1.1
+ip name-server vrf MGMT 8.8.8.8
 !
 ```
 
@@ -65,13 +67,15 @@ VRF: MGMT
 
 | Node | Primary |
 | ---- | ------- |
-| 10.255.1.1 | True |
+| uk.pool.ntp.org | True |
+| fr.pool.ntp.org | - |
 
 ### NTP Device Configuration
 
 ```eos
 ntp local-interface vrf MGMT Management1
-ntp server vrf MGMT 10.255.1.1 prefer
+ntp server vrf MGMT uk.pool.ntp.org prefer
+ntp server vrf MGMT fr.pool.ntp.org
 !
 ```
 
@@ -109,8 +113,6 @@ AAA Not Configured
 | admin | 15 | network-admin |
 | ansible | 15 | network-admin |
 | christophe | 15 | network-admin |
-| cvpadmin | 15 | network-admin |
-| demo | 15 | network-admin |
 | khelil | 15 | network-admin |
 | tom | 15 | network-admin |
 
@@ -120,8 +122,6 @@ AAA Not Configured
 username admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
 username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username christophe privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
-username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
-username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username khelil privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username tom privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 !
@@ -360,11 +360,15 @@ ip virtual-router mac-address 00:1c:73:00:dc:01
 
 | VRF | Destination Prefix | Fowarding Address / Interface |
 | --- | ------------------ | ----------------------------- |
+| MGMT | 10.255.2.0/24 | 10.255.1.1 |
+| MGMT | 10.255.3.0/24 | 10.255.1.1 |
 | MGMT | 0.0.0.0/0 | 10.255.1.1 |
 
 ### Static Routes Device Configuration
 
 ```eos
+ip route vrf MGMT 10.255.2.0/24 10.255.1.1
+ip route vrf MGMT 10.255.3.0/24 10.255.1.1
 ip route vrf MGMT 0.0.0.0/0 10.255.1.1
 !
 ```
