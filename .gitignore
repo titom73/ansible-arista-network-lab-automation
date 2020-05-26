@@ -2,6 +2,7 @@
 *.log
 playbooks/intended/*
 playbooks/documentation/*
+inventories/*/config_backup/*/*
 
 *.json
 *.log.*
