@@ -107,7 +107,7 @@ l3leaf:
       bgp_as: 65105
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'BORDER' ]
+        tags: [ 'BORDER', 'DCI' ]
       nodes:
         SITE01-BL01A:
           id: 7

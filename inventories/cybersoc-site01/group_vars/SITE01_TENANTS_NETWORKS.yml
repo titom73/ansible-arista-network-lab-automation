@@ -19,6 +19,11 @@ tenants:
             tags: [POD02]
             enabled: true
             ip_address_virtual: 10.1.11.254/24
+          112:
+            name: 'PR01-DCI'
+            tags: [DCI]
+            enabled: true
+            ip_address_virtual: 10.1.12.254/24
 
 # Tenant B Specific Information - Pure L2 tenant
   Tenant_B:
@@ -26,4 +31,4 @@ tenants:
     l2vlans:
       201:
         name: 'B-ELAN-201'
-        tags: [DC1]
+        tags: [DC1, DCI]

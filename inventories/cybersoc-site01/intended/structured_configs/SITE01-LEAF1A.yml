@@ -159,6 +159,11 @@ port_channel_interfaces:
     trunk_groups:
       - LEAF_PEER_L3
       - MLAG
+  Port-Channel5:
+    description: POD01-SRV_PortChannel5
+    vlans: 110
+    mode: access
+    mlag: 5
 
 ### Ethernet Interfaces ###
 ethernet_interfaces:
@@ -195,6 +200,17 @@ ethernet_interfaces:
     channel_group:
       id: 3
       mode: active
+  Ethernet5:
+    peer: POD01-SRV
+    peer_interface: Eth1
+    peer_type: server
+    description: POD01-SRV_Eth1
+    mode: access
+    vlans: 110
+    channel_group:
+      id: 5
+      mode: "active"
+    profile: A-PR01-DMZ
 
 
 ### Loopback Interfaces ###

@@ -202,6 +202,7 @@ bfd multihop interval 1200 min_rx 1200 multiplier 3
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | VRF | IP Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | --- | ---------- |
 | Port-Channel3 | MLAG_PEER_SITE01-LEAF1B_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - |
+| Port-Channel5 | POD01-SRV_PortChannel5 | 1500 | switched | access | 110 | - | 5 | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -212,6 +213,11 @@ interface Port-Channel3
    switchport mode trunk
    switchport trunk group LEAF_PEER_L3
    switchport trunk group MLAG
+!
+interface Port-Channel5
+   description POD01-SRV_PortChannel5
+   switchport access vlan 110
+   mlag 5
 !
 ```
 
@@ -225,6 +231,7 @@ interface Port-Channel3
 | Ethernet2 | P2P_LINK_TO_SITE01-SPINE2_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.255.3/31 | - | - |
 | Ethernet3 | MLAG_PEER_SITE01-LEAF1B_Ethernet3 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
 | Ethernet4 | MLAG_PEER_SITE01-LEAF1B_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
+| Ethernet5 | POD01-SRV_Eth1 | *1500 | *switched | *access | *110 | - | - | - | 5 | active |
 
 *Inherited from Port-Channel Interface
 
@@ -248,6 +255,10 @@ interface Ethernet3
 interface Ethernet4
    description MLAG_PEER_SITE01-LEAF1B_Ethernet4
    channel-group 3 mode active
+!
+interface Ethernet5
+   description POD01-SRV_Eth1
+   channel-group 5 mode active
 !
 ```
 
