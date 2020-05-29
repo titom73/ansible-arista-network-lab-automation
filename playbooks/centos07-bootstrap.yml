@@ -1,0 +1,37 @@
+- hosts: all
+  gather_facts: true
+  tasks:
+    # - name: configure network
+    #   import_role:
+    #      name: centos.network
+    #   tags: bootstrap
+
+    - name: bootstrap initial centos setup
+      import_role:
+         name: centos7/rh-base
+      tags: bootstrap
+
+    - name: install and configure DNS
+      import_role:
+         name: centos7/bind
+      tags: dns
+
+    - name: install and configure NTP
+      import_role:
+         name: centos7/ntp
+      tags: ntp
+
+    - name: install docker service
+      import_role:
+         name: centos7/docker
+      tags: docker
+
+    - name: create local users
+      import_role:
+         name: users
+      tags: users
+
+    - name: install freeradius
+      import_role:
+         name: centos7/radius
+      tags: radius

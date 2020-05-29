@@ -1,0 +1,7 @@
+{% for client in radius.clients %}
+client {{ client.name }} {
+        ipaddr          = {{ client.ip }}
+        nas_type        = other     # localhost isn't usually a NAS...
+        secret          = {{ client.secret }}
+}
+{% endfor %}

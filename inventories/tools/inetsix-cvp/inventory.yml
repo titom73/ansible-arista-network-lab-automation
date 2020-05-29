@@ -1,0 +1,6 @@
+all:
+  children:
+    tool_servers:
+      hosts:
+        ansible_centos_avd:
+          ansible_host: 10.73.1.240

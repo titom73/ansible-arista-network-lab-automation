@@ -1,0 +1,204 @@
+---
+ansible_user: centos
+ansible_ssh_pass: centos
+ansible_become: yes
+ansible_become_pass: centos
+
+
+## RH Base
+rhbase_repositories:
+  - epel-release
+rhbase_enable_repos:
+  - CentOS-fasttrack
+rhbase_install_packages:
+  - tree
+  - bash-completion
+  - vim-enhanced
+  - nmap
+  - net-tools
+  - python3
+  - python3-pip
+  - git
+# rhbase_remove_packages:
+#   - NetworkManager
+#   - NetworkManager-glib12
+#   - NetworkManager-tui
+#   - wpa_supplicant
+
+rhbase_repo_exclude_from_update:
+  - kernel*
+  - centos-release*
+
+rhbase_stop_services:
+  - postfix
+  - kdump
+
+rhbase_users:
+  - name: tom
+    comment: 'TiTom'
+    groups:
+      - users
+      - devs
+      - wheel
+    password: '$1$IBlEXGM0$vD9qscJIuupwT25Gxnzs1.'
+
+## NAT Interface
+
+# network_connections:
+#   - name: Ethernet1
+#     type: ethernet
+#     interface_name: eth1
+#     ip:
+#       dhcp4: yes
+
+## Local Users
+
+users:
+  - username: tom
+    name: Thomas Grimonet
+    groups:
+      - users
+      - devs
+      - wheel
+      - docker
+    password: "$1$IBlEXGM0$vD9qscJIuupwT25Gxnzs1."
+    update_password: "on_create"
+
+rhbase_tz: 'Europe/Paris'
+rhbase_nameservers:
+  - 127.0.0.1
+rhbase_domain_name: 'avd.lab.as73.inetsix.net'
+rhbase_domain_search:
+  - 'avd.lab.as73.inetsix.net'
+
+## DNS
+
+bind_zone_dir: /var/local/named-zones
+bind_zone_file_mode: '0660'
+bind_allow_query:
+  - any
+bind_listen_ipv4:
+  - any
+bind_listen_ipv6:
+  - any
+bind_acls:
+  - name: acl1
+    match_list:
+      - 10.73.0.0/16
+      - 127.0.0.1/32
+bind_forwarders:
+  - '10.73.1.253'
+  - '10.73.1.254'
+bind_recursion: true
+bind_query_log: 'data/query.log'
+bind_check_names: 'master ignore'
+bind_zone_master_server_ip: '{{ansible_host}}'
+bind_zone_domains:
+  - name: 'lab.local'
+    networks:
+      - '10.73.255'
+    name_servers:
+      - centos7-lab.lab.local
+    hostmaster_email: admin
+    hosts:
+      - name: centos7-lab
+        ip: 10.73.255.2
+        aliases:
+          - mail
+      - name: cvp
+        ip: 10.73.255.1
+        aliases:
+          - cv
+      - name: spine1
+        ip: 10.73.255.101
+      - name: spine2
+        ip: 10.73.255.102
+      - name: leaf01a
+        ip: 10.73.255.111
+      - name: leaf01b
+        ip: 10.73.255.112
+      - name: leaf02a
+        ip: 10.73.255.113
+      - name: leaf02b
+        ip: 10.73.255.114
+      - name: bl01a
+        ip: 10.73.255.115
+      - name: bl01b
+        ip: 10.73.255.116
+      - name: agg01
+        ip: 10.73.255.121
+      - name: agg02
+        ip: 10.73.255.122
+    mail_servers:
+      - name: mail
+        preference: 10
+    services:
+      - name: _ldap._tcp
+        weight: 100
+        port: 88
+        target: centos7-lab
+
+## NTP
+
+# List of NTP servers for time synchronization.
+ntp_server:
+ - 0.fr.pool.ntp.org
+ - 1.fr.pool.ntp.org
+
+# Restrictions are used to control access to your ntpd.
+ntp_config_restrict:
+  - '-4 default kod notrap nomodify nopeer noquery'
+  - '-6 default kod notrap nomodify nopeer noquery'
+  - '127.0.0.1'
+  - '::1'
+  - '10.73.255.0 mask 255.255.255.0 nomodify notrap'
+
+### DHCP Configuration with role from arista.cvp
+ztp:
+  default:
+    registration: 'http://10.73.255.1/ztp/bootstrap'
+    gateway: 10.73.255.1
+    nameservers:
+      - '10.73.255.1'
+  general:
+    subnets:
+      - network: 10.73.255.0
+        netmask: 255.255.255.0
+        gateway: 10.73.255.3
+        nameservers:
+          - '10.73.255.1'
+        start: 10.73.255.200
+        end: 10.73.255.250
+        lease_time: 300
+  clients:
+  # AVD/CVP Integration
+    - name: DC1-SPINE1
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.73.255.101
+    - name: DC1-SPINE2
+      mac: 0c:1d:c0:1d:62:02
+      ip4: 10.73.255.102
+    - name: DC1-LEAF1A
+      mac: 0c:1d:c0:1d:62:11
+      ip4: 10.73.255.111
+    - name: DC1-LEAF1B
+      mac: 0c:1d:c0:1d:62:12
+      ip4: 10.73.255.112
+    - name: DC1-LEAF2A
+      mac: 0c:1d:c0:1d:62:13
+      ip4: 10.73.255.113
+    - name: DC1-LEAF2B
+      mac: 0c:1d:c0:1d:62:14
+      ip4: 10.73.255.114
+    - name: DC1-BL01A
+      mac: 0c:1d:c0:1d:62:15
+      ip4: 10.73.255.115
+    - name: DC1-BL01B
+      mac: 0c:1d:c0:1d:62:16
+      ip4: 10.73.255.116
+    - name: DC1-AGG01
+      mac: 0c:1d:c0:1d:62:21
+      ip4: 10.73.255.121
+    - name: DC1-AGG02
+      mac: 0c:1d:c0:1d:62:22
+      ip4: 10.73.255.122
