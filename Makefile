@@ -1,11 +1,18 @@
-# Generic Variables
+### Generic Variables
 SHELL := /bin/zsh
-# Ansible variables
-INVENTORY ?= inventories/inetsix-cvp
+
+### Ansible variables
+# Inventory for EOS playbooks
+INVENTORY ?= inventories/cybersoc-site01
+# Inventory for Linux tool box
+TOOLS ?= inventories/tools/inetsix-eapi
+# Default Inventory file to look for
 INVENTORY_FILE = inventory.yml
+# For optional ansible options
 ANSIBLE_ARGS ?=
 FACTS_LOG ?= ../cvp-debug-logs/arista.cvp.facts.json
-# Docker variables
+
+### Docker variables
 CURRENT_DIR = $(shell pwd)
 DOCKER_NAME ?= avdteam/lab
 DOCKER_TAG ?= latest
@@ -133,6 +140,18 @@ container-delete: ## Remove DC2 container topology from CVP.
 .PHONY: dhcp-configure
 dhcp-configure: ## Configure DHCP server with topology information.
 	ansible-playbook playbooks/dc1-ztp-configuration.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+
+################################################################################
+# Tooling Management
+################################################################################
+
+.PHONY: centos-bootstrap
+centos-bootstrap: ## Initial Centos 7 Configuration
+	ansible-playbook playbooks/centos07-bootstrap.yml -i $(TOOLS)/$(INVENTORY_FILE)
+
+.PHONY: dhcp-bootstrap
+dhcp-bootstrap: ## Configure DHCP service
+	ansible-playbook playbooks/dhcp-configuration.yml -i $(TOOLS)/$(INVENTORY_FILE)
 
 ################################################################################
 # Repository Management

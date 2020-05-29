@@ -1,0 +1,4 @@
+---
+- name: configure centos/red-hat server
+  import_tasks: centos.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'

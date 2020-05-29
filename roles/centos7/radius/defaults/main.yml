@@ -1,0 +1,13 @@
+# Define wether or not if radius service should be installed
+# Must be absent (uninstall) / present (installed)
+radius_state: absent
+
+# Radius packages
+radius_packages:
+    - freeradius
+    - freeradius-utils
+
+# Default Freeradius files
+radius_auth_users_file: '/etc/raddb/mods-config/files/authorize'
+radius_dictionary_file: '/etc/raddb/dictionary'
+radius_clients_file: '/etc/raddb/clients.conf'

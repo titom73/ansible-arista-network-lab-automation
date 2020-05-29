@@ -1,0 +1,43 @@
+# Install Freeradius service
+- name: ensure a list of packages is installed
+  yum:
+    name: "{{ radius_packages }}"
+    state: "{{radius_state}}"
+
+# Build Radius Clients
+- name: 'Build clients configuration'
+  become: yes
+  template:
+    src: 'clients.conf.j2'
+    dest: '{{radius_clients_file}}'
+    backup: yes
+  when:
+    radius_state == 'present'
+
+# Build Radius Username
+- name: 'Build users configuration'
+  become: yes
+  template:
+    src: 'users.conf.j2'
+    dest: '{{radius_auth_users_file}}'
+    backup: yes
+  when:
+    radius_state == 'present'
+
+# Deploy Arista VSA
+- name: 'Deploy VSAs'
+  become: yes
+  template:
+    src: 'dictionary.j2'
+    dest: '{{radius_dictionary_file}}'
+    backup: yes
+  when:
+    radius_state == 'present'
+
+- name: Restart service radius, in all cases
+  become: true
+  service:
+    name: radiusd
+    state: restarted
+  when:
+    radius_state == 'present'
