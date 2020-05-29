@@ -1,8 +1,8 @@
 ---
 port_profiles:
-  TENANT_A_B:
+  TENANT-A-PR01:
     mode: trunk
-    vlans: "110-111,210-211"
+    vlans: "110-111"
   A-PR01-DMZ:
     mode: access
     vlans: "110"
@@ -14,30 +14,22 @@ port_profiles:
     vlans: "201"
 
 servers:
-  A-PR01-DMZ-POD01:
+  SRV-POD01:
     rack: POD01
     adapters:
       - type: nic
-        server_ports: [Eth0]
+        server_ports: [Eth1]
         switch_ports: [Ethernet3]
         switches: [DC1-AGG01]
-        profile: A-PR01-DMZ
-  A-PR01-DMZ-POD02:
+        profile: TENANT-A-PR01
+  SRV-POD02:
     rack: POD02
     adapters:
       - type: nic
-        server_ports: [Eth0]
-        switch_ports: [Ethernet3]
+        server_ports: [Eth01]
+        switch_ports: [Ethernet1]
         switches: [DC1-AGG02]
-        profile: A-PR01-DMZ
-  A-PR01-TRUST-POD02:
-    rack: POD02
-    adapters:
-      - type: nic
-        server_ports: [Eth0]
-        switch_ports: [Ethernet4]
-        switches: [DC1-AGG02]
-        profile: A-PR01-TRUST
+        profile: 'TENANT-A-PR01'
   B-ELAN-201-POD01:
     rack: POD01
     adapters:
