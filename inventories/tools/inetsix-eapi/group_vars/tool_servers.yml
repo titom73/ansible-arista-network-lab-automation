@@ -143,6 +143,7 @@ bind_zone_domains:
         ip: 10.73.254.33
         aliases:
           - srv-pod03
+
     mail_servers:
       - name: mail
         preference: 10
