@@ -105,7 +105,6 @@ AAA Not Configured
 
 | User | Privilege | role |
 | ---- | --------- | ---- |
-| admin | 15 | network-admin |
 | ansible | 15 | network-admin |
 | cvpadmin | 15 | network-admin |
 | demo | 15 | network-admin |
@@ -113,7 +112,6 @@ AAA Not Configured
 ### Local Users Device Configuration
 
 ```eos
-username admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
 username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
 username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
@@ -126,16 +124,12 @@ username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
-| 110 | PR01-DMZ | none  |
 | 111 | PR01-TRUST | none  |
 | 201 | B-ELAN-201 | none  |
 
 ### VLANs Device Configuration
 
 ```eos
-vlan 110
-   name PR01-DMZ
-!
 vlan 111
    name PR01-TRUST
 !
@@ -215,6 +209,7 @@ interface Ethernet2
 | --------- | ----------- | --- | ---------- |
 | Loopback0 | EVPN_Overlay_Peering | Global Routing Table | 192.168.255.8/32 |
 | Loopback1 | VTEP_VXLAN_Tunnel_Source | Global Routing Table | 192.168.254.8/32 |
+| Loopback101 | TENANT_A_PROJECT01_VTEP_DIAGNOSTICS | TENANT_A_PROJECT01 | 10.1.255.8/32 |
 
 ### Loopback Interfaces Device Configuration
 
@@ -227,6 +222,11 @@ interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    ip address 192.168.254.8/32
 !
+interface Loopback101
+   description TENANT_A_PROJECT01_VTEP_DIAGNOSTICS
+   vrf TENANT_A_PROJECT01
+   ip address 10.1.255.8/32
+!
 ```
 
 ## VLAN Interfaces
@@ -235,17 +235,11 @@ interface Loopback1
 
 | Interface | Description | VRF | IP Address | IP Address Virtual | IP Router Virtual Address (vARP) |
 | --------- | ----------- | --- | ---------- | ------------------ | -------------------------------- |
-| Vlan110 | PR01-DMZ | TENANT_A_PROJECT01 | - | 10.1.10.254/24 | - |
 | Vlan111 | PR01-TRUST | TENANT_A_PROJECT01 | - | 10.1.11.254/24 | - |
 
 ### VLAN Interfaces Device Configuration
 
 ```eos
-interface Vlan110
-   description PR01-DMZ
-   vrf TENANT_A_PROJECT01
-   ip address virtual 10.1.10.254/24
-!
 interface Vlan111
    description PR01-TRUST
    vrf TENANT_A_PROJECT01
@@ -264,7 +258,6 @@ interface Vlan111
 
 | VLAN | VNI |
 | ---- | --- |
-| 110 | 10110 |
 | 111 | 10111 |
 | 201 | 20201 |
 
@@ -280,7 +273,6 @@ interface Vlan111
 interface Vxlan1
    vxlan source-interface Loopback1
    vxlan udp-port 4789
-   vxlan vlan 110 vni 10110
    vxlan vlan 111 vni 10111
    vxlan vlan 201 vni 20201
    vxlan vrf TENANT_A_PROJECT01 vni 11
@@ -292,11 +284,17 @@ interface Vxlan1
 ### Virtual Router MAC Address and Virtual Source NAT Summary
 
 **Virtual Router MAC Address:** 00:1c:73:00:dc:01
+### Virtual Source NAT Summary
+
+| Source NAT VRF | Source NAT IP Address |
+| -------------- | --------------------- |
+| TENANT_A_PROJECT01 | 10.1.255.8 |
 
 ### Virtual Router MAC Address Device and Virtual Source NAT Configuration
 
 ```eos
 ip virtual-router mac-address 00:1c:73:00:dc:01
+ip address virtual source-nat vrf TENANT_A_PROJECT01 address 10.1.255.8
 !
 ```
 
@@ -456,7 +454,7 @@ No Peer Filters defined
 | VLAN Aware Bundle | Route-Distinguisher | Route Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ------------ | ------------ | ----- |
 | B-ELAN-201 | 192.168.255.8:20201 | both 20201:20201 | learned | 201 |
-| TENANT_A_PROJECT01 | 192.168.255.8:11 | both 11:11 | learned | 110-111 |
+| TENANT_A_PROJECT01 | 192.168.255.8:11 | both 11:11 | learned | 111 |
 
 #### Router BGP EVPN VRFs
 
@@ -503,7 +501,7 @@ router bgp 65104
       rd 192.168.255.8:11
       route-target both 11:11
       redistribute learned
-      vlan 110-111
+      vlan 111
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate

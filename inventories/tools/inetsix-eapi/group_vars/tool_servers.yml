@@ -96,14 +96,14 @@ bind_query_log: 'data/query.log'
 bind_check_names: 'master ignore'
 bind_zone_master_server_ip: '{{ansible_host}}'
 bind_zone_domains:
-  - name: 'lab.local'
+  - name: 'eapi.lab.as73.inetsix.net'
     networks:
-      - '10.73.255'
+      - '10.73.254'
     name_servers:
-      - centos7-lab.lab.local.
+      - jump.eapi.lab.as73.inetsix.net.
     hostmaster_email: admin
     hosts:
-      - name: centos7-lab
+      - name: jump
         ip: 10.73.254.253
         aliases:
           - mail
@@ -127,6 +127,22 @@ bind_zone_domains:
         ip: 10.73.254.15
       - name: bl01b
         ip: 10.73.254.16
+      - name: agg01
+        ip: 10.73.254.21
+      - name: agg02
+        ip: 10.73.254.22
+      - name: pod01
+        ip: 10.73.254.31
+        aliases:
+          - srv-pod01
+      - name: pod02
+        ip: 10.73.254.32
+        aliases:
+          - srv-pod02
+      - name: pod03
+        ip: 10.73.254.33
+        aliases:
+          - srv-pod03
     mail_servers:
       - name: mail
         preference: 10
@@ -134,7 +150,7 @@ bind_zone_domains:
       - name: _ldap._tcp
         weight: 100
         port: 88
-        target: centos7-lab
+        target: jump
 
 ## NTP
 

@@ -12,8 +12,8 @@ switch_mgmt_ip: 10.73.254.17/24
 leaf_filter_tenants: ['Tenant_A', 'Tenant_B']
 leaf_filter_tags: ['POD02', 'DC1']
 leaf_allowed_vrfs: ['TENANT_A_PROJECT01']
-leaf_allowed_svis: [110, 111]
-leaf_allowed_vlans: [110, 111, 201]
+leaf_allowed_svis: [111]
+leaf_allowed_vlans: [111, 201]
 leaf_mlag: False
 
 ### Hardware Counters
@@ -72,10 +72,6 @@ aaa_authorization:
 
 ### local users ###
 local_users:
-  admin:
-    privilege: 15
-    role: network-admin
-    sha512_password: $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
   ansible:
     privilege: 15
     role: network-admin
@@ -96,9 +92,6 @@ clock:
 vlans:
 
 ## Tenant_A ##
-  110:
-    tenant: Tenant_A
-    name: PR01-DMZ
   111:
     tenant: Tenant_A
     name: PR01-TRUST
@@ -154,6 +147,11 @@ loopback_interfaces:
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
     ip_address: 192.168.254.7/32
+## Tenant_A ##
+  Loopback101:
+    description: TENANT_A_PROJECT01_VTEP_DIAGNOSTICS
+    vrf: TENANT_A_PROJECT01
+    ip_address: 10.1.255.7/32
 
 ### Management Interfaces ###
 management_interfaces:
@@ -166,12 +164,6 @@ management_interfaces:
 ### VLAN Interfaces ###
 vlan_interfaces:
 ## Tenant_A ##
-  Vlan110:
-    tenant: Tenant_A
-    tags: ['DC1']
-    description: PR01-DMZ
-    vrf: TENANT_A_PROJECT01
-    ip_address_virtual: 10.1.10.254/24
   Vlan111:
     tenant: Tenant_A
     tags: ['POD02']
@@ -188,8 +180,6 @@ vxlan_tunnel_interface:
     vxlan_vni_mappings:
       vlans:
 ## Tenant_A ##
-        110:
-          vni: 10110
         111:
           vni: 10111
 ## Tenant_B ##
@@ -210,6 +200,9 @@ mac_address_table:
 ip_virtual_router_mac_address: 00:1c:73:00:dc:01
 
 virtual_source_nat_vrfs:
+## Tenant_A ##
+  TENANT_A_PROJECT01:
+    ip_address: 10.1.255.7
 
 ### static routes ###
 static_routes:
@@ -285,7 +278,7 @@ router_bgp:
           asn: "11:11"
       redistribute_routes:
         - learned
-      vlan: 110-111
+      vlan: 111
 ## Tenant_B ##
     B-ELAN-201:
       tenant: Tenant_B

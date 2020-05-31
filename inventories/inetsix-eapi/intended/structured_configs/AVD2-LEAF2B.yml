@@ -12,8 +12,8 @@ switch_mgmt_ip: 10.73.254.14/24
 leaf_filter_tenants: ['Tenant_A', 'Tenant_B']
 leaf_filter_tags: ['POD02', 'DC1']
 leaf_allowed_vrfs: ['TENANT_A_PROJECT01']
-leaf_allowed_svis: [110, 111]
-leaf_allowed_vlans: [110, 111, 201]
+leaf_allowed_svis: [111]
+leaf_allowed_vlans: [111, 201]
 leaf_mlag: True
 leaf_mlag_group: AVD2_LEAF2
 leaf_mlag_role: secondary
@@ -79,10 +79,6 @@ aaa_authorization:
 
 ### local users ###
 local_users:
-  admin:
-    privilege: 15
-    role: network-admin
-    sha512_password: $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
   ansible:
     privilege: 15
     role: network-admin
@@ -114,9 +110,6 @@ vlans:
       - MLAG
 
 ## Tenant_A ##
-  110:
-    tenant: Tenant_A
-    name: PR01-DMZ
   111:
     tenant: Tenant_A
     name: PR01-TRUST
@@ -150,7 +143,7 @@ port_channel_interfaces:
 ## L2 LEAF Uplink AVD2_L2LEAF2 ##
   Port-Channel5:
     description: AVD2_L2LEAF2_Po1
-    vlans: 110,201
+    vlans: 111,201
     mode: trunk
     mlag: 5
 ## mlag peer-link ##
@@ -217,6 +210,11 @@ loopback_interfaces:
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
     ip_address: 192.168.254.5/32
+## Tenant_A ##
+  Loopback101:
+    description: TENANT_A_PROJECT01_VTEP_DIAGNOSTICS
+    vrf: TENANT_A_PROJECT01
+    ip_address: 10.1.255.6/32
 
 ### Management Interfaces ###
 management_interfaces:
@@ -237,12 +235,6 @@ vlan_interfaces:
     no_autostate: true
     mtu: 1500
 ## Tenant_A ##
-  Vlan110:
-    tenant: Tenant_A
-    tags: ['DC1']
-    description: PR01-DMZ
-    vrf: TENANT_A_PROJECT01
-    ip_address_virtual: 10.1.10.254/24
   Vlan111:
     tenant: Tenant_A
     tags: ['POD02']
@@ -267,8 +259,6 @@ vxlan_tunnel_interface:
     vxlan_vni_mappings:
       vlans:
 ## Tenant_A ##
-        110:
-          vni: 10110
         111:
           vni: 10111
 ## Tenant_B ##
@@ -289,6 +279,9 @@ mac_address_table:
 ip_virtual_router_mac_address: 00:1c:73:00:dc:01
 
 virtual_source_nat_vrfs:
+## Tenant_A ##
+  TENANT_A_PROJECT01:
+    ip_address: 10.1.255.6
 
 ### static routes ###
 static_routes:
@@ -387,7 +380,7 @@ router_bgp:
           asn: "11:11"
       redistribute_routes:
         - learned
-      vlan: 110-111
+      vlan: 111
 ## Tenant_B ##
     B-ELAN-201:
       tenant: Tenant_B

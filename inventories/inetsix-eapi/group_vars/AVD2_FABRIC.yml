@@ -153,7 +153,7 @@ l2leaf:
       parent_l3leafs: [ AVD2-LEAF1A, AVD2-LEAF1B ]
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'DC1' ]
+        tags: [ 'POD01', DC1' ]
         # tags: [ border ]
       nodes:
         AVD2-AGG01:
@@ -164,7 +164,7 @@ l2leaf:
       parent_l3leafs: [ AVD2-LEAF2A, AVD2-LEAF2B ]
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'DC1' ]
+        tags: [ 'POD02', 'DC1' ]
       nodes:
         AVD2-AGG02:
           id: 10

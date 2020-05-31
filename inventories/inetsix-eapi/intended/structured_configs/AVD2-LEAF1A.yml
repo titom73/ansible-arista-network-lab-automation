@@ -79,10 +79,6 @@ aaa_authorization:
 
 ### local users ###
 local_users:
-  admin:
-    privilege: 15
-    role: network-admin
-    sha512_password: $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
   ansible:
     privilege: 15
     role: network-admin
@@ -158,7 +154,7 @@ port_channel_interfaces:
 ## L2 LEAF Uplink AVD2_L2LEAF1 ##
   Port-Channel5:
     description: AVD2_L2LEAF1_Po1
-    vlans: 110,201
+    vlans: 110,112
     mode: trunk
     mlag: 5
 ## mlag peer-link ##
@@ -225,7 +221,12 @@ loopback_interfaces:
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
     ip_address: 192.168.254.3/32
-  Loopback100:
+## Tenant_A ##
+  Loopback101:
+    description: TENANT_A_PROJECT01_VTEP_DIAGNOSTICS
+    vrf: TENANT_A_PROJECT01
+    ip_address: 10.1.255.3/32
+  Loopback102:
     description: TENANT_A_PROJECT02_VTEP_DIAGNOSTICS
     vrf: TENANT_A_PROJECT02
     ip_address: 10.1.255.3/32
@@ -251,7 +252,7 @@ vlan_interfaces:
 ## Tenant_A ##
   Vlan110:
     tenant: Tenant_A
-    tags: ['DC1']
+    tags: ['POD01']
     description: PR01-DMZ
     vrf: TENANT_A_PROJECT01
     ip_address_virtual: 10.1.10.254/24
@@ -309,6 +310,9 @@ mac_address_table:
 ip_virtual_router_mac_address: 00:1c:73:00:dc:01
 
 virtual_source_nat_vrfs:
+## Tenant_A ##
+  TENANT_A_PROJECT01:
+    ip_address: 10.1.255.3
   TENANT_A_PROJECT02:
     ip_address: 10.1.255.3
 
