@@ -95,6 +95,8 @@ bind_recursion: true
 bind_query_log: 'data/query.log'
 bind_check_names: 'master ignore'
 bind_zone_master_server_ip: '{{ansible_host}}'
+bind_dnssec_enable: false
+bind_dnssec_validation: false
 bind_zone_domains:
   - name: 'eapi.lab.as73.inetsix.net'
     networks:
