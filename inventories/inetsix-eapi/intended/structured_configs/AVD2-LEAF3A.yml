@@ -10,11 +10,14 @@ leaf_bgp_as: 65103
 leaf_id: 5
 switch_mgmt_ip: 10.73.254.17/24
 leaf_filter_tenants: ['Tenant_A', 'Tenant_B']
-leaf_filter_tags: ['POD02', 'DC1']
-leaf_allowed_vrfs: ['TENANT_A_PROJECT01']
-leaf_allowed_svis: [111]
-leaf_allowed_vlans: [111, 201]
+leaf_filter_tags: ['POD03', 'DC1']
+leaf_allowed_vrfs: []
+leaf_allowed_svis: []
+leaf_allowed_vlans: [201]
 leaf_mlag: False
+
+service_routing_protocols_model: multi-agent
+ip_routing: true
 
 ### Hardware Counters
 hardware_counters:
@@ -92,9 +95,6 @@ clock:
 vlans:
 
 ## Tenant_A ##
-  111:
-    tenant: Tenant_A
-    name: PR01-TRUST
 ## Tenant_B ##
   201:
     tenant: Tenant_B
@@ -104,10 +104,6 @@ vlans:
 vrfs:
   MGMT:
     ip_routing: False
-## Tenant_A ##
-  TENANT_A_PROJECT01:
-    tenant: Tenant_A
-    ip_routing: true
 
 ### bfd multihop ###
 bfd_multihop:
@@ -136,6 +132,14 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.19/31
+  Ethernet3:
+    peer: SRV-POD03
+    peer_interface: Eth01
+    peer_type: server
+    description: SRV-POD03_Eth01
+    mode: trunk
+    vlans: 201
+    profile: TENANT-B-PR01
 
 
 ### Loopback Interfaces ###
@@ -147,11 +151,6 @@ loopback_interfaces:
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
     ip_address: 192.168.254.7/32
-## Tenant_A ##
-  Loopback101:
-    description: TENANT_A_PROJECT01_VTEP_DIAGNOSTICS
-    vrf: TENANT_A_PROJECT01
-    ip_address: 10.1.255.7/32
 
 ### Management Interfaces ###
 management_interfaces:
@@ -164,12 +163,6 @@ management_interfaces:
 ### VLAN Interfaces ###
 vlan_interfaces:
 ## Tenant_A ##
-  Vlan111:
-    tenant: Tenant_A
-    tags: ['POD02']
-    description: PR01-TRUST
-    vrf: TENANT_A_PROJECT01
-    ip_address_virtual: 10.1.11.254/24
 
 ### VxLAN interface ###
 vxlan_tunnel_interface:
@@ -180,15 +173,11 @@ vxlan_tunnel_interface:
     vxlan_vni_mappings:
       vlans:
 ## Tenant_A ##
-        111:
-          vni: 10111
 ## Tenant_B ##
         201:
           vni: 20201
       vrfs:
 ## Tenant_A ##
-        TENANT_A_PROJECT01:
-          vni: 11
 ## Tenant_B ##
 
 ### TCAM Profiles ###
@@ -200,9 +189,6 @@ mac_address_table:
 ip_virtual_router_mac_address: 00:1c:73:00:dc:01
 
 virtual_source_nat_vrfs:
-## Tenant_A ##
-  TENANT_A_PROJECT01:
-    ip_address: 10.1.255.7
 
 ### static routes ###
 static_routes:
@@ -252,7 +238,7 @@ router_bgp:
       type: evpn
       remote_as: 65001
       update_source: Loopback0
-      fall_over_bfd: true
+      bfd: true
       ebgp_multihop: 3
       password: "q+VNViP5i4rVjW1cxFv2wA=="
       send_community: true
@@ -269,41 +255,33 @@ router_bgp:
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
+      IPv4-UNDERLAY-PEERS:
+        activate: false
+  address_family_ipv4:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: false
+      IPv4-UNDERLAY-PEERS:
+        activate: true
   vlan_aware_bundles:
 ## Tenant_A ##
-    TENANT_A_PROJECT01:
-      rd: "192.168.255.7:11"
-      route_targets:
-        both:
-          asn: "11:11"
-      redistribute_routes:
-        - learned
-      vlan: 111
 ## Tenant_B ##
     B-ELAN-201:
       tenant: Tenant_B
       rd: "192.168.255.7:20201"
       route_targets:
         both:
-          asn: "20201:20201"
+          - "20201:20201"
       redistribute_routes:
         - learned
       vlan: 201
   vlans:
   vrfs:
 ## Tenant_A ##
-    TENANT_A_PROJECT01:
-      router_id: 192.168.255.7
-      rd: "192.168.255.7:11"
-      route_targets:
-        import:
-          address_family: evpn
-          asn: "11:11"
-        export:
-          address_family: evpn
-          asn: "11:11"
-      redistribute_routes:
-        - connected
 ## Tenant_B ##
 
 ### Routing - OSPF ###

@@ -3,6 +3,12 @@ port_profiles:
   TENANT-A-PR01:
     mode: trunk
     vlans: "110-111"
+  TENANT-B-PR01:
+    mode: trunk
+    vlans: "201"
+  POD01-TESTER:
+    mode: trunk
+    vlans: "110,201"
 
 servers:
   SRV-POD01:
@@ -12,7 +18,7 @@ servers:
         server_ports: [Eth1]
         switch_ports: [Ethernet3]
         switches: [AVD2-AGG01]
-        profile: 'TENANT-A-PR01'
+        profile: 'POD01-TESTER'
   SRV-POD02:
     rack: POD02
     adapters:
@@ -21,3 +27,11 @@ servers:
         switch_ports: [Ethernet3]
         switches: [AVD2-AGG02]
         profile: 'TENANT-A-PR01'
+  SRV-POD03:
+    rack: POD03
+    adapters:
+      - type: nic
+        server_ports: [Eth01]
+        switch_ports: [Ethernet3]
+        switches: [AVD2-LEAF3A]
+        profile: 'TENANT-B-PR01'

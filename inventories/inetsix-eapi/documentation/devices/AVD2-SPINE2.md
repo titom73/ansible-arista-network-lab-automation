@@ -4,9 +4,17 @@
 
 ### Management Interfaces Summary
 
+IPv4
+
 | Management Interface | description | VRF | IP Address | Gateway |
 | -------------------- | ----------- | --- | ---------- | ------- |
 | Management1 | oob_management | MGMT | 10.73.254.2/24 | 10.73.254.253 |
+
+IPv6
+
+| Management Interface | description | VRF | IPv6 Address | IPv6 Gateway |
+| -------------------- | ----------- | --- | ------------ | ------------ |
+| Management1 | oob_management | MGMT | ||
 
 ### Management Interfaces Device Configuration
 
@@ -21,6 +29,9 @@ interface Management1
 ## Hardware Counters
 
 No Hardware Counters defined
+
+## Aliases
+Aliases not defined
 
 ## TerminAttr Daemon
 
@@ -41,6 +52,17 @@ vlan internal order ascending range 1006 1199
 !
 ```
 
+## IP IGMP Snooping
+
+
+## Logging
+
+No logging settings defined
+
+## Domain Lookup
+
+DNS domain lookup not defined
+
 ## Name Servers
 
 ### Name Servers Summary
@@ -56,16 +78,22 @@ ip name-server vrf MGMT 10.73.254.253
 !
 ```
 
+## DNS Domain
+
+DNS domain not defined
+
 ## NTP
 
 ### NTP Summary
 
 Local Interface: Management1
+
 VRF: MGMT
+
 
 | Node | Primary |
 | ---- | ------- |
-| 10.73.254.253 | True |
+| 10.73.254.253 | true |
 
 ### NTP Device Configuration
 
@@ -74,6 +102,14 @@ ntp local-interface vrf MGMT Management1
 ntp server vrf MGMT 10.73.254.253 prefer
 !
 ```
+
+## Router L2 VPN
+
+Router L2 VPN not defined
+
+## SFlow
+
+No sFlow defined
 
 ## Spanning Tree
 
@@ -89,9 +125,26 @@ spanning-tree mode none
 !
 ```
 
+
+TACACS Servers Not Configured
+
+
+IP TACACS source interfaces not defined
+
+
+AAA server groups not defined
+
 ## AAA Authentication
 
-AAA Not Configured
+AAA authentication not defined
+
+## AAA Authorization
+
+AAA authorization not defined
+
+## AAA Accounting
+
+AAA accounting not defined
 
 ## Local Users
 
@@ -128,21 +181,6 @@ No VLANs defined
 
 ```eos
 vrf instance MGMT
-!
-```
-
-## BFD Multihop Interval
-
-### BFD Multihop Summary
-
-| Interval | Minimum RX | Multiplier |
-| -------- | ---------- | ---------- |
-| 1200 | 1200 | 3 |
-
-### BFD Multihop Device Configuration
-
-```eos
-bfd multihop interval 1200 min_rx 1200 multiplier 3
 !
 ```
 
@@ -216,9 +254,17 @@ interface Ethernet8
 
 ### Loopback Interfaces Summary
 
+IPv4
+
 | Interface | Description | VRF | IP Address |
 | --------- | ----------- | --- | ---------- |
 | Loopback0 | EVPN_Overlay_Peering | Global Routing Table | 192.168.255.2/32 |
+
+IPv6
+
+| Interface | Description | VRF | IPv6 Address |
+| --------- | ----------- | --- | ------------ |
+| Loopback0 | EVPN_Overlay_Peering | Global Routing Table | - |
 
 ### Loopback Interfaces Device Configuration
 
@@ -239,6 +285,22 @@ No VXLAN interface defined
 
 ## Virtual Router MAC Address & Virtual Source NAT
 
+
+## IPv6 Extended Access-lists
+
+IPv6 Extended Access-lists not defined
+
+## IPv6 Standard Access-lists
+
+IPv6 Standard Access-lists not defined
+
+## Extended Access-lists
+
+Extended Access-lists not defined
+
+## Standard Access-lists
+
+Standard Access-lists not defined
 
 ## Static Routes
 
@@ -293,6 +355,23 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 !
 ```
 
+## IPv6 Prefix Lists
+
+IPv6 Prefix lists not defined
+
+## IPv6 Routing
+
+### IPv6 Routing Summary
+
+| VRF | IPv6 Routing Enabled |
+| --- | -------------------- |
+| MGMT | False |
+
+### IPv6 Routing Device Configuration
+
+```eos
+```
+
 ## MLAG
 
 MLAG not defined
@@ -303,9 +382,9 @@ MLAG not defined
 
 **RM-CONN-2-BGP:**
 
-| Sequence | Type | Match |
-| -------- | ---- | ----- |
-| 10 | permit | ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
+| Sequence | Type | Match and/or Set |
+| -------- | ---- | ---------------- |
+| 10 | permit | match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
 
 ### Route Maps Device Configuration
 
@@ -333,6 +412,22 @@ peer-filter LEAF-AS-RANGE
 !
 ```
 
+## Router BFD
+
+### Router BFD Multihop Summary
+
+| Interval | Minimum RX | Multiplier |
+| -------- | ---------- | ---------- |
+| 1200 | 1200 | 3 |
+
+### Router BFD Multihop Device Configuration
+
+```eos
+router bfd
+   multihop interval 1200 min-rx 1200 multiplier 3
+!
+```
+
 ## Router BGP
 
 ### Router BGP Summary
@@ -356,51 +451,44 @@ peer-filter LEAF-AS-RANGE
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
-| next-hop unchanged | True |
+| next-hop unchanged | true |
 | source | Loopback0 |
-| bfd | True |
+| bfd | true |
 | ebgp multihop | 3 |
 | send community | true |
 | maximum routes | 0 (no limit) |
-**Neighbors:**
-
-| Neighbor | Remote AS |
-| -------- | ---------
-| 192.168.255.3 | 65101  |
-| 192.168.255.4 | 65101  |
-| 192.168.255.5 | 65102  |
-| 192.168.255.6 | 65102  |
-| 192.168.255.7 | 65103  |
-| 192.168.255.8 | 65104  |
-| 192.168.255.9 | 65105  |
-| 192.168.255.10 | 65105  |
-
-*Inherited from peer group
-
 **IPv4-UNDERLAY-PEERS**:
 
 | Settings | Value |
 | -------- | ----- |
 | Address Family | ipv4 |
 | maximum routes | 12000 |
-**Neighbors:**
+
+### BGP Neighbors
 
 | Neighbor | Remote AS |
 | -------- | ---------
-| 172.31.255.3 | 65101  |
-| 172.31.255.7 | 65101  |
-| 172.31.255.11 | 65102  |
-| 172.31.255.15 | 65102  |
-| 172.31.255.19 | 65103  |
-| 172.31.255.23 | 65104  |
-| 172.31.255.27 | 65105  |
-| 172.31.255.31 | 65105  |
-
-*Inherited from peer group
+| 172.31.255.3 | 65101 |
+| 172.31.255.7 | 65101 |
+| 172.31.255.11 | 65102 |
+| 172.31.255.15 | 65102 |
+| 172.31.255.19 | 65103 |
+| 172.31.255.23 | 65104 |
+| 172.31.255.27 | 65105 |
+| 172.31.255.31 | 65105 |
+| 192.168.255.3 | 65101 |
+| 192.168.255.4 | 65101 |
+| 192.168.255.5 | 65102 |
+| 192.168.255.6 | 65102 |
+| 192.168.255.7 | 65103 |
+| 192.168.255.8 | 65104 |
+| 192.168.255.9 | 65105 |
+| 192.168.255.10 | 65105 |
 
 ### Router BGP EVPN Address Family
 
 #### Router BGP EVPN MAC-VRFs
+
 
 
 #### Router BGP EVPN VRFs
@@ -470,3 +558,23 @@ router bgp 65001
       neighbor IPv4-UNDERLAY-PEERS activate
 !
 ```
+
+## Router Multicast
+
+Routing multicast not defined
+
+## Router PIM Sparse Mode
+
+Router PIM sparse mode not defined
+
+## VM Tracer Sessions
+
+No VM tracer session defined
+
+## Management Security
+
+Management Security not defined
+
+## Platform
+
+No Platform parameters defined

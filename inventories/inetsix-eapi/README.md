@@ -12,6 +12,11 @@
 
 ### Topology Information:
 
+#### Nodes Version
+
+- vEOS-LAB: `4.24.0F`
+- Centos: `7`
+
 #### Subnet allocation:
 
 - Underlay:  172.31.255.0/24

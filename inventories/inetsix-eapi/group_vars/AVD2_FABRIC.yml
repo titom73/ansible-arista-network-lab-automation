@@ -77,7 +77,7 @@ l3leaf:
       bgp_as: 65101
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'POD01', 'DC1' ]
+        tags: [ POD01, DC1 ]
         # tags: [ border ]
       nodes:
         AVD2-LEAF1A:
@@ -92,7 +92,7 @@ l3leaf:
       bgp_as: 65102
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'POD02', 'DC1' ]
+        tags: [ POD02, DC1 ]
         # tags: [ border ]
       nodes:
         AVD2-LEAF2A:
@@ -107,7 +107,7 @@ l3leaf:
       bgp_as: 65103
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'POD02', 'DC1' ]
+        tags: [ POD03, DC1 ]
         # tags: [ border ]
       nodes:
         AVD2-LEAF3A:
@@ -118,7 +118,7 @@ l3leaf:
       bgp_as: 65104
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'POD02', 'DC1' ]
+        tags: [ POD04, DC1 ]
         # tags: [ border ]
       nodes:
         AVD2-LEAF4A:
@@ -129,7 +129,7 @@ l3leaf:
       bgp_as: 65105
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'BORDER' ]
+        tags: [ BORDER ]
       nodes:
         AVD2-BL01A:
           id: 7
@@ -153,8 +153,7 @@ l2leaf:
       parent_l3leafs: [ AVD2-LEAF1A, AVD2-LEAF1B ]
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'POD01', DC1' ]
-        # tags: [ border ]
+        tags: [ POD01, DC1 ]
       nodes:
         AVD2-AGG01:
           id: 9
@@ -164,7 +163,7 @@ l2leaf:
       parent_l3leafs: [ AVD2-LEAF2A, AVD2-LEAF2B ]
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'POD02', 'DC1' ]
+        tags: [ POD02, DC1 ]
       nodes:
         AVD2-AGG02:
           id: 10

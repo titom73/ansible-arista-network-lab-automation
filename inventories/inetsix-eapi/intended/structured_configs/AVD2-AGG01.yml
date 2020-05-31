@@ -9,11 +9,14 @@ switch_platform: vEOS-LAB
 leaf_id: 9
 switch_mgmt_ip: 10.73.254.21/24
 leaf_filter_tenants: ['Tenant_A', 'Tenant_B']
-leaf_filter_tags: ['POD01', "DC1'"]
+leaf_filter_tags: ['POD01', 'DC1']
 leaf_allowed_vrfs: ['TENANT_A_PROJECT01', 'TENANT_A_PROJECT02']
 leaf_allowed_svis: [110, 112]
-leaf_allowed_vlans: [110, 112]
+leaf_allowed_vlans: [110, 112, 201]
 leaf_mlag: False
+
+service_routing_protocols_model: multi-agent
+ip_routing: true
 
 ### Hardware Counter
 hardware_counters:
@@ -98,6 +101,9 @@ vlans:
     tenant: Tenant_A
     name: PR02-DMZ-ORANGE
 ## Tenant_B ##
+  201:
+    tenant: Tenant_B
+    name: B-ELAN-201
 
 ### VRFs ###
 vrfs:
@@ -107,7 +113,7 @@ vrfs:
 port_channel_interfaces:
   Port-Channel1:
     description: AVD2-LEAF1A_Po5
-    vlans: 110,112
+    vlans: 110,112,201
     mode: trunk
     mlag: 1
 
@@ -137,8 +143,8 @@ ethernet_interfaces:
     peer_type: server
     description: SRV-POD01_Eth1
     mode: trunk
-    vlans: 110-111
-    profile: TENANT-A-PR01
+    vlans: 110,201
+    profile: POD01-TESTER
 
 ### Management Interfaces ###
 management_interfaces:
