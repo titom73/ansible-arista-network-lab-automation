@@ -6,6 +6,9 @@
 switch_platform: vEOS-LAB
 switch_mgmt_ip: 10.73.255.101/24
 
+service_routing_protocols_model: multi-agent
+ip_routing: true
+
 ### Hardware Counters
 hardware_counters:
 
@@ -237,7 +240,7 @@ router_bgp:
       peer_filter: LEAF-AS-RANGE
       next_hop_unchanged: true
       update_source: Loopback0
-      fall_over_bfd: true
+      bfd: true
       ebgp_multihop: 3
       password: "q+VNViP5i4rVjW1cxFv2wA=="
       send_community: true
@@ -294,6 +297,18 @@ router_bgp:
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
+      IPv4-UNDERLAY-PEERS:
+        activate: false
+  address_family_ipv4:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: false
+      IPv4-UNDERLAY-PEERS:
+        activate: true
 
 ### Routing - OSPF ###
 router_ospf:

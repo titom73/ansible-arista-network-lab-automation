@@ -1,6 +1,6 @@
 ---
 - name: Configure DHCP Service for ZTP
-  hosts: cv_ztp
+  hosts: ZTP
   gather_facts: true
   tasks:
     - name: 'Execute DHCP configuration role'

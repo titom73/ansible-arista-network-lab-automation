@@ -16,6 +16,9 @@ leaf_allowed_svis: [110, 111]
 leaf_allowed_vlans: [110, 111, 201]
 leaf_mlag: False
 
+service_routing_protocols_model: multi-agent
+ip_routing: true
+
 ### Hardware Counters
 hardware_counters:
 
@@ -267,7 +270,7 @@ router_bgp:
       type: evpn
       remote_as: 65001
       update_source: Loopback0
-      fall_over_bfd: true
+      bfd: true
       ebgp_multihop: 3
       password: "q+VNViP5i4rVjW1cxFv2wA=="
       send_community: true
@@ -284,13 +287,25 @@ router_bgp:
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
+      IPv4-UNDERLAY-PEERS:
+        activate: false
+  address_family_ipv4:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: false
+      IPv4-UNDERLAY-PEERS:
+        activate: true
   vlan_aware_bundles:
 ## Tenant_A ##
     TENANT_A_PROJECT01:
       rd: "192.168.255.8:11"
       route_targets:
         both:
-          asn: "11:11"
+          - "11:11"
       redistribute_routes:
         - learned
       vlan: 110-111
@@ -300,7 +315,7 @@ router_bgp:
       rd: "192.168.255.8:20201"
       route_targets:
         both:
-          asn: "20201:20201"
+          - "20201:20201"
       redistribute_routes:
         - learned
       vlan: 201
@@ -312,11 +327,11 @@ router_bgp:
       rd: "192.168.255.8:11"
       route_targets:
         import:
-          address_family: evpn
-          asn: "11:11"
+          evpn:
+            - "11:11"
         export:
-          address_family: evpn
-          asn: "11:11"
+          evpn:
+            - "11:11"
       redistribute_routes:
         - connected
 ## Tenant_B ##

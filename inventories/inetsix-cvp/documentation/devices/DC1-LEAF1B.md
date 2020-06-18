@@ -4,9 +4,17 @@
 
 ### Management Interfaces Summary
 
+IPv4
+
 | Management Interface | description | VRF | IP Address | Gateway |
 | -------------------- | ----------- | --- | ---------- | ------- |
 | Management1 | oob_management | MGMT | 10.73.255.112/24 | 10.73.255.2 |
+
+IPv6
+
+| Management Interface | description | VRF | IPv6 Address | IPv6 Gateway |
+| -------------------- | ----------- | --- | ------------ | ------------ |
+| Management1 | oob_management | MGMT | ||
 
 ### Management Interfaces Device Configuration
 
@@ -21,6 +29,9 @@ interface Management1
 ## Hardware Counters
 
 No Hardware Counters defined
+
+## Aliases
+Aliases not defined
 
 ## TerminAttr Daemon
 
@@ -54,6 +65,17 @@ vlan internal order ascending range 1006 1199
 !
 ```
 
+## IP IGMP Snooping
+
+
+## Logging
+
+No logging settings defined
+
+## Domain Lookup
+
+DNS domain lookup not defined
+
 ## Name Servers
 
 ### Name Servers Summary
@@ -69,16 +91,22 @@ ip name-server vrf MGMT 10.73.255.2
 !
 ```
 
+## DNS Domain
+
+DNS domain not defined
+
 ## NTP
 
 ### NTP Summary
 
 Local Interface: Management1
+
 VRF: MGMT
+
 
 | Node | Primary |
 | ---- | ------- |
-| 10.73.255.2 | True |
+| 10.73.255.2 | true |
 
 ### NTP Device Configuration
 
@@ -87,6 +115,14 @@ ntp local-interface vrf MGMT Management1
 ntp server vrf MGMT 10.73.255.2 prefer
 !
 ```
+
+## Router L2 VPN
+
+Router L2 VPN not defined
+
+## SFlow
+
+No sFlow defined
 
 ## Spanning Tree
 
@@ -109,9 +145,26 @@ spanning-tree mst 0 priority 4096
 !
 ```
 
+
+TACACS Servers Not Configured
+
+
+IP TACACS source interfaces not defined
+
+
+AAA server groups not defined
+
 ## AAA Authentication
 
-AAA Not Configured
+AAA authentication not defined
+
+## AAA Authorization
+
+AAA authorization not defined
+
+## AAA Accounting
+
+AAA accounting not defined
 
 ## Local Users
 
@@ -199,29 +252,14 @@ vrf instance TENANT_A_PROJECT02
 !
 ```
 
-## BFD Multihop Interval
-
-### BFD Multihop Summary
-
-| Interval | Minimum RX | Multiplier |
-| -------- | ---------- | ---------- |
-| 1200 | 1200 | 3 |
-
-### BFD Multihop Device Configuration
-
-```eos
-bfd multihop interval 1200 min_rx 1200 multiplier 3
-!
-```
-
 ## Port-Channel Interfaces
 
 ### Port-Channel Interfaces Summary
 
-| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | VRF | IP Address |
-| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | --- | ---------- |
-| Port-Channel3 | MLAG_PEER_DC1-LEAF1A_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - |
-| Port-Channel5 | DC1_L2LEAF1_Po1 | 1500 | switched | trunk | 110,201 | - | 5 | - | - |
+| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | VRF | IP Address | IPv6 Address |
+| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | --- | ---------- | ------------ |
+| Port-Channel3 | MLAG_PEER_DC1-LEAF1A_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - | - |
+| Port-Channel5 | DC1_L2LEAF1_Po1 | 1500 | switched | trunk | 110,201 | - | 5 | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -286,11 +324,21 @@ interface Ethernet5
 
 ### Loopback Interfaces Summary
 
+IPv4
+
 | Interface | Description | VRF | IP Address |
 | --------- | ----------- | --- | ---------- |
 | Loopback0 | EVPN_Overlay_Peering | Global Routing Table | 192.168.255.4/32 |
 | Loopback1 | VTEP_VXLAN_Tunnel_Source | Global Routing Table | 192.168.254.3/32 |
 | Loopback100 | TENANT_A_PROJECT02_VTEP_DIAGNOSTICS | TENANT_A_PROJECT02 | 10.1.255.4/32 |
+
+IPv6
+
+| Interface | Description | VRF | IPv6 Address |
+| --------- | ----------- | --- | ------------ |
+| Loopback0 | EVPN_Overlay_Peering | Global Routing Table | - |
+| Loopback1 | VTEP_VXLAN_Tunnel_Source | Global Routing Table | - |
+| Loopback100 | TENANT_A_PROJECT02_VTEP_DIAGNOSTICS | TENANT_A_PROJECT02 | - |
 
 ### Loopback Interfaces Device Configuration
 
@@ -413,6 +461,22 @@ ip address virtual source-nat vrf TENANT_A_PROJECT02 address 10.1.255.4
 !
 ```
 
+## IPv6 Extended Access-lists
+
+IPv6 Extended Access-lists not defined
+
+## IPv6 Standard Access-lists
+
+IPv6 Standard Access-lists not defined
+
+## Extended Access-lists
+
+Extended Access-lists not defined
+
+## Standard Access-lists
+
+Standard Access-lists not defined
+
 ## Static Routes
 
 ### Static Routes Summary
@@ -483,6 +547,25 @@ ip prefix-list PL-P2P-UNDERLAY
 !
 ```
 
+## IPv6 Prefix Lists
+
+IPv6 Prefix lists not defined
+
+## IPv6 Routing
+
+### IPv6 Routing Summary
+
+| VRF | IPv6 Routing Enabled |
+| --- | -------------------- |
+| MGMT | False |
+| TENANT_A_PROJECT01 | False |
+| TENANT_A_PROJECT02 | False |
+
+### IPv6 Routing Device Configuration
+
+```eos
+```
+
 ## MLAG
 
 ### MLAG Summary
@@ -490,6 +573,8 @@ ip prefix-list PL-P2P-UNDERLAY
 | domain-id | local-interface | peer-address | peer-link |
 | --------- | --------------- | ------------ | --------- |
 | DC1_LEAF1 | Vlan4094 | 10.255.252.0 | Port-Channel3 |
+
+Dual primary detection is enabled. The detection delay is 5 seconds.
 
 ### MLAG Device Configuration
 
@@ -501,8 +586,8 @@ mlag configuration
    peer-address heartbeat 10.73.255.111 vrf MGMT
    peer-link Port-Channel3
    dual-primary detection delay 5 action errdisable all-interfaces
-   reload-delay mlag 360
-   reload-delay non-mlag 300
+   reload-delay mlag 300
+   reload-delay non-mlag 330
 !
 ```
 
@@ -512,9 +597,9 @@ mlag configuration
 
 **RM-CONN-2-BGP:**
 
-| Sequence | Type | Match |
-| -------- | ---- | ----- |
-| 10 | permit | ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
+| Sequence | Type | Match and/or Set |
+| -------- | ---- | ---------------- |
+| 10 | permit | match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
 
 ### Route Maps Device Configuration
 
@@ -527,6 +612,22 @@ route-map RM-CONN-2-BGP permit 10
 ## Peer Filters
 
 No Peer Filters defined
+
+## Router BFD
+
+### Router BFD Multihop Summary
+
+| Interval | Minimum RX | Multiplier |
+| -------- | ---------- | ---------- |
+| 1200 | 1200 | 3 |
+
+### Router BFD Multihop Device Configuration
+
+```eos
+router bfd
+   multihop interval 1200 min-rx 1200 multiplier 3
+!
+```
 
 ## Router BGP
 
@@ -553,19 +654,10 @@ No Peer Filters defined
 | Address Family | evpn |
 | remote_as | 65001 |
 | source | Loopback0 |
-| bfd | True |
+| bfd | true |
 | ebgp multihop | 3 |
 | send community | true |
 | maximum routes | 0 (no limit) |
-**Neighbors:**
-
-| Neighbor | Remote AS |
-| -------- | ---------
-| 192.168.255.1 | *65001  |
-| 192.168.255.2 | *65001  |
-
-*Inherited from peer group
-
 **IPv4-UNDERLAY-PEERS**:
 
 | Settings | Value |
@@ -574,31 +666,25 @@ No Peer Filters defined
 | remote_as | 65001 |
 | send community | true |
 | maximum routes | 12000 |
-**Neighbors:**
-
-| Neighbor | Remote AS |
-| -------- | ---------
-| 172.31.255.4 | *65001  |
-| 172.31.255.6 | *65001  |
-
-*Inherited from peer group
-
 **MLAG-IPv4-UNDERLAY-PEER**:
 
 | Settings | Value |
 | -------- | ----- |
 | Address Family | ipv4 |
 | remote_as | 65101 |
-| next-hop self | True |
+| next-hop self | true |
 | send community | true |
 | maximum routes | 12000 |
-**Neighbors:**
+
+### BGP Neighbors
 
 | Neighbor | Remote AS |
 | -------- | ---------
-| 10.255.251.0 | *65101  |
-
-*Inherited from peer group
+| 10.255.251.0 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
+| 172.31.255.4 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 172.31.255.6 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS |
+| 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS |
 
 ### Router BGP EVPN Address Family
 
@@ -606,18 +692,19 @@ No Peer Filters defined
 
 **VLAN aware bundles:**
 
-| VLAN Aware Bundle | Route-Distinguisher | Route Target | Redistribute | VLANs |
-| ----------------- | ------------------- | ------------ | ------------ | ----- |
-| B-ELAN-201 | 192.168.255.4:20201 | both 20201:20201 | learned | 201 |
-| TENANT_A_PROJECT01 | 192.168.255.4:11 | both 11:11 | learned | 110 |
-| TENANT_A_PROJECT02 | 192.168.255.4:12 | both 12:12 | learned | 112 |
+| VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
+| ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
+| B-ELAN-201 | 192.168.255.4:20201 |  20201:20201  |  |  | learned | 201 |
+| TENANT_A_PROJECT01 | 192.168.255.4:11 |  11:11  |  |  | learned | 110 |
+| TENANT_A_PROJECT02 | 192.168.255.4:12 |  12:12  |  |  | learned | 112 |
+
 
 #### Router BGP EVPN VRFs
 
-| VRF | Route-Distinguisher | Route Target | Redistribute |
-| --- | ------------------- | ------------ | ------------ |
-| TENANT_A_PROJECT01 | 192.168.255.4:11 | import 11:11<br> export 11:11 | connected |
-| TENANT_A_PROJECT02 | 192.168.255.4:12 | import 12:12<br> export 12:12 | connected |
+| VRF | Route-Distinguisher | Redistribute |
+| --- | ------------------- | ------------ |
+| TENANT_A_PROJECT01 | 192.168.255.4:11 | connected  |
+| TENANT_A_PROJECT02 | 192.168.255.4:12 | connected  |
 
 ### Router BGP Device Configuration
 
@@ -684,19 +771,39 @@ router bgp 65101
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    vrf TENANT_A_PROJECT01
-      router-id 192.168.255.4
       rd 192.168.255.4:11
       route-target import evpn 11:11
       route-target export evpn 11:11
+      router-id 192.168.255.4
       neighbor 10.255.251.0 peer group MLAG-IPv4-UNDERLAY-PEER
       redistribute connected
    !
    vrf TENANT_A_PROJECT02
-      router-id 192.168.255.4
       rd 192.168.255.4:12
       route-target import evpn 12:12
       route-target export evpn 12:12
+      router-id 192.168.255.4
       neighbor 10.255.251.0 peer group MLAG-IPv4-UNDERLAY-PEER
       redistribute connected
 !
 ```
+
+## Router Multicast
+
+Routing multicast not defined
+
+## Router PIM Sparse Mode
+
+Router PIM sparse mode not defined
+
+## VM Tracer Sessions
+
+No VM tracer session defined
+
+## Management Security
+
+Management Security not defined
+
+## Platform
+
+No Platform parameters defined
