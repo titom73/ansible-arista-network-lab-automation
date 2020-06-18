@@ -55,6 +55,12 @@ VM uses DHCP for IP allocation on EMEA Lab so IP might change
   - Expose SSH Port: `2008`
   - Expose eAPI Port: `3008`
 
+__Servers and routers__
+
+- POD01-SRV: `10.255.0.11`
+  - Expose SSH Port: `2011`
+  - Expose eAPI Port: `3011`
+
 To connect:
 
 ```shell

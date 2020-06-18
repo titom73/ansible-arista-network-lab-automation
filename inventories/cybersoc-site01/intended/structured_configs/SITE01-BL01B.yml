@@ -10,10 +10,10 @@ leaf_bgp_as: 65105
 leaf_id: 8
 switch_mgmt_ip: 10.255.1.108/24
 leaf_filter_tenants: ['Tenant_A', 'Tenant_B']
-leaf_filter_tags: ['BORDER']
-leaf_allowed_vrfs: []
-leaf_allowed_svis: []
-leaf_allowed_vlans: []
+leaf_filter_tags: ['BORDER', 'DCI']
+leaf_allowed_vrfs: ['TENANT_A_PROJECT01']
+leaf_allowed_svis: [112]
+leaf_allowed_vlans: [112, 201]
 leaf_mlag: True
 leaf_mlag_group: SITE01_BL01
 leaf_mlag_role: secondary
@@ -29,10 +29,10 @@ hardware_counters:
 daemon_terminattr:
 
 vlan_internal_order:
-  allocation: ascending
+  allocation: descending
   range:
-    beginning: 1006
-    ending: 1199
+    beginning: 4000
+    ending: 4050
 
 ### Event Monitor ###
 event_monitor:
@@ -54,7 +54,8 @@ name_server:
   source:
     vrf: MGMT
   nodes:
-    - 10.255.1.1
+    - 1.1.1.1
+    - 8.8.8.8
 
 ### NTP Servers ###
 ntp_server:
@@ -62,7 +63,8 @@ ntp_server:
     vrf: MGMT
     interface: Management1
   nodes:
-    - 10.255.1.1
+    - uk.pool.ntp.org
+    - fr.pool.ntp.org
 
 ### Redundancy ###
 redundancy:
@@ -91,14 +93,6 @@ local_users:
     privilege: 15
     role: network-admin
     sha512_password: $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
-  cvpadmin:
-    privilege: 15
-    role: network-admin
-    sha512_password: $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
-  demo:
-    privilege: 15
-    role: network-admin
-    sha512_password: $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
   khelil:
     privilege: 15
     role: network-admin
@@ -110,6 +104,7 @@ local_users:
 
 ### Clock Timezone ###
 clock:
+  timezone: Europe/Paris
 
 ### VLANs ###
 vlans:
@@ -126,12 +121,27 @@ vlans:
       - MLAG
 
 ## Tenant_A ##
+  112:
+    tenant: Tenant_A
+    name: PR01-DCI
+  3010:
+    tenant: Tenant_A
+    name: MLAG_iBGP_TENANT_A_PROJECT01
+    trunk_groups:
+      - LEAF_PEER_L3
 ## Tenant_B ##
+  201:
+    tenant: Tenant_B
+    name: B-ELAN-201
 
 ### VRFs ###
 vrfs:
   MGMT:
     ip_routing: False
+## Tenant_A ##
+  TENANT_A_PROJECT01:
+    tenant: Tenant_A
+    ip_routing: true
 
 ### bfd multihop ###
 bfd_multihop:
@@ -149,6 +159,11 @@ port_channel_interfaces:
     trunk_groups:
       - LEAF_PEER_L3
       - MLAG
+  Port-Channel5:
+    description: DCI_RTR01_PortChannel5
+    vlans: 201,112
+    mode: trunk
+    mlag: 5
 
 ### Ethernet Interfaces ###
 ethernet_interfaces:
@@ -185,6 +200,17 @@ ethernet_interfaces:
     channel_group:
       id: 3
       mode: active
+  Ethernet5:
+    peer: DCI_RTR01
+    peer_interface: Eth2
+    peer_type: server
+    description: DCI_RTR01_Eth2
+    mode: trunk
+    vlans: 201,112
+    channel_group:
+      id: 5
+      mode: "active"
+    profile: DCI_IX
 
 
 ### Loopback Interfaces ###
@@ -216,6 +242,18 @@ vlan_interfaces:
     no_autostate: true
     mtu: 1500
 ## Tenant_A ##
+  Vlan112:
+    tenant: Tenant_A
+    tags: ['DCI']
+    description: PR01-DCI
+    vrf: TENANT_A_PROJECT01
+    ip_address_virtual: 10.1.12.254/24
+  Vlan3010:
+    tenant: Tenant_A
+    type: underlay_peering
+    description: "MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01"
+    vrf: TENANT_A_PROJECT01
+    ip_address: 10.255.251.13/31
 
 ### VxLAN interface ###
 vxlan_tunnel_interface:
@@ -228,9 +266,15 @@ vxlan_tunnel_interface:
     vxlan_vni_mappings:
       vlans:
 ## Tenant_A ##
+        112:
+          vni: 10112
 ## Tenant_B ##
+        201:
+          vni: 20201
       vrfs:
 ## Tenant_A ##
+        TENANT_A_PROJECT01:
+          vni: 11
 ## Tenant_B ##
 
 ### TCAM Profiles ###
@@ -245,6 +289,12 @@ virtual_source_nat_vrfs:
 
 ### static routes ###
 static_routes:
+  - vrf: MGMT
+    destination_address_prefix: 10.255.2.0/24
+    gateway: 10.255.1.1
+  - vrf: MGMT
+    destination_address_prefix: 10.255.3.0/24
+    gateway: 10.255.1.1
   - vrf: MGMT
     destination_address_prefix: 0.0.0.0/0
     gateway: 10.255.1.1
@@ -333,10 +383,42 @@ router_bgp:
       route_map: RM-CONN-2-BGP
   vlan_aware_bundles:
 ## Tenant_A ##
+    TENANT_A_PROJECT01:
+      rd: "192.168.255.10:11"
+      route_targets:
+        both:
+          asn: "11:11"
+      redistribute_routes:
+        - learned
+      vlan: 112
 ## Tenant_B ##
+    B-ELAN-201:
+      tenant: Tenant_B
+      rd: "192.168.255.10:20201"
+      route_targets:
+        both:
+          asn: "20201:20201"
+      redistribute_routes:
+        - learned
+      vlan: 201
   vlans:
   vrfs:
 ## Tenant_A ##
+    TENANT_A_PROJECT01:
+      router_id: 192.168.255.10
+      rd: "192.168.255.10:11"
+      route_targets:
+        import:
+          address_family: evpn
+          asn: "11:11"
+        export:
+          address_family: evpn
+          asn: "11:11"
+      neighbors:
+        10.255.251.12:
+          peer_group: MLAG-IPv4-UNDERLAY-PEER
+      redistribute_routes:
+        - connected
 ## Tenant_B ##
 
 ### Routing - OSPF ###

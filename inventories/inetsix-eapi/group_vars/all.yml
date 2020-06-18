@@ -6,9 +6,9 @@ ansible_httpapi_use_ssl: true
 ansible_httpapi_validate_certs: false
 
 ansible_network_os: eos
-ansible_user: admin
-ansible_ssh_pass: arista123
+ansible_user: ansible
+ansible_ssh_pass: ansible
 ansible_become: yes
 ansible_become_method: enable
 
-ansible_host: 10.73.1.17
+ansible_host: 10.73.1.241

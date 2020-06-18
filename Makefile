@@ -139,7 +139,23 @@ container-delete: ## Remove DC2 container topology from CVP.
 
 .PHONY: dhcp-configure
 dhcp-configure: ## Configure DHCP server with topology information.
-	ansible-playbook playbooks/dc1-ztp-configuration.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/dhcp-configuration.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+
+.PHONY: dhcp-generate
+dhcp-generate: ## Generate DHCPd configuration
+	ansible-playbook playbooks/dhcp-generate-dhcpd-conf.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+
+################################################################################
+# Tooling Management
+################################################################################
+
+.PHONY: centos-bootstrap
+centos-bootstrap: ## Initial Centos 7 Configuration
+	ansible-playbook playbooks/centos07-bootstrap.yml -i $(TOOLS)/$(INVENTORY_FILE)
+
+.PHONY: dhcp-bootstrap
+dhcp-bootstrap: ## Configure DHCP service
+	ansible-playbook playbooks/dhcp-configuration.yml -i $(TOOLS)/$(INVENTORY_FILE)
 
 ################################################################################
 # Tooling Management

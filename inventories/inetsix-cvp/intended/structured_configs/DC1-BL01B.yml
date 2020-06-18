@@ -22,6 +22,9 @@ leaf_mlag_ip: 13
 leaf_mlag_peer_ip: 12
 leaf_mlag_peer_id: 7
 
+service_routing_protocols_model: multi-agent
+ip_routing: true
+
 ### Hardware Counters
 hardware_counters:
 
@@ -270,8 +273,8 @@ mlag_configuration:
     vrf: MGMT
   dual_primary_detection_delay: 5
   peer_link: Port-Channel3
-  reload_delay_mlag: 360
-  reload_delay_non_mlag: 300
+  reload_delay_mlag: 300
+  reload_delay_non_mlag: 330
 
 ### route-maps ###
 route_maps:
@@ -301,7 +304,7 @@ router_bgp:
       type: evpn
       remote_as: 65001
       update_source: Loopback0
-      fall_over_bfd: true
+      bfd: true
       ebgp_multihop: 3
       password: "q+VNViP5i4rVjW1cxFv2wA=="
       send_community: true
@@ -327,6 +330,22 @@ router_bgp:
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
+      IPv4-UNDERLAY-PEERS:
+        activate: false
+      MLAG-IPv4-UNDERLAY-PEER:
+        activate: false
+  address_family_ipv4:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: false
+      IPv4-UNDERLAY-PEERS:
+        activate: true
+      MLAG-IPv4-UNDERLAY-PEER:
+        activate: true
   vlan_aware_bundles:
 ## Tenant_A ##
 ## Tenant_B ##

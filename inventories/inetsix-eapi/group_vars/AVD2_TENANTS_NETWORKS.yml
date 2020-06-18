@@ -8,10 +8,13 @@ tenants:
     vrfs:
       TENANT_A_PROJECT01:
         vrf_vni: 11
+        vtep_diagnostic:
+          loopback: 101
+          loopback_ip_range: 10.1.255.0/24
         svis:
           110:
             name: 'PR01-DMZ'
-            tags: [DC1]
+            tags: [POD01]
             enabled: true
             ip_address_virtual: 10.1.10.254/24
           111:
@@ -22,7 +25,7 @@ tenants:
       TENANT_A_PROJECT02:
         vrf_vni: 12
         vtep_diagnostic:
-          loopback: 100
+          loopback: 102
           loopback_ip_range: 10.1.255.0/24
         svis:
           112:

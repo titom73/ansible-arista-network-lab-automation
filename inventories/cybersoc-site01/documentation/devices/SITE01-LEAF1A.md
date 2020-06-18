@@ -32,12 +32,12 @@ TerminAttr Daemon not defined
 
 | Policy Allocation | Range Beginning | Range Ending |
 | ------------------| --------------- | ------------ |
-| ascending | 1006 | 1199 |
+| descending | 4000 | 4050 |
 
 ### Internal VLAN Allocation Policy Configuration
 
 ```eos
-vlan internal order ascending range 1006 1199
+vlan internal order descending range 4000 4050
 !
 ```
 
@@ -47,12 +47,14 @@ vlan internal order ascending range 1006 1199
 
 | Name Server | Source VRF |
 | ----------- | ---------- |
-| 10.255.1.1 | MGMT |
+| 1.1.1.1 | MGMT |
+| 8.8.8.8 | MGMT |
 
 ### Name Servers Device Configuration
 
 ```eos
-ip name-server vrf MGMT 10.255.1.1
+ip name-server vrf MGMT 1.1.1.1
+ip name-server vrf MGMT 8.8.8.8
 !
 ```
 
@@ -65,13 +67,15 @@ VRF: MGMT
 
 | Node | Primary |
 | ---- | ------- |
-| 10.255.1.1 | True |
+| uk.pool.ntp.org | True |
+| fr.pool.ntp.org | - |
 
 ### NTP Device Configuration
 
 ```eos
 ntp local-interface vrf MGMT Management1
-ntp server vrf MGMT 10.255.1.1 prefer
+ntp server vrf MGMT uk.pool.ntp.org prefer
+ntp server vrf MGMT fr.pool.ntp.org
 !
 ```
 
@@ -109,8 +113,6 @@ AAA Not Configured
 | admin | 15 | network-admin |
 | ansible | 15 | network-admin |
 | christophe | 15 | network-admin |
-| cvpadmin | 15 | network-admin |
-| demo | 15 | network-admin |
 | khelil | 15 | network-admin |
 | tom | 15 | network-admin |
 
@@ -120,8 +122,6 @@ AAA Not Configured
 username admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
 username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username christophe privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
-username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
-username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username khelil privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username tom privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 !
@@ -202,6 +202,7 @@ bfd multihop interval 1200 min_rx 1200 multiplier 3
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | VRF | IP Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | --- | ---------- |
 | Port-Channel3 | MLAG_PEER_SITE01-LEAF1B_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - |
+| Port-Channel5 | POD01-SRV_PortChannel5 | 1500 | switched | access | 110 | - | 5 | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -212,6 +213,11 @@ interface Port-Channel3
    switchport mode trunk
    switchport trunk group LEAF_PEER_L3
    switchport trunk group MLAG
+!
+interface Port-Channel5
+   description POD01-SRV_PortChannel5
+   switchport access vlan 110
+   mlag 5
 !
 ```
 
@@ -225,6 +231,7 @@ interface Port-Channel3
 | Ethernet2 | P2P_LINK_TO_SITE01-SPINE2_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.255.3/31 | - | - |
 | Ethernet3 | MLAG_PEER_SITE01-LEAF1B_Ethernet3 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
 | Ethernet4 | MLAG_PEER_SITE01-LEAF1B_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
+| Ethernet5 | POD01-SRV_Eth1 | *1500 | *switched | *access | *110 | - | - | - | 5 | active |
 
 *Inherited from Port-Channel Interface
 
@@ -248,6 +255,10 @@ interface Ethernet3
 interface Ethernet4
    description MLAG_PEER_SITE01-LEAF1B_Ethernet4
    channel-group 3 mode active
+!
+interface Ethernet5
+   description POD01-SRV_Eth1
+   channel-group 5 mode active
 !
 ```
 
@@ -360,11 +371,15 @@ ip virtual-router mac-address 00:1c:73:00:dc:01
 
 | VRF | Destination Prefix | Fowarding Address / Interface |
 | --- | ------------------ | ----------------------------- |
+| MGMT | 10.255.2.0/24 | 10.255.1.1 |
+| MGMT | 10.255.3.0/24 | 10.255.1.1 |
 | MGMT | 0.0.0.0/0 | 10.255.1.1 |
 
 ### Static Routes Device Configuration
 
 ```eos
+ip route vrf MGMT 10.255.2.0/24 10.255.1.1
+ip route vrf MGMT 10.255.3.0/24 10.255.1.1
 ip route vrf MGMT 0.0.0.0/0 10.255.1.1
 !
 ```

@@ -106,7 +106,6 @@ AAA Not Configured
 
 | User | Privilege | role |
 | ---- | --------- | ---- |
-| admin | 15 | network-admin |
 | ansible | 15 | network-admin |
 | cvpadmin | 15 | network-admin |
 | demo | 15 | network-admin |
@@ -114,7 +113,6 @@ AAA Not Configured
 ### Local Users Device Configuration
 
 ```eos
-username admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
 username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
 username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
@@ -208,7 +206,7 @@ bfd multihop interval 1200 min_rx 1200 multiplier 3
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | VRF | IP Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | --- | ---------- |
 | Port-Channel3 | MLAG_PEER_AVD2-LEAF1B_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - |
-| Port-Channel5 | AVD2_L2LEAF1_Po1 | 1500 | switched | trunk | 110,201 | - | 5 | - | - |
+| Port-Channel5 | AVD2_L2LEAF1_Po1 | 1500 | switched | trunk | 110,112 | - | 5 | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -222,7 +220,7 @@ interface Port-Channel3
 !
 interface Port-Channel5
    description AVD2_L2LEAF1_Po1
-   switchport trunk allowed vlan 110,201
+   switchport trunk allowed vlan 110,112
    switchport mode trunk
    mlag 5
 !
@@ -238,7 +236,7 @@ interface Port-Channel5
 | Ethernet2 | P2P_LINK_TO_AVD2-SPINE2_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.255.3/31 | - | - |
 | Ethernet3 | MLAG_PEER_AVD2-LEAF1B_Ethernet3 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
 | Ethernet4 | MLAG_PEER_AVD2-LEAF1B_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
-| Ethernet5 | AVD2-AGG01_Ethernet1 | *1500 | *switched | *trunk | *110,201 | - | - | - | 5 | active |
+| Ethernet5 | AVD2-AGG01_Ethernet1 | *1500 | *switched | *trunk | *110,112 | - | - | - | 5 | active |
 
 *Inherited from Port-Channel Interface
 
@@ -277,7 +275,8 @@ interface Ethernet5
 | --------- | ----------- | --- | ---------- |
 | Loopback0 | EVPN_Overlay_Peering | Global Routing Table | 192.168.255.3/32 |
 | Loopback1 | VTEP_VXLAN_Tunnel_Source | Global Routing Table | 192.168.254.3/32 |
-| Loopback100 | TENANT_A_PROJECT02_VTEP_DIAGNOSTICS | TENANT_A_PROJECT02 | 10.1.255.3/32 |
+| Loopback101 | TENANT_A_PROJECT01_VTEP_DIAGNOSTICS | TENANT_A_PROJECT01 | 10.1.255.3/32 |
+| Loopback102 | TENANT_A_PROJECT02_VTEP_DIAGNOSTICS | TENANT_A_PROJECT02 | 10.1.255.3/32 |
 
 ### Loopback Interfaces Device Configuration
 
@@ -290,7 +289,12 @@ interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    ip address 192.168.254.3/32
 !
-interface Loopback100
+interface Loopback101
+   description TENANT_A_PROJECT01_VTEP_DIAGNOSTICS
+   vrf TENANT_A_PROJECT01
+   ip address 10.1.255.3/32
+!
+interface Loopback102
    description TENANT_A_PROJECT02_VTEP_DIAGNOSTICS
    vrf TENANT_A_PROJECT02
    ip address 10.1.255.3/32
@@ -390,12 +394,14 @@ interface Vxlan1
 
 | Source NAT VRF | Source NAT IP Address |
 | -------------- | --------------------- |
+| TENANT_A_PROJECT01 | 10.1.255.3 |
 | TENANT_A_PROJECT02 | 10.1.255.3 |
 
 ### Virtual Router MAC Address Device and Virtual Source NAT Configuration
 
 ```eos
 ip virtual-router mac-address 00:1c:73:00:dc:01
+ip address virtual source-nat vrf TENANT_A_PROJECT01 address 10.1.255.3
 ip address virtual source-nat vrf TENANT_A_PROJECT02 address 10.1.255.3
 !
 ```

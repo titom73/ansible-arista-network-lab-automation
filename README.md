@@ -40,10 +40,14 @@
       - [Build Docker image](#build-docker-image)
       - [Run Docker container](#run-docker-container)
     - [Expose eAPI port with Jumphost](#expose-eapi-port-with-jumphost)
+  - [Tool Servers](#tool-servers)
+    - [Centos 7 Servers](#centos-7-servers)
+      - [Bootstrap servers](#bootstrap-servers)
+      - [Configure DHCP Server](#configure-dhcp-server)
 
 ## Topology
 
-![Topology](inventories/inetsix/media/lab-topology.png)
+![Topology](inventories/inetsix-cvp/media/lab-topology.png)
 
 ## Setup
 
@@ -410,4 +414,31 @@ iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8022 -j DNAT --to-destinati
 iptables -A FORWARD -p tcp -d 10.73.254.0/24 --dport 443 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 
 $ sudo sh iptables-port-forward.sh
+```
+
+## Tool Servers
+
+- Inventories are all under [`inventories/tools/`](inventories/tools/)
+- Inventory variable is `$(TOOLS)`
+
+### Centos 7 Servers
+
+#### Bootstrap servers
+
+```shell
+# Makefile
+$ make centos-bootstrap
+
+# ansible command
+$ ansible-playbook playbooks/centos07-bootstrap.yml -i $(TOOLS)/$(INVENTORY_FILE)
+```
+
+#### Configure DHCP Server
+
+```shell
+# Makefile
+$ make dhcp-bootstrap
+
+# ansible command
+$ ansible-playbook playbooks/dhcp-configuration.yml -i $(TOOLS)/$(INVENTORY_FILE)
 ```

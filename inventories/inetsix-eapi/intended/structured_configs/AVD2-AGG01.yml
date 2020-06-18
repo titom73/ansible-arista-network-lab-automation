@@ -9,10 +9,10 @@ switch_platform: vEOS-LAB
 leaf_id: 9
 switch_mgmt_ip: 10.73.254.21/24
 leaf_filter_tenants: ['Tenant_A', 'Tenant_B']
-leaf_filter_tags: ['DC1']
-leaf_allowed_vrfs: ['TENANT_A_PROJECT01']
-leaf_allowed_svis: [110]
-leaf_allowed_vlans: [110, 201]
+leaf_filter_tags: ['POD01', "DC1'"]
+leaf_allowed_vrfs: ['TENANT_A_PROJECT01', 'TENANT_A_PROJECT02']
+leaf_allowed_svis: [110, 112]
+leaf_allowed_vlans: [110, 112]
 leaf_mlag: False
 
 ### Hardware Counter
@@ -71,10 +71,6 @@ aaa_authorization:
 
 ### local users ###
 local_users:
-  admin:
-    privilege: 15
-    role: network-admin
-    sha512_password: $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
   ansible:
     privilege: 15
     role: network-admin
@@ -98,10 +94,10 @@ vlans:
   110:
     tenant: Tenant_A
     name: PR01-DMZ
+  112:
+    tenant: Tenant_A
+    name: PR02-DMZ-ORANGE
 ## Tenant_B ##
-  201:
-    tenant: Tenant_B
-    name: B-ELAN-201
 
 ### VRFs ###
 vrfs:
@@ -111,7 +107,7 @@ vrfs:
 port_channel_interfaces:
   Port-Channel1:
     description: AVD2-LEAF1A_Po5
-    vlans: 110,201
+    vlans: 110,112
     mode: trunk
     mlag: 1
 
@@ -135,6 +131,14 @@ ethernet_interfaces:
     channel_group:
       id: 1
       mode: active
+  Ethernet3:
+    peer: SRV-POD01
+    peer_interface: Eth1
+    peer_type: server
+    description: SRV-POD01_Eth1
+    mode: trunk
+    vlans: 110-111
+    profile: TENANT-A-PR01
 
 ### Management Interfaces ###
 management_interfaces:
