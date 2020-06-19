@@ -14,9 +14,10 @@ FACTS_LOG ?= ../cvp-debug-logs/arista.cvp.facts.json
 
 ### Docker variables
 CURRENT_DIR = $(shell pwd)
-DOCKER_NAME ?= avdteam/lab
-DOCKER_TAG ?= latest
+DOCKER_NAME ?= avdteam/base
+DOCKER_TAG ?= 3.8-devel
 AVD_REPOSITORY ?= ../ansible-avd/development/
+ANSIBLE_VERSION ?=
 
 .PHONY: help
 help: ## Display help message (*: main entry points / []: part of an entry point)
@@ -158,18 +159,6 @@ dhcp-bootstrap: ## Configure DHCP service
 	ansible-playbook playbooks/dhcp-configuration.yml -i $(TOOLS)/$(INVENTORY_FILE)
 
 ################################################################################
-# Tooling Management
-################################################################################
-
-.PHONY: centos-bootstrap
-centos-bootstrap: ## Initial Centos 7 Configuration
-	ansible-playbook playbooks/centos07-bootstrap.yml -i $(TOOLS)/$(INVENTORY_FILE)
-
-.PHONY: dhcp-bootstrap
-dhcp-bootstrap: ## Configure DHCP service
-	ansible-playbook playbooks/dhcp-configuration.yml -i $(TOOLS)/$(INVENTORY_FILE)
-
-################################################################################
 # Repository Management
 ################################################################################
 
@@ -187,12 +176,4 @@ repo-clean: ## Delete previously generated outputs
 
 .PHONY: docker-run
 docker-run: ## Connect to docker container
-	docker run -it --rm -v $(CURRENT_DIR)/../:/projects $(DOCKER_NAME):$(DOCKER_TAG) $(SHELL)
-
-.PHONY: docker-inetsix
-docker-inetsix: ## Connect to docker container (inetsix/ansible)
-	docker run -it --rm -v $(CURRENT_DIR)/../:/projects inetsix/ansible $(SHELL)
-
-.PHONY: docker-build
-docker-build: ## Build docker image based on latest supported Python version
-	docker build -f $(AVD_REPOSITORY)/Dockerfile -t $(DOCKER_NAME):$(DOCKER_TAG) $(AVD_REPOSITORY)
+	docker run -it --rm -e AVD_ANSIBLE=$(ANSIBLE_VERSION) -v $(CURRENT_DIR)/../:/projects $(DOCKER_NAME):$(DOCKER_TAG)
