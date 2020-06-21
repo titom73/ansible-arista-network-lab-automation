@@ -15,7 +15,7 @@ FACTS_LOG ?= ../cvp-debug-logs/arista.cvp.facts.json
 ### Docker variables
 CURRENT_DIR = $(shell pwd)
 DOCKER_NAME ?= avdteam/base
-DOCKER_TAG ?= 3.8-devel
+DOCKER_TAG ?= 3.6
 AVD_REPOSITORY ?= ../ansible-avd/development/
 ANSIBLE_VERSION ?=
 
