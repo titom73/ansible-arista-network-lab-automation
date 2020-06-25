@@ -11,12 +11,14 @@ all:
           ansible_host: 13.57.219.206
           ansible_user: arista
           ansible_password: arista
-    CVP:
+    ZTP:
       hosts:
         cv_ztp:
           ansible_host: 10.83.28.164
           ansible_user: root
           ansible_password: ansible
+    CVP:
+      hosts:
         cv_server:
           ansible_host: 10.83.28.164
           ansible_user: ansible

@@ -168,4 +168,4 @@ bfd_multihop:
 #       - ASE_GLOBAL-ALIASES
 #   devices:
 #     DC1-L2LEAF1A:
-#       - ASE_DEVICE-ALIASES.conf
+#       - ASE_DEVICE-ALIASES
