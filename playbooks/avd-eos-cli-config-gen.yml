@@ -1,0 +1,13 @@
+---
+- name: Build Switch configuration
+  hosts: all
+  connection: local
+  gather_facts: no
+  collections:
+    - arista.avd
+    - arista.cvp
+  tasks:
+    - name: generate device intended config and documention
+      tags: [build]
+      import_role:
+         name: eos_cli_config_gen

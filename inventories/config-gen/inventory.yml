@@ -1,0 +1,7 @@
+all:
+  children:
+# DC1_Fabric - EVPN DC1 Fabric running in lab
+    DC1:
+      hosts:
+        DC1-SP1:
+        DC1-BL1:

@@ -101,6 +101,22 @@ eapi-build-isis: ## Run ansible playbook to build EVPN Fabric configuration for 
 eapi-deploy-isis: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with ISIS underlay
 	ansible-playbook playbooks/avd-eapi-generic.yml --tags "build, deploy" --extra-vars "underlay_routing_protocol=ISIS" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
+.PHONY: eapi-build-ospf
+eapi-build-ospf: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with OSPF underlay
+	ansible-playbook playbooks/avd-eapi-generic.yml --tags build --tags build --extra-vars "underlay_routing_protocol=OSPF" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
+.PHONY: eapi-deploy-ospf
+eapi-deploy-ospf: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with OSPF underlay
+	ansible-playbook playbooks/avd-eapi-generic.yml --tags "build, deploy" --extra-vars "underlay_routing_protocol=OSPF" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
+################################################################################
+# AVD Commands for eos_cli_config_gen role
+################################################################################
+
+.PHONY: cli-config-gen
+cli-config-gen: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with OSPF underlay
+	ansible-playbook playbooks/avd-eos-cli-config-gen.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
 ################################################################################
 # AVD Commands for Generic Inventory and NO CV instance
 ################################################################################
