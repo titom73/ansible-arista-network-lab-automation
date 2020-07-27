@@ -1,5 +1,5 @@
 ---
-- name: Clenup CVP in default configuration
+- name: Cleanup CVP in default configuration
   hosts: cv_server
   connection: local
   gather_facts: false
