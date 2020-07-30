@@ -186,6 +186,10 @@ repo-rebuild: ## Delete previously generated outputs
 repo-clean: ## Delete previously generated outputs
 	sh playbooks/repository-cleanup.sh
 
+.PHONY: log-clean
+log-clean: ## log-clean description
+	rm -f cvp-debug-logs/arista.cvp.debug.log*
+
 ################################################################################
 # Docker Runner
 ################################################################################
