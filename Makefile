@@ -3,7 +3,7 @@ SHELL := /bin/zsh
 
 ### Ansible variables
 # Inventory for EOS playbooks
-INVENTORY ?= inventories/cybersoc-site01
+INVENTORY ?= inventories/inetsix-cvp
 # Inventory for Linux tool box
 TOOLS ?= inventories/tools/inetsix-eapi
 # Default Inventory file to look for
@@ -92,6 +92,10 @@ eapi-deploy: ## Run ansible playbook to build EVPN Fabric configuration for gene
 .PHONY: eapi-check
 eapi-check: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
 	ansible-playbook playbooks/avd-eapi-generic.yml --tags "build, deploy" -i $(INVENTORY)/$(INVENTORY_FILE) --check --diff
+
+.PHONY: eapi-states-validation
+eapi-states-validation: ## eapi-states-validation description
+	ansible-playbook playbooks/avd-eapi-states-validation.yml -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: eapi-build-isis
 eapi-build-isis: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with ISIS underlay
