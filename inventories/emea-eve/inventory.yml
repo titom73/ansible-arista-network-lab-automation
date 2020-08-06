@@ -1,0 +1,66 @@
+---
+all:
+  children:
+    ZTP:
+      hosts:
+        cv_ztp:
+          ansible_host: 10.83.28.162
+          ansible_user: root
+          ansible_password: interdata
+    CVP:
+      hosts:
+        cv_server:
+          ansible_host: 10.83.28.164
+          ansible_user: ansible
+          ansible_password: interdata
+    # DC1_Fabric - EVPN Fabric running in home lab
+    DC1:
+      vars:
+        ansible_user: ansible
+        # should use vault for passwords
+        ansible_ssh_pass: ansible
+        ansible_become: true
+        ansible_become_method: enable
+        ansible_httpapi_validate_certs: false
+        ansible_host: 10.83.28.162
+      children:
+        DC1_FABRIC:
+          children:
+            DC1_SPINES:
+              hosts:
+                DC1-SPINE1:
+                  ansible_port: 8011
+                DC1-SPINE2:
+                  ansible_port: 8012
+            DC1_L3LEAFS:
+              children:
+                DC1_LEAF1:
+                  hosts:
+                    DC1-LEAF1A:
+                      ansible_port: 8013
+                    DC1-LEAF1B:
+                      ansible_port: 8014
+                DC1_LEAF2:
+                  hosts:
+                    DC1-LEAF2A:
+                      ansible_port: 8015
+                    DC1-LEAF2B:
+                      ansible_port: 8016
+            DC1_L2LEAFS:
+              children:
+                DC1_L2LEAF1:
+                  hosts:
+                    DC1-L2LEAF1A:
+                      ansible_port: 8017
+                DC1_L2LEAF2:
+                  hosts:
+                    DC1-L2LEAF2A:
+                      ansible_port: 8018
+        DC1_TENANTS_NETWORKS:
+          children:
+            DC1_L3LEAFS:
+            DC1_L2LEAFS:
+        DC1_SERVERS:
+          children:
+            DC1_L3LEAFS:
+            DC1_L2LEAFS:

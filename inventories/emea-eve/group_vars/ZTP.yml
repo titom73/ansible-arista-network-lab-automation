@@ -1,0 +1,43 @@
+---
+ztp:
+  default:
+    registration: 'http://10.83.28.164/ztp/bootstrap'
+    gateway: 10.73.0.1
+    nameservers:
+      - '1.1.1.1'
+  general:
+    subnets:
+      - network: 10.73.0.0
+        netmask: 255.255.0.0
+        gateway: 10.73.0.1
+        nameservers:
+          - '1.1.1.1'
+        start: 10.73.255.200
+        end: 10.73.255.250
+        lease_time: 300
+  clients:
+  # AVD/CVP Integration
+    - name: DC1-SPINE1
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.73.1.11
+    - name: DC1-SPINE2
+      mac: 0c:1d:c0:1d:62:02
+      ip4: 10.73.1.12
+    - name: DC1-LEAF1A
+      mac: 0c:1d:c0:1d:62:11
+      ip4: 10.73.1.13
+    - name: DC1-LEAF1B
+      mac: 0c:1d:c0:1d:62:12
+      ip4: 10.73.1.14
+    - name: DC1-LEAF2A
+      mac: 0c:1d:c0:1d:62:21
+      ip4: 10.73.1.15
+    - name: DC1-LEAF2B
+      mac: 0c:1d:c0:1d:62:22
+      ip4: 10.73.1.16
+    - name: DC1-L2LEAF1A
+      mac: 0c:1d:c0:1d:62:13
+      ip4: 10.73.1.17
+    - name: DC1-L2LEAF2A
+      mac: 0c:1d:c0:1d:62:23
+      ip4: 10.73.1.18
