@@ -8,7 +8,7 @@ IPv4
 
 | Management Interface | description | VRF | IP Address | Gateway |
 | -------------------- | ----------- | --- | ---------- | ------- |
-| Management1 | oob_management | MGMT | 10.255.0.12/24 | 10.255.0.3 |
+| Management1 | oob_management | MGMT | 10.73.1.12/16 | 10.73.0.1 |
 
 IPv6
 
@@ -22,7 +22,7 @@ IPv6
 interface Management1
    description oob_management
    vrf MGMT
-   ip address 10.255.0.12/24
+   ip address 10.73.1.12/16
 !
 ```
 
@@ -39,16 +39,20 @@ Aliases not defined
 
 | CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF |
 | -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- |
-| gzip | 10.255.0.1:9910 |  | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT |
+| gzip | 10.83.28.164:9910 |  | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT |
 
 ### TerminAttr Daemon Device Configuration
 
 ```eos
 daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=10.255.0.1:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
+   exec /usr/bin/TerminAttr -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
    no shutdown
 !
 ```
+
+## IP DHCP Relay
+
+IP DHCP Relay not defined
 
 ## Internal VLAN allocation Policy
 
@@ -82,12 +86,12 @@ DNS domain lookup not defined
 
 | Name Server | Source VRF |
 | ----------- | ---------- |
-| 10.255.0.3 | MGMT |
+| 1.1.1.1 | MGMT |
 
 ### Name Servers Device Configuration
 
 ```eos
-ip name-server vrf MGMT 10.255.0.3
+ip name-server vrf MGMT 1.1.1.1
 !
 ```
 
@@ -106,13 +110,13 @@ VRF: MGMT
 
 | Node | Primary |
 | ---- | ------- |
-| 10.255.0.3 | true |
+| fr.pool.ntp.org | true |
 
 ### NTP Device Configuration
 
 ```eos
 ntp local-interface vrf MGMT Management1
-ntp server vrf MGMT 10.255.0.3 prefer
+ntp server vrf MGMT fr.pool.ntp.org prefer
 !
 ```
 
@@ -168,15 +172,13 @@ AAA accounting not defined
 | admin | 15 | network-admin |
 | ansible | 15 | network-admin |
 | cvpadmin | 15 | network-admin |
-| demo | 15 | network-admin |
 
 ### Local Users Device Configuration
 
 ```eos
 username admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
-username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
+username ansible privilege 15 role network-admin secret sha512 $6$ZMTiXhLqBo7v1si1$sytOdfL9pAFj4paRrqnQeolINyi1zTrBECVQimMvYRAR5wL8RQa02Qet9Jz7D6PXANdb.CEyeVrLbWv8INv7K0
 username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
-username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 !
 ```
 
@@ -299,12 +301,12 @@ Standard Access-lists not defined
 
 | VRF | Destination Prefix | Fowarding Address / Interface |
 | --- | ------------------ | ----------------------------- |
-| MGMT | 0.0.0.0/0 | 10.255.0.3 |
+| MGMT | 0.0.0.0/0 | 10.73.0.1 |
 
 ### Static Routes Device Configuration
 
 ```eos
-ip route vrf MGMT 0.0.0.0/0 10.255.0.3
+ip route vrf MGMT 0.0.0.0/0 10.73.0.1
 !
 ```
 
@@ -366,6 +368,10 @@ IPv6 Prefix lists not defined
 ## MLAG
 
 MLAG not defined
+
+## Community Lists
+
+Community Lists not defined
 
 ## Route Maps
 
@@ -448,11 +454,21 @@ router bfd
 | ebgp multihop | 3 |
 | send community | true |
 | maximum routes | 0 (no limit) |
+**IPv4-UNDERLAY-PEERS**:
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | ipv4 |
+| maximum routes | 12000 |
 
 ### BGP Neighbors
 
 | Neighbor | Remote AS |
 | -------- | ---------
+| 172.31.255.3 | 65101 |
+| 172.31.255.7 | 65101 |
+| 172.31.255.11 | 65102 |
+| 172.31.255.15 | 65102 |
 | 192.168.255.3 | 65101 |
 | 192.168.255.4 | 65101 |
 | 192.168.255.5 | 65102 |
@@ -485,6 +501,17 @@ router bgp 65001
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor IPv4-UNDERLAY-PEERS peer group
+   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
+   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
+   neighbor 172.31.255.3 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.3 remote-as 65101
+   neighbor 172.31.255.7 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.7 remote-as 65101
+   neighbor 172.31.255.11 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.11 remote-as 65102
+   neighbor 172.31.255.15 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.15 remote-as 65102
    neighbor 192.168.255.3 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.3 remote-as 65101
    neighbor 192.168.255.4 peer group EVPN-OVERLAY-PEERS
@@ -493,12 +520,15 @@ router bgp 65001
    neighbor 192.168.255.5 remote-as 65102
    neighbor 192.168.255.6 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.6 remote-as 65102
+   redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
+      no neighbor IPv4-UNDERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
+      neighbor IPv4-UNDERLAY-PEERS activate
 !
 ```
 
@@ -521,3 +551,7 @@ Management Security not defined
 ## Platform
 
 No Platform parameters defined
+
+## Router ISIS
+
+Router ISIS not defined

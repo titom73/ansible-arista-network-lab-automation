@@ -49,10 +49,10 @@ spine:
   nodes:
     DC1-SPINE1:
       id: 1
-      mgmt_ip: 10.73.1.11/16
+      mgmt_ip: 10.255.0.11/24
     DC1-SPINE2:
       id: 2
-      mgmt_ip: 10.73.1.12/16
+      mgmt_ip: 10.255.0.12/24
 
 # Leaf switch groups
 # A maximum of two nodes can form a leaf group
@@ -80,22 +80,22 @@ l3leaf:
       nodes:
         DC1-LEAF1A:
           id: 1
-          mgmt_ip: 10.73.1.13/16
+          mgmt_ip: 10.255.0.13/24
           spine_interfaces: [Ethernet1, Ethernet1]
         DC1-LEAF1B:
           id: 2
-          mgmt_ip: 10.73.1.14/16
+          mgmt_ip: 10.255.0.14/24
           spine_interfaces: [Ethernet2, Ethernet2]
     DC1_LEAF2:
       bgp_as: 65102
       nodes:
         DC1-LEAF2A:
           id: 3
-          mgmt_ip: 10.73.1.15/16
+          mgmt_ip: 10.255.0.15/24
           spine_interfaces: [Ethernet3, Ethernet3]
         DC1-LEAF2B:
           id: 4
-          mgmt_ip: 10.73.1.16/16
+          mgmt_ip: 10.255.0.16/24
           spine_interfaces: [Ethernet4, Ethernet4]
 
 
@@ -117,7 +117,7 @@ l2leaf:
       nodes:
         DC1-L2LEAF1A:
           id: 5
-          mgmt_ip: 10.73.1.17/16
+          mgmt_ip: 10.255.0.17/24
           l3leaf_interfaces: [ Ethernet5, Ethernet5 ]
     DC1_L2LEAF2:
       parent_l3leafs: [ DC1-LEAF2A, DC1-LEAF2B ]
@@ -127,7 +127,7 @@ l2leaf:
       nodes:
         DC1-L2LEAF2A:
           id: 7
-          mgmt_ip: 10.73.1.18/16
+          mgmt_ip: 10.255.0.18/24
           l3leaf_interfaces: [ Ethernet5, Ethernet5 ]
 
 #### Override for vEOS Lab Caveats ####
