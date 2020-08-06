@@ -1,0 +1,43 @@
+---
+# DC1 Tenants Networks
+# Documentation of Tenant specific information - Vlans/VRFs
+tenants:
+  # Tenant A Specific Information - VRFs / VLANs
+  Tenant_A:
+    mac_vrf_vni_base: 10000
+    vrfs:
+      TENANT_A_PROJECT01:
+        vrf_vni: 11
+        vtep_diagnostic:
+          loopback: 101
+          loopback_ip_range: 10.1.255.0/24
+        svis:
+          110:
+            name: 'PR01-DMZ'
+            tags: [POD01]
+            enabled: true
+            ip_address_virtual: 10.1.10.254/24
+          111:
+            name: 'PR01-TRUST'
+            tags: [POD02]
+            enabled: true
+            ip_address_virtual: 10.1.11.254/24
+      TENANT_A_PROJECT02:
+        vrf_vni: 12
+        vtep_diagnostic:
+          loopback: 102
+          loopback_ip_range: 10.1.255.0/24
+        svis:
+          112:
+            name: 'PR02-DMZ-ORANGE'
+            tags: [POD01]
+            enabled: true
+            ip_address_virtual: 10.1.12.254/24
+
+# Tenant B Specific Information - Pure L2 tenant
+  Tenant_B:
+    mac_vrf_vni_base: 20000
+    l2vlans:
+      201:
+        name: 'B-ELAN-201'
+        tags: [DC1]
