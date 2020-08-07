@@ -1,8 +1,8 @@
 ---
 port_profiles:
-  TENANT_A_B:
+  ALL:
     mode: trunk
-    vlans: "110-111,210-211"
+    vlans: "1-4093"
   TENANT_A:
     mode: access
     vlans: "110"
@@ -18,7 +18,7 @@ servers:
         server_ports: [Eth0]
         switch_ports: [Ethernet5]
         switches: [DC1-L2LEAF1A]
-        profile: TENANT_A
+        profile: ALL
   server02:
     rack: RackA
     adapters:
@@ -26,4 +26,4 @@ servers:
         server_ports: [Eth0]
         switch_ports: [Ethernet5]
         switches: [DC1-L2LEAF2A]
-        profile: TENANT_A
+        profile: ALL
