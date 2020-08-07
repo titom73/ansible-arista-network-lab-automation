@@ -49,6 +49,16 @@ all:
                       ansible_port: 8005
                     DC1-LEAF2B:
                       ansible_port: 8006
+                DC1_LEAF3:
+                  hosts:
+                    DC1-LEAF3A:
+                      ansible_port: 8011
+                DC1_BL1:
+                  hosts:
+                    DC1-BL1A:
+                      ansible_port: 8012
+                    DC1-BL1B:
+                      ansible_port: 8013
             DC1_L2LEAFS:
               children:
                 DC1_L2LEAF1:
@@ -67,5 +77,4 @@ all:
           children:
             DC1_L3LEAFS:
             DC1_L2LEAFS:
-
 ```

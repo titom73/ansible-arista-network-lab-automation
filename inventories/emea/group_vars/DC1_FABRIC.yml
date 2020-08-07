@@ -97,7 +97,24 @@ l3leaf:
           id: 4
           mgmt_ip: 10.73.1.16/16
           spine_interfaces: [Ethernet4, Ethernet4]
-
+    DC1_LEAF3:
+      bgp_as: 65102
+      nodes:
+        DC1-LEAF3A:
+          id: 8
+          mgmt_ip: 10.73.1.21/16
+          spine_interfaces: [Ethernet5, Ethernet5]
+    DC1_BL1:
+      bgp_as: 65102
+      nodes:
+        DC1-BL1A:
+          id: 9
+          mgmt_ip: 10.73.1.22/16
+          spine_interfaces: [Ethernet6, Ethernet6]
+        DC1-BL1B:
+          id: 10
+          mgmt_ip: 10.73.1.23/16
+          spine_interfaces: [Ethernet7, Ethernet7]
 
 l2leaf:
   defaults:
