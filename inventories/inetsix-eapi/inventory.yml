@@ -55,3 +55,8 @@ AVD2:
       children:
         AVD2_L3LEAFS:
         AVD2_L2LEAFS:
+
+# Group to run arista.avd.eos_validate_state
+EOS:
+  children:
+    AVD2:

@@ -1,6 +1,7 @@
 ---
 - name: Audit Switch State based on AVD
-  hosts: all
+  hosts: EOS
+  connection: local
   collections:
     - arista.avd
     - arista.cvp
@@ -8,3 +9,6 @@
     - name: deploy configuration to device
       import_role:
          name: arista.avd.eos_validate_state
+      when:
+        - ansible_network_os is defined
+        - ansible_network_os == "eos"

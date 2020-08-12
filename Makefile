@@ -3,7 +3,7 @@ SHELL := /bin/zsh
 
 ### Ansible variables
 # Inventory for EOS playbooks
-INVENTORY ?= inventories/inetsix-cvp
+INVENTORY ?= inventories/emea
 # Inventory for Linux tool box
 TOOLS ?= inventories/tools/inetsix-eapi
 # Default Inventory file to look for
