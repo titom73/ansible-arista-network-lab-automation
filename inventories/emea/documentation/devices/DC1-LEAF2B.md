@@ -97,7 +97,15 @@ ip name-server vrf MGMT 1.1.1.1
 
 ## DNS Domain
 
-DNS domain not defined
+
+### DNS domain: eve.emea.lab
+
+### DNS Domain Device Configuration
+
+```eos
+dns domain eve.emea.lab
+!
+```
 
 ## NTP
 
@@ -195,19 +203,35 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
-| 727 | NYCNY5-FEEDOS-OVERLAY | none  |
-| 3017 | MLAG_iBGP_QH-NYCNY5-FEEDOS-OVERLAY | LEAF_PEER_L3  |
+| 110 | Tenant_A_OP_Zone_1 | none  |
+| 111 | Tenant_A_OP_Zone_2 | none  |
+| 114 | Tenant_A_OP_Zone_3 | none  |
+| 411 | Tenant_D_OP_Zone_1 | none  |
+| 412 | Tenant_D_OP_Zone_2 | none  |
+| 3009 | MLAG_iBGP_Tenant_A_OP_Zone | LEAF_PEER_L3  |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3  |
 | 4094 | MLAG_PEER | MLAG  |
 
 ### VLANs Device Configuration
 
 ```eos
-vlan 727
-   name NYCNY5-FEEDOS-OVERLAY
+vlan 110
+   name Tenant_A_OP_Zone_1
 !
-vlan 3017
-   name MLAG_iBGP_QH-NYCNY5-FEEDOS-OVERLAY
+vlan 111
+   name Tenant_A_OP_Zone_2
+!
+vlan 114
+   name Tenant_A_OP_Zone_3
+!
+vlan 411
+   name Tenant_D_OP_Zone_1
+!
+vlan 412
+   name Tenant_D_OP_Zone_2
+!
+vlan 3009
+   name MLAG_iBGP_Tenant_A_OP_Zone
    trunk group LEAF_PEER_L3
 !
 vlan 4093
@@ -227,14 +251,14 @@ vlan 4094
 | VRF Name | IP Routing |
 | -------- | ---------- |
 | MGMT |  disabled |
-| QH-NYCNY5-FEEDOS-OVERLAY |  enabled |
+| Tenant_A_OP_Zone |  enabled |
 
 ### VRF Instances Device Configuration
 
 ```eos
 vrf instance MGMT
 !
-vrf instance QH-NYCNY5-FEEDOS-OVERLAY
+vrf instance Tenant_A_OP_Zone
 !
 ```
 
@@ -242,10 +266,10 @@ vrf instance QH-NYCNY5-FEEDOS-OVERLAY
 
 ### Port-Channel Interfaces Summary
 
-| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | VRF | IP Address | IPv6 Address |
-| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | --- | ---------- | ------------ |
-| Port-Channel3 | MLAG_PEER_DC1-LEAF2A_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - | - |
-| Port-Channel5 | DC1_L2LEAF2_Po1 | 1500 | switched | trunk |  | - | 5 | - | - | - |
+| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
+| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
+| Port-Channel3 | MLAG_PEER_DC1-LEAF2A_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - | - | - |
+| Port-Channel5 | DC1_L2LEAF2_Po1 | 1500 | switched | trunk | 110-111,114 | - | 5 | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -259,7 +283,7 @@ interface Port-Channel3
 !
 interface Port-Channel5
    description DC1_L2LEAF2_Po1
-   switchport trunk allowed vlan 
+   switchport trunk allowed vlan 110-111,114
    switchport mode trunk
    mlag 5
 !
@@ -275,7 +299,7 @@ interface Port-Channel5
 | Ethernet2 | P2P_LINK_TO_DC1-SPINE2_Ethernet4 | 1500 | routed | access | - | - | - | 172.31.255.15/31 | - | - |
 | Ethernet3 | MLAG_PEER_DC1-LEAF2A_Ethernet3 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
 | Ethernet4 | MLAG_PEER_DC1-LEAF2A_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
-| Ethernet5 | DC1-L2LEAF2A_Ethernet2 | *1500 | *switched | *trunk | * | - | - | - | 5 | active |
+| Ethernet5 | DC1-L2LEAF2A_Ethernet2 | *1500 | *switched | *trunk | *110-111,114 | - | - | - | 5 | active |
 
 *Inherited from Port-Channel Interface
 
@@ -316,6 +340,7 @@ IPv4
 | --------- | ----------- | --- | ---------- |
 | Loopback0 | EVPN_Overlay_Peering | Global Routing Table | 192.168.255.6/32 |
 | Loopback1 | VTEP_VXLAN_Tunnel_Source | Global Routing Table | 192.168.254.5/32 |
+| Loopback100 | Tenant_A_OP_Zone_VTEP_DIAGNOSTICS | Tenant_A_OP_Zone | 10.255.1.6/32 |
 
 IPv6
 
@@ -323,6 +348,7 @@ IPv6
 | --------- | ----------- | --- | ------------ |
 | Loopback0 | EVPN_Overlay_Peering | Global Routing Table | - |
 | Loopback1 | VTEP_VXLAN_Tunnel_Source | Global Routing Table | - |
+| Loopback100 | Tenant_A_OP_Zone_VTEP_DIAGNOSTICS | Tenant_A_OP_Zone | - |
 
 ### Loopback Interfaces Device Configuration
 
@@ -335,6 +361,11 @@ interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    ip address 192.168.254.5/32
 !
+interface Loopback100
+   description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS
+   vrf Tenant_A_OP_Zone
+   ip address 10.255.1.6/32
+!
 ```
 
 ## VLAN Interfaces
@@ -343,22 +374,34 @@ interface Loopback1
 
 | Interface | Description | VRF | IP Address | IP Address Virtual | IP Router Virtual Address (vARP) |
 | --------- | ----------- | --- | ---------- | ------------------ | -------------------------------- |
-| Vlan727 | NYCNY5-FEEDOS-OVERLAY | QH-NYCNY5-FEEDOS-OVERLAY | - | 172.16.156.1/22 | - |
-| Vlan3017 | MLAG_PEER_L3_iBGP: vrf QH-NYCNY5-FEEDOS-OVERLAY | QH-NYCNY5-FEEDOS-OVERLAY | 10.255.251.5/31 | - | - |
+| Vlan110 | Tenant_A_OP_Zone_1 | Tenant_A_OP_Zone | - | 10.1.10.254/24 | - |
+| Vlan111 | Tenant_A_OP_Zone_2 | Tenant_A_OP_Zone | - | 10.1.11.254/24 | - |
+| Vlan114 | Tenant_A_OP_Zone_3 | Tenant_A_OP_Zone | - | 10.1.14.254/24 | - |
+| Vlan3009 | MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone | Tenant_A_OP_Zone | 10.255.251.5/31 | - | - |
 | Vlan4093 | MLAG_PEER_L3_PEERING | Global Routing Table | 10.255.251.5/31 | - | - |
 | Vlan4094 | MLAG_PEER | Global Routing Table | 10.255.252.5/31 | - | - |
 
 ### VLAN Interfaces Device Configuration
 
 ```eos
-interface Vlan727
-   description NYCNY5-FEEDOS-OVERLAY
-   vrf QH-NYCNY5-FEEDOS-OVERLAY
-   ip address virtual 172.16.156.1/22
+interface Vlan110
+   description Tenant_A_OP_Zone_1
+   vrf Tenant_A_OP_Zone
+   ip address virtual 10.1.10.254/24
 !
-interface Vlan3017
-   description MLAG_PEER_L3_iBGP: vrf QH-NYCNY5-FEEDOS-OVERLAY
-   vrf QH-NYCNY5-FEEDOS-OVERLAY
+interface Vlan111
+   description Tenant_A_OP_Zone_2
+   vrf Tenant_A_OP_Zone
+   ip address virtual 10.1.11.254/24
+!
+interface Vlan114
+   description Tenant_A_OP_Zone_3
+   vrf Tenant_A_OP_Zone
+   ip address virtual 10.1.14.254/24
+!
+interface Vlan3009
+   description MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone
+   vrf Tenant_A_OP_Zone
    ip address 10.255.251.5/31
 !
 interface Vlan4093
@@ -383,13 +426,17 @@ interface Vlan4094
 
 | VLAN | VNI |
 | ---- | --- |
-| 727 | 10727 |
+| 110 | 10110 |
+| 111 | 50111 |
+| 114 | 50114 |
+| 411 | 40411 |
+| 412 | 40412 |
 
 **VRF to VNI Mappings:**
 
 | VLAN | VNI |
 | ---- | --- |
-| QH-NYCNY5-FEEDOS-OVERLAY | 18 |
+| Tenant_A_OP_Zone | 10 |
 
 ### VXLAN Interface Device Configuration
 
@@ -398,8 +445,12 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
-   vxlan vlan 727 vni 10727
-   vxlan vrf QH-NYCNY5-FEEDOS-OVERLAY vni 18
+   vxlan vlan 110 vni 10110
+   vxlan vlan 111 vni 50111
+   vxlan vlan 114 vni 50114
+   vxlan vlan 411 vni 40411
+   vxlan vlan 412 vni 40412
+   vxlan vrf Tenant_A_OP_Zone vni 10
 !
 ```
 
@@ -408,11 +459,17 @@ interface Vxlan1
 ### Virtual Router MAC Address and Virtual Source NAT Summary
 
 **Virtual Router MAC Address:** 00:1c:73:00:dc:01
+### Virtual Source NAT Summary
+
+| Source NAT VRF | Source NAT IP Address |
+| -------------- | --------------------- |
+| Tenant_A_OP_Zone | 10.255.1.6 |
 
 ### Virtual Router MAC Address Device and Virtual Source NAT Configuration
 
 ```eos
 ip virtual-router mac-address 00:1c:73:00:dc:01
+ip address virtual source-nat vrf Tenant_A_OP_Zone address 10.255.1.6
 !
 ```
 
@@ -458,14 +515,14 @@ No Event Handler Defined
 | VRF | Routing Enabled |
 | --- | --------------- |
 | MGMT | False |
-| QH-NYCNY5-FEEDOS-OVERLAY | True |
+| Tenant_A_OP_Zone | True |
 
 ### IP Routing Device Configuration
 
 ```eos
 ip routing
 no ip routing vrf MGMT
-ip routing vrf QH-NYCNY5-FEEDOS-OVERLAY
+ip routing vrf Tenant_A_OP_Zone
 !
 ```
 
@@ -511,7 +568,7 @@ IPv6 Prefix lists not defined
 | VRF | IPv6 Routing Enabled |
 | --- | -------------------- |
 | MGMT | False |
-| QH-NYCNY5-FEEDOS-OVERLAY | False |
+| Tenant_A_OP_Zone | False |
 
 ### IPv6 Routing Device Configuration
 
@@ -650,14 +707,16 @@ router bfd
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| QH-NYCNY5-FEEDOS-OVERLAY | 192.168.255.6:18 |  18:18  |  |  | learned | 727 |
+| Tenant_A_OP_Zone | 192.168.255.6:10 |  10:10  |  |  | learned | 110-111,114 |
+| Tenant_D_OP_Zone_1 | 192.168.255.6:40411 |  40411:40411  |  |  | learned | 411 |
+| Tenant_D_OP_Zone_2 | 192.168.255.6:40412 |  40412:40412  |  |  | learned | 412 |
 
 
 #### Router BGP EVPN VRFs
 
 | VRF | Route-Distinguisher | Redistribute |
 | --- | ------------------- | ------------ |
-| QH-NYCNY5-FEEDOS-OVERLAY | 192.168.255.6:18 | connected  |
+| Tenant_A_OP_Zone | 192.168.255.6:10 | connected  |
 
 ### Router BGP Device Configuration
 
@@ -695,11 +754,23 @@ router bgp 65102
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
    redistribute connected route-map RM-CONN-2-BGP
    !
-   vlan-aware-bundle QH-NYCNY5-FEEDOS-OVERLAY
-      rd 192.168.255.6:18
-      route-target both 18:18
+   vlan-aware-bundle Tenant_A_OP_Zone
+      rd 192.168.255.6:10
+      route-target both 10:10
       redistribute learned
-      vlan 727
+      vlan 110-111,114
+   !
+   vlan-aware-bundle Tenant_D_OP_Zone_1
+      rd 192.168.255.6:40411
+      route-target both 40411:40411
+      redistribute learned
+      vlan 411
+   !
+   vlan-aware-bundle Tenant_D_OP_Zone_2
+      rd 192.168.255.6:40412
+      route-target both 40412:40412
+      redistribute learned
+      vlan 412
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
@@ -711,10 +782,10 @@ router bgp 65102
       neighbor IPv4-UNDERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
-   vrf QH-NYCNY5-FEEDOS-OVERLAY
-      rd 192.168.255.6:18
-      route-target import evpn 18:18
-      route-target export evpn 18:18
+   vrf Tenant_A_OP_Zone
+      rd 192.168.255.6:10
+      route-target import evpn 10:10
+      route-target export evpn 10:10
       router-id 192.168.255.6
       neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER
       redistribute connected

@@ -97,7 +97,15 @@ ip name-server vrf MGMT 1.1.1.1
 
 ## DNS Domain
 
-DNS domain not defined
+
+### DNS domain: eve.emea.lab
+
+### DNS Domain Device Configuration
+
+```eos
+dns domain eve.emea.lab
+!
+```
 
 ## NTP
 
@@ -215,6 +223,10 @@ No Port-Channels defined
 | Ethernet2 | P2P_LINK_TO_DC1-LEAF1B_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.255.6/31 | - | - |
 | Ethernet3 | P2P_LINK_TO_DC1-LEAF2A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.255.10/31 | - | - |
 | Ethernet4 | P2P_LINK_TO_DC1-LEAF2B_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.255.14/31 | - | - |
+| Ethernet5 | P2P_LINK_TO_DC1-LEAF3A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.255.30/31 | - | - |
+| Ethernet6 | P2P_LINK_TO_DC1-BL1A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.255.34/31 | - | - |
+| Ethernet7 | P2P_LINK_TO_DC1-BL1B_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.255.38/31 | - | - |
+| Ethernet8 | P2P_LINK_TO_DC1-LEAF4A_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.255.42/31 | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -240,6 +252,26 @@ interface Ethernet4
    description P2P_LINK_TO_DC1-LEAF2B_Ethernet2
    no switchport
    ip address 172.31.255.14/31
+!
+interface Ethernet5
+   description P2P_LINK_TO_DC1-LEAF3A_Ethernet2
+   no switchport
+   ip address 172.31.255.30/31
+!
+interface Ethernet6
+   description P2P_LINK_TO_DC1-BL1A_Ethernet2
+   no switchport
+   ip address 172.31.255.34/31
+!
+interface Ethernet7
+   description P2P_LINK_TO_DC1-BL1B_Ethernet2
+   no switchport
+   ip address 172.31.255.38/31
+!
+interface Ethernet8
+   description P2P_LINK_TO_DC1-LEAF4A_Ethernet2
+   no switchport
+   ip address 172.31.255.42/31
 !
 ```
 
@@ -469,10 +501,18 @@ router bfd
 | 172.31.255.7 | 65101 |
 | 172.31.255.11 | 65102 |
 | 172.31.255.15 | 65102 |
+| 172.31.255.31 | 65103 |
+| 172.31.255.35 | 65110 |
+| 172.31.255.39 | 65110 |
+| 172.31.255.43 | 65104 |
 | 192.168.255.3 | 65101 |
 | 192.168.255.4 | 65101 |
 | 192.168.255.5 | 65102 |
 | 192.168.255.6 | 65102 |
+| 192.168.255.10 | 65103 |
+| 192.168.255.11 | 65110 |
+| 192.168.255.12 | 65110 |
+| 192.168.255.13 | 65104 |
 
 ### Router BGP EVPN Address Family
 
@@ -512,6 +552,14 @@ router bgp 65001
    neighbor 172.31.255.11 remote-as 65102
    neighbor 172.31.255.15 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.15 remote-as 65102
+   neighbor 172.31.255.31 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.31 remote-as 65103
+   neighbor 172.31.255.35 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.35 remote-as 65110
+   neighbor 172.31.255.39 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.39 remote-as 65110
+   neighbor 172.31.255.43 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.43 remote-as 65104
    neighbor 192.168.255.3 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.3 remote-as 65101
    neighbor 192.168.255.4 peer group EVPN-OVERLAY-PEERS
@@ -520,6 +568,14 @@ router bgp 65001
    neighbor 192.168.255.5 remote-as 65102
    neighbor 192.168.255.6 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.6 remote-as 65102
+   neighbor 192.168.255.10 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.10 remote-as 65103
+   neighbor 192.168.255.11 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.11 remote-as 65110
+   neighbor 192.168.255.12 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.12 remote-as 65110
+   neighbor 192.168.255.13 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.13 remote-as 65104
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn

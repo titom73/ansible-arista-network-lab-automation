@@ -48,6 +48,10 @@ all:
                   hosts:
                     DC1-LEAF3A:
                       ansible_port: 8011
+                DC1_LEAF4:
+                  hosts:
+                    DC1-LEAF4A:
+                      ansible_port: 1111
                 DC1_BL1:
                   hosts:
                     DC1-BL1A:
@@ -72,3 +76,8 @@ all:
           children:
             DC1_L3LEAFS:
             DC1_L2LEAFS:
+
+# Group to run arista.avd.eos_validate_state
+EOS:
+  children:
+    DC1:

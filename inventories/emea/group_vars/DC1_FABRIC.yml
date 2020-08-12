@@ -5,8 +5,15 @@
 fabric_name: DC1_FABRIC
 
 underlay_routing_protocol: BGP
+
+# ISIS Parameters when underlay_routing_protocol=ISIS
 isis_area_id: "49.0001"
 isis_site_id: "0001"
+
+# OSPF Parameters when underlay_routing_protocol=OSPF
+underlay_ospf_process_id: 100
+underlay_ospf_area: 0.0.0.0
+underlay_ospf_max_lsa: 12000
 
 # Point to Point Network Summary range, assigned as /31 for each
 # uplink interfaces
@@ -98,14 +105,21 @@ l3leaf:
           mgmt_ip: 10.73.1.16/16
           spine_interfaces: [Ethernet4, Ethernet4]
     DC1_LEAF3:
-      bgp_as: 65102
+      bgp_as: 65103
       nodes:
         DC1-LEAF3A:
           id: 8
           mgmt_ip: 10.73.1.21/16
           spine_interfaces: [Ethernet5, Ethernet5]
+    DC1_LEAF4:
+      bgp_as: 65104
+      nodes:
+        DC1-LEAF4A:
+          id: 11
+          mgmt_ip: 10.73.1.25/16
+          spine_interfaces: [Ethernet8, Ethernet8]
     DC1_BL1:
-      bgp_as: 65102
+      bgp_as: 65110
       nodes:
         DC1-BL1A:
           id: 9

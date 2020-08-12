@@ -44,6 +44,9 @@ ztp:
     - name: DC1-LEAF3A
       mac: 0c:1d:c0:1d:62:31
       ip4: 10.73.1.21
+    - name: DC1-LEAF4A
+      mac: 0c:1d:c0:1d:62:51
+      ip4: 10.73.1.24
     - name: DC1-BL1A
       mac: 0c:1d:c0:1d:62:41
       ip4: 10.73.1.22

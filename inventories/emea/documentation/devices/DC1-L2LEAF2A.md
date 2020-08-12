@@ -97,7 +97,15 @@ ip name-server vrf MGMT 1.1.1.1
 
 ## DNS Domain
 
-DNS domain not defined
+
+### DNS domain: eve.emea.lab
+
+### DNS Domain Device Configuration
+
+```eos
+dns domain eve.emea.lab
+!
+```
 
 ## NTP
 
@@ -190,7 +198,27 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 
 ## VLANs
 
-No VLANs defined
+### VLANs Summary
+
+| VLAN ID | Name | Trunk Groups |
+| ------- | ---- | ------------ |
+| 110 | Tenant_A_OP_Zone_1 | none  |
+| 111 | Tenant_A_OP_Zone_2 | none  |
+| 114 | Tenant_A_OP_Zone_3 | none  |
+
+### VLANs Device Configuration
+
+```eos
+vlan 110
+   name Tenant_A_OP_Zone_1
+!
+vlan 111
+   name Tenant_A_OP_Zone_2
+!
+vlan 114
+   name Tenant_A_OP_Zone_3
+!
+```
 
 ## VRF Instances
 
@@ -211,16 +239,16 @@ vrf instance MGMT
 
 ### Port-Channel Interfaces Summary
 
-| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | VRF | IP Address | IPv6 Address |
-| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | --- | ---------- | ------------ |
-| Port-Channel1 | DC1-LEAF2A_Po5 | 1500 | switched | trunk |  | - | 1 | - | - | - |
+| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
+| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
+| Port-Channel1 | DC1-LEAF2A_Po5 | 1500 | switched | trunk | 110-111,114 | - | 1 | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
 ```eos
 interface Port-Channel1
    description DC1-LEAF2A_Po5
-   switchport trunk allowed vlan 
+   switchport trunk allowed vlan 110-111,114
    switchport mode trunk
    mlag 1
 !
@@ -232,9 +260,9 @@ interface Port-Channel1
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | DC1-LEAF2A_Ethernet5 | *1500 | *switched | *trunk | * | - | - | - | 1 | active |
-| Ethernet2 | DC1-LEAF2B_Ethernet5 | *1500 | *switched | *trunk | * | - | - | - | 1 | active |
-| Ethernet5 | server02_Eth0 | 1500 | switched | access | 110 | - | - | - | - | - |
+| Ethernet1 | DC1-LEAF2A_Ethernet5 | *1500 | *switched | *trunk | *110-111,114 | - | - | - | 1 | active |
+| Ethernet2 | DC1-LEAF2B_Ethernet5 | *1500 | *switched | *trunk | *110-111,114 | - | - | - | 1 | active |
+| Ethernet5 | server01_SINGLE_Eth0 | 1500 | switched | trunk | 110-114,210,211 | - | - | - | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -250,8 +278,9 @@ interface Ethernet2
    channel-group 1 mode active
 !
 interface Ethernet5
-   description server02_Eth0
-   switchport access vlan 110
+   description server01_SINGLE_Eth0
+   switchport trunk allowed vlan 110-114,210,211
+   switchport mode trunk
 !
 ```
 
