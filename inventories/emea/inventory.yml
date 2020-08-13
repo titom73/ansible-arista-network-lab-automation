@@ -51,7 +51,7 @@ all:
                 DC1_LEAF4:
                   hosts:
                     DC1-LEAF4A:
-                      ansible_port: 1111
+                      ansible_port: 8014
                 DC1_BL1:
                   hosts:
                     DC1-BL1A:

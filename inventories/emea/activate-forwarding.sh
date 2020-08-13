@@ -5,6 +5,9 @@ _SSH_PORT=22
 _SRC_IF='ens3'
 _DST_IF='ens4'
 
+echo 'Activate kernel routing'
+sysctl -w net.ipv4.ip_forward=1
+
 echo 'Flush Current IPTables settings'
 iptables --flush
 iptables --delete-chain
@@ -29,6 +32,7 @@ iptables -t nat -A PREROUTING -p tcp -i ${_SRC_IF} --dport 8008 -j DNAT --to-des
 iptables -t nat -A PREROUTING -p tcp -i ${_SRC_IF} --dport 8011 -j DNAT --to-destination 10.73.1.21:${_EAPI_PORT}
 iptables -t nat -A PREROUTING -p tcp -i ${_SRC_IF} --dport 8012 -j DNAT --to-destination 10.73.1.22:${_EAPI_PORT}
 iptables -t nat -A PREROUTING -p tcp -i ${_SRC_IF} --dport 8013 -j DNAT --to-destination 10.73.1.23:${_EAPI_PORT}
+iptables -t nat -A PREROUTING -p tcp -i ${_SRC_IF} --dport 8014 -j DNAT --to-destination 10.73.1.24:${_EAPI_PORT}
 
 iptables -A FORWARD -p tcp -d 10.73.1.0/24 --dport ${_EAPI_PORT} -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 
@@ -45,6 +49,7 @@ iptables -t nat -A PREROUTING -p tcp -i ${_SRC_IF} --dport 8108 -j DNAT --to-des
 iptables -t nat -A PREROUTING -p tcp -i ${_SRC_IF} --dport 8111 -j DNAT --to-destination 10.73.1.21:${_SSH_PORT}
 iptables -t nat -A PREROUTING -p tcp -i ${_SRC_IF} --dport 8112 -j DNAT --to-destination 10.73.1.22:${_SSH_PORT}
 iptables -t nat -A PREROUTING -p tcp -i ${_SRC_IF} --dport 8113 -j DNAT --to-destination 10.73.1.23:${_SSH_PORT}
+iptables -t nat -A PREROUTING -p tcp -i ${_SRC_IF} --dport 8114 -j DNAT --to-destination 10.73.1.24:${_SSH_PORT}
 ### POD Server
 iptables -t nat -A PREROUTING -p tcp -i ${_SRC_IF} --dport 8109 -j DNAT --to-destination 10.73.1.19:${_SSH_PORT}
 iptables -t nat -A PREROUTING -p tcp -i ${_SRC_IF} --dport 8110 -j DNAT --to-destination 10.73.1.20:${_SSH_PORT}

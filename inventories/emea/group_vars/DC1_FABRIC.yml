@@ -116,7 +116,7 @@ l3leaf:
       nodes:
         DC1-LEAF4A:
           id: 11
-          mgmt_ip: 10.73.1.25/16
+          mgmt_ip: 10.73.1.24/16
           spine_interfaces: [Ethernet8, Ethernet8]
     DC1_BL1:
       bgp_as: 65110
