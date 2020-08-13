@@ -53,6 +53,8 @@ l3leaf,DC1-LEAF4A,Ethernet2,spine,DC1-SPINE2,Ethernet8
 l3leaf,DC1-LEAF4A,Ethernet7,server,server01_ESI,Eth1
 l2leaf,DC1-L2LEAF1A,Ethernet1,l3leaf,DC1-LEAF1A,Ethernet5
 l2leaf,DC1-L2LEAF1A,Ethernet2,l3leaf,DC1-LEAF1B,Ethernet5
+l2leaf,DC1-L2LEAF1A,Ethernet5,server,POD01-SRV,Eth0
 l2leaf,DC1-L2LEAF2A,Ethernet1,l3leaf,DC1-LEAF2A,Ethernet5
 l2leaf,DC1-L2LEAF2A,Ethernet2,l3leaf,DC1-LEAF2B,Ethernet5
-l2leaf,DC1-L2LEAF2A,Ethernet5,server,server01_SINGLE,Eth0
+l2leaf,DC1-L2LEAF2A,Ethernet5,server,POD02-SRV,Eth0
+l2leaf,DC1-L2LEAF2A,Ethernet6,server,server01_SINGLE,Eth0

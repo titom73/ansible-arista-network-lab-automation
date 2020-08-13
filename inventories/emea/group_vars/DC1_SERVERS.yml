@@ -41,6 +41,23 @@ servers:
     adapters:
       - type: nic
         server_ports: [Eth0]
+        switch_ports: [Ethernet6]
+        switches: [DC1-L2LEAF2A]
+        profile: ALL
+
+  POD02-SRV:
+    rack: Rack2
+    adapters:
+      - type: nic
+        server_ports: [Eth0]
         switch_ports: [Ethernet5]
         switches: [DC1-L2LEAF2A]
+        profile: ALL
+  POD01-SRV:
+    rack: Rack1
+    adapters:
+      - type: nic
+        server_ports: [Eth0]
+        switch_ports: [Ethernet5]
+        switches: [DC1-L2LEAF1A]
         profile: ALL

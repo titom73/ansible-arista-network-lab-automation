@@ -60,12 +60,12 @@ IP DHCP Relay not defined
 
 | Policy Allocation | Range Beginning | Range Ending |
 | ------------------| --------------- | ------------ |
-| ascending | 1006 | 1199 |
+| descending | 4000 | 4090 |
 
 ### Internal VLAN Allocation Policy Configuration
 
 ```eos
-vlan internal order ascending range 1006 1199
+vlan internal order descending range 4000 4090
 !
 ```
 
@@ -262,6 +262,7 @@ interface Port-Channel1
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
 | Ethernet1 | DC1-LEAF1A_Ethernet5 | *1500 | *switched | *trunk | *110-111,114 | - | - | - | 1 | active |
 | Ethernet2 | DC1-LEAF1B_Ethernet5 | *1500 | *switched | *trunk | *110-111,114 | - | - | - | 1 | active |
+| Ethernet5 | POD01-SRV_Eth0 | 1500 | switched | trunk | 110-114,210,211 | - | - | - | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -275,6 +276,11 @@ interface Ethernet1
 interface Ethernet2
    description DC1-LEAF1B_Ethernet5
    channel-group 1 mode active
+!
+interface Ethernet5
+   description POD01-SRV_Eth0
+   switchport trunk allowed vlan 110-114,210,211
+   switchport mode trunk
 !
 ```
 

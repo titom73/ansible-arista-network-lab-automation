@@ -38,6 +38,13 @@ mlag_ips:
 # Enable vlan aware bundles
 vxlan_vlan_aware_bundles: true
 
+# Internal VLAN Allocation
+internal_vlan_order:
+  allocation: descending
+  range:
+    beginning: 4000
+    ending: 4090
+
 # bgp peer groups passwords
 bgp_peer_groups:
   IPv4_UNDERLAY_PEERS:

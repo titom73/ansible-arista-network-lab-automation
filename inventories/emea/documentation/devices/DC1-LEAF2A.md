@@ -60,12 +60,12 @@ IP DHCP Relay not defined
 
 | Policy Allocation | Range Beginning | Range Ending |
 | ------------------| --------------- | ------------ |
-| ascending | 1006 | 1199 |
+| descending | 4000 | 4090 |
 
 ### Internal VLAN Allocation Policy Configuration
 
 ```eos
-vlan internal order ascending range 1006 1199
+vlan internal order descending range 4000 4090
 !
 ```
 
