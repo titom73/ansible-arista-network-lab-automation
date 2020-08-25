@@ -42,6 +42,8 @@
         "editor.quickSuggestions": true,
         "editor.minimap.enabled": false,
         "files.autoSave": "onFocusChange",
+        "material-icon-theme.folders.theme": "classic",
+        "workbench.iconTheme": "material-icon-theme",
     },
 
     // Add the IDs of extensions you want installed when the container is created.
@@ -63,7 +65,8 @@
         "christian-kohler.path-intellisense",
         "ms-python.vscode-pylance",
         "tht13.python",
-        "felipe-mendes.slack-theme"
+        "felipe-mendes.slack-theme",
+        "pkief.material-icon-theme"
     ],
     "containerEnv": {
         // Required as workaround for running ansible in publicly writable folders
