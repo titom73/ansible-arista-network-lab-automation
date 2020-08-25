@@ -1,6 +1,7 @@
-# Add your image here
+### Image variables
+
+# Image flavor
 ARG VARIANT="3.6"
-FROM avdteam/base:${VARIANT}
 
 # Options for setup script
 ARG INSTALL_ZSH="true"
@@ -8,6 +9,12 @@ ARG UPGRADE_PACKAGES="false"
 ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
+
+############################################
+### Build Section
+############################################
+
+FROM avdteam/base:${VARIANT}
 
 # Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
 COPY library-scripts/*.sh /tmp/library-scripts/
