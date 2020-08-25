@@ -1,20 +1,22 @@
 #!/bin/bash
 
+echo "Jumphost Remote access configuration"
+
 _EAPI_PORT=443
 _SSH_PORT=22
 _SRC_IF='ens3'
 _DST_IF='ens4'
 
-echo 'Activate kernel routing'
+echo '* Activate kernel routing'
 sysctl -w net.ipv4.ip_forward=1
 
-echo 'Flush Current IPTables settings'
+echo '* Flush Current IPTables settings'
 iptables --flush
 iptables --delete-chain
 iptables --table nat --flush
 iptables --table nat --delete-chain
 
-echo 'Activate masquerading'
+echo '* Activate masquerading'
 
 iptables -t nat -A POSTROUTING -o ${_SRC_IF} -j MASQUERADE
 iptables -t nat -A POSTROUTING -o ${_DST_IF} -j MASQUERADE
