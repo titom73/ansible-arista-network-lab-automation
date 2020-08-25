@@ -9,3 +9,5 @@ inventories/*/documentation/*
 
 *.json
 *.log.*
+
+collections/*

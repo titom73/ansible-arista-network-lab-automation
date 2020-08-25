@@ -194,6 +194,15 @@ repo-clean: ## Delete previously generated outputs
 log-clean: ## log-clean description
 	rm -f cvp-debug-logs/arista.cvp.debug.log*
 
+.PHONY: install
+install: ## Install arista collections
+	git clone https://github.com/aristanetworks/ansible-avd.git collections/ansible-avd
+	git clone https://github.com/aristanetworks/ansible-cvp.git collections/ansible-cvp
+
+.PHONY: uninstall
+uninstall: ## Remove arista collections
+	rm -rf collections
+
 ################################################################################
 # Docker Runner
 ################################################################################
