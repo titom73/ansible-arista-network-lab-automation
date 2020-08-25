@@ -1,0 +1,41 @@
+all:
+  vars:
+    vault_ansible_ssh_pass: test
+    vault_ansible_user: test
+  children:
+    OHV_LAB:
+      children:
+# DC1 Fabric
+        DC1_FABRIC:
+          children:
+            DC1_SPINES:
+              hosts:
+                SPINE1:
+                  ansible_host: 192.168.100.31
+                SPINE2:
+                  ansible_host: 192.168.100.35
+            DC1_LEAFS:
+              children:
+                LEAF1:
+                  hosts:
+                    LEAF1A:
+                      ansible_host: 192.168.100.32
+                LEAF2:
+                  hosts:
+                    LEAF2A:
+                      ansible_host: 192.168.100.33
+                    LEAF2B:
+                      ansible_host: 192.168.100.34
+
+
+        DC1_TENANTS_NETWORKS:
+          children:
+            DC1_LEAFS:
+
+        DC1_SERVERS:
+          children:
+            DC1_LEAFS:
+
+    # vault:
+    #   children:
+    #     OHV_LAB:

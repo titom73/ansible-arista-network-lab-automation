@@ -4,9 +4,17 @@
 
 ### Management Interfaces Summary
 
+IPv4
+
 | Management Interface | description | VRF | IP Address | Gateway |
 | -------------------- | ----------- | --- | ---------- | ------- |
 | Management1 | oob_management | MGMT | 10.73.254.21/24 | 10.73.254.253 |
+
+IPv6
+
+| Management Interface | description | VRF | IPv6 Address | IPv6 Gateway |
+| -------------------- | ----------- | --- | ------------ | ------------ |
+| Management1 | oob_management | MGMT | ||
 
 ### Management Interfaces Device Configuration
 
@@ -22,9 +30,16 @@ interface Management1
 
 No Hardware Counters defined
 
+## Aliases
+Aliases not defined
+
 ## TerminAttr Daemon
 
 TerminAttr Daemon not defined
+
+## IP DHCP Relay
+
+IP DHCP Relay not defined
 
 ## Internal VLAN allocation Policy
 
@@ -41,6 +56,17 @@ vlan internal order ascending range 1006 1199
 !
 ```
 
+## IP IGMP Snooping
+
+
+## Logging
+
+No logging settings defined
+
+## Domain Lookup
+
+DNS domain lookup not defined
+
 ## Name Servers
 
 ### Name Servers Summary
@@ -56,16 +82,22 @@ ip name-server vrf MGMT 10.73.254.253
 !
 ```
 
+## DNS Domain
+
+DNS domain not defined
+
 ## NTP
 
 ### NTP Summary
 
 Local Interface: Management1
+
 VRF: MGMT
+
 
 | Node | Primary |
 | ---- | ------- |
-| 10.73.254.253 | True |
+| 10.73.254.253 | true |
 
 ### NTP Device Configuration
 
@@ -74,6 +106,14 @@ ntp local-interface vrf MGMT Management1
 ntp server vrf MGMT 10.73.254.253 prefer
 !
 ```
+
+## Router L2 VPN
+
+Router L2 VPN not defined
+
+## SFlow
+
+No sFlow defined
 
 ## Spanning Tree
 
@@ -95,9 +135,26 @@ spanning-tree mst 0 priority 16384
 !
 ```
 
+
+TACACS Servers Not Configured
+
+
+IP TACACS source interfaces not defined
+
+
+AAA server groups not defined
+
 ## AAA Authentication
 
-AAA Not Configured
+AAA authentication not defined
+
+## AAA Authorization
+
+AAA authorization not defined
+
+## AAA Accounting
+
+AAA accounting not defined
 
 ## Local Users
 
@@ -153,28 +210,13 @@ vrf instance MGMT
 !
 ```
 
-## BFD Multihop Interval
-
-### BFD Multihop Summary
-
-| Interval | Minimum RX | Multiplier |
-| -------- | ---------- | ---------- |
-| 1200 | 1200 | 3 |
-
-### BFD Multihop Device Configuration
-
-```eos
-bfd multihop interval 1200 min_rx 1200 multiplier 3
-!
-```
-
 ## Port-Channel Interfaces
 
 ### Port-Channel Interfaces Summary
 
-| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | VRF | IP Address |
-| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | --- | ---------- |
-| Port-Channel1 | AVD2-LEAF1A_Po5 | 1500 | switched | trunk | 110,112 | - | 1 | - | - |
+| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | VRF | IP Address | IPv6 Address |
+| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | --- | ---------- | ------------ |
+| Port-Channel1 | AVD2-LEAF1A_Po5 | 1500 | switched | trunk | 110,112 | - | 1 | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -232,6 +274,22 @@ No VXLAN interface defined
 ## Virtual Router MAC Address & Virtual Source NAT
 
 
+## IPv6 Extended Access-lists
+
+IPv6 Extended Access-lists not defined
+
+## IPv6 Standard Access-lists
+
+IPv6 Standard Access-lists not defined
+
+## Extended Access-lists
+
+Extended Access-lists not defined
+
+## Standard Access-lists
+
+Standard Access-lists not defined
+
 ## Static Routes
 
 ### Static Routes Summary
@@ -271,9 +329,30 @@ no ip routing vrf MGMT
 
 Prefix lists not defined
 
+## IPv6 Prefix Lists
+
+IPv6 Prefix lists not defined
+
+## IPv6 Routing
+
+### IPv6 Routing Summary
+
+| VRF | IPv6 Routing Enabled |
+| --- | -------------------- |
+| MGMT | False |
+
+### IPv6 Routing Device Configuration
+
+```eos
+```
+
 ## MLAG
 
 MLAG not defined
+
+## Community Lists
+
+Community Lists not defined
 
 ## Route Maps
 
@@ -283,6 +362,40 @@ No route maps defined
 
 No Peer Filters defined
 
+## Router BFD
+
+### Router BFD Multihop Summary
+
+| Interval | Minimum RX | Multiplier |
+| -------- | ---------- | ---------- |
+| 300 | 300 | 3 |
+
+*No device configuration required - default values
+
 ## Router BGP
 
 Router BGP not defined
+
+## Router Multicast
+
+Routing multicast not defined
+
+## Router PIM Sparse Mode
+
+Router PIM sparse mode not defined
+
+## VM Tracer Sessions
+
+No VM tracer session defined
+
+## Management Security
+
+Management Security not defined
+
+## Platform
+
+No Platform parameters defined
+
+## Router ISIS
+
+Router ISIS not defined

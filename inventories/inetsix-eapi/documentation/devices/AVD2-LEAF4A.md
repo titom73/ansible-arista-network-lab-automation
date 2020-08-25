@@ -4,9 +4,17 @@
 
 ### Management Interfaces Summary
 
+IPv4
+
 | Management Interface | description | VRF | IP Address | Gateway |
 | -------------------- | ----------- | --- | ---------- | ------- |
 | Management1 | oob_management | MGMT | 10.73.254.18/24 | 10.73.254.253 |
+
+IPv6
+
+| Management Interface | description | VRF | IPv6 Address | IPv6 Gateway |
+| -------------------- | ----------- | --- | ------------ | ------------ |
+| Management1 | oob_management | MGMT | ||
 
 ### Management Interfaces Device Configuration
 
@@ -22,9 +30,16 @@ interface Management1
 
 No Hardware Counters defined
 
+## Aliases
+Aliases not defined
+
 ## TerminAttr Daemon
 
 TerminAttr Daemon not defined
+
+## IP DHCP Relay
+
+IP DHCP Relay not defined
 
 ## Internal VLAN allocation Policy
 
@@ -41,6 +56,17 @@ vlan internal order ascending range 1006 1199
 !
 ```
 
+## IP IGMP Snooping
+
+
+## Logging
+
+No logging settings defined
+
+## Domain Lookup
+
+DNS domain lookup not defined
+
 ## Name Servers
 
 ### Name Servers Summary
@@ -56,16 +82,22 @@ ip name-server vrf MGMT 10.73.254.253
 !
 ```
 
+## DNS Domain
+
+DNS domain not defined
+
 ## NTP
 
 ### NTP Summary
 
 Local Interface: Management1
+
 VRF: MGMT
+
 
 | Node | Primary |
 | ---- | ------- |
-| 10.73.254.253 | True |
+| 10.73.254.253 | true |
 
 ### NTP Device Configuration
 
@@ -74,6 +106,14 @@ ntp local-interface vrf MGMT Management1
 ntp server vrf MGMT 10.73.254.253 prefer
 !
 ```
+
+## Router L2 VPN
+
+Router L2 VPN not defined
+
+## SFlow
+
+No sFlow defined
 
 ## Spanning Tree
 
@@ -95,9 +135,26 @@ spanning-tree mst 0 priority 4096
 !
 ```
 
+
+TACACS Servers Not Configured
+
+
+IP TACACS source interfaces not defined
+
+
+AAA server groups not defined
+
 ## AAA Authentication
 
-AAA Not Configured
+AAA authentication not defined
+
+## AAA Authorization
+
+AAA authorization not defined
+
+## AAA Accounting
+
+AAA accounting not defined
 
 ## Local Users
 
@@ -156,21 +213,6 @@ vrf instance TENANT_A_PROJECT01
 !
 ```
 
-## BFD Multihop Interval
-
-### BFD Multihop Summary
-
-| Interval | Minimum RX | Multiplier |
-| -------- | ---------- | ---------- |
-| 1200 | 1200 | 3 |
-
-### BFD Multihop Device Configuration
-
-```eos
-bfd multihop interval 1200 min_rx 1200 multiplier 3
-!
-```
-
 ## Port-Channel Interfaces
 
 No Port-Channels defined
@@ -193,11 +235,17 @@ interface Ethernet1
    description P2P_LINK_TO_AVD2-SPINE1_Ethernet8
    no switchport
    ip address 172.31.255.21/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
 !
 interface Ethernet2
    description P2P_LINK_TO_AVD2-SPINE2_Ethernet8
    no switchport
    ip address 172.31.255.23/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
 !
 ```
 
@@ -205,11 +253,21 @@ interface Ethernet2
 
 ### Loopback Interfaces Summary
 
+IPv4
+
 | Interface | Description | VRF | IP Address |
 | --------- | ----------- | --- | ---------- |
 | Loopback0 | EVPN_Overlay_Peering | Global Routing Table | 192.168.255.8/32 |
 | Loopback1 | VTEP_VXLAN_Tunnel_Source | Global Routing Table | 192.168.254.8/32 |
 | Loopback101 | TENANT_A_PROJECT01_VTEP_DIAGNOSTICS | TENANT_A_PROJECT01 | 10.1.255.8/32 |
+
+IPv6
+
+| Interface | Description | VRF | IPv6 Address |
+| --------- | ----------- | --- | ------------ |
+| Loopback0 | EVPN_Overlay_Peering | Global Routing Table | - |
+| Loopback1 | VTEP_VXLAN_Tunnel_Source | Global Routing Table | - |
+| Loopback101 | TENANT_A_PROJECT01_VTEP_DIAGNOSTICS | TENANT_A_PROJECT01 | - |
 
 ### Loopback Interfaces Device Configuration
 
@@ -217,10 +275,14 @@ interface Ethernet2
 interface Loopback0
    description EVPN_Overlay_Peering
    ip address 192.168.255.8/32
+   isis enable EVPN_UNDERLAY
+   isis passive
 !
 interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    ip address 192.168.254.8/32
+   isis enable EVPN_UNDERLAY
+   isis passive
 !
 interface Loopback101
    description TENANT_A_PROJECT01_VTEP_DIAGNOSTICS
@@ -298,6 +360,22 @@ ip address virtual source-nat vrf TENANT_A_PROJECT01 address 10.1.255.8
 !
 ```
 
+## IPv6 Extended Access-lists
+
+IPv6 Extended Access-lists not defined
+
+## IPv6 Standard Access-lists
+
+IPv6 Standard Access-lists not defined
+
+## Extended Access-lists
+
+Extended Access-lists not defined
+
+## Standard Access-lists
+
+Standard Access-lists not defined
+
 ## Static Routes
 
 ### Static Routes Summary
@@ -364,9 +442,31 @@ ip prefix-list PL-P2P-UNDERLAY
 !
 ```
 
+## IPv6 Prefix Lists
+
+IPv6 Prefix lists not defined
+
+## IPv6 Routing
+
+### IPv6 Routing Summary
+
+| VRF | IPv6 Routing Enabled |
+| --- | -------------------- |
+| MGMT | False |
+| TENANT_A_PROJECT01 | False |
+
+### IPv6 Routing Device Configuration
+
+```eos
+```
+
 ## MLAG
 
 MLAG not defined
+
+## Community Lists
+
+Community Lists not defined
 
 ## Route Maps
 
@@ -374,9 +474,9 @@ MLAG not defined
 
 **RM-CONN-2-BGP:**
 
-| Sequence | Type | Match |
-| -------- | ---- | ----- |
-| 10 | permit | ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
+| Sequence | Type | Match and/or Set |
+| -------- | ---- | ---------------- |
+| 10 | permit | match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
 
 ### Route Maps Device Configuration
 
@@ -389,6 +489,22 @@ route-map RM-CONN-2-BGP permit 10
 ## Peer Filters
 
 No Peer Filters defined
+
+## Router BFD
+
+### Router BFD Multihop Summary
+
+| Interval | Minimum RX | Multiplier |
+| -------- | ---------- | ---------- |
+| 1200 | 1200 | 3 |
+
+### Router BFD Multihop Device Configuration
+
+```eos
+router bfd
+   multihop interval 1200 min-rx 1200 multiplier 3
+!
+```
 
 ## Router BGP
 
@@ -415,35 +531,17 @@ No Peer Filters defined
 | Address Family | evpn |
 | remote_as | 65001 |
 | source | Loopback0 |
-| bfd | True |
+| bfd | true |
 | ebgp multihop | 3 |
 | send community | true |
 | maximum routes | 0 (no limit) |
-**Neighbors:**
+
+### BGP Neighbors
 
 | Neighbor | Remote AS |
 | -------- | ---------
-| 192.168.255.1 | *65001  |
-| 192.168.255.2 | *65001  |
-
-*Inherited from peer group
-
-**IPv4-UNDERLAY-PEERS**:
-
-| Settings | Value |
-| -------- | ----- |
-| Address Family | ipv4 |
-| remote_as | 65001 |
-| send community | true |
-| maximum routes | 12000 |
-**Neighbors:**
-
-| Neighbor | Remote AS |
-| -------- | ---------
-| 172.31.255.20 | *65001  |
-| 172.31.255.22 | *65001  |
-
-*Inherited from peer group
+| 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS |
+| 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS |
 
 ### Router BGP EVPN Address Family
 
@@ -451,16 +549,17 @@ No Peer Filters defined
 
 **VLAN aware bundles:**
 
-| VLAN Aware Bundle | Route-Distinguisher | Route Target | Redistribute | VLANs |
-| ----------------- | ------------------- | ------------ | ------------ | ----- |
-| B-ELAN-201 | 192.168.255.8:20201 | both 20201:20201 | learned | 201 |
-| TENANT_A_PROJECT01 | 192.168.255.8:11 | both 11:11 | learned | 111 |
+| VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
+| ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
+| B-ELAN-201 | 192.168.255.8:20201 |  20201:20201  |  |  | learned | 201 |
+| TENANT_A_PROJECT01 | 192.168.255.8:11 |  11:11  |  |  | learned | 111 |
+
 
 #### Router BGP EVPN VRFs
 
-| VRF | Route-Distinguisher | Route Target | Redistribute |
-| --- | ------------------- | ------------ | ------------ |
-| TENANT_A_PROJECT01 | 192.168.255.8:11 | import 11:11<br> export 11:11 | connected |
+| VRF | Route-Distinguisher | Redistribute |
+| --- | ------------------- | ------------ |
+| TENANT_A_PROJECT01 | 192.168.255.8:11 | connected  |
 
 ### Router BGP Device Configuration
 
@@ -480,16 +579,8 @@ router bgp 65104
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS remote-as 65001
-   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
-   neighbor IPv4-UNDERLAY-PEERS send-community
-   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 172.31.255.20 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.22 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
-   redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle B-ELAN-201
       rd 192.168.255.8:20201
@@ -505,17 +596,62 @@ router bgp 65104
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
-      no neighbor IPv4-UNDERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS activate
    !
    vrf TENANT_A_PROJECT01
-      router-id 192.168.255.8
       rd 192.168.255.8:11
       route-target import evpn 11:11
       route-target export evpn 11:11
+      router-id 192.168.255.8
       redistribute connected
 !
 ```
+
+## Router Multicast
+
+Routing multicast not defined
+
+## Router PIM Sparse Mode
+
+Router PIM sparse mode not defined
+
+## VM Tracer Sessions
+
+No VM tracer session defined
+
+## Management Security
+
+Management Security not defined
+
+## Platform
+
+No Platform parameters defined
+
+## Router ISIS
+
+### Router ISIS Summary
+
+| Settings | Value |
+| -------- | ----- |
+| Instance | EVPN_UNDERLAY |
+| Net-ID | 49.0001.0001.0001.0006.00 |
+| Type | level-2 |
+| Address Family | ipv4 unicast |
+
+### Router ISIS Device Configuration
+
+```eos
+router isis EVPN_UNDERLAY
+   net 49.0001.0001.0001.0006.00
+   is-type level-2
+   router-id ipv4 192.168.255.8
+   log-adjacency-changes
+   !
+   address-family ipv4 unicast
+      maximum-paths 2
+   !
+!
+```
+
