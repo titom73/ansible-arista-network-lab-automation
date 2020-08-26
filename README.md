@@ -53,7 +53,7 @@
 
 - [`ansible-cvp`](https://github.com/aristanetworks/ansible-cvp): configured under ../ansible-cvp
 - [`ansible-avd`](https://github.com/aristanetworks/ansible-avd): configured under ../ansible-avd
-- If required, `make install` will clone avd and cvp under `./collections/` folder
+- If required, `make install` will clone avd and cvp under `collections/` folder
 - Ansible playbook debugger activated in ansible.cfg
 - Execution time configured
 - Default inventory is set to [`inventories/inetsix-cvp/`](inventories/inetsix-cvp/inventory.yml)
