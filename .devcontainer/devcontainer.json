@@ -1,13 +1,17 @@
 {
-    "name": "Dev Container Definition Template - Dockerfile",
+    "name": "Arista Dev Container",
+    // Existing Docker Image
+    "image": "titom73/devcontainer_python:latest",
+
+    // To build your own image
     // Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
-    "build": {
-        "dockerfile": "Dockerfile",
-        // Use build args to set options. e.g. 'VARIANT' below affects the image in the Dockerfile
-        "args": {
-            "VARIANT": "3.6"
-        }
-    },
+    // "build": {
+    //     "dockerfile": "Dockerfile",
+    //     // Use build args to set options. e.g. 'VARIANT' below affects the image in the Dockerfile
+    //     "args": {
+    //         "VARIANT": "3.6"
+    //     }
+    // },
 
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [],
