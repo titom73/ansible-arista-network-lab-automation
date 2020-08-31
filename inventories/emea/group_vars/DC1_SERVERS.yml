@@ -11,19 +11,29 @@ port_profiles:
     vlans: "210-211"
 
 servers:
-  server01_ESI:
+  #################################
+  # POD servers
+  #################################
+  POD01-SRV:
     rack: RackA
     adapters:
       - type: nic
-        server_ports: [Eth0, Eth1]
-        switch_ports: [Ethernet7, Ethernet7]
-        switches: [DC1-LEAF3A, DC1-LEAF4A]
-        port_channel:
-          state: present
-          description: data
-          mode: active
-          esi: 0303:0202:0101
+        server_ports: [Eth1]
+        switch_ports: [Ethernet5]
+        switches: [DC1-L2LEAF1A]
         profile: ALL
+  POD02-SRV:
+    rack: RackB
+    adapters:
+      - type: nic
+        server_ports: [Eth1]
+        switch_ports: [Ethernet5]
+        switches: [DC1-L2LEAF2A]
+        profile: ALL
+
+  #################################
+  # Fake servers
+  #################################
   server01_MLAG:
     rack: RackA
     adapters:
@@ -36,28 +46,28 @@ servers:
           state: present
           description: data
           mode: active
-  server01_SINGLE:
-    rack: RackA
+  server02_MLAG:
+    rack: RackB
     adapters:
       - type: nic
-        server_ports: [Eth0]
-        switch_ports: [Ethernet6]
-        switches: [DC1-L2LEAF2A]
+        server_ports: [Eth0, Eth1]
+        switch_ports: [Ethernet6, Ethernet6]
+        switches: [DC1-LEAF2A, DC1-LEAF2B]
         profile: ALL
-
-  POD02-SRV:
-    rack: Rack2
+        port_channel:
+          state: present
+          description: data
+          mode: active
+  server03_ESI:
+    rack: RackC
     adapters:
       - type: nic
-        server_ports: [Eth0]
-        switch_ports: [Ethernet5]
-        switches: [DC1-L2LEAF2A]
-        profile: ALL
-  POD01-SRV:
-    rack: Rack1
-    adapters:
-      - type: nic
-        server_ports: [Eth0]
-        switch_ports: [Ethernet5]
-        switches: [DC1-L2LEAF1A]
+        server_ports: [Eth0, Eth1]
+        switch_ports: [Ethernet7, Ethernet7]
+        switches: [DC1-LEAF3A, DC1-LEAF4A]
+        port_channel:
+          state: present
+          description: data
+          mode: active
+          esi: 0303:0202:0101
         profile: ALL
