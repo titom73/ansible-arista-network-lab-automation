@@ -19,11 +19,11 @@ IPv6
 ### Management Interfaces Device Configuration
 
 ```eos
+!
 interface Management1
    description oob_management
    vrf MGMT
    ip address 10.73.1.13/16
-!
 ```
 
 ## Hardware Counters
@@ -44,10 +44,10 @@ Aliases not defined
 ### TerminAttr Daemon Device Configuration
 
 ```eos
+!
 daemon TerminAttr
    exec /usr/bin/TerminAttr -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
    no shutdown
-!
 ```
 
 ## IP DHCP Relay
@@ -65,8 +65,8 @@ IP DHCP Relay not defined
 ### Internal VLAN Allocation Policy Configuration
 
 ```eos
-vlan internal order descending range 4000 4090
 !
+vlan internal order descending range 4000 4090
 ```
 
 ## IP IGMP Snooping
@@ -92,7 +92,6 @@ DNS domain lookup not defined
 
 ```eos
 ip name-server vrf MGMT 1.1.1.1
-!
 ```
 
 ## DNS Domain
@@ -123,9 +122,9 @@ VRF: MGMT
 ### NTP Device Configuration
 
 ```eos
+!
 ntp local-interface vrf MGMT Management1
 ntp server vrf MGMT fr.pool.ntp.org prefer
-!
 ```
 
 ## Router L2 VPN
@@ -151,10 +150,10 @@ Mode: mstp
 ### Spanning Tree Device Configuration
 
 ```eos
+!
 spanning-tree mode mstp
 no spanning-tree vlan-id 4094
 spanning-tree mst 0 priority 4096
-!
 ```
 
 
@@ -191,10 +190,10 @@ AAA accounting not defined
 ### Local Users Device Configuration
 
 ```eos
+!
 username admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
 username ansible privilege 15 role network-admin secret sha512 $6$ZMTiXhLqBo7v1si1$sytOdfL9pAFj4paRrqnQeolINyi1zTrBECVQimMvYRAR5wL8RQa02Qet9Jz7D6PXANdb.CEyeVrLbWv8INv7K0
 username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
-!
 ```
 
 ## VLANs
@@ -213,6 +212,7 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 ### VLANs Device Configuration
 
 ```eos
+!
 vlan 110
    name Tenant_A_OP_Zone_1
 !
@@ -233,7 +233,6 @@ vlan 4093
 vlan 4094
    name MLAG_PEER
    trunk group MLAG
-!
 ```
 
 ## VRF Instances
@@ -248,25 +247,26 @@ vlan 4094
 ### VRF Instances Device Configuration
 
 ```eos
+!
 vrf instance MGMT
 !
 vrf instance Tenant_A_OP_Zone
-!
 ```
 
 ## Port-Channel Interfaces
 
 ### Port-Channel Interfaces Summary
 
-| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | VRF | IP Address | IPv6 Address |
-| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | --- | ---------- | ------------ |
-| Port-Channel3 | MLAG_PEER_DC1-LEAF1B_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - | - |
-| Port-Channel5 | DC1_L2LEAF1_Po1 | 1500 | switched | trunk | 110-111,114 | - | 5 | - | - | - |
-| Port-Channel6 | server01_MLAG_data | 1500 | switched | trunk | 110-114,210,211 | - | 6 | - | - | - |
+| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
+| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
+| Port-Channel3 | MLAG_PEER_DC1-LEAF1B_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - | - | - |
+| Port-Channel5 | DC1_L2LEAF1_Po1 | 1500 | switched | trunk | 110-111,114 | - | 5 | - | - | - | - |
+| Port-Channel6 | server01_MLAG_data | 1500 | switched | trunk | 110-114,210,211 | - | 6 | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
 ```eos
+!
 interface Port-Channel3
    description MLAG_PEER_DC1-LEAF1B_Po3
    switchport trunk allowed vlan 2-4094
@@ -285,7 +285,6 @@ interface Port-Channel6
    switchport trunk allowed vlan 110-114,210,211
    switchport mode trunk
    mlag 6
-!
 ```
 
 ## Ethernet Interfaces
@@ -306,6 +305,7 @@ interface Port-Channel6
 ### Ethernet Interfaces Device Configuration
 
 ```eos
+!
 interface Ethernet1
    description P2P_LINK_TO_DC1-SPINE1_Ethernet1
    no switchport
@@ -331,7 +331,6 @@ interface Ethernet5
 interface Ethernet6
    description server01_MLAG_Eth0
    channel-group 6 mode active
-!
 ```
 
 ## Loopback Interfaces
@@ -357,6 +356,7 @@ IPv6
 ### Loopback Interfaces Device Configuration
 
 ```eos
+!
 interface Loopback0
    description EVPN_Overlay_Peering
    ip address 192.168.255.3/32
@@ -369,7 +369,6 @@ interface Loopback100
    description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS
    vrf Tenant_A_OP_Zone
    ip address 10.255.1.3/32
-!
 ```
 
 ## VLAN Interfaces
@@ -388,6 +387,7 @@ interface Loopback100
 ### VLAN Interfaces Device Configuration
 
 ```eos
+!
 interface Vlan110
    description Tenant_A_OP_Zone_1
    vrf Tenant_A_OP_Zone
@@ -416,7 +416,6 @@ interface Vlan4094
    description MLAG_PEER
    no autostate
    ip address 10.255.252.0/31
-!
 ```
 
 ## VXLAN Interface
@@ -443,6 +442,7 @@ interface Vlan4094
 ### VXLAN Interface Device Configuration
 
 ```eos
+!
 interface Vxlan1
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
@@ -451,7 +451,6 @@ interface Vxlan1
    vxlan vlan 111 vni 50111
    vxlan vlan 114 vni 50114
    vxlan vrf Tenant_A_OP_Zone vni 10
-!
 ```
 
 ## Virtual Router MAC Address & Virtual Source NAT
@@ -468,9 +467,9 @@ interface Vxlan1
 ### Virtual Router MAC Address Device and Virtual Source NAT Configuration
 
 ```eos
+!
 ip virtual-router mac-address 00:1c:73:00:dc:01
 ip address virtual source-nat vrf Tenant_A_OP_Zone address 10.255.1.3
-!
 ```
 
 ## IPv6 Extended Access-lists
@@ -500,8 +499,8 @@ Standard Access-lists not defined
 ### Static Routes Device Configuration
 
 ```eos
-ip route vrf MGMT 0.0.0.0/0 10.73.0.1
 !
+ip route vrf MGMT 0.0.0.0/0 10.73.0.1
 ```
 
 ## Event Handler
@@ -520,10 +519,10 @@ No Event Handler Defined
 ### IP Routing Device Configuration
 
 ```eos
+!
 ip routing
 no ip routing vrf MGMT
 ip routing vrf Tenant_A_OP_Zone
-!
 ```
 
 ## Prefix Lists
@@ -547,6 +546,7 @@ ip routing vrf Tenant_A_OP_Zone
 ### Prefix Lists Device Configuration
 
 ```eos
+!
 ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
    seq 10 permit 192.168.255.0/24 eq 32
    seq 20 permit 192.168.254.0/24 eq 32
@@ -554,7 +554,6 @@ ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 ip prefix-list PL-P2P-UNDERLAY
    seq 10 permit 172.31.255.0/24 le 31
    seq 20 permit 10.255.251.0/24 le 31
-!
 ```
 
 ## IPv6 Prefix Lists
@@ -588,6 +587,7 @@ Dual primary detection is enabled. The detection delay is 5 seconds.
 ### MLAG Device Configuration
 
 ```eos
+!
 mlag configuration
    domain-id DC1_LEAF1
    local-interface Vlan4094
@@ -597,7 +597,6 @@ mlag configuration
    dual-primary detection delay 5 action errdisable all-interfaces
    reload-delay mlag 300
    reload-delay non-mlag 330
-!
 ```
 
 ## Community Lists
@@ -617,9 +616,9 @@ Community Lists not defined
 ### Route Maps Device Configuration
 
 ```eos
+!
 route-map RM-CONN-2-BGP permit 10
    match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-!
 ```
 
 ## Peer Filters
@@ -637,9 +636,9 @@ No Peer Filters defined
 ### Router BFD Multihop Device Configuration
 
 ```eos
+!
 router bfd
    multihop interval 1200 min-rx 1200 multiplier 3
-!
 ```
 
 ## Router BGP
@@ -671,6 +670,7 @@ router bfd
 | ebgp multihop | 3 |
 | send community | true |
 | maximum routes | 0 (no limit) |
+
 **IPv4-UNDERLAY-PEERS**:
 
 | Settings | Value |
@@ -679,6 +679,7 @@ router bfd
 | remote_as | 65001 |
 | send community | true |
 | maximum routes | 12000 |
+
 **MLAG-IPv4-UNDERLAY-PEER**:
 
 | Settings | Value |
@@ -719,6 +720,7 @@ router bfd
 ### Router BGP Device Configuration
 
 ```eos
+!
 router bgp 65101
    router-id 192.168.255.3
    no bgp default ipv4-unicast
@@ -775,7 +777,6 @@ router bgp 65101
       router-id 192.168.255.3
       neighbor 10.255.251.1 peer group MLAG-IPv4-UNDERLAY-PEER
       redistribute connected
-!
 ```
 
 ## Router Multicast
