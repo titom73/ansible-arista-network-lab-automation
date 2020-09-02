@@ -3,7 +3,7 @@ SHELL := /bin/zsh
 
 ### Ansible variables
 # Inventory for EOS playbooks
-INVENTORY ?= inventories/emea
+INVENTORY ?= inventories/emea-cvp-dc1
 # Inventory for Linux tool box
 TOOLS ?= inventories/tools/inetsix-eapi
 # Default Inventory file to look for
@@ -33,39 +33,39 @@ facts: ## Get facts from CVP and save locally
 
 .PHONY: avd-build
 avd-build: ## Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
-	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: avd-provision
 avd-provision: ## Run ansible playbook to deploy EVPN Fabric.
-	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags provision -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags provision -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: avd-deploy
 avd-deploy: ## Run ansible playbook to deploy EVPN Fabric.
-	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --extra-vars "execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 ### Sub-scenario
 
 .PHONY: avd-build-isis
 avd-build-isis: ## Run ansible playbook to build EVPN Fabric configuration with ISIS as underlay with DC1 and CV
-	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build --extra-vars "underlay_routing_protocol=ISIS" -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build --extra-vars "underlay_routing_protocol=ISIS" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: avd-deploy-isis
 avd-deploy-isis: ## Run ansible playbook to deploy EVPN Fabric with ISIS as underlay.
-	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --extra-vars "underlay_routing_protocol=ISIS execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "underlay_routing_protocol=ISIS execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: avd-build-ospf
 avd-build-ospf: ## Run ansible playbook to build EVPN Fabric configuration with OSPF as underlay with DC1 and CV
-	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --tags build --extra-vars "underlay_routing_protocol=OSPF" -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build --extra-vars "underlay_routing_protocol=OSPF" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: avd-deploy-ospf
 avd-deploy-ospf: ## Run ansible playbook to deploy EVPN Fabric with OSPF as underlay.
-	ansible-playbook playbooks/dc1-fabric-deploy-cvp.yml --extra-vars "underlay_routing_protocol=OSPF execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "underlay_routing_protocol=OSPF execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 ### Cleanup CVP
 
 .PHONY: avd-reset
 avd-reset: ## Run ansible playbook to reset all devices.
-	ansible-playbook playbooks/dc1-fabric-reset-cvp.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-reset.yml -i $(INVENTORY)/$(INVENTORY_FILE)
 
 ### Debug Actions
 
@@ -129,22 +129,21 @@ cli-config-gen: ## Run ansible playbook to build EVPN Fabric configuration for g
 eos-backup: ## Backup current running configuration
 	ansible-playbook playbooks/eos-configuration-backup.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
-
 ################################################################################
 # Configlet Management
 ################################################################################
 
 .PHONY: configlet-upload
 configlet-upload: ## Upload configlets available in configlets/ to CVP.
-	ansible-playbook playbooks/dc1-upload-configlets.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/cv-configlet-upload.yml -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: configlet-unbound
 configlet-unbound: ## Rebuild configlets binding based on AVD standard
-	ansible-playbook playbooks/dc1-fabric-rollback-to-avd.yml --extra-vars "execute_tasks=true" -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-rollback-configlet-binding.yml --extra-vars "execute_tasks=true" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: configlet-delete
 configlet-delete: ## Delete Configlets (GLOBAL-ALIASES*) from CVP
-	ansible-playbook playbooks/dc1-remove-configlets.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/cv-configlet-delete.yml-i $(INVENTORY)/$(INVENTORY_FILE)
 
 ################################################################################
 # Container Management

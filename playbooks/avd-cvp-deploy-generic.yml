@@ -15,6 +15,10 @@
       tags: [build]
       import_role:
         name: eos_l3ls_evpn
+    - name: update device intended config with DCI
+      tags: [build]
+      import_role:
+         name: eos_dci
     - name: generate device intended config and documention
       tags: [build]
       import_role:
