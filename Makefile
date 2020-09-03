@@ -143,7 +143,7 @@ configlet-unbound: ## Rebuild configlets binding based on AVD standard
 
 .PHONY: configlet-delete
 configlet-delete: ## Delete Configlets (GLOBAL-ALIASES*) from CVP
-	ansible-playbook playbooks/cv-configlet-delete.yml-i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/cv-configlet-delete.yml -i $(INVENTORY)/$(INVENTORY_FILE)
 
 ################################################################################
 # Container Management
