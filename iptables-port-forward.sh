@@ -16,6 +16,12 @@ iptables --delete-chain
 iptables --table nat --flush
 iptables --table nat --delete-chain
 
+echo '* Activate default forwarding'
+
+iptables -P FORWARD ACCEPT
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+
 echo '* Activate masquerading'
 
 iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
