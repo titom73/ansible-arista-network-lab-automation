@@ -19,11 +19,11 @@ IPv6
 ### Management Interfaces Device Configuration
 
 ```eos
+!
 interface Management1
    description oob_management
    vrf MGMT
    ip address 10.73.255.121/24
-!
 ```
 
 ## Hardware Counters
@@ -44,10 +44,10 @@ Aliases not defined
 ### TerminAttr Daemon Device Configuration
 
 ```eos
+!
 daemon TerminAttr
    exec /usr/bin/TerminAttr -ingestgrpcurl=10.73.255.1:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
    no shutdown
-!
 ```
 
 ## IP DHCP Relay
@@ -65,8 +65,8 @@ IP DHCP Relay not defined
 ### Internal VLAN Allocation Policy Configuration
 
 ```eos
-vlan internal order ascending range 1006 1199
 !
+vlan internal order ascending range 1006 1199
 ```
 
 ## IP IGMP Snooping
@@ -92,7 +92,6 @@ DNS domain lookup not defined
 
 ```eos
 ip name-server vrf MGMT 10.73.255.2
-!
 ```
 
 ## DNS Domain
@@ -110,14 +109,18 @@ VRF: MGMT
 
 | Node | Primary |
 | ---- | ------- |
-| 10.73.255.2 | true |
+| 91.224.149.41 | true |
+| 37.59.63.125 | - |
+| 188.165.240.21 | - |
 
 ### NTP Device Configuration
 
 ```eos
-ntp local-interface vrf MGMT Management1
-ntp server vrf MGMT 10.73.255.2 prefer
 !
+ntp local-interface vrf MGMT Management1
+ntp server vrf MGMT 91.224.149.41 prefer
+ntp server vrf MGMT 37.59.63.125
+ntp server vrf MGMT 188.165.240.21
 ```
 
 ## Router L2 VPN
@@ -143,9 +146,9 @@ Mode: mstp
 ### Spanning Tree Device Configuration
 
 ```eos
+!
 spanning-tree mode mstp
 spanning-tree mst 0 priority 16384
-!
 ```
 
 
@@ -183,11 +186,11 @@ AAA accounting not defined
 ### Local Users Device Configuration
 
 ```eos
+!
 username admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
 username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
 username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
-!
 ```
 
 ## VLANs
@@ -202,12 +205,12 @@ username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$
 ### VLANs Device Configuration
 
 ```eos
+!
 vlan 110
    name PR01-DMZ
 !
 vlan 201
    name B-ELAN-201
-!
 ```
 
 ## VRF Instances
@@ -221,8 +224,8 @@ vlan 201
 ### VRF Instances Device Configuration
 
 ```eos
-vrf instance MGMT
 !
+vrf instance MGMT
 ```
 
 ## Port-Channel Interfaces
@@ -236,12 +239,12 @@ vrf instance MGMT
 ### Port-Channel Interfaces Device Configuration
 
 ```eos
+!
 interface Port-Channel1
    description DC1-LEAF1A_Po5
    switchport trunk allowed vlan 110,201
    switchport mode trunk
    mlag 1
-!
 ```
 
 ## Ethernet Interfaces
@@ -252,14 +255,14 @@ interface Port-Channel1
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
 | Ethernet1 | DC1-LEAF1A_Ethernet5 | *1500 | *switched | *trunk | *110,201 | - | - | - | 1 | active |
 | Ethernet2 | DC1-LEAF1B_Ethernet5 | *1500 | *switched | *trunk | *110,201 | - | - | - | 1 | active |
-| Ethernet3 | A-PR01-DMZ-POD01_Eth0 | 1500 | switched | access | 110 | - | - | - | - | - |
-| Ethernet4 | B-ELAN-201-POD01_Eth0 | 1500 | switched | access | 201 | - | - | - | - | - |
+| Ethernet5 | SRV-POD01_Eth1 | 1500 | switched | trunk | 110-111,210-211 | - | - | - | - | - |
 
 *Inherited from Port-Channel Interface
 
 ### Ethernet Interfaces Device Configuration
 
 ```eos
+!
 interface Ethernet1
    description DC1-LEAF1A_Ethernet5
    channel-group 1 mode active
@@ -268,14 +271,10 @@ interface Ethernet2
    description DC1-LEAF1B_Ethernet5
    channel-group 1 mode active
 !
-interface Ethernet3
-   description A-PR01-DMZ-POD01_Eth0
-   switchport access vlan 110
-!
-interface Ethernet4
-   description B-ELAN-201-POD01_Eth0
-   switchport access vlan 201
-!
+interface Ethernet5
+   description SRV-POD01_Eth1
+   switchport trunk allowed vlan 110-111,210-211
+   switchport mode trunk
 ```
 
 ## Loopback Interfaces
@@ -320,8 +319,8 @@ Standard Access-lists not defined
 ### Static Routes Device Configuration
 
 ```eos
-ip route vrf MGMT 0.0.0.0/0 10.73.255.2
 !
+ip route vrf MGMT 0.0.0.0/0 10.73.255.2
 ```
 
 ## Event Handler
@@ -339,9 +338,9 @@ No Event Handler Defined
 ### IP Routing Device Configuration
 
 ```eos
+!
 ip routing
 no ip routing vrf MGMT
-!
 ```
 
 ## Prefix Lists
@@ -392,9 +391,9 @@ No Peer Filters defined
 ### Router BFD Multihop Device Configuration
 
 ```eos
+!
 router bfd
    multihop interval 1200 min-rx 1200 multiplier 3
-!
 ```
 
 ## Router BGP

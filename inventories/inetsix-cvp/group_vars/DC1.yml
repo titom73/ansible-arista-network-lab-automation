@@ -37,4 +37,15 @@ name_servers:
 
 # NTP Servers IP or DNS name, first NTP server will be prefered, and sourced from Managment VRF
 ntp_servers:
-  - 10.73.255.2
+  - 91.224.149.41
+  - 37.59.63.125
+  - 188.165.240.21
+
+
+### Connection information
+ansible_become: true
+ansible_become_method: enable
+ansible_httpapi_port: '{{ansible_port}}'
+ansible_httpapi_host: '{{ ansible_host }}'
+ansible_httpapi_use_ssl: true
+ansible_httpapi_validate_certs: false

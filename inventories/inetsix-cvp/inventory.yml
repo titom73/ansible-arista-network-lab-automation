@@ -25,53 +25,71 @@ all:
           ansible_password: ansible
     # DC1_Fabric - EVPN Fabric running in home lab
     DC1:
+      vars:
+        ansible_host: 10.73.1.240
+        ansible_user: ansible
+        ansible_ssh_pass: ansible
+        # ansible_connection: httpapi
+        ansible_network_os: eos
       children:
         DC1_FABRIC:
           children:
             DC1_SPINES:
               hosts:
                 DC1-SPINE1:
-                    ansible_host: 10.73.255.101
+                  ansible_ssh_port: 8101
+                  ansible_port: 8001
                 DC1-SPINE2:
-                    ansible_host: 10.73.255.102
+                  ansible_ssh_port: 8102
+                  ansible_port: 8002
             DC1_L3LEAFS:
               children:
                 DC1_LEAF1:
                   hosts:
                     DC1-LEAF1A:
-                        ansible_host: 10.73.255.111
+                      ansible_ssh_port: 8111
+                      ansible_port: 8011
                     DC1-LEAF1B:
-                        ansible_host: 10.73.255.112
+                      ansible_ssh_port: 8112
+                      ansible_port: 8012
                 DC1_LEAF2:
                   hosts:
                     DC1-LEAF2A:
-                      ansible_host: 10.73.255.113
+                      ansible_ssh_port: 8113
+                      ansible_port: 8013
                     DC1-LEAF2B:
-                      ansible_host: 10.73.255.114
+                      ansible_ssh_port: 8114
+                      ansible_port: 8014
                 DC1_LEAF3:
                   hosts:
                     DC1-LEAF3A:
-                      ansible_host: 10.73.255.117
+                      ansible_ssh_port: 8117
+                      ansible_port: 8017
                 DC1_LEAF4:
                   hosts:
                     DC1-LEAF4A:
-                      ansible_host: 10.73.255.118
+                      ansible_ssh_port: 8118
+                      ansible_port: 8018
                 DC1_BL01:
                   hosts:
                     DC1-BL01A:
-                      ansible_host: 10.73.255.115
+                      ansible_ssh_port: 8115
+                      ansible_port: 8015
                     DC1-BL01B:
-                      ansible_host: 10.73.255.116
+                      ansible_ssh_port: 8116
+                      ansible_port: 8016
             DC1_L2LEAFS:
               children:
                 DC1_L2LEAF1:
                   hosts:
                     DC1-AGG01:
-                      ansible_host: 10.73.255.121
+                      ansible_ssh_port: 8121
+                      ansible_port: 8021
                 DC1_L2LEAF2:
                   hosts:
                     DC1-AGG02:
-                      ansible_host: 10.73.255.122
+                      ansible_ssh_port: 8122
+                      ansible_port: 8022
         DC1_TENANTS_NETWORKS:
           children:
             DC1_L3LEAFS:

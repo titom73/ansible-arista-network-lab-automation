@@ -45,14 +45,11 @@ l3leaf,DC1-LEAF2B,Ethernet4,mlag_peer,DC1-LEAF2A,Ethernet4
 l3leaf,DC1-LEAF2B,Ethernet5,l2leaf,DC1-AGG02,Ethernet2
 l3leaf,DC1-LEAF3A,Ethernet1,spine,DC1-SPINE1,Ethernet7
 l3leaf,DC1-LEAF3A,Ethernet2,spine,DC1-SPINE2,Ethernet7
-l3leaf,DC1-LEAF3A,Ethernet5,server,B-ELAN-201-POD03,Eth0
 l3leaf,DC1-LEAF4A,Ethernet1,spine,DC1-SPINE1,Ethernet8
 l3leaf,DC1-LEAF4A,Ethernet2,spine,DC1-SPINE2,Ethernet8
 l2leaf,DC1-AGG01,Ethernet1,l3leaf,DC1-LEAF1A,Ethernet5
 l2leaf,DC1-AGG01,Ethernet2,l3leaf,DC1-LEAF1B,Ethernet5
-l2leaf,DC1-AGG01,Ethernet3,server,A-PR01-DMZ-POD01,Eth0
-l2leaf,DC1-AGG01,Ethernet4,server,B-ELAN-201-POD01,Eth0
+l2leaf,DC1-AGG01,Ethernet5,server,SRV-POD01,Eth1
 l2leaf,DC1-AGG02,Ethernet1,l3leaf,DC1-LEAF2A,Ethernet5
 l2leaf,DC1-AGG02,Ethernet2,l3leaf,DC1-LEAF2B,Ethernet5
-l2leaf,DC1-AGG02,Ethernet3,server,A-PR01-DMZ-POD02,Eth0
-l2leaf,DC1-AGG02,Ethernet4,server,A-PR01-TRUST-POD02,Eth0
+l2leaf,DC1-AGG02,Ethernet5,server,SRV-POD02,Eth1

@@ -19,11 +19,11 @@ IPv6
 ### Management Interfaces Device Configuration
 
 ```eos
+!
 interface Management1
    description oob_management
    vrf MGMT
    ip address 10.73.255.102/24
-!
 ```
 
 ## Hardware Counters
@@ -44,10 +44,10 @@ Aliases not defined
 ### TerminAttr Daemon Device Configuration
 
 ```eos
+!
 daemon TerminAttr
    exec /usr/bin/TerminAttr -ingestgrpcurl=10.73.255.1:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
    no shutdown
-!
 ```
 
 ## IP DHCP Relay
@@ -65,8 +65,8 @@ IP DHCP Relay not defined
 ### Internal VLAN Allocation Policy Configuration
 
 ```eos
-vlan internal order ascending range 1006 1199
 !
+vlan internal order ascending range 1006 1199
 ```
 
 ## IP IGMP Snooping
@@ -92,7 +92,6 @@ DNS domain lookup not defined
 
 ```eos
 ip name-server vrf MGMT 10.73.255.2
-!
 ```
 
 ## DNS Domain
@@ -110,14 +109,18 @@ VRF: MGMT
 
 | Node | Primary |
 | ---- | ------- |
-| 10.73.255.2 | true |
+| 91.224.149.41 | true |
+| 37.59.63.125 | - |
+| 188.165.240.21 | - |
 
 ### NTP Device Configuration
 
 ```eos
-ntp local-interface vrf MGMT Management1
-ntp server vrf MGMT 10.73.255.2 prefer
 !
+ntp local-interface vrf MGMT Management1
+ntp server vrf MGMT 91.224.149.41 prefer
+ntp server vrf MGMT 37.59.63.125
+ntp server vrf MGMT 188.165.240.21
 ```
 
 ## Router L2 VPN
@@ -138,8 +141,8 @@ Mode: none
 ### Spanning Tree Device Configuration
 
 ```eos
-spanning-tree mode none
 !
+spanning-tree mode none
 ```
 
 
@@ -177,11 +180,11 @@ AAA accounting not defined
 ### Local Users Device Configuration
 
 ```eos
+!
 username admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
 username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
 username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
-!
 ```
 
 ## VLANs
@@ -199,8 +202,8 @@ No VLANs defined
 ### VRF Instances Device Configuration
 
 ```eos
-vrf instance MGMT
 !
+vrf instance MGMT
 ```
 
 ## Port-Channel Interfaces
@@ -227,6 +230,7 @@ No Port-Channels defined
 ### Ethernet Interfaces Device Configuration
 
 ```eos
+!
 interface Ethernet1
    description P2P_LINK_TO_DC1-LEAF1A_Ethernet2
    no switchport
@@ -266,7 +270,6 @@ interface Ethernet8
    description P2P_LINK_TO_DC1-LEAF4A_Ethernet2
    no switchport
    ip address 172.31.255.22/31
-!
 ```
 
 ## Loopback Interfaces
@@ -288,10 +291,10 @@ IPv6
 ### Loopback Interfaces Device Configuration
 
 ```eos
+!
 interface Loopback0
    description EVPN_Overlay_Peering
    ip address 192.168.255.2/32
-!
 ```
 
 ## VLAN Interfaces
@@ -332,8 +335,8 @@ Standard Access-lists not defined
 ### Static Routes Device Configuration
 
 ```eos
-ip route vrf MGMT 0.0.0.0/0 10.73.255.2
 !
+ip route vrf MGMT 0.0.0.0/0 10.73.255.2
 ```
 
 ## Event Handler
@@ -351,9 +354,9 @@ No Event Handler Defined
 ### IP Routing Device Configuration
 
 ```eos
+!
 ip routing
 no ip routing vrf MGMT
-!
 ```
 
 ## Prefix Lists
@@ -369,9 +372,9 @@ no ip routing vrf MGMT
 ### Prefix Lists Device Configuration
 
 ```eos
+!
 ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
    seq 10 permit 192.168.255.0/24 le 32
-!
 ```
 
 ## IPv6 Prefix Lists
@@ -412,9 +415,9 @@ Community Lists not defined
 ### Route Maps Device Configuration
 
 ```eos
+!
 route-map RM-CONN-2-BGP permit 10
    match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-!
 ```
 
 ## Peer Filters
@@ -430,9 +433,9 @@ route-map RM-CONN-2-BGP permit 10
 ### Peer Filters Device Configuration
 
 ```eos
+!
 peer-filter LEAF-AS-RANGE
    10 match as-range 65101-65132 result accept
-!
 ```
 
 ## Router BFD
@@ -446,9 +449,9 @@ peer-filter LEAF-AS-RANGE
 ### Router BFD Multihop Device Configuration
 
 ```eos
+!
 router bfd
    multihop interval 1200 min-rx 1200 multiplier 3
-!
 ```
 
 ## Router BGP
@@ -480,6 +483,7 @@ router bfd
 | ebgp multihop | 3 |
 | send community | true |
 | maximum routes | 0 (no limit) |
+
 **IPv4-UNDERLAY-PEERS**:
 
 | Settings | Value |
@@ -520,6 +524,7 @@ router bfd
 ### Router BGP Device Configuration
 
 ```eos
+!
 router bgp 65001
    router-id 192.168.255.2
    no bgp default ipv4-unicast
@@ -579,7 +584,6 @@ router bgp 65001
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
-!
 ```
 
 ## Router Multicast
