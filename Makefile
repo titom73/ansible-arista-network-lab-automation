@@ -11,6 +11,7 @@ INVENTORY_FILE = inventory.yml
 # For optional ansible options
 ANSIBLE_ARGS ?=
 FACTS_LOG ?= ../cvp-debug-logs/arista.cvp.facts.json
+CV_PREFIX ?= ASE
 
 ### Docker variables
 CURRENT_DIR = $(shell pwd)
@@ -135,7 +136,7 @@ eos-backup: ## Backup current running configuration
 
 .PHONY: configlet-upload
 configlet-upload: ## Upload configlets available in configlets/ to CVP.
-	ansible-playbook playbooks/cv-configlet-upload.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/cv-configlet-upload.yml --extra-vars "configlets_prefix_var=$(CV_PREFIX)" -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: configlet-unbound
 configlet-unbound: ## Rebuild configlets binding based on AVD standard

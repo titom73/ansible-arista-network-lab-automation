@@ -7,7 +7,7 @@
     - arista.avd
     - arista.cvp
   vars:
-    configlets_prefix_var: "ASE"
+    configlets_prefix_var: "TEST2"
     configlet_dir_var: "configlets/"
   tasks:
   - name: 'upload configlets from cloudvision {{inventory_hostname}}'
