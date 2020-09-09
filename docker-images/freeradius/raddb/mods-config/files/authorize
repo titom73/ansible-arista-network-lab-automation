@@ -1,0 +1,15 @@
+cvpadmin Cleartext-Password := "cvpadmin"
+        Arista-AVPair = "shell:priv-lvl=15",
+        Service-Type = NAS-Prompt-User
+
+ansible Cleartext-Password := "ansible"
+        Arista-AVPair = "shell:priv-lvl=15",
+        Service-Type = NAS-Prompt-User
+
+cvpuser Cleartext-Password := "cvpuser"
+        Arista-AVPair = "shell:priv-lvl=15",
+        Service-Type = NAS-Prompt-User
+
+demo Cleartext-Password := "ansible"
+        Arista-AVPair = "shell:priv-lvl=15",
+        Service-Type = NAS-Prompt-User
