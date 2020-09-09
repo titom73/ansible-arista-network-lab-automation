@@ -9,7 +9,7 @@ TOOLS ?= inventories/tools/inetsix-eapi
 # Default Inventory file to look for
 INVENTORY_FILE = inventory.yml
 # For optional ansible options
-ANSIBLE_ARGS ?=
+ANSIBLE_ARGS ?= --diff
 FACTS_LOG ?= ../cvp-debug-logs/arista.cvp.facts.json
 CV_PREFIX ?= ASE
 
@@ -34,49 +34,49 @@ facts: ## Get facts from CVP and save locally
 
 .PHONY: avd-build
 avd-build: ## Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
-	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-provision
 avd-provision: ## Run ansible playbook to deploy EVPN Fabric.
-	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags provision -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags provision -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-deploy
 avd-deploy: ## Run ansible playbook to deploy EVPN Fabric.
-	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 ### Sub-scenario
 
 .PHONY: avd-build-isis
 avd-build-isis: ## Run ansible playbook to build EVPN Fabric configuration with ISIS as underlay with DC1 and CV
-	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build --extra-vars "underlay_routing_protocol=ISIS" -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build --extra-vars "underlay_routing_protocol=ISIS" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-deploy-isis
 avd-deploy-isis: ## Run ansible playbook to deploy EVPN Fabric with ISIS as underlay.
-	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "underlay_routing_protocol=ISIS execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "underlay_routing_protocol=ISIS execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-build-ospf
 avd-build-ospf: ## Run ansible playbook to build EVPN Fabric configuration with OSPF as underlay with DC1 and CV
-	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build --extra-vars "underlay_routing_protocol=OSPF" -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build --extra-vars "underlay_routing_protocol=OSPF" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-deploy-ospf
 avd-deploy-ospf: ## Run ansible playbook to deploy EVPN Fabric with OSPF as underlay.
-	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "underlay_routing_protocol=OSPF execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "underlay_routing_protocol=OSPF execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 ### Cleanup CVP
 
 .PHONY: avd-reset
 avd-reset: ## Run ansible playbook to reset all devices.
-	ansible-playbook playbooks/avd-cvp-reset.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-cvp-reset.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 ### Debug Actions
 
 .PHONY: avd-vars-input
 avd-vars-input: ## Run ansible playbook to extract EVPN Fabric variables.
-	ansible-playbook playbooks/extract-avd-vars.yml --tags eos_l3ls_evpn -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/extract-avd-vars.yml --tags eos_l3ls_evpn -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-vars-devices
 avd-vars-devices: ## Run ansible playbook to extract Devices variables.
-	ansible-playbook playbooks/extract-avd-vars.yml --tags cli -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/extract-avd-vars.yml --tags cli -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 ################################################################################
 # AVD Commands for Generic Inventory and NO CV instance
