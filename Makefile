@@ -138,6 +138,10 @@ eos-backup: ## Backup current running configuration
 configlet-upload: ## Upload configlets available in configlets/ to CVP.
 	ansible-playbook playbooks/cv-configlet-upload.yml --extra-vars "configlets_prefix_var=$(CV_PREFIX)" -i $(INVENTORY)/$(INVENTORY_FILE)
 
+.PHONY: configlet-module-check
+configlet-module: ## Upload configlets available in configlets/ to CVP.
+	ansible-playbook playbooks/cv-configlet-module.yml --extra-vars "configlets_prefix_var=$(CV_PREFIX)" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
 .PHONY: configlet-unbound
 configlet-unbound: ## Rebuild configlets binding based on AVD standard
 	ansible-playbook playbooks/avd-cvp-rollback-configlet-binding.yml --extra-vars "execute_tasks=true" -i $(INVENTORY)/$(INVENTORY_FILE)
