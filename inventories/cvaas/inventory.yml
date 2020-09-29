@@ -1,0 +1,9 @@
+---
+all:
+  children:
+    CVP:
+      hosts:
+        cv_server:
+          ansible_host: 'www.cv-staging.corp.arista.io'
+          ansible_user: cvaas
+          ansible_password: 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOjc4OTYsImRzbiI6ImFyaXN0YS10YWMiLCJkc3QiOiJhY2NvdW50Iiwic2lkIjoiNmMwN2U5ODI2NjI0MDQwZjJjYmZlYzRlZTE5M2QwNGUxZTBjZWE0ZDM3YjRlYWQzMjJkNjE3YjFhOWYyOTU1Zi1rUDAxNzQ0S2FxVzFrYkdLcE1XY1BJbE1zV1EyWDZsaU5mQXVUREQ4In0.uUE-WBRDU6bLArZrqQP8rr1wwHMOxStBc-5s2dF_0F3rYxcDPf7NfI6u6hNMfi-AeBq93BcG8ut2GzOH8dqQHA'
