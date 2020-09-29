@@ -1,5 +1,5 @@
 ---
-- name: Build Switch configuration
+- name: cv_configlet unit testing
   hosts: cv_server
   connection: local
   gather_facts: false

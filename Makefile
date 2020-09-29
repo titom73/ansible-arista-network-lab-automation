@@ -138,10 +138,6 @@ eos-backup: ## Backup current running configuration
 configlet-upload: ## Upload configlets available in configlets/ to CVP.
 	ansible-playbook playbooks/cv-configlet-upload.yml --extra-vars "configlets_prefix_var=$(CV_PREFIX)" -i $(INVENTORY)/$(INVENTORY_FILE)
 
-.PHONY: configlet-module-check
-configlet-module: ## Upload configlets available in configlets/ to CVP.
-	ansible-playbook playbooks/cv-configlet-module.yml --extra-vars "configlets_prefix_var=$(CV_PREFIX)" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
-
 .PHONY: configlet-unbound
 configlet-unbound: ## Rebuild configlets binding based on AVD standard
 	ansible-playbook playbooks/avd-cvp-rollback-configlet-binding.yml --extra-vars "execute_tasks=true" -i $(INVENTORY)/$(INVENTORY_FILE)
@@ -151,24 +147,36 @@ configlet-delete: ## Delete Configlets (GLOBAL-ALIASES*) from CVP
 	ansible-playbook playbooks/cv-configlet-delete.yml -i $(INVENTORY)/$(INVENTORY_FILE)
 
 ################################################################################
-# Container Management
+# Unit testing management
 ################################################################################
 
+.PHONY: unit-configlet
+unit-configlet: ## Unit test for cv_configlet
+	ansible-playbook playbooks/unit-cv-configlets.yml --extra-vars "configlets_prefix_var=$(CV_PREFIX)" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
+.PHONY: unit-container
+unit-container: ## Unit test for cv_container
+	ansible-playbook playbooks/unit-cv-container.yml --extra-vars "configlets_prefix_var=$(CV_PREFIX)" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
 .PHONY: container-create
-container-create: ## Create DC2 container topology on CVP.
-	ansible-playbook playbooks/cv-container-testing.yml --extra-vars "run_mode=merge" -i $(INVENTORY)/$(INVENTORY_FILE)
+container-create: unit-container ## Create DC2 container topology on CVP.
 
 .PHONY: container-delete
 container-delete: ## Remove DC2 container topology from CVP.
-	ansible-playbook playbooks/cv-container-testing.yml --extra-vars "run_mode=delete" -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/cv-container-testing.yml --extra-vars "run_mode=delete" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
-.PHONY: dhcp-configure
-dhcp-configure: ## Configure DHCP server with topology information.
-	ansible-playbook playbooks/dhcp-configuration.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+.PHONY: unit-device
+unit-device: ## Unit test for cv_configlet
+	ansible-playbook playbooks/unit-cv-device.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
 
 ################################################################################
 # Tooling Management
 ################################################################################
+
+.PHONY: dhcp-configure
+dhcp-configure: ## Configure DHCP server with topology information.
+	ansible-playbook playbooks/dhcp-configuration.yml -i $(INVENTORY)/$(INVENTORY_FILE)
 
 .PHONY: centos-bootstrap
 centos-bootstrap: ## Initial Centos 7 Configuration
