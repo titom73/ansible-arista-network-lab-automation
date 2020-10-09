@@ -1,0 +1,10 @@
+---
+all:
+  children:
+    CVP:
+      hosts:
+        cv_server:
+          ansible_host: 10.83.28.164
+          ansible_user: ansible
+          ansible_password: interdata
+          ansible_httpapi_validate_certs: true
