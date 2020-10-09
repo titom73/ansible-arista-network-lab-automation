@@ -272,17 +272,11 @@ interface Ethernet1
    description P2P_LINK_TO_DC1-SPINE1_Ethernet5
    no switchport
    ip address 172.31.255.25/31
-   isis enable EVPN_UNDERLAY
-   isis metric 50
-   isis network point-to-point
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-SPINE2_Ethernet5
    no switchport
    ip address 172.31.255.27/31
-   isis enable EVPN_UNDERLAY
-   isis metric 50
-   isis network point-to-point
 !
 interface Ethernet3
    description MLAG_PEER_DC1-BL01B_Ethernet3
@@ -318,14 +312,10 @@ IPv6
 interface Loopback0
    description EVPN_Overlay_Peering
    ip address 192.168.255.9/32
-   isis enable EVPN_UNDERLAY
-   isis passive
 !
 interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    ip address 192.168.254.9/32
-   isis enable EVPN_UNDERLAY
-   isis passive
 ```
 
 ## VLAN Interfaces
@@ -344,9 +334,6 @@ interface Loopback1
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
    ip address 10.255.251.12/31
-   isis enable EVPN_UNDERLAY
-   isis metric 50
-   isis network point-to-point
 !
 interface Vlan4094
    description MLAG_PEER
@@ -586,6 +573,15 @@ router bfd
 | send community | true |
 | maximum routes | 0 (no limit) |
 
+**IPv4-UNDERLAY-PEERS**:
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | ipv4 |
+| remote_as | 65001 |
+| send community | true |
+| maximum routes | 12000 |
+
 **MLAG-IPv4-UNDERLAY-PEER**:
 
 | Settings | Value |
@@ -600,6 +596,9 @@ router bfd
 
 | Neighbor | Remote AS |
 | -------- | ---------
+| 10.255.251.13 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
+| 172.31.255.24 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 172.31.255.26 | Inherited from peer group IPv4-UNDERLAY-PEERS |
 | 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS |
 | 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS |
 
@@ -631,21 +630,32 @@ router bgp 65105
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor IPv4-UNDERLAY-PEERS peer group
+   neighbor IPv4-UNDERLAY-PEERS remote-as 65001
+   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
+   neighbor IPv4-UNDERLAY-PEERS send-community
+   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER peer group
    neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65105
    neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
    neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
+   neighbor 10.255.251.13 peer group MLAG-IPv4-UNDERLAY-PEER
+   neighbor 172.31.255.24 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.26 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
+   redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
+      no neighbor IPv4-UNDERLAY-PEERS activate
       no neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
+      neighbor IPv4-UNDERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
 ```
 
@@ -671,27 +681,4 @@ No Platform parameters defined
 
 ## Router ISIS
 
-### Router ISIS Summary
-
-| Settings | Value |
-| -------- | ----- |
-| Instance | EVPN_UNDERLAY |
-| Net-ID | 49.0001.0001.0001.0007.00 |
-| Type | level-2 |
-| Address Family | ipv4 unicast |
-
-### Router ISIS Device Configuration
-
-```eos
-router isis EVPN_UNDERLAY
-   net 49.0001.0001.0001.0007.00
-   is-type level-2
-   router-id ipv4 192.168.255.9
-   log-adjacency-changes
-   !
-   address-family ipv4 unicast
-      maximum-paths 2
-   !
-!
-```
-
+Router ISIS not defined

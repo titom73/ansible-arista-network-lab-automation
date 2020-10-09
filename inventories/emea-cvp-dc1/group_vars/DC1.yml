@@ -26,7 +26,9 @@ local_users:
 
 
 # Cloud Vision server information
-cvp_instance_ip: 10.83.28.164
+cvp_instance_ips:
+  - 10.83.28.164
+  # - apiserver.corp.arista.io
 cvp_ingestauth_key: ''
 # cvp_ingestauth_key: telarista
 
