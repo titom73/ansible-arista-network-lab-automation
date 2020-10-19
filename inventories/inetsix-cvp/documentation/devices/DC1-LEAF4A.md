@@ -237,7 +237,27 @@ vrf instance TENANT_A_PROJECT01
 
 ## Port-Channel Interfaces
 
-No Port-Channels defined
+### Port-Channel Interfaces Summary
+
+| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
+| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
+| Port-Channel5 | SRV-POD03_PortChanne1 | 1500 | switched | trunk | 110-111,210-211 | - | - | 0000:0000:0303:0202:0101 | - | - | - |
+
+### Port-Channel Interfaces Device Configuration
+
+```eos
+!
+interface Port-Channel5
+   description SRV-POD03_PortChanne1
+   switchport trunk allowed vlan 110-111,210-211
+   switchport mode trunk
+   !
+    evpn ethernet-segment
+       identifier 0000:0000:0303:0202:0101
+       route-target import 03:03:02:02:01:01
+   !
+   lacp system-id 0303.0202.0101
+```
 
 ## Ethernet Interfaces
 
@@ -247,6 +267,7 @@ No Port-Channels defined
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
 | Ethernet1 | P2P_LINK_TO_DC1-SPINE1_Ethernet8 | 1500 | routed | access | - | - | - | 172.31.255.21/31 | - | - |
 | Ethernet2 | P2P_LINK_TO_DC1-SPINE2_Ethernet8 | 1500 | routed | access | - | - | - | 172.31.255.23/31 | - | - |
+| Ethernet5 | SRV-POD03_Eth2 | *1500 | *switched | *trunk | *110-111,210-211 | - | - | - | 5 | active |
 
 *Inherited from Port-Channel Interface
 
@@ -263,6 +284,10 @@ interface Ethernet2
    description P2P_LINK_TO_DC1-SPINE2_Ethernet8
    no switchport
    ip address 172.31.255.23/31
+!
+interface Ethernet5
+   description SRV-POD03_Eth2
+   channel-group 5 mode active
 ```
 
 ## Loopback Interfaces
