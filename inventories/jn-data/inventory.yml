@@ -14,7 +14,7 @@ all:
           ansible_user: ansible
           ansible_password: interdata
     # DC1_Fabric - EVPN Fabric running in home lab
-    PROD:
+    DC1:
       vars:
         ansible_host: 10.83.28.162
         ansible_user: ansible
@@ -24,6 +24,10 @@ all:
       children:
         DC1_FABRIC:
           children:
+            DC1_RS:
+              hosts:
+                DC1_RS01:
+                  ansible_port: 8110
             DC1_SPINES:
               hosts:
                 DC1-SPINE1:

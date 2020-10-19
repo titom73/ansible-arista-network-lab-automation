@@ -19,6 +19,7 @@ underlay_ospf_max_lsa: 12000
 # uplink interfaces
 # Assign range larger then total [spines * total potential leafs * 2]
 underlay_p2p_network_summary: 172.31.255.0/24
+evpn_controller_p2p_network_summary: 172.32.255.0/24
 
 # IP address range for evpn loopback for all switches in fabric,
 # assigned as /32s
@@ -68,6 +69,18 @@ spine:
       id: 2
       mgmt_ip: 10.73.1.12/16
 
+evpn_controller:
+  platform: vEOS-LAB
+  defaults:
+    remote_switches: [DC1-LEAF1A, DC1-LEAF1B]
+    uplink_to_remote_switches: [Ethernet9, Ethernet8]
+    remote_switches_group: l3leaf
+  nodes:
+    DC1_RS01:
+      id: 1
+      mgmt_ip: 10.73.1.11/16
+      remote_switches_interfaces: [Ethernet9, Ethernet9]
+
 # Leaf switch groups
 # A maximum of two nodes can form a leaf group
 # When two nodes are in a leaf group this will automatically form mlag pair
@@ -115,25 +128,25 @@ l3leaf:
       bgp_as: 65103
       nodes:
         DC1-LEAF3A:
-          id: 8
+          id: 5
           mgmt_ip: 10.73.1.21/16
           spine_interfaces: [Ethernet5, Ethernet5]
     DC1_LEAF4:
       bgp_as: 65104
       nodes:
         DC1-LEAF4A:
-          id: 11
+          id: 6
           mgmt_ip: 10.73.1.24/16
           spine_interfaces: [Ethernet8, Ethernet8]
     DC1_BL1:
       bgp_as: 65110
       nodes:
         DC1-BL1A:
-          id: 9
+          id: 7
           mgmt_ip: 10.73.1.22/16
           spine_interfaces: [Ethernet6, Ethernet6]
         DC1-BL1B:
-          id: 10
+          id: 8
           mgmt_ip: 10.73.1.23/16
           spine_interfaces: [Ethernet7, Ethernet7]
 
