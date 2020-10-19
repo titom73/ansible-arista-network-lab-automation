@@ -9,5 +9,6 @@ inventories/*/documentation/*
 
 *.json
 *.log.*
+*.swp
 
 collections/*
