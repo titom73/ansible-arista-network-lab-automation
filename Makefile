@@ -123,6 +123,15 @@ cli-config-gen: ## Run ansible playbook to build EVPN Fabric configuration for g
 	ansible-playbook playbooks/avd-eos-cli-config-gen.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 ################################################################################
+# AVD Commands for l3ls_evpn role
+################################################################################
+
+.PHONY: l3ls-evpn
+l3ls-evpn: ## Run ansible playbook to run only L3LS role
+	ansible-playbook playbooks/avd-l3ls-development.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
+
+################################################################################
 # AVD Commands for Generic Inventory and NO CV instance
 ################################################################################
 
