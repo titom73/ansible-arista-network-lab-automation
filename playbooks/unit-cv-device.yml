@@ -14,6 +14,13 @@
           - 'AVD_DC1-SPINE1'
           - '01TRAINING-01'
         imageBundle: []  # Not yet supported
+      DC1-SPINE2:
+        name: 'DC1-SPINE1'
+        parentContainerName: DC1_SPINES
+        configlets:
+          - 'AVD_DC1-SPINE2'
+          - '01TRAINING-01'
+        imageBundle: []  # Not yet supported
   tasks:
     - name: "Gather CVP facts {{inventory_hostname}}"
       arista.cvp.cv_facts:

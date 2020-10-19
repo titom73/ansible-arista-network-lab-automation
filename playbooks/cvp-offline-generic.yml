@@ -1,0 +1,34 @@
+---
+- name: Configuration deployment with CVP
+  hosts: cv_server
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.avd
+    - arista.cvp
+  vars:
+    run_tasks: false
+    run_mode: merge
+    CVP_CONTAINERS:
+      DC2:
+        parent_container: Tenant
+      Leafs:
+        parent_container: DC2
+      Spines:
+        parent_container: DC2
+      POD01:
+        parent_container: Leafs
+  tasks:
+    - name: "Include offline facts"
+      include_vars: "{{ playbook_dir }}/../output.variables/arista.cvp.facts.json"
+
+    - name: 'running cv_container in {{run_mode}} on {{inventory_hostname}}'
+      arista.cvp.cv_container:
+        cvp_facts: "{{ansible_facts}}"
+        topology: "{{CVP_CONTAINERS}}"
+        mode: '{{run_mode}}'
+      register: result
+
+    - debug:
+        msg: '{{result}}'
+
