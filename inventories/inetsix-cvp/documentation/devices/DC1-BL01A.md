@@ -188,7 +188,7 @@ AAA accounting not defined
 
 ```eos
 !
-username admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
+username admin privilege 15 role network-admin nopassword
 username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
 username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
@@ -272,11 +272,15 @@ interface Ethernet1
    description P2P_LINK_TO_DC1-SPINE1_Ethernet5
    no switchport
    ip address 172.31.255.25/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-SPINE2_Ethernet5
    no switchport
    ip address 172.31.255.27/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet3
    description MLAG_PEER_DC1-BL01B_Ethernet3
@@ -312,10 +316,12 @@ IPv6
 interface Loopback0
    description EVPN_Overlay_Peering
    ip address 192.168.255.9/32
+   ip ospf area 0.0.0.0
 !
 interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    ip address 192.168.254.9/32
+   ip ospf area 0.0.0.0
 ```
 
 ## VLAN Interfaces
@@ -334,6 +340,8 @@ interface Loopback1
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
    ip address 10.255.251.12/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Vlan4094
    description MLAG_PEER
@@ -573,15 +581,6 @@ router bfd
 | send community | true |
 | maximum routes | 0 (no limit) |
 
-**IPv4-UNDERLAY-PEERS**:
-
-| Settings | Value |
-| -------- | ----- |
-| Address Family | ipv4 |
-| remote_as | 65001 |
-| send community | true |
-| maximum routes | 12000 |
-
 **MLAG-IPv4-UNDERLAY-PEER**:
 
 | Settings | Value |
@@ -596,9 +595,6 @@ router bfd
 
 | Neighbor | Remote AS |
 | -------- | ---------
-| 10.255.251.13 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
-| 172.31.255.24 | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.26 | Inherited from peer group IPv4-UNDERLAY-PEERS |
 | 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS |
 | 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS |
 
@@ -630,32 +626,21 @@ router bgp 65105
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS remote-as 65001
-   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
-   neighbor IPv4-UNDERLAY-PEERS send-community
-   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER peer group
    neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65105
    neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
    neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
-   neighbor 10.255.251.13 peer group MLAG-IPv4-UNDERLAY-PEER
-   neighbor 172.31.255.24 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.26 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
-   redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
-      no neighbor IPv4-UNDERLAY-PEERS activate
       no neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
 ```
 

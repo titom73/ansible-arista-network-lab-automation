@@ -188,7 +188,7 @@ AAA accounting not defined
 
 ```eos
 !
-username admin privilege 15 role network-admin secret sha512 $6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1
+username admin privilege 15 role network-admin nopassword
 username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
 username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
@@ -300,11 +300,15 @@ interface Ethernet1
    description P2P_LINK_TO_DC1-SPINE1_Ethernet4
    no switchport
    ip address 172.31.255.13/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-SPINE2_Ethernet4
    no switchport
    ip address 172.31.255.15/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet3
    description MLAG_PEER_DC1-LEAF2A_Ethernet3
@@ -344,10 +348,12 @@ IPv6
 interface Loopback0
    description EVPN_Overlay_Peering
    ip address 192.168.255.6/32
+   ip ospf area 0.0.0.0
 !
 interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    ip address 192.168.254.5/32
+   ip ospf area 0.0.0.0
 ```
 
 ## VLAN Interfaces
@@ -384,6 +390,8 @@ interface Vlan3010
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
    ip address 10.255.251.5/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Vlan4094
    description MLAG_PEER
@@ -638,15 +646,6 @@ router bfd
 | send community | true |
 | maximum routes | 0 (no limit) |
 
-**IPv4-UNDERLAY-PEERS**:
-
-| Settings | Value |
-| -------- | ----- |
-| Address Family | ipv4 |
-| remote_as | 65001 |
-| send community | true |
-| maximum routes | 12000 |
-
 **MLAG-IPv4-UNDERLAY-PEER**:
 
 | Settings | Value |
@@ -661,9 +660,6 @@ router bfd
 
 | Neighbor | Remote AS |
 | -------- | ---------
-| 10.255.251.4 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
-| 172.31.255.12 | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.14 | Inherited from peer group IPv4-UNDERLAY-PEERS |
 | 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS |
 | 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS |
 
@@ -704,23 +700,14 @@ router bgp 65102
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS remote-as 65001
-   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
-   neighbor IPv4-UNDERLAY-PEERS send-community
-   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER peer group
    neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65102
    neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
    neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
-   neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER
-   neighbor 172.31.255.12 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.14 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
-   redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle B-ELAN-201
       rd 192.168.255.6:20201
@@ -736,12 +723,10 @@ router bgp 65102
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
-      no neighbor IPv4-UNDERLAY-PEERS activate
       no neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    vrf TENANT_A_PROJECT01
