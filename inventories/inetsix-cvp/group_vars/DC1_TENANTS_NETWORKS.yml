@@ -14,9 +14,20 @@ tenants:
             tags: [DC1]
             enabled: true
             ip_address_virtual: 10.1.10.254/24
+            igmp_snooping: false
           111:
             name: 'PR01-TRUST'
-            tags: [POD02]
+            tags: [POD01]
+            enabled: true
+            ip_address_virtual: 10.1.11.254/24
+          112:
+            name: 'PR01-TRUST'
+            tags: [POD01]
+            enabled: true
+            ip_address_virtual: 10.1.11.254/24
+          113:
+            name: 'PR01-TRUST'
+            tags: [POD01]
             enabled: true
             ip_address_virtual: 10.1.11.254/24
       TENANT_A_PROJECT02:
@@ -25,11 +36,12 @@ tenants:
           loopback: 100
           loopback_ip_range: 10.1.255.0/24
         svis:
-          112:
+          114:
             name: 'PR02-DMZ'
             tags: [POD01]
             enabled: true
             ip_address_virtual: 10.1.12.254/24
+            igmp_snooping: true
 
 # Tenant D Specific Information - Pure L2 tenant
   Tenant_B:
@@ -38,3 +50,4 @@ tenants:
       201:
         name: 'B-ELAN-201'
         tags: [DC1]
+        igmp_snooping: false

@@ -62,6 +62,9 @@ avd-build-ospf: ## Run ansible playbook to build EVPN Fabric configuration with 
 avd-deploy-ospf: ## Run ansible playbook to deploy EVPN Fabric with OSPF as underlay.
 	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "underlay_routing_protocol=OSPF execute_tasks=true" --tags "build,provision,apply" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
+.PHONY: avd-build-all
+avd-build-all: avd-build-isis avd-build-ospf avd-build ## Run AVD Build for all ISIS, OSPF and BGP Underlay
+
 ### Cleanup CVP
 
 .PHONY: avd-reset
