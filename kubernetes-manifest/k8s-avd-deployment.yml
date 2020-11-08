@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: avd-documentation-deployment
+  labels:
+    name: avd-documentation
+    run: avd-web
+    app: avd
+    version: '0.0.2'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: avd
+  template:
+    metadata:
+      labels:
+        app: avd
+        run: avd-web
+        app: avd
+    spec:
+      restartPolicy: Always
+      volumes:
+        - name: avd-data
+          emptyDir: {}
+      containers:
+        - name: avd-web
+          image: nginx
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          command: ['nginx-debug', '-g', 'daemon off;']
+          volumeMounts:
+            - name: avd-data
+              mountPath: /usr/share/nginx/html/
+      initContainers:
+        - name: avd-builder
+          image: titom73/k8s_avd:0.0.2
+          env:
+            - name: REPO_AVD_DATA
+              value: "https://github.com/titom73/avd-for-compose-kubernetes-demo.git"
+            - name: ANSIBLE_PLAYBOOK
+              value: "dc1-fabric-deploy-cvp.yml"
+            - name: ANSIBLE_TAGS
+              value: "build"
+          volumeMounts:
+            - name: avd-data
+              mountPath: /web/
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: avd-documentation-service
+spec:
+  type: NodePort
+  ports:
+  - nodePort: 31080
+    port: 80
+    targetPort: 80
+  selector:
+    app: avd
+    run: avd-web
