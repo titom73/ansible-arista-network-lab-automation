@@ -85,6 +85,7 @@ l3leaf:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
         tags: [ 'POD01', 'DC1' ]
         # tags: [ border ]
+      igmp_snooping_enabled: false
       nodes:
         DC1-LEAF1A:
           id: 1

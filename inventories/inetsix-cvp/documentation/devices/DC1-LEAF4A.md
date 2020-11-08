@@ -291,7 +291,10 @@ vlan internal order ascending range 1006 1199
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 110 | PR01-DMZ | none  |
+| 111 | PR01-TRUST | none  |
+| 112 | PR01-DMZ | none  |
 | 201 | B-ELAN-201 | none  |
+| 311 | PR01-TRUST-DHCP | none  |
 
 ### VLANs Device Configuration
 
@@ -300,8 +303,17 @@ vlan internal order ascending range 1006 1199
 vlan 110
    name PR01-DMZ
 !
+vlan 111
+   name PR01-TRUST
+!
+vlan 112
+   name PR01-DMZ
+!
 vlan 201
    name B-ELAN-201
+!
+vlan 311
+   name PR01-TRUST-DHCP
 ```
 
 # Interfaces
@@ -399,6 +411,9 @@ interface Loopback1
 | Interface | Description | VRF | IP Address | IP Address Virtual | IP Router Virtual Address (vARP) |
 | --------- | ----------- | --- | ---------- | ------------------ | -------------------------------- |
 | Vlan110 | PR01-DMZ | TENANT_A_PROJECT01 | - | 10.1.10.254/24 | - |
+| Vlan111 | PR01-TRUST | TENANT_A_PROJECT01 | - | 10.1.11.254/24 | - |
+| Vlan112 | PR01-DMZ | TENANT_A_PROJECT01 | - | 10.1.11.254/24 | - |
+| Vlan311 | PR01-TRUST-DHCP | TENANT_A_PROJECT01 | - | 10.1.31.254/24 | - |
 
 ### VLAN Interfaces Device Configuration
 
@@ -406,8 +421,26 @@ interface Loopback1
 !
 interface Vlan110
    description PR01-DMZ
+   mtu 6666
    vrf TENANT_A_PROJECT01
    ip address virtual 10.1.10.254/24
+!
+interface Vlan111
+   description PR01-TRUST
+   mtu 4444
+   vrf TENANT_A_PROJECT01
+   ip address virtual 10.1.11.254/24
+!
+interface Vlan112
+   description PR01-DMZ
+   mtu 7777
+   vrf TENANT_A_PROJECT01
+   ip address virtual 10.1.11.254/24
+!
+interface Vlan311
+   description PR01-TRUST-DHCP
+   vrf TENANT_A_PROJECT01
+   ip address virtual 10.1.31.254/24
 ```
 
 ## VXLAN Interface
@@ -422,7 +455,10 @@ interface Vlan110
 | VLAN | VNI |
 | ---- | --- |
 | 110 | 10110 |
+| 111 | 10111 |
+| 112 | 10112 |
 | 201 | 20201 |
+| 311 | 10311 |
 
 **VRF to VNI Mappings:**
 
@@ -438,7 +474,10 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan udp-port 4789
    vxlan vlan 110 vni 10110
+   vxlan vlan 111 vni 10111
+   vxlan vlan 112 vni 10112
    vxlan vlan 201 vni 20201
+   vxlan vlan 311 vni 10311
    vxlan vrf TENANT_A_PROJECT01 vni 11
 ```
 
@@ -480,15 +519,13 @@ ip routing vrf TENANT_A_PROJECT01
 
 ### IPv6 Routing Summary
 
-| VRF | IPv6 Routing Enabled |
-| --- | -------------------- |
+| VRF | Routing Enabled |
+| --- | --------------- |
+| default |  False | 
 | MGMT | False |
 | TENANT_A_PROJECT01 | False |
+ 
 
-### IPv6 Routing Device Configuration
-
-```eos
-```
 
 ## Static Routes
 
@@ -566,7 +603,7 @@ Router ISIS not defined
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
 | B-ELAN-201 | 192.168.255.8:20201 |  20201:20201  |  |  | learned | 201 |
-| TENANT_A_PROJECT01 | 192.168.255.8:11 |  11:11  |  |  | learned | 110 |
+| TENANT_A_PROJECT01 | 192.168.255.8:11 |  11:11  |  |  | learned | 110-112,311 |
 
 
 #### Router BGP EVPN VRFs
@@ -615,7 +652,7 @@ router bgp 65104
       rd 192.168.255.8:11
       route-target both 11:11
       redistribute learned
-      vlan 110
+      vlan 110-112,311
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate

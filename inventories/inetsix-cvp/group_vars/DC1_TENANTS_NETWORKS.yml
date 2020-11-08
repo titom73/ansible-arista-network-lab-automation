@@ -1,4 +1,34 @@
 ---
+# SVI Profile
+svi_profiles:
+  GENERIC:
+    mtu: 1560
+    enabled: false
+  GENERIC_WITH_VIP:
+    mtu: 1560
+    enabled: false
+    ip_address_virtual: 10.1.10.254/24
+  GENERIC_FULL:
+    name: GENERIC Name
+    mtu: 1560
+    enabled: false
+    ip_address_virtual: 10.1.10.254/24
+  WITH_NO_MTU:
+    enabled: true
+  WITH_DHCP_01:
+    tags: ['DC1']
+    enabled: true
+    ip_helpers:
+      1.1.1.1:
+        source_interface: lo100
+  WITH_DHCP_02:
+    tags: ['DC1']
+    enabled: true
+    ip_helpers:
+      1.1.1.1:
+        source_interface: lo100
+        source_vrf: MGMT
+
 # DC1 Tenants Networks
 # Documentation of Tenant specific information - Vlans/VRFs
 tenants:
@@ -18,19 +48,28 @@ tenants:
           111:
             name: 'PR01-TRUST'
             tags: [POD01]
-            enabled: true
-            ip_address_virtual: 10.1.11.254/24
           112:
             name: 'PR01-TRUST'
             tags: [POD01]
-            enabled: true
             ip_address_virtual: 10.1.11.254/24
           113:
             name: 'PR01-TRUST'
             tags: [POD01]
             enabled: true
             ip_address_virtual: 10.1.11.254/24
+          311:
+            name: 'PR01-TRUST-DHCP'
+            tags: [DC1]
+            enabled: true
+            ip_address_virtual: 10.1.31.254/24
+            igmp_snooping_enabled: true
+            ip_helpers:
+              1.1.1.1:
+                source_interface: lo100
       TENANT_A_PROJECT02:
+        ip_helpers:
+          1.1.1.1:
+            source_interface: lo100
         vrf_vni: 12
         vtep_diagnostic:
           loopback: 100

@@ -409,14 +409,12 @@ no ip routing vrf MGMT
 
 ### IPv6 Routing Summary
 
-| VRF | IPv6 Routing Enabled |
-| --- | -------------------- |
+| VRF | Routing Enabled |
+| --- | --------------- |
+| default |  False | 
 | MGMT | False |
+ 
 
-### IPv6 Routing Device Configuration
-
-```eos
-```
 
 ## Static Routes
 

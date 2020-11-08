@@ -14,7 +14,7 @@
 
 | Total Tests | Total Tests Passed | Total Tests Failed |
 | ----------- | ------------------ | ------------------ |
-| 248 | 246 | 2 |
+| 242 | 240 | 2 |
 
 ### Summary Totals Devices Under Tests
 
@@ -22,12 +22,12 @@
 | --- | ----------- | ------------ | ------------ | ----------------- |
 | DC1-AGG01 |  5 | 5 | 0 | - |
 | DC1-AGG02 |  5 | 5 | 0 | - |
-| DC1-BL01A |  21 | 20 | 1 | Interface State |
-| DC1-BL01B |  21 | 20 | 1 | Interface State |
-| DC1-LEAF1A |  22 | 22 | 0 | - |
-| DC1-LEAF1B |  22 | 22 | 0 | - |
-| DC1-LEAF2A |  25 | 25 | 0 | - |
-| DC1-LEAF2B |  25 | 25 | 0 | - |
+| DC1-BL01A |  20 | 19 | 1 | Interface State |
+| DC1-BL01B |  20 | 19 | 1 | Interface State |
+| DC1-LEAF1A |  21 | 21 | 0 | - |
+| DC1-LEAF1B |  21 | 21 | 0 | - |
+| DC1-LEAF2A |  24 | 24 | 0 | - |
+| DC1-LEAF2B |  24 | 24 | 0 | - |
 | DC1-LEAF3A |  16 | 16 | 0 | - |
 | DC1-LEAF4A |  16 | 16 | 0 | - |
 | DC1-SPINE1 |  35 | 35 | 0 | - |
@@ -41,7 +41,7 @@
 | Interface State |  112 | 110 | 2 |
 | MLAG |  6 | 6 | 0 |
 | IP Reachability |  32 | 32 | 0 |
-| BGP |  86 | 86 | 0 |
+| BGP |  80 | 80 | 0 |
 
 ## Failed Test Results Summary
 
@@ -264,41 +264,35 @@
 | 208 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.15 | PASS |  |
 | 209 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.19 | PASS |  |
 | 210 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.23 | PASS |  |
-| 211 | DC1-BL01A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.24 | PASS |  |
-| 212 | DC1-BL01A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.26 | PASS |  |
-| 213 | DC1-BL01A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.255.251.13 | PASS |  |
-| 214 | DC1-BL01B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.28 | PASS |  |
-| 215 | DC1-BL01B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.30 | PASS |  |
-| 216 | DC1-BL01B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.255.251.12 | PASS |  |
-| 217 | DC1-LEAF1A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.0 | PASS |  |
-| 218 | DC1-LEAF1A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.2 | PASS |  |
-| 219 | DC1-LEAF1A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.255.251.1 | PASS |  |
-| 220 | DC1-LEAF1B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.4 | PASS |  |
-| 221 | DC1-LEAF1B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.6 | PASS |  |
-| 222 | DC1-LEAF1B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.255.251.0 | PASS |  |
-| 223 | DC1-LEAF2A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.8 | PASS |  |
-| 224 | DC1-LEAF2A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.10 | PASS |  |
-| 225 | DC1-LEAF2A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.255.251.5 | PASS |  |
-| 226 | DC1-LEAF2B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.12 | PASS |  |
-| 227 | DC1-LEAF2B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.14 | PASS |  |
-| 228 | DC1-LEAF2B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 10.255.251.4 | PASS |  |
-| 229 | DC1-LEAF3A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.16 | PASS |  |
-| 230 | DC1-LEAF3A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.18 | PASS |  |
-| 231 | DC1-LEAF4A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.20 | PASS |  |
-| 232 | DC1-LEAF4A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.22 | PASS |  |
-| 233 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.25 | PASS |  |
-| 234 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.29 | PASS |  |
-| 235 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.1 | PASS |  |
-| 236 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.5 | PASS |  |
-| 237 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.9 | PASS |  |
-| 238 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.13 | PASS |  |
-| 239 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.17 | PASS |  |
-| 240 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.21 | PASS |  |
-| 241 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.27 | PASS |  |
-| 242 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.31 | PASS |  |
-| 243 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.3 | PASS |  |
-| 244 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.7 | PASS |  |
-| 245 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.11 | PASS |  |
-| 246 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.15 | PASS |  |
-| 247 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.19 | PASS |  |
-| 248 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 172.31.255.23 | PASS |  |
+| 211 | DC1-BL01A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 212 | DC1-BL01A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 213 | DC1-BL01B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 214 | DC1-BL01B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 215 | DC1-LEAF1A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 216 | DC1-LEAF1A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 217 | DC1-LEAF1B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 218 | DC1-LEAF1B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 219 | DC1-LEAF2A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 220 | DC1-LEAF2A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 221 | DC1-LEAF2B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 222 | DC1-LEAF2B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 223 | DC1-LEAF3A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 224 | DC1-LEAF3A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 225 | DC1-LEAF4A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 226 | DC1-LEAF4A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 227 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.9 | PASS |  |
+| 228 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.10 | PASS |  |
+| 229 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.3 | PASS |  |
+| 230 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.4 | PASS |  |
+| 231 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.5 | PASS |  |
+| 232 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.6 | PASS |  |
+| 233 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.7 | PASS |  |
+| 234 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.8 | PASS |  |
+| 235 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.9 | PASS |  |
+| 236 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.10 | PASS |  |
+| 237 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.3 | PASS |  |
+| 238 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.4 | PASS |  |
+| 239 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.5 | PASS |  |
+| 240 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.6 | PASS |  |
+| 241 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.7 | PASS |  |
+| 242 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.8 | PASS |  |
