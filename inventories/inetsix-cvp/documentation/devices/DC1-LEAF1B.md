@@ -314,7 +314,7 @@ vlan internal order ascending range 1006 1199
 | ------- | ---- | ------------ |
 | 110 | PR01-DMZ | none  |
 | 111 | PR01-TRUST | none  |
-| 112 | PR01-DMZ | none  |
+| 112 | PR01-TRUST | none  |
 | 113 | PR01-TRUST | none  |
 | 114 | PR02-DMZ | none  |
 | 201 | B-ELAN-201 | none  |
@@ -335,7 +335,7 @@ vlan 111
    name PR01-TRUST
 !
 vlan 112
-   name PR01-DMZ
+   name PR01-TRUST
 !
 vlan 113
    name PR01-TRUST
@@ -378,7 +378,7 @@ vlan 4094
 | Ethernet2 | P2P_LINK_TO_DC1-SPINE2_Ethernet2 | 1500 | routed | access | - | - | - | 172.31.255.7/31 | - | - |
 | Ethernet3 | MLAG_PEER_DC1-LEAF1A_Ethernet3 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
 | Ethernet4 | MLAG_PEER_DC1-LEAF1A_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
-| Ethernet5 | DC1-AGG01_Ethernet2 | *1500 | *switched | *trunk | *110-112,201,311 | - | - | - | 5 | active |
+| Ethernet5 | DC1-AGG01_Ethernet2 | *1500 | *switched | *trunk | *110,201,311 | - | - | - | 5 | active |
 
 *Inherited from Port-Channel Interface
 
@@ -416,7 +416,7 @@ interface Ethernet5
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
 | Port-Channel3 | MLAG_PEER_DC1-LEAF1A_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - | - | - |
-| Port-Channel5 | DC1_L2LEAF1_Po1 | 1500 | switched | trunk | 110-112,201,311 | - | 5 | - | - | - | - |
+| Port-Channel5 | DC1_L2LEAF1_Po1 | 1500 | switched | trunk | 110,201,311 | - | 5 | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -431,7 +431,7 @@ interface Port-Channel3
 !
 interface Port-Channel5
    description DC1_L2LEAF1_Po1
-   switchport trunk allowed vlan 110-112,201,311
+   switchport trunk allowed vlan 110,201,311
    switchport mode trunk
    mlag 5
 ```
@@ -481,8 +481,8 @@ interface Loopback100
 | Interface | Description | VRF | IP Address | IP Address Virtual | IP Router Virtual Address (vARP) |
 | --------- | ----------- | --- | ---------- | ------------------ | -------------------------------- |
 | Vlan110 | PR01-DMZ | TENANT_A_PROJECT01 | - | 10.1.10.254/24 | - |
-| Vlan111 | PR01-TRUST | TENANT_A_PROJECT01 | - | 10.1.11.254/24 | - |
-| Vlan112 | PR01-DMZ | TENANT_A_PROJECT01 | - | 10.1.11.254/24 | - |
+| Vlan111 | PR01-TRUST | TENANT_A_PROJECT01 | - | - | - |
+| Vlan112 | PR01-TRUST | TENANT_A_PROJECT01 | - | 10.1.11.254/24 | - |
 | Vlan113 | PR01-TRUST | TENANT_A_PROJECT01 | - | 10.1.11.254/24 | - |
 | Vlan114 | PR02-DMZ | TENANT_A_PROJECT02 | - | 10.1.12.254/24 | - |
 | Vlan311 | PR01-TRUST-DHCP | TENANT_A_PROJECT01 | - | 10.1.31.254/24 | - |
@@ -497,19 +497,15 @@ interface Loopback100
 !
 interface Vlan110
    description PR01-DMZ
-   mtu 6666
    vrf TENANT_A_PROJECT01
    ip address virtual 10.1.10.254/24
 !
 interface Vlan111
    description PR01-TRUST
-   mtu 4444
    vrf TENANT_A_PROJECT01
-   ip address virtual 10.1.11.254/24
 !
 interface Vlan112
-   description PR01-DMZ
-   mtu 7777
+   description PR01-TRUST
    vrf TENANT_A_PROJECT01
    ip address virtual 10.1.11.254/24
 !

@@ -291,8 +291,6 @@ vlan internal order ascending range 1006 1199
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 110 | PR01-DMZ | none  |
-| 111 | PR01-TRUST | none  |
-| 112 | PR01-DMZ | none  |
 | 201 | B-ELAN-201 | none  |
 | 311 | PR01-TRUST-DHCP | none  |
 
@@ -301,12 +299,6 @@ vlan internal order ascending range 1006 1199
 ```eos
 !
 vlan 110
-   name PR01-DMZ
-!
-vlan 111
-   name PR01-TRUST
-!
-vlan 112
    name PR01-DMZ
 !
 vlan 201
@@ -324,8 +316,8 @@ vlan 311
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (Trunk) | Trunk Group | VRF | IP Address | Channel-Group ID | Channel-Group Type |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --- | ---------- | ---------------- | ------------------ |
-| Ethernet1 | DC1-LEAF1A_Ethernet5 | *1500 | *switched | *trunk | *110-112,201,311 | - | - | - | 1 | active |
-| Ethernet2 | DC1-LEAF1B_Ethernet5 | *1500 | *switched | *trunk | *110-112,201,311 | - | - | - | 1 | active |
+| Ethernet1 | DC1-LEAF1A_Ethernet5 | *1500 | *switched | *trunk | *110,201,311 | - | - | - | 1 | active |
+| Ethernet2 | DC1-LEAF1B_Ethernet5 | *1500 | *switched | *trunk | *110,201,311 | - | - | - | 1 | active |
 | Ethernet5 | SRV-POD01_Eth1 | 1500 | switched | trunk | 110-111,210-211 | - | - | - | - | - |
 
 *Inherited from Port-Channel Interface
@@ -354,7 +346,7 @@ interface Ethernet5
 
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
-| Port-Channel1 | DC1-LEAF1A_Po5 | 1500 | switched | trunk | 110-112,201,311 | - | 1 | - | - | - | - |
+| Port-Channel1 | DC1-LEAF1A_Po5 | 1500 | switched | trunk | 110,201,311 | - | 1 | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -362,7 +354,7 @@ interface Ethernet5
 !
 interface Port-Channel1
    description DC1-LEAF1A_Po5
-   switchport trunk allowed vlan 110-112,201,311
+   switchport trunk allowed vlan 110,201,311
    switchport mode trunk
    mlag 1
 ```

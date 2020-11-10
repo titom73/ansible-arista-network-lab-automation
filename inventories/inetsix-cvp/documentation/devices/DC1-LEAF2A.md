@@ -313,8 +313,6 @@ vlan internal order ascending range 1006 1199
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 110 | PR01-DMZ | none  |
-| 111 | PR01-TRUST | none  |
-| 112 | PR01-DMZ | none  |
 | 201 | B-ELAN-201 | none  |
 | 311 | PR01-TRUST-DHCP | none  |
 | 3010 | MLAG_iBGP_TENANT_A_PROJECT01 | LEAF_PEER_L3  |
@@ -326,12 +324,6 @@ vlan internal order ascending range 1006 1199
 ```eos
 !
 vlan 110
-   name PR01-DMZ
-!
-vlan 111
-   name PR01-TRUST
-!
-vlan 112
    name PR01-DMZ
 !
 vlan 201
@@ -365,7 +357,7 @@ vlan 4094
 | Ethernet2 | P2P_LINK_TO_DC1-SPINE2_Ethernet3 | 1500 | routed | access | - | - | - | 172.31.255.11/31 | - | - |
 | Ethernet3 | MLAG_PEER_DC1-LEAF2B_Ethernet3 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
 | Ethernet4 | MLAG_PEER_DC1-LEAF2B_Ethernet4 | *1500 | *switched | *trunk | *2-4094 | *LEAF_PEER_L3<br> *MLAG | - | - | 3 | active |
-| Ethernet5 | DC1-AGG02_Ethernet1 | *1500 | *switched | *trunk | *110-112,201,311 | - | - | - | 5 | active |
+| Ethernet5 | DC1-AGG02_Ethernet1 | *1500 | *switched | *trunk | *110,201,311 | - | - | - | 5 | active |
 
 *Inherited from Port-Channel Interface
 
@@ -403,7 +395,7 @@ interface Ethernet5
 | Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
 | --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
 | Port-Channel3 | MLAG_PEER_DC1-LEAF2B_Po3 | 1500 | switched | trunk | 2-4094 | LEAF_PEER_L3<br> MLAG | - | - | - | - | - |
-| Port-Channel5 | DC1_L2LEAF2_Po1 | 1500 | switched | trunk | 110-112,201,311 | - | 5 | - | - | - | - |
+| Port-Channel5 | DC1_L2LEAF2_Po1 | 1500 | switched | trunk | 110,201,311 | - | 5 | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -418,7 +410,7 @@ interface Port-Channel3
 !
 interface Port-Channel5
    description DC1_L2LEAF2_Po1
-   switchport trunk allowed vlan 110-112,201,311
+   switchport trunk allowed vlan 110,201,311
    switchport mode trunk
    mlag 5
 ```
@@ -461,8 +453,6 @@ interface Loopback1
 | Interface | Description | VRF | IP Address | IP Address Virtual | IP Router Virtual Address (vARP) |
 | --------- | ----------- | --- | ---------- | ------------------ | -------------------------------- |
 | Vlan110 | PR01-DMZ | TENANT_A_PROJECT01 | - | 10.1.10.254/24 | - |
-| Vlan111 | PR01-TRUST | TENANT_A_PROJECT01 | - | 10.1.11.254/24 | - |
-| Vlan112 | PR01-DMZ | TENANT_A_PROJECT01 | - | 10.1.11.254/24 | - |
 | Vlan311 | PR01-TRUST-DHCP | TENANT_A_PROJECT01 | - | 10.1.31.254/24 | - |
 | Vlan3010 | MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01 | TENANT_A_PROJECT01 | 10.255.251.4/31 | - | - |
 | Vlan4093 | MLAG_PEER_L3_PEERING | Global Routing Table | 10.255.251.4/31 | - | - |
@@ -474,21 +464,8 @@ interface Loopback1
 !
 interface Vlan110
    description PR01-DMZ
-   mtu 6666
    vrf TENANT_A_PROJECT01
    ip address virtual 10.1.10.254/24
-!
-interface Vlan111
-   description PR01-TRUST
-   mtu 4444
-   vrf TENANT_A_PROJECT01
-   ip address virtual 10.1.11.254/24
-!
-interface Vlan112
-   description PR01-DMZ
-   mtu 7777
-   vrf TENANT_A_PROJECT01
-   ip address virtual 10.1.11.254/24
 !
 interface Vlan311
    description PR01-TRUST-DHCP
@@ -522,8 +499,6 @@ interface Vlan4094
 | VLAN | VNI |
 | ---- | --- |
 | 110 | 10110 |
-| 111 | 10111 |
-| 112 | 10112 |
 | 201 | 20201 |
 | 311 | 10311 |
 
@@ -542,8 +517,6 @@ interface Vxlan1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
    vxlan vlan 110 vni 10110
-   vxlan vlan 111 vni 10111
-   vxlan vlan 112 vni 10112
    vxlan vlan 201 vni 20201
    vxlan vlan 311 vni 10311
    vxlan vrf TENANT_A_PROJECT01 vni 11
@@ -682,7 +655,7 @@ Router ISIS not defined
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
 | B-ELAN-201 | 192.168.255.5:20201 |  20201:20201  |  |  | learned | 201 |
-| TENANT_A_PROJECT01 | 192.168.255.5:11 |  11:11  |  |  | learned | 110-112,311 |
+| TENANT_A_PROJECT01 | 192.168.255.5:11 |  11:11  |  |  | learned | 110,311 |
 
 
 #### Router BGP EVPN VRFs
@@ -738,7 +711,7 @@ router bgp 65102
       rd 192.168.255.5:11
       route-target both 11:11
       redistribute learned
-      vlan 110-112,311
+      vlan 110,311
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate

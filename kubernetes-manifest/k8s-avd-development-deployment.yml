@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: avd-development-pods
+  labels:
+    name: avd-development
+    run: avd-dev
+    app: avd
+    version: '3.6'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: avd
+  template:
+    metadata:
+      labels:
+        app: avd
+        run: avd-dev
+        app: avd
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: avd-runner
+          image: titom73/avd-k8s-dev:3.6
