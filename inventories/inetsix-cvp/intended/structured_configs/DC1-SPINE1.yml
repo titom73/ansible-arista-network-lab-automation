@@ -114,6 +114,9 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.24/31
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
   Ethernet6:
     peer: DC1-BL01B
     peer_interface: Ethernet1
@@ -122,6 +125,9 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.28/31
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
   Ethernet1:
     peer: DC1-LEAF1A
     peer_interface: Ethernet1
@@ -130,6 +136,9 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.0/31
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
   Ethernet2:
     peer: DC1-LEAF1B
     peer_interface: Ethernet1
@@ -138,6 +147,9 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.4/31
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
   Ethernet3:
     peer: DC1-LEAF2A
     peer_interface: Ethernet1
@@ -146,6 +158,9 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.8/31
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
   Ethernet4:
     peer: DC1-LEAF2B
     peer_interface: Ethernet1
@@ -154,6 +169,9 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.12/31
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
   Ethernet7:
     peer: DC1-LEAF3A
     peer_interface: Ethernet1
@@ -162,6 +180,9 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.16/31
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
   Ethernet8:
     peer: DC1-LEAF4A
     peer_interface: Ethernet1
@@ -170,6 +191,9 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.20/31
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
 
 
 ### Loopback Interfaces ###
@@ -177,6 +201,8 @@ loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
     ip_address: 192.168.255.1/32
+    isis_enable: EVPN_UNDERLAY
+    isis_passive: true
 
 
 ### Management Interfaces ###
@@ -201,30 +227,19 @@ static_routes:
 
 ### prefix-lists ###
 prefix_lists:
-  PL-LOOPBACKS-EVPN-OVERLAY:
-    sequence_numbers:
-      10:
-        action: "permit 192.168.255.0/24 le 32"
+
 
 ### route-maps ###
 route_maps:
-  RM-CONN-2-BGP:
-    sequence_numbers:
-      10:
-        type: permit
-        match:
-          - "ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY"
+
 
 ### peer-filters ###
 peer_filters:
-  LEAF-AS-RANGE:
-    sequence_numbers:
-      10:
-        match: as-range 65101-65132 result accept
+
 
 ### Routing - BGP ###
 router_bgp:
-  as: 65001
+  as: 65000
   router_id: 192.168.255.1
   bgp_defaults:
     - no bgp default ipv4-unicast
@@ -232,92 +247,73 @@ router_bgp:
     - graceful-restart restart-time 300
     - graceful-restart
     - maximum-paths 2 ecmp 2
+  bgp_cluster_id: 192.168.255.1
   peer_groups:
-    IPv4-UNDERLAY-PEERS:
-      type: ipv4
-      peer_filter: LEAF-AS-RANGE
-      password: "AQQvKeimxJu+uGQ/yYvv9w=="
-      maximum_routes: 12000
     EVPN-OVERLAY-PEERS:
       type: evpn
-      peer_filter: LEAF-AS-RANGE
-      next_hop_unchanged: true
+      remote_as: 65000
       update_source: Loopback0
+      route_reflector_client: true
       bfd: true
-      ebgp_multihop: 3
       password: "q+VNViP5i4rVjW1cxFv2wA=="
       send_community: true
       maximum_routes: 0
   neighbors:
-    172.31.255.25:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65105
     192.168.255.9:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65105
-    172.31.255.29:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65105
+      remote_as: 65000
     192.168.255.10:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65105
-    172.31.255.1:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65101
+      remote_as: 65000
     192.168.255.3:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65101
-    172.31.255.5:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65101
+      remote_as: 65000
     192.168.255.4:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65101
-    172.31.255.9:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65102
+      remote_as: 65000
     192.168.255.5:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65102
-    172.31.255.13:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65102
+      remote_as: 65000
     192.168.255.6:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65102
-    172.31.255.17:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65103
+      remote_as: 65000
     192.168.255.7:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65103
-    172.31.255.21:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65104
+      remote_as: 65000
     192.168.255.8:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65104
+      remote_as: 65000
   redistribute_routes:
-    connected:
-      route_map: RM-CONN-2-BGP
   address_family_evpn:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
-      IPv4-UNDERLAY-PEERS:
-        activate: false
   address_family_ipv4:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: false
-      IPv4-UNDERLAY-PEERS:
-        activate: true
 
 ### Routing - OSPF ###
 router_ospf:
 
 ### Routing - ISIS ###
 router_isis:
+  instance: EVPN_UNDERLAY
+  net: 49.0001.0001.0000.0001.00
+  router_id: 192.168.255.1
+  no_passive_interfaces:
+    - Ethernet5
+    - Ethernet6
+    - Ethernet1
+    - Ethernet2
+    - Ethernet3
+    - Ethernet4
+    - Ethernet7
+    - Ethernet8
+  is_type: level-2
+  address_family: ['ipv4 unicast']
+  isis_af_defaults:
+    - maximum-paths 2
 
 ### Queue Monitor Streaming ###
 queue_monitor_streaming:

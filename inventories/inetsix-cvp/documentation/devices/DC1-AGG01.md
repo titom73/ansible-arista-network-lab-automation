@@ -526,3 +526,7 @@ Router L2 VPN not defined
 # IP DHCP Relay
 
 IP DHCP Relay not defined
+
+## Custom Templates
+
+No Custom Templates Defined

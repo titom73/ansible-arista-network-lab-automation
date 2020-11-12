@@ -10,6 +10,7 @@
     - [Point-To-Point Links Node Allocation](#point-to-point-links-node-allocation)
     - [Overlay Loopback Interfaces (BGP EVPN Peering)](#overlay-loopback-interfaces-bgp-evpn-peering)
     - [Loopback0 Interfaces Node Allocation](#loopback0-interfaces-node-allocation)
+    - [CLNS Interfaces](#isis-clns-interfaces)
     - [VTEP Loopback VXLAN Tunnel Source Interfaces (Leafs Only)](#vtep-loopback-vxlan-tunnel-source-interfaces-leafs-only)
     - [VTEP Loopback Node allocation](#vtep-loopback-node-allocation)
 
@@ -104,6 +105,21 @@
 | DC1-LEAF2B | 192.168.255.6/32 |
 | DC1-LEAF3A | 192.168.255.7/32 |
 | DC1-LEAF4A | 192.168.255.8/32 |
+
+### ISIS CLNS interfaces
+
+| Node | CLNS Address |
+| ---- | ------------ |
+| DC1-SPINE1 | 49.0001.0001.0000.0001.00 |
+| DC1-SPINE2 | 49.0001.0001.0000.0002.00 |
+| DC1-BL01A | 49.0001.0001.0001.0007.00 |
+| DC1-BL01B | 49.0001.0001.0001.0008.00 |
+| DC1-LEAF1A | 49.0001.0001.0001.0001.00 |
+| DC1-LEAF1B | 49.0001.0001.0001.0002.00 |
+| DC1-LEAF2A | 49.0001.0001.0001.0003.00 |
+| DC1-LEAF2B | 49.0001.0001.0001.0004.00 |
+| DC1-LEAF3A | 49.0001.0001.0001.0005.00 |
+| DC1-LEAF4A | 49.0001.0001.0001.0006.00 |
 
 ### VTEP Loopback VXLAN Tunnel Source Interfaces (Leafs Only)
 

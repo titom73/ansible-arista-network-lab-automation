@@ -309,41 +309,65 @@ interface Ethernet1
    description P2P_LINK_TO_DC1-LEAF1A_Ethernet1
    no switchport
    ip address 172.31.255.0/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-LEAF1B_Ethernet1
    no switchport
    ip address 172.31.255.4/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
 !
 interface Ethernet3
    description P2P_LINK_TO_DC1-LEAF2A_Ethernet1
    no switchport
    ip address 172.31.255.8/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
 !
 interface Ethernet4
    description P2P_LINK_TO_DC1-LEAF2B_Ethernet1
    no switchport
    ip address 172.31.255.12/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
 !
 interface Ethernet5
    description P2P_LINK_TO_DC1-BL01A_Ethernet1
    no switchport
    ip address 172.31.255.24/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
 !
 interface Ethernet6
    description P2P_LINK_TO_DC1-BL01B_Ethernet1
    no switchport
    ip address 172.31.255.28/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
 !
 interface Ethernet7
    description P2P_LINK_TO_DC1-LEAF3A_Ethernet1
    no switchport
    ip address 172.31.255.16/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
 !
 interface Ethernet8
    description P2P_LINK_TO_DC1-LEAF4A_Ethernet1
    no switchport
    ip address 172.31.255.20/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
 ```
 
 ## Port-Channel Interfaces
@@ -373,6 +397,8 @@ IPv6
 interface Loopback0
    description EVPN_Overlay_Peering
    ip address 192.168.255.1/32
+   isis enable EVPN_UNDERLAY
+   isis passive
 ```
 
 ## VLAN Interfaces
@@ -433,7 +459,30 @@ ip route vrf MGMT 0.0.0.0/0 10.73.255.2
 
 ## Router ISIS
 
-Router ISIS not defined
+### Router ISIS Summary
+
+| Settings | Value |
+| -------- | ----- |
+| Instance | EVPN_UNDERLAY |
+| Net-ID | 49.0001.0001.0000.0001.00 |
+| Type | level-2 |
+| Address Family | ipv4 unicast |
+
+### Router ISIS Device Configuration
+
+```eos
+router isis EVPN_UNDERLAY
+   net 49.0001.0001.0000.0001.00
+   is-type level-2
+   router-id ipv4 192.168.255.1
+   log-adjacency-changes
+   !
+   address-family ipv4 unicast
+      maximum-paths 2
+   !
+!
+```
+
 
 # Router BGP
 
@@ -441,7 +490,7 @@ Router ISIS not defined
 
 | BGP AS | Router ID |
 | ------ | --------- |
-| 65001|  192.168.255.1 |
+| 65000|  192.168.255.1 |
 
 | BGP Tuning |
 | ---------- |
@@ -458,40 +507,24 @@ Router ISIS not defined
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
-| next-hop unchanged | true |
+| remote_as | 65000 |
 | source | Loopback0 |
 | bfd | true |
-| ebgp multihop | 3 |
 | send community | true |
 | maximum routes | 0 (no limit) |
-
-**IPv4-UNDERLAY-PEERS**:
-
-| Settings | Value |
-| -------- | ----- |
-| Address Family | ipv4 |
-| maximum routes | 12000 |
 
 ### BGP Neighbors
 
 | Neighbor | Remote AS |
 | -------- | ---------
-| 172.31.255.1 | 65101 |
-| 172.31.255.5 | 65101 |
-| 172.31.255.9 | 65102 |
-| 172.31.255.13 | 65102 |
-| 172.31.255.17 | 65103 |
-| 172.31.255.21 | 65104 |
-| 172.31.255.25 | 65105 |
-| 172.31.255.29 | 65105 |
-| 192.168.255.3 | 65101 |
-| 192.168.255.4 | 65101 |
-| 192.168.255.5 | 65102 |
-| 192.168.255.6 | 65102 |
-| 192.168.255.7 | 65103 |
-| 192.168.255.8 | 65104 |
-| 192.168.255.9 | 65105 |
-| 192.168.255.10 | 65105 |
+| 192.168.255.3 | 65000 |
+| 192.168.255.4 | 65000 |
+| 192.168.255.5 | 65000 |
+| 192.168.255.6 | 65000 |
+| 192.168.255.7 | 65000 |
+| 192.168.255.8 | 65000 |
+| 192.168.255.9 | 65000 |
+| 192.168.255.10 | 65000 |
 
 ### Router BGP EVPN Address Family
 
@@ -506,65 +539,44 @@ Router ISIS not defined
 
 ```eos
 !
-router bgp 65001
+router bgp 65000
    router-id 192.168.255.1
+   bgp cluster-id 192.168.255.1
    no bgp default ipv4-unicast
    distance bgp 20 200 200
    graceful-restart restart-time 300
    graceful-restart
    maximum-paths 2 ecmp 2
    neighbor EVPN-OVERLAY-PEERS peer group
-   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
+   neighbor EVPN-OVERLAY-PEERS remote-as 65000
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
+   neighbor EVPN-OVERLAY-PEERS route-reflector-client
    neighbor EVPN-OVERLAY-PEERS bfd
-   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
-   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 172.31.255.1 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.1 remote-as 65101
-   neighbor 172.31.255.5 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.5 remote-as 65101
-   neighbor 172.31.255.9 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.9 remote-as 65102
-   neighbor 172.31.255.13 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.13 remote-as 65102
-   neighbor 172.31.255.17 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.17 remote-as 65103
-   neighbor 172.31.255.21 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.21 remote-as 65104
-   neighbor 172.31.255.25 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.25 remote-as 65105
-   neighbor 172.31.255.29 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.29 remote-as 65105
    neighbor 192.168.255.3 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.3 remote-as 65101
+   neighbor 192.168.255.3 remote-as 65000
    neighbor 192.168.255.4 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.4 remote-as 65101
+   neighbor 192.168.255.4 remote-as 65000
    neighbor 192.168.255.5 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.5 remote-as 65102
+   neighbor 192.168.255.5 remote-as 65000
    neighbor 192.168.255.6 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.6 remote-as 65102
+   neighbor 192.168.255.6 remote-as 65000
    neighbor 192.168.255.7 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.7 remote-as 65103
+   neighbor 192.168.255.7 remote-as 65000
    neighbor 192.168.255.8 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.8 remote-as 65104
+   neighbor 192.168.255.8 remote-as 65000
    neighbor 192.168.255.9 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.9 remote-as 65105
+   neighbor 192.168.255.9 remote-as 65000
    neighbor 192.168.255.10 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.10 remote-as 65105
-   redistribute connected route-map RM-CONN-2-BGP
+   neighbor 192.168.255.10 remote-as 65000
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
-      no neighbor IPv4-UNDERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS activate
 ```
 
 ## Router BFD
@@ -604,39 +616,11 @@ Community Lists not defined
 
 ## Peer Filters
 
-### Peer Filters Summary
-
-**LEAF-AS-RANGE:**
-
-| Sequence | Match |
-| -------- | ----- |
-| 10 | as-range 65101-65132 result accept |
-
-### Peer Filters Device Configuration
-
-```eos
-!
-peer-filter LEAF-AS-RANGE
-   10 match as-range 65101-65132 result accept
-```
+No Peer Filters defined
 
 ## Prefix Lists
 
-### Prefix Lists Summary
-
-**PL-LOOPBACKS-EVPN-OVERLAY:**
-
-| Sequence | Action |
-| -------- | ------ |
-| 10 | permit 192.168.255.0/24 le 32 |
-
-### Prefix Lists Device Configuration
-
-```eos
-!
-ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-   seq 10 permit 192.168.255.0/24 le 32
-```
+Prefix lists not defined
 
 ## IPv6 Prefix Lists
 
@@ -644,21 +628,7 @@ IPv6 Prefix lists not defined
 
 ## Route Maps
 
-### Route Maps Summary
-
-**RM-CONN-2-BGP:**
-
-| Sequence | Type | Match and/or Set |
-| -------- | ---- | ---------------- |
-| 10 | permit | match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
-
-### Route Maps Device Configuration
-
-```eos
-!
-route-map RM-CONN-2-BGP permit 10
-   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-```
+No route maps defined
 
 # ACL 
 
@@ -708,3 +678,7 @@ Router L2 VPN not defined
 # IP DHCP Relay
 
 IP DHCP Relay not defined
+
+## Custom Templates
+
+No Custom Templates Defined
