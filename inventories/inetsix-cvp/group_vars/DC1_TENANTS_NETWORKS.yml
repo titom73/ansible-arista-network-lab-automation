@@ -21,6 +21,7 @@ svi_profiles:
     ip_helpers:
       1.1.1.1:
         source_interface: lo100
+        source_vrf: TEST
   WITH_DHCP_02:
     tags: ['DC1']
     enabled: true
@@ -48,6 +49,7 @@ tenants:
           111:
             name: 'PR01-TRUST'
             tags: [POD01]
+            profile: 'WITH_DHCP_01'
           112:
             name: 'PR01-TRUST'
             tags: [POD01]

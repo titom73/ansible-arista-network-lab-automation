@@ -2,7 +2,6 @@
 
 ### DC1-LEAF2A ###
 
-
 ### Leaf Info ###
 l3leaf_node_group: DC1_LEAF2
 switch_platform: vEOS-LAB
@@ -267,14 +266,20 @@ vlan_interfaces:
     tenant: Tenant_A
     tags: ['DC1']
     description: PR01-DMZ
+    enabled: True
     vrf: TENANT_A_PROJECT01
     ip_address_virtual: 10.1.10.254/24
   Vlan311:
     tenant: Tenant_A
     tags: ['DC1']
     description: PR01-TRUST-DHCP
+    enabled: True
     vrf: TENANT_A_PROJECT01
     ip_address_virtual: 10.1.31.254/24
+    ip_helpers:
+      1.1.1.1:
+        source_interface: lo100
+        vrf: TENANT_A_PROJECT01
   Vlan3010:
     tenant: Tenant_A
     type: underlay_peering
@@ -368,7 +373,7 @@ router_bgp:
   peer_groups:
     EVPN-OVERLAY-PEERS:
       type: evpn
-      remote_as: 65001
+      remote_as: 65000
       update_source: Loopback0
       bfd: true
       ebgp_multihop: 3

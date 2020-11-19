@@ -2,7 +2,6 @@
 
 ### DC1-BL01A ###
 
-
 ### Leaf Info ###
 l3leaf_node_group: DC1_BL01
 switch_platform: vEOS-LAB
@@ -309,7 +308,7 @@ router_bgp:
   peer_groups:
     EVPN-OVERLAY-PEERS:
       type: evpn
-      remote_as: 65001
+      remote_as: 65000
       update_source: Loopback0
       bfd: true
       ebgp_multihop: 3

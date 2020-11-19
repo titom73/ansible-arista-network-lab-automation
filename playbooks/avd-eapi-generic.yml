@@ -6,7 +6,7 @@
     - arista.cvp
   tasks:
     - name: build local folders
-      tags: [build]
+      tags: [init]
       import_role:
         name: build_output_folders
       vars:

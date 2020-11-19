@@ -2,69 +2,70 @@
 
 # Table of Contents
 
-- [Management](#management)  
-  - [Management Interfaces](#management-interfaces)  
-  - [DNS Domain](#dns-domain)  
-  - [Name Servers](#name-servers)  
-  - [Domain Lookup](#domain-lookup)  
-  - [NTP](#ntp) 
-  - [Management SSH](#management-ssh) 
-- [Authentication](#authentication) 
-  - [Local Users](#local-users)  
-  - [TACACS Servers](#tacacs-servers)  
-  - [IP TACACS Source Interfaces](#ip-tacacs-source-interfaces)  
-  - [RADIUS Servers](#radius-servers)  
-  - [AAA Server Groups](#aaa-server-groups)  
-  - [AAA Authentication](#aaa-authentication)  
-  - [AAA Authorization](#aaa-authorization)  
-  - [AAA Accounting](#aaa-accounting) 
-- [Management Security](#management-security)    
-- [Aliases](#aliases)  
-- [Monitoring](#monitoring)  
-  - [TerminAttr Daemon](#terminattr-daemon)  
-  - [Logging](#logging)  
-  - [SFlow](#sflow)  
-  - [Hardware Counters](#hardware-counters)  
-  - [VM Tracer Sessions](#vm-tracer-sessions)  
-  - [Event Handler](#event-handler)  
-- [MLAG](#mlag)  
-- [Spanning Tree](#spanning-tree)  
-- [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)  
-- [VLANs](#vlans)  
-- [Interfaces](#interfaces)  
-  - [Ethernet Interfaces](#ethernet-interfaces)  
-  - [Port-Channel Interfaces](#port-channel-interfaces)  
-  - [Loopback Interfaces](#loopback-interfaces) 
-  - [VLAN Interfaces](#vlan-interfaces)  
-  - [VXLAN Interface](#vxlan-interface)  
-- [Routing](#routing)  
-  - [Virtual Router MAC Address](#virtual-router-mac-address)  
-  - [IP Routing](#ip-routing)  
-  - [IPv6 Routing](#ipv6-routing)  
-  - [Static Routes](#static-routes)  
+- [Management](#management)
+  - [Management Interfaces](#management-interfaces)
+  - [DNS Domain](#dns-domain)
+  - [Name Servers](#name-servers)
+  - [Domain Lookup](#domain-lookup)
+  - [NTP](#ntp)
+  - [Management SSH](#management-ssh)
+- [Authentication](#authentication)
+  - [Local Users](#local-users)
+  - [TACACS Servers](#tacacs-servers)
+  - [IP TACACS Source Interfaces](#ip-tacacs-source-interfaces)
+  - [RADIUS Servers](#radius-servers)
+  - [AAA Server Groups](#aaa-server-groups)
+  - [AAA Authentication](#aaa-authentication)
+  - [AAA Authorization](#aaa-authorization)
+  - [AAA Accounting](#aaa-accounting)
+- [Management Security](#management-security)
+- [Aliases](#aliases)
+- [Monitoring](#monitoring)
+  - [TerminAttr Daemon](#terminattr-daemon)
+  - [Logging](#logging)
+  - [SFlow](#sflow)
+  - [Hardware Counters](#hardware-counters)
+  - [VM Tracer Sessions](#vm-tracer-sessions)
+  - [Event Handler](#event-handler)
+- [MLAG](#mlag)
+- [Spanning Tree](#spanning-tree)
+- [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
+- [VLANs](#vlans)
+- [Interfaces](#interfaces)
+  - [Ethernet Interfaces](#ethernet-interfaces)
+  - [Port-Channel Interfaces](#port-channel-interfaces)
+  - [Loopback Interfaces](#loopback-interfaces)
+  - [VLAN Interfaces](#vlan-interfaces)
+  - [VXLAN Interface](#vxlan-interface)
+- [Routing](#routing)
+  - [Virtual Router MAC Address](#virtual-router-mac-address)
+  - [IP Routing](#ip-routing)
+  - [IPv6 Routing](#ipv6-routing)
+  - [Static Routes](#static-routes)
   - [Router ISIS](#router-isis)
-  - [Router BGP](#router-bgp)  
-  - [Router BFD](#router-bfd)    
-- [Multicast](#multicast)  
-  - [IP IGMP Snooping](#ip-igmp-snooping)    
-  - [Router Multicast](#router-multicast)  
-  - [Router PIM Sparse Mode](#router-pim-sparse-mode)  
+  - [Router BGP](#router-bgp)
+  - [Router BFD](#router-bfd)
+- [Multicast](#multicast)
+  - [IP IGMP Snooping](#ip-igmp-snooping)
+  - [Router Multicast](#router-multicast)
+  - [Router PIM Sparse Mode](#router-pim-sparse-mode)
 - [Filters](#filters)
-  - [Community Lists](#community-lists)  
-  - [Peer Filters](#peer-filters)  
-  - [Prefix Lists](#prefix-lists)  
-  - [IPv6 Prefix Lists](#ipv6-prefix-lists)  
-  - [Route Maps](#route-maps)  
-- [ACL](#acl)  
-  - [Standard Access-lists](#standard-access-lists)  
-  - [Extended Access-lists](#extended-access-lists)   
-  - [IPv6 Standard Access-lists](#ipv6-standard-access-lists)  
-  - [IPv6 Extended Access-lists](#ipv6-extended-access-lists)  
-- [VRF Instances](#vrf-instances)  
-- [Virtual Source NAT](#virtual-source-nat)  
-- [Platform](#platform)  
-- [Router L2 VPN](#router-l2-vpn)  
-- [IP DHCP Relay](#ip-dhcp-relay)  
+  - [Community Lists](#community-lists)
+  - [Peer Filters](#peer-filters)
+  - [Prefix Lists](#prefix-lists)
+  - [IPv6 Prefix Lists](#ipv6-prefix-lists)
+  - [Route Maps](#route-maps)
+  - [IP Extended Communities](#ip-extended-communities)
+- [ACL](#acl)
+  - [Standard Access-lists](#standard-access-lists)
+  - [Extended Access-lists](#extended-access-lists)
+  - [IPv6 Standard Access-lists](#ipv6-standard-access-lists)
+  - [IPv6 Extended Access-lists](#ipv6-extended-access-lists)
+- [VRF Instances](#vrf-instances)
+- [Virtual Source NAT](#virtual-source-nat)
+- [Platform](#platform)
+- [Router L2 VPN](#router-l2-vpn)
+- [IP DHCP Relay](#ip-dhcp-relay)
 
 # Management
 
@@ -97,6 +98,10 @@ interface Management1
 ## DNS Domain
 
 DNS domain not defined
+
+## Domain-List
+
+Domain-list not defined
 
 ## Name Servers
 
@@ -141,7 +146,7 @@ ntp server vrf MGMT 37.59.63.125
 ntp server vrf MGMT 188.165.240.21
 ```
 
-## Management SSH 
+## Management SSH
 
 
 Management SSH is not defined
@@ -569,6 +574,7 @@ router isis EVPN_UNDERLAY
 | ------ | --------- |
 | 65000|  192.168.255.9 |
 
+
 | BGP Tuning |
 | ---------- |
 | no bgp default ipv4-unicast |
@@ -584,7 +590,7 @@ router isis EVPN_UNDERLAY
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
-| remote_as | 65001 |
+| remote_as | 65000 |
 | source | Loopback0 |
 | bfd | true |
 | ebgp multihop | 3 |
@@ -619,7 +625,7 @@ router bgp 65000
    graceful-restart
    maximum-paths 2 ecmp 2
    neighbor EVPN-OVERLAY-PEERS peer group
-   neighbor EVPN-OVERLAY-PEERS remote-as 65001
+   neighbor EVPN-OVERLAY-PEERS remote-as 65000
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
    neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
@@ -712,7 +718,22 @@ route-map RM-EVPN-SOO-OUT permit 10
    set extcommunity soo 192.168.254.9:1 additive
 ```
 
-# ACL 
+## IP Extended Communities
+
+### IP Extended Communities Summary
+
+| Sequence | Type | Match and/or Set |
+| -------- | ---- | ---------------- |
+| ECL-EVPN-SOO | permit | soo 192.168.254.9:1 |
+
+### IP Extended Communities configuration
+
+```eos
+!
+ip extcommunity-list ECL-EVPN-SOO permit soo 192.168.254.9:1
+```
+
+# ACL
 
 ## Standard Access-lists
 
