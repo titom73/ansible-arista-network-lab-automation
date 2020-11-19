@@ -12,3 +12,5 @@ inventories/*/documentation/*
 *.swp
 
 collections/*
+
+*.DS_Store
