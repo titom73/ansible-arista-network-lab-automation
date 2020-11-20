@@ -4,8 +4,8 @@
 
 fabric_name: DC1_FABRIC
 
-underlay_routing_protocol: ISIS
-overlay_routing_protocol: ibgp
+underlay_routing_protocol: ebgp
+overlay_routing_protocol: ebgp
 bgp_as: 65000
 
 # ISIS Parameters when underlay_routing_protocol=ISIS
