@@ -45,11 +45,13 @@ l3leaf,AVD2-LEAF2B,Ethernet4,mlag_peer,AVD2-LEAF2A,Ethernet4
 l3leaf,AVD2-LEAF2B,Ethernet5,l2leaf,AVD2-AGG02,Ethernet2
 l3leaf,AVD2-LEAF3A,Ethernet1,spine,AVD2-SPINE1,Ethernet7
 l3leaf,AVD2-LEAF3A,Ethernet2,spine,AVD2-SPINE2,Ethernet7
+l3leaf,AVD2-LEAF3A,Ethernet5,server,SRV-POD03,Eth1
 l3leaf,AVD2-LEAF4A,Ethernet1,spine,AVD2-SPINE1,Ethernet8
 l3leaf,AVD2-LEAF4A,Ethernet2,spine,AVD2-SPINE2,Ethernet8
+l3leaf,AVD2-LEAF4A,Ethernet5,server,SRV-POD03,Eth2
 l2leaf,AVD2-AGG01,Ethernet1,l3leaf,AVD2-LEAF1A,Ethernet5
 l2leaf,AVD2-AGG01,Ethernet2,l3leaf,AVD2-LEAF1B,Ethernet5
 l2leaf,AVD2-AGG01,Ethernet3,server,SRV-POD01,Eth1
 l2leaf,AVD2-AGG02,Ethernet1,l3leaf,AVD2-LEAF2A,Ethernet5
 l2leaf,AVD2-AGG02,Ethernet2,l3leaf,AVD2-LEAF2B,Ethernet5
-l2leaf,AVD2-AGG02,Ethernet3,server,SRV-POD02,Eth01
+l2leaf,AVD2-AGG02,Ethernet3,server,SRV-POD02,Eth1

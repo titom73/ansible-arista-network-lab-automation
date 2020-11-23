@@ -1,4 +1,31 @@
 ---
+# SVI Profile
+svi_profiles:
+  GENERIC:
+    mtu: 1560
+    enabled: true
+  GENERIC_FULL:
+    name: GENERIC Name
+    mtu: 1560
+    enabled: false
+    ip_address_virtual: 10.1.10.254/24
+  WITH_NO_MTU:
+    enabled: true
+  WITH_DHCP_01:
+    enabled: true
+    ip_address_virtual: 10.1.11.254/24
+    ip_helpers:
+      1.1.1.1:
+        source_interface: lo100
+        source_vrf: TEST
+  WITH_DHCP_02:
+    tags: ['DC1']
+    enabled: true
+    ip_helpers:
+      1.1.1.1:
+        source_interface: lo100
+        source_vrf: MGMT
+
 # DC1 Tenants Networks
 # Documentation of Tenant specific information - Vlans/VRFs
 tenants:
@@ -8,36 +35,56 @@ tenants:
     vrfs:
       TENANT_A_PROJECT01:
         vrf_vni: 11
-        vtep_diagnostic:
-          loopback: 101
-          loopback_ip_range: 10.1.255.0/24
         svis:
           110:
-            name: 'PR01-DMZ'
-            tags: [POD01]
+            name: 'PR01-DEMO'
+            tags: ['DC1']
             enabled: true
             ip_address_virtual: 10.1.10.254/24
-          111:
-            name: 'PR01-TRUST'
-            tags: [POD02]
-            enabled: true
-            ip_address_virtual: 10.1.11.254/24
-      TENANT_A_PROJECT02:
-        vrf_vni: 12
-        vtep_diagnostic:
-          loopback: 102
-          loopback_ip_range: 10.1.255.0/24
-        svis:
+            # igmp_snooping: false
+          # 111:
+          #   name: 'PR01-TRUST'
+          #   tags: ['POD01']
+          #   profile: 'WITH_DHCP_01'
           112:
-            name: 'PR02-DMZ-ORANGE'
-            tags: [POD01]
-            enabled: true
+            name: 'PR01-TRUST'
+            tags: ['POD01', 'POD02']
             ip_address_virtual: 10.1.12.254/24
+          113:
+            name: 'PR01-DMZ'
+            tags: [POD03]
+            enabled: true
+            ip_address_virtual: 10.1.13.254/24
+      #     311:
+      #       name: 'PR01-TRUST-DHCP'
+      #       tags: ['DC1']
+      #       enabled: true
+      #       ip_address_virtual: 10.3.11.254/24
+      #       igmp_snooping_enabled: true
+      #       ip_helpers:
+      #         1.1.1.1:
+      #           source_interface: lo100
+      # TENANT_A_PROJECT02:
+      #   ip_helpers:
+      #     1.1.1.1:
+      #       source_interface: lo100
+      #   vrf_vni: 12
+      #   vtep_diagnostic:
+      #     loopback: 100
+      #     loopback_ip_range: 10.2.255.0/24
+      #   svis:
+      #     114:
+      #       name: 'PR02-DMZ'
+      #       tags: ['POD01']
+      #       enabled: true
+      #       ip_address_virtual: 10.2.12.254/24
+      #       igmp_snooping: true
 
-# Tenant B Specific Information - Pure L2 tenant
+# Tenant D Specific Information - Pure L2 tenant
   Tenant_B:
     mac_vrf_vni_base: 20000
     l2vlans:
       201:
         name: 'B-ELAN-201'
-        tags: [DC1]
+        tags: ['DC1']
+        igmp_snooping: false

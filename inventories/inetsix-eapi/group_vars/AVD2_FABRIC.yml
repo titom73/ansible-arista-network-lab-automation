@@ -4,7 +4,9 @@
 
 fabric_name: AVD2_FABRIC
 
-underlay_routing_protocol: BGP
+underlay_routing_protocol: ebgp
+overlay_routing_protocol: ebgp
+# bgp_as: 65000
 
 # ISIS Parameters when underlay_routing_protocol=ISIS
 isis_area_id: "49.0001"
@@ -57,9 +59,11 @@ spine:
     AVD2-SPINE1:
       id: 1
       mgmt_ip: 10.73.254.1/24
+      bgp_route_reflector: true
     AVD2-SPINE2:
       id: 2
       mgmt_ip: 10.73.254.2/24
+      bgp_route_reflector: true
 
 # Leaf switch groups
 # A maximum of two nodes can form a leaf group
@@ -112,7 +116,7 @@ l3leaf:
       bgp_as: 65103
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'POD02', 'DC1' ]
+        tags: [ 'POD03', 'DC1' ]
         # tags: [ border ]
       nodes:
         AVD2-LEAF3A:
@@ -123,7 +127,7 @@ l3leaf:
       bgp_as: 65104
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'POD02', 'DC1' ]
+        tags: [ 'POD03', 'DC1' ]
         # tags: [ border ]
       nodes:
         AVD2-LEAF4A:
@@ -158,7 +162,7 @@ l2leaf:
       parent_l3leafs: [ AVD2-LEAF1A, AVD2-LEAF1B ]
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'POD01', DC1' ]
+        tags: [ 'POD01', 'DC1' ]
         # tags: [ border ]
       nodes:
         AVD2-AGG01:

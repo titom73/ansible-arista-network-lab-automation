@@ -1,8 +1,17 @@
 ---
 port_profiles:
-  TENANT-A-PR01:
+  ALL:
     mode: trunk
-    vlans: "110-111"
+    vlans: "1-4000"
+  A-PR01-DMZ:
+    mode: access
+    vlans: "110"
+  A-PR01-TRUST:
+    mode: access
+    vlans: "111"
+  B-ELAN-201:
+    mode: access
+    vlans: "201"
 
 servers:
   SRV-POD01:
@@ -12,12 +21,24 @@ servers:
         server_ports: [Eth1]
         switch_ports: [Ethernet3]
         switches: [AVD2-AGG01]
-        profile: 'TENANT-A-PR01'
+        profile: ALL
   SRV-POD02:
     rack: POD02
     adapters:
       - type: nic
-        server_ports: [Eth01]
+        server_ports: [Eth1]
         switch_ports: [Ethernet3]
         switches: [AVD2-AGG02]
-        profile: 'TENANT-A-PR01'
+        profile: ALL
+  SRV-POD03:
+    rack: POD03
+    adapters:
+      - server_ports: [ Eth1, Eth2 ]
+        switch_ports: [ Ethernet5, Ethernet5 ]
+        switches: [ AVD2-LEAF3A, AVD2-LEAF4A ]
+        profile: ALL
+        port_channel:
+          state: present
+          description: PortChanne1
+          mode: active
+          short_esi: '0303:0202:0101'
