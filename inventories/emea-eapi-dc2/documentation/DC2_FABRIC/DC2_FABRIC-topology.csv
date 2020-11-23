@@ -1,0 +1,12 @@
+Node Type,Node,Node Interface,Peer Type,Peer,Peer Interface
+spine,DC2-SPINE1,Ethernet1,l3leaf,DC2-LEAF01A,Ethernet1
+spine,DC2-SPINE1,Ethernet2,l3leaf,DC2-BL01A,Ethernet1
+spine,DC2-SPINE1,Ethernet3,l3leaf,DC2-BL01B,Ethernet1
+l3leaf,DC2-BL01A,Ethernet1,spine,DC2-SPINE1,Ethernet2
+l3leaf,DC2-BL01A,Ethernet3,mlag_peer,DC2-BL01B,Ethernet3
+l3leaf,DC2-BL01A,Ethernet4,mlag_peer,DC2-BL01B,Ethernet4
+l3leaf,DC2-BL01B,Ethernet1,spine,DC2-SPINE1,Ethernet3
+l3leaf,DC2-BL01B,Ethernet3,mlag_peer,DC2-BL01A,Ethernet3
+l3leaf,DC2-BL01B,Ethernet4,mlag_peer,DC2-BL01A,Ethernet4
+l3leaf,DC2-LEAF01A,Ethernet1,spine,DC2-SPINE1,Ethernet1
+l3leaf,DC2-LEAF01A,Ethernet5,server,POD04-DC2,Eth1

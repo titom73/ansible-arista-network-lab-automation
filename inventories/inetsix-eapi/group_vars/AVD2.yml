@@ -25,8 +25,9 @@ local_users:
 
 
 # Cloud Vision server information
-# cvp_instance_ip: 10.73.254.1
-# cvp_ingestauth_key: ''
+cvp_instance_ips:
+  - 10.73.254.1
+cvp_ingestauth_key: ''
 # cvp_ingestauth_key: telarista
 
 # OOB Management network default gateway.
