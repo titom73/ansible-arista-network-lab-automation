@@ -11,8 +11,8 @@ switch_mgmt_ip: 10.73.254.22/24
 leaf_filter_tenants: ['Tenant_A', 'Tenant_B']
 leaf_filter_tags: ['POD02', 'DC1']
 leaf_allowed_vrfs: ['TENANT_A_PROJECT01']
-leaf_allowed_svis: [110, 112]
-leaf_allowed_vlans: [110, 112, 201]
+leaf_allowed_svis: [110, 111, 112]
+leaf_allowed_vlans: [110, 111, 112, 201]
 leaf_mlag: False
 
 service_routing_protocols_model: multi-agent
@@ -26,6 +26,7 @@ daemon_terminattr:
   ingestgrpcurl:
     ips:
       - 10.73.254.1
+      - apiserver.corp.arista.io
     port: 9910
   ingestauth_key: 
   ingestvrf: MGMT
@@ -49,9 +50,6 @@ load_interval:
 
 ### Queue Monitor Lenght ###
 queue_monitor_length:
-
-### Logging ###
-logging:
 
 ### Name Servers ###
 name_server:
@@ -109,6 +107,9 @@ vlans:
   110:
     tenant: Tenant_A
     name: PR01-DEMO
+  111:
+    tenant: Tenant_A
+    name: PR01-TRUST
   112:
     tenant: Tenant_A
     name: PR01-TRUST
@@ -125,7 +126,7 @@ vrfs:
 port_channel_interfaces:
   Port-Channel1:
     description: AVD2-LEAF2A_Po5
-    vlans: 110,112,201
+    vlans: 110-112,201
     mode: trunk
     mlag: 1
 
@@ -174,6 +175,12 @@ tcam_profile:
 
 ### MAC address table ###
 mac_address_table:
+
+ip_igmp_snooping:
+  globally_enabled: True
+  vlans:
+## Tenant_A ##
+## Tenant_B ##
 
 ### static routes ###
 static_routes:

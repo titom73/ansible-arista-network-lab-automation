@@ -11,9 +11,10 @@ svi_profiles:
     ip_address_virtual: 10.1.10.254/24
   WITH_NO_MTU:
     enabled: true
-  WITH_DHCP_01:
+  WITH_DHCP_01_SNOOPING:
     enabled: true
     ip_address_virtual: 10.1.11.254/24
+    igmp_snooping_enabled: false
     ip_helpers:
       1.1.1.1:
         source_interface: lo100
@@ -42,10 +43,10 @@ tenants:
             enabled: true
             ip_address_virtual: 10.1.10.254/24
             # igmp_snooping: false
-          # 111:
-          #   name: 'PR01-TRUST'
-          #   tags: ['POD01']
-          #   profile: 'WITH_DHCP_01'
+          111:
+            name: 'PR01-TRUST'
+            tags: ['POD01', 'POD02']
+            profile: 'WITH_DHCP_01_SNOOPING'
           112:
             name: 'PR01-TRUST'
             tags: ['POD01', 'POD02']
@@ -55,6 +56,7 @@ tenants:
             tags: [POD03]
             enabled: true
             ip_address_virtual: 10.1.13.254/24
+            igmp_snooping_enabled: false
       #     311:
       #       name: 'PR01-TRUST-DHCP'
       #       tags: ['DC1']

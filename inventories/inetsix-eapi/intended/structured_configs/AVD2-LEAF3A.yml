@@ -2,7 +2,6 @@
 
 ### AVD2-LEAF3A ###
 
-
 ### Leaf Info ###
 l3leaf_node_group: AVD2_LEAF3
 switch_platform: vEOS-LAB
@@ -27,6 +26,7 @@ daemon_terminattr:
   ingestgrpcurl:
     ips:
       - 10.73.254.1
+      - apiserver.corp.arista.io
     port: 9910
   ingestauth_key: 
   ingestvrf: MGMT
@@ -50,9 +50,6 @@ load_interval:
 
 ### Queue Monitor Lenght ###
 queue_monitor_length:
-
-### Logging ###
-logging:
 
 ### Name Servers ###
 name_server:
@@ -240,6 +237,14 @@ ip_virtual_router_mac_address: 00:1c:73:00:dc:01
 
 virtual_source_nat_vrfs:
 
+ip_igmp_snooping:
+  globally_enabled: True
+  vlans:
+## Tenant_A ##
+    113:
+      enabled: false
+## Tenant_B ##
+
 ### static routes ###
 static_routes:
   - vrf: MGMT
@@ -268,6 +273,7 @@ route_maps:
         type: permit
         match:
           - "ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY"
+
 ### Routing - BGP ###
 router_bgp:
   as: 65103
@@ -279,6 +285,12 @@ router_bgp:
     - graceful-restart
     - maximum-paths 2 ecmp 2
   peer_groups:
+    IPv4-UNDERLAY-PEERS:
+      type: ipv4
+      remote_as: 65001
+      password: "AQQvKeimxJu+uGQ/yYvv9w=="
+      maximum_routes: 12000
+      send_community: true
     EVPN-OVERLAY-PEERS:
       type: evpn
       remote_as: 65001
@@ -289,19 +301,29 @@ router_bgp:
       send_community: true
       maximum_routes: 0
   neighbors:
+    172.31.255.16:
+      peer_group: IPv4-UNDERLAY-PEERS
+    172.31.255.18:
+      peer_group: IPv4-UNDERLAY-PEERS
     192.168.255.1:
       peer_group: EVPN-OVERLAY-PEERS
     192.168.255.2:
       peer_group: EVPN-OVERLAY-PEERS
   redistribute_routes:
+    connected:
+      route_map: RM-CONN-2-BGP
   address_family_evpn:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
+      IPv4-UNDERLAY-PEERS:
+        activate: false
   address_family_ipv4:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: false
+      IPv4-UNDERLAY-PEERS:
+        activate: true
   vlan_aware_bundles:
 ## Tenant_A ##
     TENANT_A_PROJECT01:
@@ -338,6 +360,9 @@ router_bgp:
       redistribute_routes:
         - connected
 ## Tenant_B ##
+
+### Extended Community Lists ###
+ip_extcommunity_lists:
 
 ### Routing - OSPF ###
 router_ospf:

@@ -350,9 +350,9 @@ interface Ethernet5
 
 ### Port-Channel Interfaces Summary
 
-| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
-| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | ------- | -------- | --- | ---------- | ------------ |
-| Port-Channel5 | SRV-POD03_PortChanne1 | 1500 | switched | trunk | 110-111,210-211 | - | - | 0000:0000:0303:0202:0101 | - | - | - |
+| Interface | Description | MTU | Type | Mode | Allowed VLANs (trunk) | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI | VRF | IP Address | IPv6 Address |
+| --------- | ----------- | --- | ---- | ---- | --------------------- | ----------- | --------------------- ! ------------------ | ------- | -------- | --- | ---------- | ------------ |
+| Port-Channel5 | SRV-POD03_PortChanne1 | 1500 | switched | trunk | 110-111,210-211 | - | - | - | - | 0000:0000:0303:0202:0101 | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -670,6 +670,18 @@ router bfd
 
 ## IP IGMP Snooping
 
+### IP IGMP Snooping Summary
+
+| VLAN | IGMP Snooping |
+| --- | --------------- |
+| 311 | Disabled |
+
+### IP IGMP Snooping Device Configuration
+
+```eos
+!
+no ip igmp snooping vlan 311
+```
 
 ## Router Multicast
 
