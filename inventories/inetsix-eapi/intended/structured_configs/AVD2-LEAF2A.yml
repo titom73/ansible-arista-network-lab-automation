@@ -32,7 +32,6 @@ daemon_terminattr:
   ingestgrpcurl:
     ips:
       - 10.73.254.1
-      - apiserver.corp.arista.io
     port: 9910
   ingestauth_key: 
   ingestvrf: MGMT
@@ -63,6 +62,7 @@ name_server:
     vrf: MGMT
   nodes:
     - 10.73.254.253
+    - 10.73.1.254
 
 ### NTP Servers ###
 ntp_server:
@@ -71,6 +71,7 @@ ntp_server:
     interface: Management1
   nodes:
     - 10.73.254.253
+    - 10.73.1.254
 
 ### Redundancy ###
 redundancy:
@@ -252,13 +253,20 @@ vlan_interfaces:
     tenant: Tenant_A
     tags: ['DC1']
     description: PR01-DEMO
+    enabled: True
     vrf: TENANT_A_PROJECT01
     ip_address_virtual: 10.1.10.254/24
   Vlan111:
     tenant: Tenant_A
     tags: ['POD01', 'POD02']
     description: PR01-TRUST
+    enabled: True
     vrf: TENANT_A_PROJECT01
+    ip_address_virtual: 10.1.11.254/24
+    ip_helpers:
+      1.1.1.1:
+        source_interface: lo100
+        vrf: TEST
   Vlan112:
     tenant: Tenant_A
     tags: ['POD01', 'POD02']
@@ -312,6 +320,8 @@ ip_igmp_snooping:
   globally_enabled: True
   vlans:
 ## Tenant_A ##
+    111:
+      enabled: False
 ## Tenant_B ##
 
 ### static routes ###

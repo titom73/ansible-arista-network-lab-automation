@@ -1,6 +1,9 @@
 ---
 AVD2:
   children:
+    # TOOLS:
+    #   hosts:
+    #     DHCP_SERVER:
     AVD2_FABRIC:
       children:
         AVD2_SPINES:
@@ -59,4 +62,4 @@ AVD2:
 # Group to run arista.avd.eos_validate_state
 EOS:
   children:
-    AVD2:
+    AVD2_FABRIC:

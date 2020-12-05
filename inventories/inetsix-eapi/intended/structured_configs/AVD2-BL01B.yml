@@ -32,7 +32,6 @@ daemon_terminattr:
   ingestgrpcurl:
     ips:
       - 10.73.254.1
-      - apiserver.corp.arista.io
     port: 9910
   ingestauth_key: 
   ingestvrf: MGMT
@@ -63,6 +62,7 @@ name_server:
     vrf: MGMT
   nodes:
     - 10.73.254.253
+    - 10.73.1.254
 
 ### NTP Servers ###
 ntp_server:
@@ -71,6 +71,7 @@ ntp_server:
     interface: Management1
   nodes:
     - 10.73.254.253
+    - 10.73.1.254
 
 ### Redundancy ###
 redundancy:

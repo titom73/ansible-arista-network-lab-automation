@@ -56,9 +56,6 @@ load_interval:
 ### Queue Monitor Lenght ###
 queue_monitor_length:
 
-### Logging ###
-logging:
-
 ### Name Servers ###
 name_server:
   source:
@@ -351,6 +348,12 @@ virtual_source_nat_vrfs:
 ## Tenant_A ##
   Tenant_A_OP_Zone:
     ip_address: 10.255.1.5
+
+ip_igmp_snooping:
+  globally_enabled: True
+  vlans:
+## Tenant_A ##
+## Tenant_D ##
 
 ### static routes ###
 static_routes:

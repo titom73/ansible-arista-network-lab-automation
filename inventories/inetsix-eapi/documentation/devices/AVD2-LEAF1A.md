@@ -110,10 +110,12 @@ Domain-list not defined
 | Name Server | Source VRF |
 | ----------- | ---------- |
 | 10.73.254.253 | MGMT |
+| 10.73.1.254 | MGMT |
 
 ### Name Servers Device Configuration
 
 ```eos
+ip name-server vrf MGMT 10.73.1.254
 ip name-server vrf MGMT 10.73.254.253
 ```
 
@@ -133,6 +135,7 @@ VRF: MGMT
 | Node | Primary |
 | ---- | ------- |
 | 10.73.254.253 | true |
+| 10.73.1.254 | - |
 
 ### NTP Device Configuration
 
@@ -140,6 +143,7 @@ VRF: MGMT
 !
 ntp local-interface vrf MGMT Management1
 ntp server vrf MGMT 10.73.254.253 prefer
+ntp server vrf MGMT 10.73.1.254
 ```
 
 ## Management SSH
@@ -214,14 +218,14 @@ Aliases not defined
 
 | CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF |
 | -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- |
-| gzip | 10.73.254.1:9910,apiserver.corp.arista.io:9910 |  | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT |
+| gzip | 10.73.254.1:9910 |  | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT |
 
 ### TerminAttr Daemon Device Configuration
 
 ```eos
 !
 daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=10.73.254.1:9910,apiserver.corp.arista.io:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
+   exec /usr/bin/TerminAttr -ingestgrpcurl=10.73.254.1:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
    no shutdown
 ```
 
@@ -458,7 +462,7 @@ interface Loopback1
 | Interface | Description | VRF | IP Address | IP Address Virtual | IP Router Virtual Address (vARP) |
 | --------- | ----------- | --- | ---------- | ------------------ | -------------------------------- |
 | Vlan110 | PR01-DEMO | TENANT_A_PROJECT01 | - | 10.1.10.254/24 | - |
-| Vlan111 | PR01-TRUST | TENANT_A_PROJECT01 | - | - | - |
+| Vlan111 | PR01-TRUST | TENANT_A_PROJECT01 | - | 10.1.11.254/24 | - |
 | Vlan112 | PR01-TRUST | TENANT_A_PROJECT01 | - | 10.1.12.254/24 | - |
 | Vlan3010 | MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01 | TENANT_A_PROJECT01 | 10.255.251.0/31 | - | - |
 | Vlan4093 | MLAG_PEER_L3_PEERING | Global Routing Table | 10.255.251.0/31 | - | - |
@@ -476,6 +480,8 @@ interface Vlan110
 interface Vlan111
    description PR01-TRUST
    vrf TENANT_A_PROJECT01
+   ip address virtual 10.1.11.254/24
+   ip helper-address 1.1.1.1 vrf TEST  source-interface lo100
 !
 interface Vlan112
    description PR01-TRUST
@@ -766,6 +772,17 @@ router bfd
 ## IP IGMP Snooping
 
 ### IP IGMP Snooping Summary
+
+| VLAN | IGMP Snooping |
+| --- | --------------- |
+| 111 | Disabled |
+
+### IP IGMP Snooping Device Configuration
+
+```eos
+!
+no ip igmp snooping vlan 111
+```
 
 ## Router Multicast
 

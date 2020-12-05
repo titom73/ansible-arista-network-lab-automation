@@ -110,10 +110,12 @@ Domain-list not defined
 | Name Server | Source VRF |
 | ----------- | ---------- |
 | 10.73.254.253 | MGMT |
+| 10.73.1.254 | MGMT |
 
 ### Name Servers Device Configuration
 
 ```eos
+ip name-server vrf MGMT 10.73.1.254
 ip name-server vrf MGMT 10.73.254.253
 ```
 
@@ -133,6 +135,7 @@ VRF: MGMT
 | Node | Primary |
 | ---- | ------- |
 | 10.73.254.253 | true |
+| 10.73.1.254 | - |
 
 ### NTP Device Configuration
 
@@ -140,6 +143,7 @@ VRF: MGMT
 !
 ntp local-interface vrf MGMT Management1
 ntp server vrf MGMT 10.73.254.253 prefer
+ntp server vrf MGMT 10.73.1.254
 ```
 
 ## Management SSH
@@ -214,14 +218,14 @@ Aliases not defined
 
 | CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF |
 | -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- |
-| gzip | 10.73.254.1:9910,apiserver.corp.arista.io:9910 |  | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT |
+| gzip | 10.73.254.1:9910 |  | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT |
 
 ### TerminAttr Daemon Device Configuration
 
 ```eos
 !
 daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=10.73.254.1:9910,apiserver.corp.arista.io:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
+   exec /usr/bin/TerminAttr -ingestgrpcurl=10.73.254.1:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
    no shutdown
 ```
 

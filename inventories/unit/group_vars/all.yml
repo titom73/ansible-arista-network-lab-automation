@@ -1,0 +1,131 @@
+---
+ansible_httpapi_host: '{{ ansible_host }}'
+ansible_connection: httpapi
+ansible_httpapi_use_ssl: true
+ansible_httpapi_validate_certs: false
+# ansible_httpapi_session_key: '/Users/tgrimonet/Projects/cvp-resource-api-testing/cvp.crt'
+ansible_network_os: eos
+ansible_httpapi_port: 443
+# Configuration to get Virtual Env information
+ansible_python_interpreter: $(which python)
+
+
+HEC_CONTAINER:
+  HEC:
+    parent_container: Fabric
+    # configlets:
+    #   - sw-hec
+    #   - sw-hec-aaa
+    #   - CVP-Arista
+    #   - sw-hec-oob-vrf
+    #   - sw-hec-snmp
+    #   - sw-hec-ntp
+    #   - sw-hec-logging
+  HEC-IPMI:
+    parent_container: HEC
+    # configlets:
+    #   - HEC-IPMI
+    #   - mgmt-oob
+    #   - sw-hec-tele-oob
+    #   - sw-hec-switch-snmp
+    #   - sw-hec-switch-ntp
+    #   - sw-hec-switch-logging
+  HEC-Out of band:
+    parent_container: HEC
+    # configlets:
+    #   - mgmt-default
+    #   - sw-hec-oob-common
+    #   - sw-hec-tele-default
+  HEC-External Connectivity:
+    parent_container: HEC
+  HEC-CWAN:
+    parent_container: HEC
+  HEC-FWT:
+    parent_container: HEC
+  HEC-InterDC:
+    parent_container: HEC
+    # configlets:
+    #   - sw-hec-switch-snmp
+    #   - sw-hec-switch-ntp
+    #   - sw-hec-switch-logging
+  HEC-Backup Routers:
+    parent_container: HEC
+  HEC-Switched Fabric:
+    parent_container: HEC
+    # configlets:
+    #   - HEC-VLANs
+    #   - sw-hec-switch-snmp
+    #   - sw-hec-switch-ntp
+    #   - sw-hec-switch-logging
+  HEC-Routed Fabric:
+    parent_container: HEC
+    # configlets:
+    #   - CVP-Arista
+    #   - sw-hec-fab-L900
+    #   - sw-hec-fab-ntp
+    #   - sw-hec-fab-snmp
+    #   - sw-hec-fab-logging
+    #   - sw-hec-oob-vrf
+    #   - sw-hec-tele-oob
+    #   - mgmt-default
+  HEC-Core:
+    parent_container: HEC-Switched Fabric
+  HEC-Top of rack:
+    parent_container: HEC-Switched Fabric
+  HEC-HANA Top of rack:
+    parent_container: HEC-Top of rack
+    # configlets:
+    #   - sw-hec-aaa-hana
+    #   - hec-hana
+  HEC-HV Top of rack:
+    parent_container: HEC-Top of rack
+  HEC-VMWare Top of rack:
+    parent_container: HEC-HV Top of rack
+    # configlets:
+    #   - hec-vmware
+    #   - hec-vmware-L2
+  HEC-Xen Top of rack:
+    parent_container: HEC-HV Top of rack
+    # configlets:
+    #   - hec-xen
+  HEC-Spine:
+    parent_container: HEC-Routed Fabric
+    # configlets:
+    #   - sw-hec-spine
+  HEC-Superspine:
+    parent_container: HEC-Routed Fabric
+  HEC-NGDR:
+    parent_container: HEC-Routed Fabric
+  HEC-Leaf:
+    parent_container: HEC-Routed Fabric
+    # configlets:
+    #   - HEC-VLANs
+    #   - sw-hec-leaf
+  HEC-Service leaf:
+    parent_container: HEC-Leaf
+  HEC-Border leaf:
+    parent_container: HEC-Leaf
+  HEC-Storage leaf:
+    parent_container: HEC-Leaf
+  HEC-Special leaf:
+    parent_container: HEC-Leaf
+  HEC-HANA leaf:
+    parent_container: HEC-Leaf
+    # configlets:
+    #   - sw-hec-aaa-hana
+    #   - hec-hana
+  HEC-HV leaf:
+    parent_container: HEC-Leaf
+  ### Container issue
+  HEC-VMWare leaf:
+    parent_container: HEC-HV leaf
+    # configlets:
+    #   - hec-vmware
+  HEC-Xen leaf:
+    parent_container: HEC-HV leaf
+    # configlets:
+    #   - hec-xen
+  HEC-Shared HANA Storage leaf:
+    parent_container: HEC-Storage leaf
+    # configlets:
+    #   - hec-shs

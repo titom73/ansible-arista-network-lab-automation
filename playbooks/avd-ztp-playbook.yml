@@ -1,0 +1,14 @@
+---
+- name: Build Switch configuration
+  hosts: TOOLS
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.avd
+    - arista.cvp
+  tasks:
+    - name: generate intented variables for DHCP server
+      import_role:
+        name: arista.avd.dhcp_provisioner
+      vars:
+        fabric_group: 'AVD2_FABRIC'
