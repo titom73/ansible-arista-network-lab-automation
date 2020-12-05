@@ -103,7 +103,7 @@ eapi-check: ## Run ansible playbook to build EVPN Fabric configuration for gener
 
 .PHONY: eapi-states-validation
 eapi-states-validation: ## eapi-states-validation description
-	ansible-playbook playbooks/avd-eapi-states-validation.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+	ansible-playbook playbooks/avd-eapi-states-validation.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: eapi-build-isis
 eapi-build-isis: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with ISIS underlay

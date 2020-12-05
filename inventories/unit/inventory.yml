@@ -7,4 +7,9 @@ all:
           ansible_host: 10.83.28.164
           ansible_user: ansible
           ansible_password: interdata
-          ansible_httpapi_validate_certs: true
+          ansible_httpapi_validate_certs: false
+        cv_server_sap:
+          ansible_host: 10.83.30.245
+          ansible_user: cvpadmin
+          ansible_password: arista
+          ansible_httpapi_validate_certs: false

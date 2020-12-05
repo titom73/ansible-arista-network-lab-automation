@@ -90,7 +90,7 @@ CVP_CONFIGLETS:
     \ level-2\n   router-id ipv4 192.168.255.11\n   log-adjacency-changes\n   !\n\
     \   address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
     \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
-    end\n"
+    end"
   AVD_DC1-BL1B: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -182,7 +182,7 @@ CVP_CONFIGLETS:
     \ level-2\n   router-id ipv4 192.168.255.12\n   log-adjacency-changes\n   !\n\
     \   address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
     \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
-    end\n"
+    end"
   AVD_DC1-L2LEAF1A: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -205,7 +205,7 @@ CVP_CONFIGLETS:
     \ 10.73.1.17/16\n!\nip routing\nno ip routing vrf MGMT\n!\nip route vrf MGMT 0.0.0.0/0\
     \ 10.73.0.1\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n\
     !\nmanagement api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n\
-    !\nend\n"
+    !\nend"
   AVD_DC1-L2LEAF2A: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -228,7 +228,7 @@ CVP_CONFIGLETS:
     \ 10.73.1.18/16\n!\nip routing\nno ip routing vrf MGMT\n!\nip route vrf MGMT 0.0.0.0/0\
     \ 10.73.0.1\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n\
     !\nmanagement api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n\
-    !\nend\n"
+    !\nend"
   AVD_DC1-LEAF1A: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -309,7 +309,7 @@ CVP_CONFIGLETS:
     \ EVPN_UNDERLAY\n   net 49.0001.0001.0001.0001.00\n   is-type level-2\n   router-id\
     \ ipv4 192.168.255.3\n   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n\
     \      maximum-paths 2\n   !\n!\n!\nmanagement api http-commands\n   no shutdown\n\
-    \   !\n   vrf MGMT\n      no shutdown\n!\nend\n"
+    \   !\n   vrf MGMT\n      no shutdown\n!\nend"
   AVD_DC1-LEAF1B: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -390,7 +390,7 @@ CVP_CONFIGLETS:
     \ EVPN_UNDERLAY\n   net 49.0001.0001.0001.0002.00\n   is-type level-2\n   router-id\
     \ ipv4 192.168.255.4\n   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n\
     \      maximum-paths 2\n   !\n!\n!\nmanagement api http-commands\n   no shutdown\n\
-    \   !\n   vrf MGMT\n      no shutdown\n!\nend\n"
+    \   !\n   vrf MGMT\n      no shutdown\n!\nend"
   AVD_DC1-LEAF2A: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -476,7 +476,7 @@ CVP_CONFIGLETS:
     \ level-2\n   router-id ipv4 192.168.255.5\n   log-adjacency-changes\n   !\n \
     \  address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
     \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
-    end\n"
+    end"
   AVD_DC1-LEAF2B: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -562,7 +562,7 @@ CVP_CONFIGLETS:
     \ level-2\n   router-id ipv4 192.168.255.6\n   log-adjacency-changes\n   !\n \
     \  address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
     \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
-    end\n"
+    end"
   AVD_DC1-LEAF3A: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -630,7 +630,7 @@ CVP_CONFIGLETS:
     \   is-type level-2\n   router-id ipv4 192.168.255.10\n   log-adjacency-changes\n\
     \   !\n   address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
     \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
-    end\n"
+    end"
   AVD_DC1-LEAF4A: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -698,7 +698,7 @@ CVP_CONFIGLETS:
     \   is-type level-2\n   router-id ipv4 192.168.255.13\n   log-adjacency-changes\n\
     \   !\n   address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
     \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
-    end\n"
+    end"
   AVD_DC1-SPINE1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -758,7 +758,7 @@ CVP_CONFIGLETS:
     \ 49.0001.0001.0000.0001.00\n   is-type level-2\n   router-id ipv4 192.168.255.1\n\
     \   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths\
     \ 2\n   !\n!\n!\nmanagement api http-commands\n   no shutdown\n   !\n   vrf MGMT\n\
-    \      no shutdown\n!\nend\n"
+    \      no shutdown\n!\nend"
   AVD_DC1-SPINE2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -818,7 +818,7 @@ CVP_CONFIGLETS:
     \ 49.0001.0001.0000.0002.00\n   is-type level-2\n   router-id ipv4 192.168.255.2\n\
     \   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths\
     \ 2\n   !\n!\n!\nmanagement api http-commands\n   no shutdown\n   !\n   vrf MGMT\n\
-    \      no shutdown\n!\nend\n"
+    \      no shutdown\n!\nend"
 CVP_TOPOLOGY:
   DC1_BL1:
     devices:

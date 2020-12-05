@@ -59,10 +59,12 @@ spine:
     AVD2-SPINE1:
       id: 1
       mgmt_ip: 10.73.254.1/24
+      mac_address: '0c:1d:c0:1d:62:01'
       bgp_route_reflector: true
     AVD2-SPINE2:
       id: 2
       mgmt_ip: 10.73.254.2/24
+      mac_address: '0c:1d:c0:1d:62:02'
       bgp_route_reflector: true
 
 # Leaf switch groups
@@ -93,10 +95,12 @@ l3leaf:
           id: 1
           mgmt_ip: 10.73.254.11/24
           spine_interfaces: [Ethernet1, Ethernet1]
+          mac_address: '0c:1d:c0:1d:62:01'
         AVD2-LEAF1B:
           id: 2
           mgmt_ip: 10.73.254.12/24
           spine_interfaces: [Ethernet2, Ethernet2]
+          mac_address: '0c:1d:c0:1d:62:01'
     AVD2_LEAF2:
       bgp_as: 65102
       filter:
@@ -107,10 +111,12 @@ l3leaf:
         AVD2-LEAF2A:
           id: 3
           mgmt_ip: 10.73.254.13/24
+          mac_address: '0c:1d:c0:1d:62:01'
           spine_interfaces: [Ethernet3, Ethernet3]
         AVD2-LEAF2B:
           id: 4
           mgmt_ip: 10.73.254.14/24
+          mac_address: '0c:1d:c0:1d:62:01'
           spine_interfaces: [Ethernet4, Ethernet4]
     AVD2_LEAF3:
       bgp_as: 65103
@@ -122,6 +128,7 @@ l3leaf:
         AVD2-LEAF3A:
           id: 5
           mgmt_ip: 10.73.254.17/24
+          mac_address: '0c:1d:c0:1d:62:01'
           spine_interfaces: [Ethernet7, Ethernet7]
     AVD2_LEAF4:
       bgp_as: 65104
@@ -133,6 +140,7 @@ l3leaf:
         AVD2-LEAF4A:
           id: 6
           mgmt_ip: 10.73.254.18/24
+          mac_address: '0c:1d:c0:1d:62:01'
           spine_interfaces: [Ethernet8, Ethernet8]
     AVD2_BL01:
       bgp_as: 65105
@@ -143,10 +151,12 @@ l3leaf:
         AVD2-BL01A:
           id: 7
           mgmt_ip: 10.73.254.15/24
+          mac_address: '0c:1d:c0:1d:62:01'
           spine_interfaces: [Ethernet5, Ethernet5]
         AVD2-BL01B:
           id: 8
           mgmt_ip: 10.73.254.16/24
+          mac_address: '0c:1d:c0:1d:62:01'
           spine_interfaces: [Ethernet6, Ethernet6]
 
 l2leaf:
@@ -168,6 +178,7 @@ l2leaf:
         AVD2-AGG01:
           id: 9
           mgmt_ip: 10.73.254.21/24
+          mac_address: '0c:1d:c0:1d:62:01'
           l3leaf_interfaces: [ Ethernet5, Ethernet5 ]
     AVD2_L2LEAF2:
       parent_l3leafs: [ AVD2-LEAF2A, AVD2-LEAF2B ]
@@ -178,6 +189,7 @@ l2leaf:
         AVD2-AGG02:
           id: 10
           mgmt_ip: 10.73.254.22/24
+          mac_address: '0c:1d:c0:1d:62:01'
           l3leaf_interfaces: [ Ethernet5, Ethernet5 ]
 
 #### Override for vEOS Lab Caveats ####

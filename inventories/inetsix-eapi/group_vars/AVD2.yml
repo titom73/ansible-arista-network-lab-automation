@@ -27,7 +27,6 @@ local_users:
 # Cloud Vision server information
 cvp_instance_ips:
   - 10.73.254.1
-  - apiserver.corp.arista.io
 cvp_ingestauth_key: ''
 # cvp_ingestauth_key: telarista
 
@@ -37,7 +36,9 @@ mgmt_gateway: 10.73.254.253
 # dns servers.
 name_servers:
   - 10.73.254.253
+  - 10.73.1.254
 
 # NTP Servers IP or DNS name, first NTP server will be prefered, and sourced from Managment VRF
 ntp_servers:
   - 10.73.254.253
+  - 10.73.1.254
