@@ -2,7 +2,6 @@ aaa_authorization: null
 ansible_become: true
 ansible_become_method: enable
 ansible_check_mode: false
-ansible_config_file: /projects/lab-validation/ansible.cfg
 ansible_connection: httpapi
 ansible_diff_mode: true
 ansible_facts: {}
@@ -13,24 +12,22 @@ ansible_httpapi_port: 8013
 ansible_httpapi_use_ssl: true
 ansible_httpapi_validate_certs: false
 ansible_inventory_sources:
-- /projects/lab-validation/inventories/emea-cvp-dc1/inventory.yml
+- /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/emea-cvp-dc1/inventory.yml
 ansible_network_os: eos
-ansible_playbook_python: /usr/local/bin/python
+ansible_playbook_python: /Users/tgrimonet/.pyenv/versions/3.6.8/envs/arista-ansible-stable/bin/python
 ansible_port: 8013
 ansible_run_tags:
-- provision
 - build
-- apply
 ansible_skip_tags: []
 ansible_ssh_pass: interdata
 ansible_user: ansible
 ansible_verbosity: 0
 ansible_version:
-    full: 2.10.3
+    full: 2.9.6
     major: 2
-    minor: 10
-    revision: 3
-    string: 2.10.3
+    minor: 9
+    revision: 6
+    string: 2.9.6
 bfd_multihop:
     interval: 1200
     min_rx: 1200
@@ -150,7 +147,6 @@ ethernet_interfaces:
         type: routed
 event_handlers: null
 event_monitor: null
-execute_tasks: 'true'
 fabric_name: DC1_FABRIC
 group_names:
 - DC1
@@ -280,8 +276,8 @@ internal_vlan_order:
     range:
         beginning: 4000
         ending: 4090
-inventory_dir: /projects/lab-validation/inventories/emea-cvp-dc1
-inventory_file: /projects/lab-validation/inventories/emea-cvp-dc1/inventory.yml
+inventory_dir: /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/emea-cvp-dc1
+inventory_file: /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/emea-cvp-dc1/inventory.yml
 inventory_hostname: DC1-BL1B
 inventory_hostname_short: DC1-BL1B
 ip_extcommunity_lists:
@@ -534,11 +530,11 @@ ntp_server:
     - fr.pool.ntp.org
 ntp_servers:
 - fr.pool.ntp.org
-omit: __omit_place_holder__26d56dbd7413a7a6ead6eb09d746d597eadc867f
+omit: __omit_place_holder__58717f2cddce0f6a25d4ae2755011cc1ae27b770
 overlay_loopback_network_summary: 192.168.255.0/24
 overlay_routing_protocol: ibgp
 p2p_uplinks_mtu: 1500
-playbook_dir: /projects/lab-validation/playbooks
+playbook_dir: /Users/tgrimonet/Projects/arista-ansible/lab-validation/playbooks
 port_channel_interfaces:
     Port-Channel3:
         description: MLAG_PEER_DC1-BL1A_Po3
