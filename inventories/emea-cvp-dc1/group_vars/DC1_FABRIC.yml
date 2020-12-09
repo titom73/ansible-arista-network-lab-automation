@@ -140,7 +140,19 @@ l3leaf:
           id: 10
           mgmt_ip: 10.73.1.23/16
           spine_interfaces: [Ethernet7, Ethernet7]
-
+    # Issue https://github.com/aristanetworks/ansible-avd/issues/407
+    # Fake BL to emulate missing devices
+    DC1_BL2:
+      bgp_as: 65111
+      nodes:
+        DC1-BL2A:
+          id: 12
+          mgmt_ip: 10.73.1.25/16
+          spine_interfaces: [Ethernet9, Ethernet9]
+        DC1-BL2B:
+          id: 13
+          mgmt_ip: 10.73.1.26/16
+          spine_interfaces: [Ethernet10, Ethernet10]
 
 l2leaf:
   defaults:

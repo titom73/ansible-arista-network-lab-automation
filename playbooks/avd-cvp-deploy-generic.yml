@@ -35,6 +35,7 @@
     run_tasks: false
   tasks:
     - name: run CVP provisioning
+      tags: 'generate'
       import_role:
         name: eos_config_deploy_cvp
       vars:

@@ -7,6 +7,8 @@ spine,DC1-SPINE1,Ethernet5,l3leaf,DC1-LEAF3A,Ethernet1
 spine,DC1-SPINE1,Ethernet6,l3leaf,DC1-BL1A,Ethernet1
 spine,DC1-SPINE1,Ethernet7,l3leaf,DC1-BL1B,Ethernet1
 spine,DC1-SPINE1,Ethernet8,l3leaf,DC1-LEAF4A,Ethernet1
+spine,DC1-SPINE1,Ethernet9,l3leaf,DC1-BL2A,Ethernet1
+spine,DC1-SPINE1,Ethernet10,l3leaf,DC1-BL2B,Ethernet1
 spine,DC1-SPINE2,Ethernet1,l3leaf,DC1-LEAF1A,Ethernet2
 spine,DC1-SPINE2,Ethernet2,l3leaf,DC1-LEAF1B,Ethernet2
 spine,DC1-SPINE2,Ethernet3,l3leaf,DC1-LEAF2A,Ethernet2
@@ -15,6 +17,8 @@ spine,DC1-SPINE2,Ethernet5,l3leaf,DC1-LEAF3A,Ethernet2
 spine,DC1-SPINE2,Ethernet6,l3leaf,DC1-BL1A,Ethernet2
 spine,DC1-SPINE2,Ethernet7,l3leaf,DC1-BL1B,Ethernet2
 spine,DC1-SPINE2,Ethernet8,l3leaf,DC1-LEAF4A,Ethernet2
+spine,DC1-SPINE2,Ethernet9,l3leaf,DC1-BL2A,Ethernet2
+spine,DC1-SPINE2,Ethernet10,l3leaf,DC1-BL2B,Ethernet2
 l3leaf,DC1-BL1A,Ethernet1,spine,DC1-SPINE1,Ethernet6
 l3leaf,DC1-BL1A,Ethernet2,spine,DC1-SPINE2,Ethernet6
 l3leaf,DC1-BL1A,Ethernet3,mlag_peer,DC1-BL1B,Ethernet3
@@ -23,6 +27,14 @@ l3leaf,DC1-BL1B,Ethernet1,spine,DC1-SPINE1,Ethernet7
 l3leaf,DC1-BL1B,Ethernet2,spine,DC1-SPINE2,Ethernet7
 l3leaf,DC1-BL1B,Ethernet3,mlag_peer,DC1-BL1A,Ethernet3
 l3leaf,DC1-BL1B,Ethernet4,mlag_peer,DC1-BL1A,Ethernet4
+l3leaf,DC1-BL2A,Ethernet1,spine,DC1-SPINE1,Ethernet9
+l3leaf,DC1-BL2A,Ethernet2,spine,DC1-SPINE2,Ethernet9
+l3leaf,DC1-BL2A,Ethernet3,mlag_peer,DC1-BL2B,Ethernet3
+l3leaf,DC1-BL2A,Ethernet4,mlag_peer,DC1-BL2B,Ethernet4
+l3leaf,DC1-BL2B,Ethernet1,spine,DC1-SPINE1,Ethernet10
+l3leaf,DC1-BL2B,Ethernet2,spine,DC1-SPINE2,Ethernet10
+l3leaf,DC1-BL2B,Ethernet3,mlag_peer,DC1-BL2A,Ethernet3
+l3leaf,DC1-BL2B,Ethernet4,mlag_peer,DC1-BL2A,Ethernet4
 l3leaf,DC1-LEAF1A,Ethernet1,spine,DC1-SPINE1,Ethernet1
 l3leaf,DC1-LEAF1A,Ethernet2,spine,DC1-SPINE2,Ethernet1
 l3leaf,DC1-LEAF1A,Ethernet3,mlag_peer,DC1-LEAF1B,Ethernet3

@@ -162,6 +162,8 @@ groups:
     DC1:
     - DC1-SPINE1
     - DC1-SPINE2
+    - DC1-L2LEAF1A
+    - DC1-L2LEAF2A
     - DC1-LEAF1A
     - DC1-LEAF1B
     - DC1-LEAF2A
@@ -170,11 +172,15 @@ groups:
     - DC1-LEAF4A
     - DC1-BL1A
     - DC1-BL1B
-    - DC1-L2LEAF1A
-    - DC1-L2LEAF2A
+    - DC1-BL2A
+    - DC1-BL2B
     DC1_BL1:
     - DC1-BL1A
     - DC1-BL1B
+    DC1_BL2:
+    - DC1-BL2A
+    - DC1-BL2B
+    DC1_ENHANCED_DATA: []
     DC1_FABRIC:
     - DC1-SPINE1
     - DC1-SPINE2
@@ -188,6 +194,8 @@ groups:
     - DC1-LEAF4A
     - DC1-BL1A
     - DC1-BL1B
+    - DC1-BL2A
+    - DC1-BL2B
     DC1_L2LEAF1:
     - DC1-L2LEAF1A
     DC1_L2LEAF2:
@@ -204,6 +212,8 @@ groups:
     - DC1-LEAF4A
     - DC1-BL1A
     - DC1-BL1B
+    - DC1-BL2A
+    - DC1-BL2B
     DC1_LEAF1:
     - DC1-LEAF1A
     - DC1-LEAF1B
@@ -225,6 +235,8 @@ groups:
     - DC1-LEAF4A
     - DC1-BL1A
     - DC1-BL1B
+    - DC1-BL2A
+    - DC1-BL2B
     DC1_SPINES:
     - DC1-SPINE1
     - DC1-SPINE2
@@ -239,6 +251,8 @@ groups:
     - DC1-LEAF4A
     - DC1-BL1A
     - DC1-BL1B
+    - DC1-BL2A
+    - DC1-BL2B
     EOS:
     - DC1-SPINE1
     - DC1-SPINE2
@@ -252,6 +266,8 @@ groups:
     - DC1-LEAF4A
     - DC1-BL1A
     - DC1-BL1B
+    - DC1-BL2A
+    - DC1-BL2B
     ZTP:
     - cv_ztp
     all:
@@ -269,6 +285,8 @@ groups:
     - DC1-LEAF4A
     - DC1-BL1A
     - DC1-BL1B
+    - DC1-BL2A
+    - DC1-BL2B
     ungrouped: []
 hardware_counters: null
 internal_vlan_order:
@@ -374,6 +392,21 @@ l3leaf:
                     spine_interfaces:
                     - Ethernet7
                     - Ethernet7
+        DC1_BL2:
+            bgp_as: 65111
+            nodes:
+                DC1-BL2A:
+                    id: 12
+                    mgmt_ip: 10.73.1.25/16
+                    spine_interfaces:
+                    - Ethernet9
+                    - Ethernet9
+                DC1-BL2B:
+                    id: 13
+                    mgmt_ip: 10.73.1.26/16
+                    spine_interfaces:
+                    - Ethernet10
+                    - Ethernet10
         DC1_LEAF1:
             bgp_as: 65101
             filter:
@@ -530,7 +563,7 @@ ntp_server:
     - fr.pool.ntp.org
 ntp_servers:
 - fr.pool.ntp.org
-omit: __omit_place_holder__58717f2cddce0f6a25d4ae2755011cc1ae27b770
+omit: __omit_place_holder__e58bc05b1d4b1d6a96e0b9327c29dfeaa738964e
 overlay_loopback_network_summary: 192.168.255.0/24
 overlay_routing_protocol: ibgp
 p2p_uplinks_mtu: 1500

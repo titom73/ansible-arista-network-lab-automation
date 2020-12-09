@@ -1,88 +1,67 @@
-## Ansible Generated ##
-
-### DC1-LEAF4A ###
-
-### Leaf Info ###
 l3leaf_node_group: DC1_LEAF4
 switch_platform: vEOS-LAB
 leaf_bgp_as: 65000
 leaf_id: 11
 switch_mgmt_ip: 10.73.1.24/16
-leaf_filter_tenants: ['all']
-leaf_filter_tags: ['all']
-leaf_allowed_vrfs: ['Tenant_A_OP_Zone']
-leaf_allowed_svis: [110, 111, 114]
-leaf_allowed_vlans: [110, 111, 114, 411, 412]
-leaf_mlag: False
-
+leaf_filter_tenants:
+- all
+leaf_filter_tags:
+- all
+leaf_allowed_vrfs:
+- Tenant_A_OP_Zone
+leaf_allowed_svis:
+- 110
+- 111
+- 114
+leaf_allowed_vlans:
+- 110
+- 111
+- 114
+- 411
+- 412
+leaf_mlag: false
 service_routing_protocols_model: multi-agent
 ip_routing: true
-
-### Hardware Counters
-hardware_counters:
-
-### Daemon TerminAttr
+hardware_counters: null
 daemon_terminattr:
   ingestgrpcurl:
     ips:
-      - 10.83.28.164
+    - 10.83.28.164
     port: 9910
-  ingestauth_key: 
+  ingestauth_key: null
   ingestvrf: MGMT
-  smashexcludes: "ale,flexCounter,hardware,kni,pulse,strata"
-  ingestexclude: "/Sysdb/cell/1/agent,/Sysdb/cell/2/agent"
-
+  smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
+  ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
 vlan_internal_order:
   allocation: descending
   range:
     beginning: 4000
     ending: 4090
-
-### Event Monitor ###
-event_monitor:
-
-### Event Handler ###
-event_handlers:
-
-### Load Interval ###
-load_interval:
-
-### Queue Monitor Lenght ###
-queue_monitor_length:
-
-### Name Servers ###
+event_monitor: null
+event_handlers: null
+load_interval: null
+queue_monitor_length: null
 name_server:
   source:
     vrf: MGMT
   nodes:
-    - 1.1.1.1
-
-### NTP Servers ###
+  - 1.1.1.1
 ntp_server:
   local_interface:
     vrf: MGMT
     interface: Management1
   nodes:
-    - fr.pool.ntp.org
-
-### Redundancy ###
-redundancy:
-
-### Spanning-tree ###
+  - fr.pool.ntp.org
+redundancy: null
 spanning_tree:
   mode: mstp
   priority: 4096
-
-
-### AAA authorization ###
-aaa_authorization:
-
-### local users ###
+aaa_authorization: null
 local_users:
   admin:
     privilege: 15
     role: network-admin
-    no_password: True
+    no_password: true
   ansible:
     privilege: 15
     role: network-admin
@@ -91,14 +70,8 @@ local_users:
     privilege: 15
     role: network-admin
     sha512_password: $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
-
-### Clock Timezone ###
-clock:
-
-### VLANs ###
+clock: null
 vlans:
-
-## Tenant_A ##
   110:
     tenant: Tenant_A
     name: Tenant_A_OP_Zone_1
@@ -108,30 +81,22 @@ vlans:
   114:
     tenant: Tenant_A
     name: Tenant_A_OP_Zone_3
-## Tenant_D ##
   411:
     tenant: Tenant_D
     name: Tenant_D_OP_Zone_1
   412:
     tenant: Tenant_D
     name: Tenant_D_OP_Zone_2
-
-### VRFs ###
 vrfs:
   MGMT:
-    ip_routing: False
-## Tenant_A ##
+    ip_routing: false
   Tenant_A_OP_Zone:
     tenant: Tenant_A
     ip_routing: true
-
-### bfd multihop ###
 bfd_multihop:
   interval: 1200
   min_rx: 1200
   multiplier: 3
-
-### Port-Channel Interfaces ###
 port_channel_interfaces:
   Port-Channel7:
     description: POD03-ESI_data
@@ -140,8 +105,6 @@ port_channel_interfaces:
     esi: 0000:0000:0303:0202:0101
     rt: 03:03:02:02:01:01
     lacp_id: 0303.0202.0101
-
-### Ethernet Interfaces ###
 ethernet_interfaces:
   Ethernet1:
     peer: DC1-SPINE1
@@ -174,63 +137,54 @@ ethernet_interfaces:
     vlans: 110-114,210,211
     channel_group:
       id: 7
-      mode: "active"
+      mode: active
     profile: ALL
-
-
-### Loopback Interfaces ###
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
     ip_address: 192.168.255.13/32
     isis_enable: EVPN_UNDERLAY
     isis_passive: true
-
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
     ip_address: 192.168.254.13/32
     isis_enable: EVPN_UNDERLAY
     isis_passive: true
-## Tenant_A ##
   Loopback100:
     description: Tenant_A_OP_Zone_VTEP_DIAGNOSTICS
     vrf: Tenant_A_OP_Zone
     ip_address: 10.255.1.13/32
-
-### Management Interfaces ###
 management_interfaces:
   Management1:
     description: oob_management
     vrf: MGMT
     ip_address: 10.73.1.24/16
     gateway: 10.73.0.1
-
-### VLAN Interfaces ###
 vlan_interfaces:
-## Tenant_A ##
   Vlan110:
     tenant: Tenant_A
-    tags: ['opzone']
+    tags:
+    - opzone
     description: Tenant_A_OP_Zone_1
-    enabled: True
+    enabled: true
     vrf: Tenant_A_OP_Zone
     ip_address_virtual: 10.1.10.254/24
   Vlan111:
     tenant: Tenant_A
-    tags: ['opzone']
+    tags:
+    - opzone
     description: Tenant_A_OP_Zone_2
-    enabled: True
+    enabled: true
     vrf: Tenant_A_OP_Zone
     ip_address_virtual: 10.1.11.254/24
   Vlan114:
     tenant: Tenant_A
-    tags: ['opzone']
+    tags:
+    - opzone
     description: Tenant_A_OP_Zone_3
-    enabled: True
+    enabled: true
     vrf: Tenant_A_OP_Zone
     ip_address_virtual: 10.1.14.254/24
-
-### VxLAN interface ###
 vxlan_tunnel_interface:
   Vxlan1:
     description: DC1-LEAF4A_VTEP
@@ -238,61 +192,40 @@ vxlan_tunnel_interface:
     vxlan_udp_port: 4789
     vxlan_vni_mappings:
       vlans:
-## Tenant_A ##
         110:
           vni: 10110
         111:
           vni: 50111
         114:
           vni: 50114
-## Tenant_D ##
         411:
           vni: 40411
         412:
           vni: 40412
       vrfs:
-## Tenant_A ##
         Tenant_A_OP_Zone:
           vni: 10
-## Tenant_D ##
-
-### TCAM Profiles ###
-tcam_profile:
-
-### MAC address table ###
-mac_address_table:
-
+tcam_profile: null
+mac_address_table: null
 ip_virtual_router_mac_address: 00:1c:73:00:dc:01
-
 virtual_source_nat_vrfs:
-## Tenant_A ##
   Tenant_A_OP_Zone:
     ip_address: 10.255.1.13
-
 ip_igmp_snooping:
-  globally_enabled: True
-  vlans:
-## Tenant_A ##
-## Tenant_D ##
-
-### static routes ###
+  globally_enabled: true
+  vlans: null
 static_routes:
-  - vrf: MGMT
-    destination_address_prefix: 0.0.0.0/0
-    gateway: 10.73.0.1
-
-### prefix-lists ###
-prefix_lists:
-
-
-### route-maps ###
+- vrf: MGMT
+  destination_address_prefix: 0.0.0.0/0
+  gateway: 10.73.0.1
+prefix_lists: null
 route_maps:
   RM-EVPN-SOO-IN:
     sequence_numbers:
       10:
         type: deny
         match:
-          - "extcommunity ECL-EVPN-SOO"
+        - extcommunity ECL-EVPN-SOO
       20:
         type: permit
   RM-EVPN-SOO-OUT:
@@ -300,18 +233,16 @@ route_maps:
       10:
         type: permit
         set:
-          - "extcommunity soo 192.168.254.13:1 additive"
-
-### Routing - BGP ###
+        - extcommunity soo 192.168.254.13:1 additive
 router_bgp:
   as: 65000
   router_id: 192.168.255.13
   bgp_defaults:
-    - no bgp default ipv4-unicast
-    - distance bgp 20 200 200
-    - graceful-restart restart-time 300
-    - graceful-restart
-    - maximum-paths 2 ecmp 2
+  - no bgp default ipv4-unicast
+  - distance bgp 20 200 200
+  - graceful-restart restart-time 300
+  - graceful-restart
+  - maximum-paths 2 ecmp 2
   peer_groups:
     EVPN-OVERLAY-PEERS:
       type: evpn
@@ -319,7 +250,7 @@ router_bgp:
       update_source: Loopback0
       bfd: true
       ebgp_multihop: 3
-      password: "q+VNViP5i4rVjW1cxFv2wA=="
+      password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: true
       maximum_routes: 0
   neighbors:
@@ -327,7 +258,7 @@ router_bgp:
       peer_group: EVPN-OVERLAY-PEERS
     192.168.255.2:
       peer_group: EVPN-OVERLAY-PEERS
-  redistribute_routes:
+  redistribute_routes: null
   address_family_evpn:
     peer_groups:
       EVPN-OVERLAY-PEERS:
@@ -339,78 +270,65 @@ router_bgp:
       EVPN-OVERLAY-PEERS:
         activate: false
   vlan_aware_bundles:
-## Tenant_A ##
     Tenant_A_OP_Zone:
-      rd: "192.168.255.13:10"
+      rd: 192.168.255.13:10
       route_targets:
         both:
-          - "10:10"
+        - '10:10'
       redistribute_routes:
-        - learned
+      - learned
       vlan: 110-111,114
-## Tenant_D ##
     Tenant_D_OP_Zone_1:
       tenant: Tenant_D
-      rd: "192.168.255.13:40411"
+      rd: 192.168.255.13:40411
       route_targets:
         both:
-          - "40411:40411"
+        - 40411:40411
       redistribute_routes:
-        - learned
+      - learned
       vlan: 411
     Tenant_D_OP_Zone_2:
       tenant: Tenant_D
-      rd: "192.168.255.13:40412"
+      rd: 192.168.255.13:40412
       route_targets:
         both:
-          - "40412:40412"
+        - 40412:40412
       redistribute_routes:
-        - learned
+      - learned
       vlan: 412
-  vlans:
+  vlans: null
   vrfs:
-## Tenant_A ##
     Tenant_A_OP_Zone:
       router_id: 192.168.255.13
-      rd: "192.168.255.13:10"
+      rd: 192.168.255.13:10
       route_targets:
         import:
           evpn:
-            - "10:10"
+          - '10:10'
         export:
           evpn:
-            - "10:10"
+          - '10:10'
       redistribute_routes:
-        - connected
-## Tenant_D ##
-
-### Extended Community Lists ###
+      - connected
 ip_extcommunity_lists:
   ECL-EVPN-SOO:
-    - type: permit
-      extcommunities: "soo 192.168.254.13:1"
-
-### Routing - OSPF ###
-router_ospf:
-
-### Routing - ISIS ###
+  - type: permit
+    extcommunities: soo 192.168.254.13:1
+router_ospf: null
 router_isis:
   instance: EVPN_UNDERLAY
   net: 49.0001.0001.0001.0011.00
   router_id: 192.168.255.13
   no_passive_interfaces:
-    - Ethernet1
-    - Ethernet2
+  - Ethernet1
+  - Ethernet2
   is_type: level-2
-  address_family: ['ipv4 unicast']
+  address_family:
+  - ipv4 unicast
   isis_af_defaults:
-    - maximum-paths 2
-
-### Queue Monitor Streaming ###
-queue_monitor_streaming:
-
-### Management API http ###
+  - maximum-paths 2
+queue_monitor_streaming: null
 management_api_http:
-  enable_https: True
+  enable_https: true
   enable_vrfs:
-    MGMT:
+    MGMT: null

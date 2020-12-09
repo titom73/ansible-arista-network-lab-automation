@@ -305,6 +305,8 @@ No VLANs defined
 | Ethernet6 | P2P_LINK_TO_DC1-BL1A_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.255.32/31 | - | - |
 | Ethernet7 | P2P_LINK_TO_DC1-BL1B_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.255.36/31 | - | - |
 | Ethernet8 | P2P_LINK_TO_DC1-LEAF4A_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.255.40/31 | - | - |
+| Ethernet9 | P2P_LINK_TO_DC1-BL2A_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.255.44/31 | - | - |
+| Ethernet10 | P2P_LINK_TO_DC1-BL2B_Ethernet1 | 1500 | routed | access | - | - | - | 172.31.255.48/31 | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -372,6 +374,22 @@ interface Ethernet8
    description P2P_LINK_TO_DC1-LEAF4A_Ethernet1
    no switchport
    ip address 172.31.255.40/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
+!
+interface Ethernet9
+   description P2P_LINK_TO_DC1-BL2A_Ethernet1
+   no switchport
+   ip address 172.31.255.44/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
+!
+interface Ethernet10
+   description P2P_LINK_TO_DC1-BL2B_Ethernet1
+   no switchport
+   ip address 172.31.255.48/31
    isis enable EVPN_UNDERLAY
    isis metric 50
    isis network point-to-point
@@ -537,6 +555,8 @@ router isis EVPN_UNDERLAY
 | 192.168.255.11 | 65000 |
 | 192.168.255.12 | 65000 |
 | 192.168.255.13 | 65000 |
+| 192.168.255.14 | 65000 |
+| 192.168.255.15 | 65000 |
 
 ### Router BGP EVPN Address Family
 
@@ -583,6 +603,10 @@ router bgp 65000
    neighbor 192.168.255.12 remote-as 65000
    neighbor 192.168.255.13 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.13 remote-as 65000
+   neighbor 192.168.255.14 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.14 remote-as 65000
+   neighbor 192.168.255.15 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.15 remote-as 65000
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate

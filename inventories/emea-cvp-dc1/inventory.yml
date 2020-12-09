@@ -1,6 +1,8 @@
 ---
 all:
   children:
+    DC1_ENHANCED_DATA:
+      DC1_LEAF2:
     ZTP:
       hosts:
         cv_ztp:
@@ -58,6 +60,14 @@ all:
                       ansible_port: 8012
                     DC1-BL1B:
                       ansible_port: 8013
+                DC1_BL2:
+                  hosts:
+                    DC1-BL2A:
+                      ansible_port: 8012
+                      is_deployed: false
+                    DC1-BL2B:
+                      ansible_port: 8013
+                      is_deployed: false
             DC1_L2LEAFS:
               children:
                 DC1_L2LEAF1:
@@ -76,6 +86,7 @@ all:
           children:
             DC1_L3LEAFS:
             DC1_L2LEAFS:
+
 
 # Group to run arista.avd.eos_validate_state
 EOS:

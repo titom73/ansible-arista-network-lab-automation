@@ -3,6 +3,19 @@ port_profiles:
   ALL:
     mode: trunk
     vlans: "1-4000"
+    storm_control:
+      all:
+        level: 10
+        unit: percent
+      broadcast:
+        level: 100
+        unit: pps
+      multicast:
+        level: 1
+        unit: percent
+      'unknown-unicast':
+        level: 2
+        unit: percent
   A-PR01-DMZ:
     mode: access
     vlans: "110"
@@ -20,7 +33,7 @@ servers:
       - type: nic
         server_ports: [Eth1]
         switch_ports: [Ethernet3]
-        switches: [AVD2-AGG01]
+        switches: [EAPI-AGG01]
         profile: ALL
   SRV-POD02:
     rack: POD02
@@ -28,14 +41,14 @@ servers:
       - type: nic
         server_ports: [Eth1]
         switch_ports: [Ethernet3]
-        switches: [AVD2-AGG02]
+        switches: [EAPI-AGG02]
         profile: ALL
   SRV-POD03:
     rack: POD03
     adapters:
       - server_ports: [ Eth1, Eth2 ]
         switch_ports: [ Ethernet5, Ethernet5 ]
-        switches: [ AVD2-LEAF3A, AVD2-LEAF4A ]
+        switches: [ EAPI-LEAF3A, EAPI-LEAF4A ]
         profile: ALL
         port_channel:
           state: present
