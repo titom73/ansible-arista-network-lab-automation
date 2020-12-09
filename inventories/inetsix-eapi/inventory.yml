@@ -1,65 +1,65 @@
 ---
-AVD2:
+EAPI:
   children:
     # TOOLS:
     #   hosts:
     #     DHCP_SERVER:
-    AVD2_FABRIC:
+    EAPI_FABRIC:
       children:
-        AVD2_SPINES:
+        EAPI_SPINES:
           hosts:
-            AVD2-SPINE1:
+            EAPI-SPINE1:
               ansible_port: 8001
-            AVD2-SPINE2:
+            EAPI-SPINE2:
               ansible_port: 8002
-        AVD2_L3LEAFS:
+        EAPI_L3LEAFS:
           children:
-            AVD2_LEAF1:
+            EAPI_LEAF1:
               hosts:
-                AVD2-LEAF1A:
+                EAPI-LEAF1A:
                   ansible_port: 8011
-                AVD2-LEAF1B:
+                EAPI-LEAF1B:
                   ansible_port: 8012
-            AVD2_LEAF2:
+            EAPI_LEAF2:
               hosts:
-                AVD2-LEAF2A:
+                EAPI-LEAF2A:
                   ansible_port: 8013
-                AVD2-LEAF2B:
+                EAPI-LEAF2B:
                   ansible_port: 8014
-            AVD2_LEAF3:
+            EAPI_LEAF3:
               hosts:
-                AVD2-LEAF3A:
+                EAPI-LEAF3A:
                   ansible_port: 8017
-            AVD2_LEAF4:
+            EAPI_LEAF4:
               hosts:
-                AVD2-LEAF4A:
+                EAPI-LEAF4A:
                   ansible_port: 8018
-            AVD2_BL01:
+            EAPI_BL01:
               hosts:
-                AVD2-BL01A:
+                EAPI-BL01A:
                   ansible_port: 8015
-                AVD2-BL01B:
+                EAPI-BL01B:
                   ansible_port: 8016
-        AVD2_L2LEAFS:
+        EAPI_L2LEAFS:
           children:
-            AVD2_L2LEAF1:
+            EAPI_L2LEAF1:
               hosts:
-                AVD2-AGG01:
+                EAPI-AGG01:
                   ansible_port: 8021
-            AVD2_L2LEAF2:
+            EAPI_L2LEAF2:
               hosts:
-                AVD2-AGG02:
+                EAPI-AGG02:
                   ansible_port: 8022
-    AVD2_TENANTS_NETWORKS:
+    EAPI_TENANTS_NETWORKS:
       children:
-        AVD2_L3LEAFS:
-        AVD2_L2LEAFS:
-    AVD2_SERVERS:
+        EAPI_L3LEAFS:
+        EAPI_L2LEAFS:
+    EAPI_SERVERS:
       children:
-        AVD2_L3LEAFS:
-        AVD2_L2LEAFS:
+        EAPI_L3LEAFS:
+        EAPI_L2LEAFS:
 
 # Group to run arista.avd.eos_validate_state
 EOS:
   children:
-    AVD2_FABRIC:
+    EAPI_FABRIC:
