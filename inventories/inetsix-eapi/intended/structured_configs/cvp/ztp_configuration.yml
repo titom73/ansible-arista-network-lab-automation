@@ -1,0 +1,60 @@
+---
+ztp:
+  default:
+    registration: http://10.73.254.1/ztp/bootstrap
+    gateway: 10.73.254.253
+    nameservers:
+      - 10.73.254.253
+      - 10.73.1.254
+    use_system_mac: true
+  general:
+    subnets:
+      - network: 10.73.1.0
+        netmask: 255.255.255.0
+        gateway: 10.73.254.253
+        nameservers:
+          - 10.73.254.253
+          - 10.73.1.254
+        start: 10.73.1.200
+        end: 10.73.1.210
+        lease_time: 300
+  clients:
+    # SPINE
+    - name: AVD2-SPINE1
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.73.254.1
+    - name: AVD2-SPINE2
+      mac: 0c:1d:c0:1d:62:02
+      ip4: 10.73.254.2
+    # L3LEAF
+    - name: AVD2-LEAF1A
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.73.254.11
+    - name: AVD2-LEAF1B
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.73.254.12
+    - name: AVD2-LEAF2A
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.73.254.13
+    - name: AVD2-LEAF2B
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.73.254.14
+    - name: AVD2-LEAF3A
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.73.254.17
+    - name: AVD2-LEAF4A
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.73.254.18
+    - name: AVD2-BL01A
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.73.254.15
+    - name: AVD2-BL01B
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.73.254.16
+    # L2LEAF
+    - name: AVD2-AGG01
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.73.254.21
+    - name: AVD2-AGG02
+      mac: 0c:1d:c0:1d:62:01
+      ip4: 10.73.254.22

@@ -1,25 +1,25 @@
 ## Ansible Generated ##
 
-### AVD2-LEAF1A ###
+### EAPI-BL01A ###
 
 ### Leaf Info ###
-l3leaf_node_group: AVD2_LEAF1
+l3leaf_node_group: EAPI_BL01
 switch_platform: vEOS-LAB
-leaf_bgp_as: 65101
-leaf_id: 1
-switch_mgmt_ip: 10.73.254.11/24
+leaf_bgp_as: 65105
+leaf_id: 7
+switch_mgmt_ip: 10.73.254.15/24
 leaf_filter_tenants: ['Tenant_A', 'Tenant_B']
-leaf_filter_tags: ['POD01', 'DC1']
-leaf_allowed_vrfs: ['TENANT_A_PROJECT01']
-leaf_allowed_svis: [110, 111, 112]
-leaf_allowed_vlans: [110, 111, 112, 201]
+leaf_filter_tags: ['BORDER']
+leaf_allowed_vrfs: []
+leaf_allowed_svis: []
+leaf_allowed_vlans: []
 leaf_mlag: True
-leaf_mlag_group: AVD2_LEAF1
+leaf_mlag_group: EAPI_BL01
 leaf_mlag_role: primary
-leaf_mlag_peer: AVD2-LEAF1B
-leaf_mlag_ip: 0
-leaf_mlag_peer_ip: 1
-leaf_mlag_peer_id: 2
+leaf_mlag_peer: EAPI-BL01B
+leaf_mlag_ip: 12
+leaf_mlag_peer_ip: 13
+leaf_mlag_peer_id: 8
 
 service_routing_protocols_model: multi-agent
 ip_routing: true
@@ -80,7 +80,7 @@ redundancy:
 spanning_tree:
   mode: mstp
   priority: 4096
-  no_spanning_tree_vlan: 4094
+  no_spanning_tree_vlan: 4093-4094
 
 
 ### AAA authorization ###
@@ -123,33 +123,12 @@ vlans:
       - MLAG
 
 ## Tenant_A ##
-  110:
-    tenant: Tenant_A
-    name: PR01-DEMO
-  111:
-    tenant: Tenant_A
-    name: PR01-TRUST
-  112:
-    tenant: Tenant_A
-    name: PR01-TRUST
-  3010:
-    tenant: Tenant_A
-    name: MLAG_iBGP_TENANT_A_PROJECT01
-    trunk_groups:
-      - LEAF_PEER_L3
 ## Tenant_B ##
-  201:
-    tenant: Tenant_B
-    name: B-ELAN-201
 
 ### VRFs ###
 vrfs:
   MGMT:
     ip_routing: False
-## Tenant_A ##
-  TENANT_A_PROJECT01:
-    tenant: Tenant_A
-    ip_routing: true
 
 ### bfd multihop ###
 bfd_multihop:
@@ -159,15 +138,9 @@ bfd_multihop:
 
 ### Port-Channel Interfaces ###
 port_channel_interfaces:
-## L2 LEAF Uplink AVD2_L2LEAF1 ##
-  Port-Channel5:
-    description: AVD2_L2LEAF1_Po1
-    vlans: 110-112,201
-    mode: trunk
-    mlag: 5
 ## mlag peer-link ##
   Port-Channel3:
-    description: MLAG_PEER_AVD2-LEAF1B_Po3
+    description: MLAG_PEER_EAPI-BL01B_Po3
     vlans: "2-4094"
     mode: trunk
     trunk_groups:
@@ -177,46 +150,43 @@ port_channel_interfaces:
 ### Ethernet Interfaces ###
 ethernet_interfaces:
   Ethernet1:
-    peer: AVD2-SPINE1
-    peer_interface: Ethernet1
+    peer: EAPI-SPINE1
+    peer_interface: Ethernet5
     peer_type: spine
-    description: P2P_LINK_TO_AVD2-SPINE1_Ethernet1
+    description: P2P_LINK_TO_EAPI-SPINE1_Ethernet5
     mtu: 1500
     type: routed
-    ip_address: 172.31.255.1/31
+    ip_address: 172.31.255.25/31
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
   Ethernet2:
-    peer: AVD2-SPINE2
-    peer_interface: Ethernet1
+    peer: EAPI-SPINE2
+    peer_interface: Ethernet5
     peer_type: spine
-    description: P2P_LINK_TO_AVD2-SPINE2_Ethernet1
+    description: P2P_LINK_TO_EAPI-SPINE2_Ethernet5
     mtu: 1500
     type: routed
-    ip_address: 172.31.255.3/31
+    ip_address: 172.31.255.27/31
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
 ## mlag interfaces ##
   Ethernet3:
-    peer: AVD2-LEAF1B
+    peer: EAPI-BL01B
     peer_interface: Ethernet3
     peer_type: mlag_peer
-    description: MLAG_PEER_AVD2-LEAF1B_Ethernet3
+    description: MLAG_PEER_EAPI-BL01B_Ethernet3
     channel_group:
       id: 3
       mode: active
   Ethernet4:
-    peer: AVD2-LEAF1B
+    peer: EAPI-BL01B
     peer_interface: Ethernet4
     peer_type: mlag_peer
-    description: MLAG_PEER_AVD2-LEAF1B_Ethernet4
+    description: MLAG_PEER_EAPI-BL01B_Ethernet4
     channel_group:
       id: 3
-      mode: active
-## L2 LEAF link AVD2_L2LEAF1 ##
-  Ethernet5:
-    peer: AVD2-AGG01
-    peer_interface: Ethernet1
-    peer_type: l2leaf
-    description: AVD2-AGG01_Ethernet1
-    channel_group:
-      id: 5
       mode: active
 
 
@@ -224,66 +194,43 @@ ethernet_interfaces:
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
-    ip_address: 192.168.255.3/32
+    ip_address: 192.168.255.9/32
+    isis_enable: EVPN_UNDERLAY
+    isis_passive: true
 
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
-    ip_address: 192.168.254.3/32
+    ip_address: 192.168.254.9/32
+    isis_enable: EVPN_UNDERLAY
+    isis_passive: true
 
 ### Management Interfaces ###
 management_interfaces:
   Management1:
     description: oob_management
     vrf: MGMT
-    ip_address: 10.73.254.11/24
+    ip_address: 10.73.254.15/24
     gateway: 10.73.254.253
 
 ### VLAN Interfaces ###
 vlan_interfaces:
   Vlan4093:
     description: MLAG_PEER_L3_PEERING
-    ip_address: 10.255.251.0/31
+    ip_address: 10.255.251.12/31
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
   Vlan4094:
     description: MLAG_PEER
-    ip_address: 10.255.252.0/31
+    ip_address: 10.255.252.12/31
     no_autostate: true
     mtu: 1500
 ## Tenant_A ##
-  Vlan110:
-    tenant: Tenant_A
-    tags: ['DC1']
-    description: PR01-DEMO
-    enabled: True
-    vrf: TENANT_A_PROJECT01
-    ip_address_virtual: 10.1.10.254/24
-  Vlan111:
-    tenant: Tenant_A
-    tags: ['POD01', 'POD02']
-    description: PR01-TRUST
-    enabled: True
-    vrf: TENANT_A_PROJECT01
-    ip_address_virtual: 10.1.11.254/24
-    ip_helpers:
-      1.1.1.1:
-        source_interface: lo100
-        vrf: TEST
-  Vlan112:
-    tenant: Tenant_A
-    tags: ['POD01', 'POD02']
-    description: PR01-TRUST
-    vrf: TENANT_A_PROJECT01
-    ip_address_virtual: 10.1.12.254/24
-  Vlan3010:
-    tenant: Tenant_A
-    type: underlay_peering
-    description: "MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01"
-    vrf: TENANT_A_PROJECT01
-    ip_address: 10.255.251.0/31
 
 ### VxLAN interface ###
 vxlan_tunnel_interface:
   Vxlan1:
-    description: AVD2-LEAF1A_VTEP
+    description: EAPI-BL01A_VTEP
     source_interface: Loopback1
     virtual_router:
       encapsulation_mac_address: "mlag-system-id"
@@ -291,19 +238,9 @@ vxlan_tunnel_interface:
     vxlan_vni_mappings:
       vlans:
 ## Tenant_A ##
-        110:
-          vni: 10110
-        111:
-          vni: 10111
-        112:
-          vni: 10112
 ## Tenant_B ##
-        201:
-          vni: 20201
       vrfs:
 ## Tenant_A ##
-        TENANT_A_PROJECT01:
-          vni: 11
 ## Tenant_B ##
 
 ### TCAM Profiles ###
@@ -320,8 +257,6 @@ ip_igmp_snooping:
   globally_enabled: True
   vlans:
 ## Tenant_A ##
-    111:
-      enabled: False
 ## Tenant_B ##
 
 ### static routes ###
@@ -332,26 +267,14 @@ static_routes:
 
 ### prefix-lists ###
 prefix_lists:
-  PL-LOOPBACKS-EVPN-OVERLAY:
-    sequence_numbers:
-      10:
-        action: "permit 192.168.255.0/24 eq 32"
-      20:
-        action: "permit 192.168.254.0/24 eq 32"
-  PL-P2P-UNDERLAY:
-    sequence_numbers:
-      10:
-        action: "permit 172.31.255.0/24 le 31"
-      20:
-        action: "permit 10.255.251.0/24 le 31"
 
 ### MLAG Configuration ###
 mlag_configuration:
-  domain_id: AVD2_LEAF1
+  domain_id: EAPI_BL01
   local_interface: Vlan4094
-  peer_address: 10.255.252.1
+  peer_address: 10.255.252.13
   peer_address_heartbeat:
-    peer_ip: 10.73.254.12
+    peer_ip: 10.73.254.16
     vrf: MGMT
   dual_primary_detection_delay: 5
   peer_link: Port-Channel3
@@ -360,17 +283,11 @@ mlag_configuration:
 
 ### route-maps ###
 route_maps:
-  RM-CONN-2-BGP:
-    sequence_numbers:
-      10:
-        type: permit
-        match:
-          - "ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY"
 
 ### Routing - BGP ###
 router_bgp:
-  as: 65101
-  router_id: 192.168.255.3
+  as: 65105
+  router_id: 192.168.255.9
   bgp_defaults:
     - no bgp default ipv4-unicast
     - distance bgp 20 200 200
@@ -378,19 +295,6 @@ router_bgp:
     - graceful-restart
     - maximum-paths 2 ecmp 2
   peer_groups:
-    IPv4-UNDERLAY-PEERS:
-      type: ipv4
-      remote_as: 65001
-      password: "AQQvKeimxJu+uGQ/yYvv9w=="
-      maximum_routes: 12000
-      send_community: true
-    MLAG-IPv4-UNDERLAY-PEER:
-      type: ipv4
-      remote_as: 65101
-      next_hop_self: true
-      password: "vnEaG8gMeQf3d3cN6PktXQ=="
-      maximum_routes: 12000
-      send_community: true
     EVPN-OVERLAY-PEERS:
       type: evpn
       remote_as: 65001
@@ -401,73 +305,25 @@ router_bgp:
       send_community: true
       maximum_routes: 0
   neighbors:
-    172.31.255.0:
-      peer_group: IPv4-UNDERLAY-PEERS
-    172.31.255.2:
-      peer_group: IPv4-UNDERLAY-PEERS
-    10.255.251.1:
-      peer_group: MLAG-IPv4-UNDERLAY-PEER
     192.168.255.1:
       peer_group: EVPN-OVERLAY-PEERS
     192.168.255.2:
       peer_group: EVPN-OVERLAY-PEERS
   redistribute_routes:
-    connected:
-      route_map: RM-CONN-2-BGP
   address_family_evpn:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
-      IPv4-UNDERLAY-PEERS:
-        activate: false
-      MLAG-IPv4-UNDERLAY-PEER:
-        activate: false
   address_family_ipv4:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: false
-      IPv4-UNDERLAY-PEERS:
-        activate: true
-      MLAG-IPv4-UNDERLAY-PEER:
-        activate: true
   vlan_aware_bundles:
 ## Tenant_A ##
-    TENANT_A_PROJECT01:
-      rd: "192.168.255.3:11"
-      route_targets:
-        both:
-          - "11:11"
-      redistribute_routes:
-        - learned
-      vlan: 110-112
 ## Tenant_B ##
-    B-ELAN-201:
-      tenant: Tenant_B
-      rd: "192.168.255.3:20201"
-      route_targets:
-        both:
-          - "20201:20201"
-      redistribute_routes:
-        - learned
-      vlan: 201
   vlans:
   vrfs:
 ## Tenant_A ##
-    TENANT_A_PROJECT01:
-      router_id: 192.168.255.3
-      rd: "192.168.255.3:11"
-      route_targets:
-        import:
-          evpn:
-            - "11:11"
-        export:
-          evpn:
-            - "11:11"
-      neighbors:
-        10.255.251.1:
-          peer_group: MLAG-IPv4-UNDERLAY-PEER
-      redistribute_routes:
-        - connected
 ## Tenant_B ##
 
 ### Extended Community Lists ###
@@ -478,6 +334,18 @@ router_ospf:
 
 ### Routing - ISIS ###
 router_isis:
+  instance: EVPN_UNDERLAY
+  net: 49.0001.0001.0001.0007.00
+  router_id: 192.168.255.9
+  no_passive_interfaces:
+    - Ethernet1
+    - Ethernet2
+    - Vlan4093
+    - Loopback1
+  is_type: level-2
+  address_family: ['ipv4 unicast']
+  isis_af_defaults:
+    - maximum-paths 2
 
 ### Queue Monitor Streaming ###
 queue_monitor_streaming:

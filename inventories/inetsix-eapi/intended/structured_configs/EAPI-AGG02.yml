@@ -1,10 +1,10 @@
 ## Ansible Generated ##
 
-### AVD2-AGG02 ###
+### EAPI-AGG02 ###
 
 
 ### Leaf Info ###
-l2leaf_node_group: AVD2_L2LEAF2
+l2leaf_node_group: EAPI_L2LEAF2
 switch_platform: vEOS-LAB
 leaf_id: 10
 switch_mgmt_ip: 10.73.254.22/24
@@ -126,7 +126,7 @@ vrfs:
 ### Port-Channel Interfaces ###
 port_channel_interfaces:
   Port-Channel1:
-    description: AVD2-LEAF2A_Po5
+    description: EAPI-LEAF2A_Po5
     vlans: 110-112,201
     mode: trunk
     mlag: 1
@@ -135,19 +135,19 @@ port_channel_interfaces:
 ethernet_interfaces:
 ## L3 LEAF link ##
   Ethernet1:
-    peer: AVD2-LEAF2A
+    peer: EAPI-LEAF2A
     peer_interface: Ethernet5
     peer_type: l3leaf
-    description: AVD2-LEAF2A_Ethernet5
+    description: EAPI-LEAF2A_Ethernet5
     channel_group:
       id: 1
       mode: active
 ## L3 LEAF link ##
   Ethernet2:
-    peer: AVD2-LEAF2B
+    peer: EAPI-LEAF2B
     peer_interface: Ethernet5
     peer_type: l3leaf
-    description: AVD2-LEAF2B_Ethernet5
+    description: EAPI-LEAF2B_Ethernet5
     channel_group:
       id: 1
       mode: active
@@ -158,6 +158,19 @@ ethernet_interfaces:
     description: SRV-POD02_Eth1
     mode: trunk
     vlans: 1-4000
+    storm_control:
+      all:
+        level: 10
+        unit: percent
+      broadcast:
+        level: 100
+        unit: pps
+      multicast:
+        level: 1
+        unit: percent
+      unknown-unicast:
+        level: 2
+        unit: percent
     profile: ALL
 
 ### Management Interfaces ###
