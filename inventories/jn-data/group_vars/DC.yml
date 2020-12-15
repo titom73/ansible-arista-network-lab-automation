@@ -1,0 +1,48 @@
+# DC general config
+---
+# local users
+local_users:
+  # Username with no password configured
+  admin:
+    privilege: 15
+    role: network-admin
+    no_password: true
+
+  # Username with a password
+  demo:
+    privilege: 15
+    role: network-admin
+    sha512_password: "< Provide SHA512 HASH for password >"
+
+# OOB Management network default gateway.
+mgmt_gateway: 192.168.200.1
+mgmt_destination_networks:
+  - 192.168.200.0/24
+  - 0.0.0.0/0
+
+# dns servers.
+name_servers:
+  - 1.1.1.1
+  - 8.8.8.8
+
+# NTP Servers IP or DNS name, first NTP server will be prefered, and sourced from Managment VRF
+ntp_servers:
+  - uk.pool.ntp.org
+  - fr.pool.ntp.org
+
+# custom_templates:
+#   - custom/claus.j2
+
+
+# rd and rt types
+# evpn_rd_type:
+#   admin_subfield: < "overlay_loopback" | "vtep_loopback" | "leaf_asn" | "spine_asn" | < IPv4 Address > | <0-65535> | <0-4294967295> | default -> "overlay_loopback" >
+# evpn_rt_type:
+#   admin_subfield: < "leaf_asn" | "spine_asn" | "vni" | <0-65535> | <0-4294967295> | default -> "vni" >
+evpn_rd_type:
+  admin_subfield: leaf_asn
+evpn_rt_type:
+  admin_subfield: 65000
+
+
+

@@ -1,0 +1,5 @@
+---
+type: super-spine
+
+# custom_templates:
+#   - custom/macsec.j2

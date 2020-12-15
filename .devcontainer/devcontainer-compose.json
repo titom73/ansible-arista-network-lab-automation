@@ -1,0 +1,29 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.128.0/containers/docker-from-docker-compose
+// If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
+{
+	"name": "Docker from Docker Compose",
+	"dockerComposeFile": "../ansible-avd/development/docker-compose.yml",
+	"service": "ansible",
+	"workspaceFolder": "/projects",
+	
+	// Set *default* container specific settings.json values on container create.
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/zsh"
+	},
+
+    "extensions": [
+		"ms-python.python",
+		"vscoss.vscode-ansible",
+		"timonwong.ansible-autocomplete",
+		"codezombiech.gitignore",
+		"tuxtina.json2yaml",
+		"jebbs.markdown-extended",
+		"donjayamanne.python-extension-pack",
+		"njpwerner.autodocstring",
+		"quicktype.quicktype"
+   ],
+   "containerEnv": { 
+	   "ANSIBLE_CONFIG": "./ansible.cfg"
+   }
+}

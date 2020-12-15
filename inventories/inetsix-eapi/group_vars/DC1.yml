@@ -1,7 +1,5 @@
 dc_name : DC1   # data center name
 
-fabric_name: '{{ dc_name }}'
-
 max_super_spines: 4  # maximum number of super-spines, changing this parameter affects address allocation
 
 super_spine:
@@ -64,7 +62,7 @@ overlay_controller:
       mgmt_ip: 10.73.1.12/16
       remote_switches: [DC1-POD2-LEAF1A, DC1-POD2-LEAF1B]
       remote_switches_interfaces: [Ethernet20, Ethernet20]
-
+ 
 overlay_controller_p2p_network_summary: 172.32.255.0/24
 overlay_controller_loopback_network_summary: 172.32.250.0/24
 
@@ -87,16 +85,3 @@ bfd_multihop:
   interval: 1200
   min_rx: 1200
   multiplier: 3
-
-# custom_structured_configuration_management_api_gnmi:
-#   enable_vrfs:
-#     DEMO:
-
-# custom_structured_configuration_ethernet_interfaces:
-#   Ethernet4000:
-#     description: My test
-#     ip_address: 1.2.3.4/12
-#     mtu: 1500
-#     peer: MY-own-peer
-#     peer_interface: Ethernet123
-#     peer_type: my_precious

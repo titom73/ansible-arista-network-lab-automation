@@ -1,0 +1,3 @@
+---
+type: l3leaf
+evpn_overlay_controller_groups: [ 'DC1_ROUTE_SERVERS' ]

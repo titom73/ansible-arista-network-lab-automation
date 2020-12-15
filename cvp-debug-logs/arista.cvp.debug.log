@@ -1,0 +1,288 @@
+2020-11-26 11:54:46,211 - arista.cvp.cv_facts: INFO - func: <module>     (L:110) - Start cv_facts module execution
+2020-11-26 11:54:46,213 - arista.cvp.cv_tools: INFO - func: cv_connect   (L:56 ) - Connecting to CVP
+2020-11-26 11:54:46,216 - arista.cvp.cv_tools: DEBUG - func: cv_connect   (L:81 ) -   Connecting to a on-prem instance
+2020-11-26 11:54:47,792 - arista.cvp.cv_tools: INFO - func: cv_connect   (L:95 ) - Connected to CVP
+2020-11-26 11:54:47,792 - arista.cvp.cv_facts: INFO - func: facts_builder (L:406) - ** Collecting CVP Information (version)
+2020-11-26 11:54:48,217 - cvprac      : INFO - func: set_version  (L:206) - Version 2020.2.3
+2020-11-26 11:54:48,217 - cvprac      : INFO - func: set_version  (L:225) - Setting API version to v4
+2020-11-26 11:54:48,217 - arista.cvp.cv_facts: INFO - func: facts_builder (L:411) - ** Collecting devices facts ...
+2020-11-26 11:54:49,813 - arista.cvp.cv_facts: INFO - func: facts_builder (L:416) - ** Collecting containers facts ...
+2020-11-26 11:54:51,013 - arista.cvp.cv_facts: DEBUG - func: facts_containers (L:314) -   -> Working on Fabric
+2020-11-26 11:54:52,131 - arista.cvp.cv_facts: DEBUG - func: facts_containers (L:314) -   -> Working on Undefined
+2020-11-26 11:54:53,264 - arista.cvp.cv_facts: INFO - func: facts_builder (L:421) - ** Collecting configlets facts ...
+2020-11-26 11:54:53,264 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:237) - Collecting facts v2
+2020-11-26 11:54:55,142 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:244) - Devices part of facts, using cached version
+2020-11-26 11:54:55,142 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:251) - Containers part of facts, using cached version
+2020-11-26 11:54:55,142 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-str-02b
+2020-11-26 11:54:55,143 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-mlag-a
+2020-11-26 11:54:55,143 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet autoconf.ini
+2020-11-26 11:54:55,143 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-descriptions-hvv
+2020-11-26 11:54:55,143 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-str-01b
+2020-11-26 11:54:55,143 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-tele-oob
+2020-11-26 11:54:55,143 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet hec-vmware
+2020-11-26 11:54:55,143 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet HEC-VLANs
+2020-11-26 11:54:55,143 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-spine
+2020-11-26 11:54:55,143 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-switch-logging
+2020-11-26 11:54:55,143 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-hana-7160-32CQ
+2020-11-26 11:54:55,143 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-tele-default
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-hvx-7160-32CQ
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-fab-snmp
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet hec-hana
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-brdr-02b
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-str-05a
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-oob-common
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-spine-13
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-brdr-03b
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-oob-06
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet mgmt-default
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-oob-01
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-hvv-7160-32CQ
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-oob-03
+2020-11-26 11:54:55,144 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet hec_sw_leaf_pair
+2020-11-26 11:54:55,145 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet hec-vmware-L2
+2020-11-26 11:54:55,145 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet CVP-Arista
+2020-11-26 11:54:55,145 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-switch-ntp
+2020-11-26 11:54:55,145 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet hec-shs
+2020-11-26 11:54:55,145 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet SYS_TelemetryBuilderV3
+2020-11-26 11:54:55,145 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-fab-ntp
+2020-11-26 11:54:55,145 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-str-04a
+2020-11-26 11:54:55,145 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet mgmt-oob
+2020-11-26 11:54:55,145 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-spine-14
+2020-11-26 11:54:55,145 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet HEC-IPMI
+2020-11-26 11:54:55,145 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-mlag-b
+2020-11-26 11:54:55,145 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-oob-05
+2020-11-26 11:54:55,146 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-brdr-04a
+2020-11-26 11:54:55,146 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-str-01a
+2020-11-26 11:54:55,146 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec
+2020-11-26 11:54:55,146 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-str-06a
+2020-11-26 11:54:55,146 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-spine-11
+2020-11-26 11:54:55,146 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-brdr-01a
+2020-11-26 11:54:55,146 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-str-03a
+2020-11-26 11:54:55,146 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-str-04b
+2020-11-26 11:54:55,146 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet hec-xen
+2020-11-26 11:54:55,146 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-aaa
+2020-11-26 11:54:55,146 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-hana-pwr
+2020-11-26 11:54:55,146 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet 7160-profile-tcam-acl
+2020-11-26 11:54:55,146 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-leaf
+2020-11-26 11:54:55,147 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-hvx-7160-48YC6
+2020-11-26 11:54:55,147 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-str-03b
+2020-11-26 11:54:55,147 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-aaa-hana
+2020-11-26 11:54:55,147 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-fab-logging
+2020-11-26 11:54:55,147 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-str-05b
+2020-11-26 11:54:55,147 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-descriptions
+2020-11-26 11:54:55,147 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-brdr-03a
+2020-11-26 11:54:55,147 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-brdr-01b
+2020-11-26 11:54:55,147 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-spine-12
+2020-11-26 11:54:55,147 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet hec_sw_leaf_individual
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-autoconf-ipmi
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-fab-L900
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-brdr-02a
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-str-02a
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-vmware-7150S-64-CL
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-oob-vrf
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-autoconf
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-oob-02
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-ntp
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-oob-01b
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-logging
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-switch-snmp
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-str-06b
+2020-11-26 11:54:55,148 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-snmp
+2020-11-26 11:54:55,149 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-oob-04
+2020-11-26 11:54:55,149 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-oob-01a
+2020-11-26 11:54:55,149 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-hana-pwr-7160-32CQ
+2020-11-26 11:54:55,149 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:264) - building list of mapping with devices and containers for configlet sw-hec-brdr-04b
+2020-11-26 11:54:55,149 - arista.cvp.cv_facts: INFO - func: facts_configlets (L:286) - All configlets facts collected
+2020-11-26 11:54:55,149 - arista.cvp.cv_facts: INFO - func: facts_builder (L:426) - ** Collecting tasks facts ...
+2020-11-26 11:54:55,149 - arista.cvp.cv_facts: DEBUG - func: facts_tasks  (L:363) -   -> Extracting tasks with ['default']
+2020-11-26 11:54:55,480 - arista.cvp.cv_facts: INFO - func: facts_builder (L:431) - ** Collecting images facts ...
+2020-11-26 11:54:55,480 - arista.cvp.cv_facts: INFO - func: facts_builder (L:435) - ** All facts done
+2020-11-26 11:54:57,881 - arista.cvp.cv_container: INFO - func: <module>     (L:103) - Start cv_container module execution
+2020-11-26 11:54:57,889 - arista.cvp.cv_container: INFO - func: main         (L:819) - starting module cv_container
+2020-11-26 11:54:57,889 - arista.cvp.cv_tools: INFO - func: cv_connect   (L:56 ) - Connecting to CVP
+2020-11-26 11:54:57,895 - arista.cvp.cv_tools: DEBUG - func: cv_connect   (L:81 ) -   Connecting to a on-prem instance
+2020-11-26 11:54:59,690 - arista.cvp.cv_tools: INFO - func: cv_connect   (L:95 ) - Connected to CVP
+2020-11-26 11:54:59,690 - arista.cvp.tree: DEBUG - func: get_root_container (L:59 ) - working on container {'Key': 'root', 'Name': 'Fabric', 'CreatedBy': 'cvp system', 'CreatedOn': 1606334537034, 'Mode': 'expand', 'name': 'Fabric', 'key': 'root', 'parentName': None, 'parentId': None, 'type': None, 'id': 21, 'factoryId': 1, 'userId': None, 'childContainerId': None, 'devices': [], 'configlets': [], 'imageBundle': ''}
+2020-11-26 11:54:59,690 - arista.cvp.tree: INFO - func: get_root_container (L:63 ) - ! ROOT container has name Fabric
+2020-11-26 11:54:59,691 - arista.cvp.tree: DEBUG - func: get_root_container (L:59 ) - working on container {'Key': 'root', 'Name': 'Fabric', 'CreatedBy': 'cvp system', 'CreatedOn': 1606334537034, 'Mode': 'expand', 'name': 'Fabric', 'key': 'root', 'parentName': None, 'parentId': None, 'type': None, 'id': 21, 'factoryId': 1, 'userId': None, 'childContainerId': None, 'devices': [], 'configlets': [], 'imageBundle': ''}
+2020-11-26 11:54:59,691 - arista.cvp.tree: INFO - func: get_root_container (L:63 ) - ! ROOT container has name Fabric
+2020-11-26 11:54:59,691 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:164) - containers list is {'HEC': {'parent_container': 'Fabric'}, 'HEC-IPMI': {'parent_container': 'HEC'}, 'HEC-Out of band': {'parent_container': 'HEC'}, 'HEC-External Connectivity': {'parent_container': 'HEC'}, 'HEC-CWAN': {'parent_container': 'HEC'}, 'HEC-FWT': {'parent_container': 'HEC'}, 'HEC-InterDC': {'parent_container': 'HEC'}, 'HEC-Backup Routers': {'parent_container': 'HEC'}, 'HEC-Switched Fabric': {'parent_container': 'HEC'}, 'HEC-Routed Fabric': {'parent_container': 'HEC'}, 'HEC-Core': {'parent_container': 'HEC-Switched Fabric'}, 'HEC-Top of rack': {'parent_container': 'HEC-Switched Fabric'}, 'HEC-HANA Top of rack': {'parent_container': 'HEC-Top of rack'}, 'HEC-HV Top of rack': {'parent_container': 'HEC-Top of rack'}, 'HEC-VMWare Top of rack': {'parent_container': 'HEC-HV Top of rack'}, 'HEC-Xen Top of rack': {'parent_container': 'HEC-HV Top of rack'}, 'HEC-Spine': {'parent_container': 'HEC-Routed Fabric'}, 'HEC-Superspine': {'parent_container': 'HEC-Routed Fabric'}, 'HEC-NGDR': {'parent_container': 'HEC-Routed Fabric'}, 'HEC-Leaf': {'parent_container': 'HEC-Routed Fabric'}, 'HEC-Service leaf': {'parent_container': 'HEC-Leaf'}, 'HEC-Border leaf': {'parent_container': 'HEC-Leaf'}, 'HEC-Storage leaf': {'parent_container': 'HEC-Leaf'}, 'HEC-Special leaf': {'parent_container': 'HEC-Leaf'}, 'HEC-HANA leaf': {'parent_container': 'HEC-Leaf'}, 'HEC-HV leaf': {'parent_container': 'HEC-Leaf'}, 'HEC-VMWare leaf': {'parent_container': 'HEC-HV leaf'}, 'HEC-Xen leaf': {'parent_container': 'HEC-HV leaf'}, 'HEC-Shared HANA Storage leaf': {'parent_container': 'HEC-Storage leaf'}}
+2020-11-26 11:54:59,691 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:165) - root container is set to: Fabric
+2020-11-26 11:54:59,693 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:174) - create root tree entry with: HEC
+2020-11-26 11:54:59,693 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:178) -  Tree has size: 2 - Containers has size: 29
+2020-11-26 11:54:59,693 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-IPMI
+2020-11-26 11:54:59,693 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Out of band
+2020-11-26 11:54:59,693 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-External Connectivity
+2020-11-26 11:54:59,693 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-CWAN
+2020-11-26 11:54:59,693 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-FWT
+2020-11-26 11:54:59,693 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-InterDC
+2020-11-26 11:54:59,694 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Backup Routers
+2020-11-26 11:54:59,694 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Switched Fabric
+2020-11-26 11:54:59,694 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Routed Fabric
+2020-11-26 11:54:59,695 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Core
+2020-11-26 11:54:59,695 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Top of rack
+2020-11-26 11:54:59,695 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-HANA Top of rack
+2020-11-26 11:54:59,695 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-HV Top of rack
+2020-11-26 11:54:59,695 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-VMWare Top of rack
+2020-11-26 11:54:59,695 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Xen Top of rack
+2020-11-26 11:54:59,695 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Spine
+2020-11-26 11:54:59,695 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Superspine
+2020-11-26 11:54:59,696 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-NGDR
+2020-11-26 11:54:59,696 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Leaf
+2020-11-26 11:54:59,696 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Service leaf
+2020-11-26 11:54:59,696 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Border leaf
+2020-11-26 11:54:59,696 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Storage leaf
+2020-11-26 11:54:59,696 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Special leaf
+2020-11-26 11:54:59,696 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-HANA leaf
+2020-11-26 11:54:59,696 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-HV leaf
+2020-11-26 11:54:59,697 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-VMWare leaf
+2020-11-26 11:54:59,697 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Xen leaf
+2020-11-26 11:54:59,697 - arista.cvp.tree: DEBUG - func: tree_build_from_dict (L:183) - create new node with: HEC-Shared HANA Storage leaf
+2020-11-26 11:54:59,698 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC / Fabric
+2020-11-26 11:54:59,698 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC / add
+2020-11-26 11:55:00,016 - cvprac      : INFO - func: set_version  (L:206) - Version 2020.2.3
+2020-11-26 11:55:00,017 - cvprac      : INFO - func: set_version  (L:225) - Setting API version to v4
+2020-11-26 11:55:02,402 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC / Fabric and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:55:02,403 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Backup Routers / HEC
+2020-11-26 11:55:02,403 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Backup Routers / add
+2020-11-26 11:55:04,917 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Backup Routers / HEC and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:55:04,917 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-CWAN / HEC
+2020-11-26 11:55:04,917 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-CWAN / add
+2020-11-26 11:55:08,095 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-CWAN / HEC and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:55:08,095 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-External Connectivity / HEC
+2020-11-26 11:55:08,095 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-External Connectivity / add
+2020-11-26 11:55:11,554 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-External Connectivity / HEC and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:55:11,554 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-FWT / HEC
+2020-11-26 11:55:11,555 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-FWT / add
+2020-11-26 11:55:15,132 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-FWT / HEC and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:55:15,132 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-IPMI / HEC
+2020-11-26 11:55:15,132 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-IPMI / add
+2020-11-26 11:55:19,305 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-IPMI / HEC and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:55:19,305 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-InterDC / HEC
+2020-11-26 11:55:19,305 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-InterDC / add
+2020-11-26 11:55:23,459 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-InterDC / HEC and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:55:23,459 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Out of band / HEC
+2020-11-26 11:55:23,459 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Out of band / add
+2020-11-26 11:55:28,250 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Out of band / HEC and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:55:28,250 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Routed Fabric / HEC
+2020-11-26 11:55:28,250 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Routed Fabric / add
+2020-11-26 11:55:34,064 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Routed Fabric / HEC and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:55:34,064 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Leaf / HEC-Routed Fabric
+2020-11-26 11:55:34,064 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Leaf / add
+2020-11-26 11:55:39,666 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Leaf / HEC-Routed Fabric and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:55:39,666 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Border leaf / HEC-Leaf
+2020-11-26 11:55:39,666 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Border leaf / add
+2020-11-26 11:55:46,796 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Border leaf / HEC-Leaf and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:55:46,796 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-HANA leaf / HEC-Leaf
+2020-11-26 11:55:46,797 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-HANA leaf / add
+2020-11-26 11:55:53,453 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-HANA leaf / HEC-Leaf and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:55:53,453 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-HV leaf / HEC-Leaf
+2020-11-26 11:55:53,453 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-HV leaf / add
+2020-11-26 11:56:00,678 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-HV leaf / HEC-Leaf and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:56:00,678 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-VMWare leaf / HEC-HV leaf
+2020-11-26 11:56:00,678 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-VMWare leaf / add
+2020-11-26 11:56:15,282 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-VMWare leaf / HEC-HV leaf and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:56:15,282 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Xen leaf / HEC-HV leaf
+2020-11-26 11:56:15,283 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Xen leaf / add
+2020-11-26 11:56:24,677 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Xen leaf / HEC-HV leaf and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:56:24,677 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Service leaf / HEC-Leaf
+2020-11-26 11:56:24,677 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Service leaf / add
+2020-11-26 11:56:35,357 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Service leaf / HEC-Leaf and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:56:35,357 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Special leaf / HEC-Leaf
+2020-11-26 11:56:35,357 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Special leaf / add
+2020-11-26 11:56:44,046 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Special leaf / HEC-Leaf and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:56:44,046 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Storage leaf / HEC-Leaf
+2020-11-26 11:56:44,047 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Storage leaf / add
+2020-11-26 11:56:53,282 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Storage leaf / HEC-Leaf and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:56:53,283 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Shared HANA Storage leaf / HEC-Storage leaf
+2020-11-26 11:56:53,283 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Shared HANA Storage leaf / add
+2020-11-26 11:57:02,382 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Shared HANA Storage leaf / HEC-Storage leaf and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:57:02,383 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-NGDR / HEC-Routed Fabric
+2020-11-26 11:57:02,383 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-NGDR / add
+2020-11-26 11:57:11,954 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-NGDR / HEC-Routed Fabric and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:57:11,954 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Spine / HEC-Routed Fabric
+2020-11-26 11:57:11,954 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Spine / add
+2020-11-26 11:57:22,021 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Spine / HEC-Routed Fabric and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:57:22,021 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Superspine / HEC-Routed Fabric
+2020-11-26 11:57:22,021 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Superspine / add
+2020-11-26 11:57:32,561 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Superspine / HEC-Routed Fabric and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:57:32,561 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Switched Fabric / HEC
+2020-11-26 11:57:32,561 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Switched Fabric / add
+2020-11-26 11:57:43,668 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Switched Fabric / HEC and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:57:43,668 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Core / HEC-Switched Fabric
+2020-11-26 11:57:43,668 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Core / add
+2020-11-26 11:57:55,393 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Core / HEC-Switched Fabric and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:57:55,393 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Top of rack / HEC-Switched Fabric
+2020-11-26 11:57:55,393 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Top of rack / add
+2020-11-26 11:58:07,270 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Top of rack / HEC-Switched Fabric and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:58:07,270 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-HANA Top of rack / HEC-Top of rack
+2020-11-26 11:58:07,270 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-HANA Top of rack / add
+2020-11-26 11:58:18,920 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-HANA Top of rack / HEC-Top of rack and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:58:18,920 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-HV Top of rack / HEC-Top of rack
+2020-11-26 11:58:18,920 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-HV Top of rack / add
+2020-11-26 11:58:32,849 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-HV Top of rack / HEC-Top of rack and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:58:32,850 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-VMWare Top of rack / HEC-HV Top of rack
+2020-11-26 11:58:32,850 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-VMWare Top of rack / add
+2020-11-26 11:58:47,712 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-VMWare Top of rack / HEC-HV Top of rack and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:58:47,712 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:223) - sent process_container request with HEC-Xen Top of rack / HEC-HV Top of rack
+2020-11-26 11:58:47,712 - arista.cvp.cv_container: DEBUG - func: process_container (L:136) - run process_container with HEC-Xen Top of rack / add
+2020-11-26 11:59:01,828 - arista.cvp.cv_container: DEBUG - func: create_new_containers (L:229) - sent process_container request with HEC-Xen Top of rack / HEC-HV Top of rack and response is : [True, {'taskIDs': []}, {'container': None}]
+2020-11-26 11:59:01,828 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC
+2020-11-26 11:59:02,517 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC
+2020-11-26 11:59:02,517 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-IPMI
+2020-11-26 11:59:03,190 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-IPMI
+2020-11-26 11:59:03,190 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Out of band
+2020-11-26 11:59:03,860 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Out of band
+2020-11-26 11:59:03,860 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-External Connectivity
+2020-11-26 11:59:04,521 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-External Connectivity
+2020-11-26 11:59:04,521 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-CWAN
+2020-11-26 11:59:05,182 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-CWAN
+2020-11-26 11:59:05,183 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-FWT
+2020-11-26 11:59:05,988 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-FWT
+2020-11-26 11:59:05,988 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-InterDC
+2020-11-26 11:59:06,676 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-InterDC
+2020-11-26 11:59:06,676 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Backup Routers
+2020-11-26 11:59:07,362 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Backup Routers
+2020-11-26 11:59:07,362 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Switched Fabric
+2020-11-26 11:59:08,015 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Switched Fabric
+2020-11-26 11:59:08,015 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Routed Fabric
+2020-11-26 11:59:08,763 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Routed Fabric
+2020-11-26 11:59:08,764 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Core
+2020-11-26 11:59:09,420 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Core
+2020-11-26 11:59:09,420 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Top of rack
+2020-11-26 11:59:10,077 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Top of rack
+2020-11-26 11:59:10,077 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-HANA Top of rack
+2020-11-26 11:59:10,754 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-HANA Top of rack
+2020-11-26 11:59:10,754 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-HV Top of rack
+2020-11-26 11:59:11,557 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-HV Top of rack
+2020-11-26 11:59:11,558 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-VMWare Top of rack
+2020-11-26 11:59:12,284 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-VMWare Top of rack
+2020-11-26 11:59:12,284 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Xen Top of rack
+2020-11-26 11:59:12,937 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Xen Top of rack
+2020-11-26 11:59:12,937 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Spine
+2020-11-26 11:59:13,617 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Spine
+2020-11-26 11:59:13,617 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Superspine
+2020-11-26 11:59:14,319 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Superspine
+2020-11-26 11:59:14,319 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-NGDR
+2020-11-26 11:59:14,988 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-NGDR
+2020-11-26 11:59:14,988 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Leaf
+2020-11-26 11:59:15,696 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Leaf
+2020-11-26 11:59:15,696 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Service leaf
+2020-11-26 11:59:16,390 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Service leaf
+2020-11-26 11:59:16,390 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Border leaf
+2020-11-26 11:59:17,060 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Border leaf
+2020-11-26 11:59:17,060 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Storage leaf
+2020-11-26 11:59:17,714 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Storage leaf
+2020-11-26 11:59:17,714 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Special leaf
+2020-11-26 11:59:18,952 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Special leaf
+2020-11-26 11:59:18,952 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-HANA leaf
+2020-11-26 11:59:19,638 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-HANA leaf
+2020-11-26 11:59:19,638 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-HV leaf
+2020-11-26 11:59:20,357 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-HV leaf
+2020-11-26 11:59:20,358 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-VMWare leaf
+2020-11-26 11:59:21,044 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-VMWare leaf
+2020-11-26 11:59:21,044 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Xen leaf
+2020-11-26 11:59:21,706 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Xen leaf
+2020-11-26 11:59:21,706 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:588) - work with container HEC-Shared HANA Storage leaf
+2020-11-26 11:59:22,392 - arista.cvp.cv_container: INFO - func: configure_configlet_to_container (L:636) - get container info: None for container HEC-Shared HANA Storage leaf
+2020-11-26 11:59:22,393 - arista.cvp.cv_container: DEBUG - func: configure_configlet_to_container (L:697) - configure_configlet_to_container returns {'changed': True, 'attached_configlet': {'configlet_attached': 0, 'list': [], 'taskIds': []}, 'detached_configlet': {'configlet_detached': 0}}
