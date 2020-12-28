@@ -1,0 +1,13 @@
+vrfs:
+  MGMT:
+    ip_routing: false
+    description: Managment
+  BLUE-C1:
+    ip_routing: true
+    description: Entity 01
+  BLUE-C2:
+    ip_routing: true
+    description: Entity 02
+  BLUE-C3:
+    ip_routing: true
+    description: Entity 03

@@ -1,0 +1,19 @@
+service_routing_protocols_model: multi-agent
+ip_routing: true
+
+name_server:
+  source:
+    vrf: MGMT
+  nodes:
+  - 10.73.1.254
+ntp_server:
+  local_interface:
+    vrf: MGMT
+    interface: Management1
+  nodes:
+  - 10.73.1.254
+
+bfd_multihop:
+  interval: 1200
+  min_rx: 1200
+  multiplier: 3
