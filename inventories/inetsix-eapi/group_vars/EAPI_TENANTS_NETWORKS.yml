@@ -51,12 +51,13 @@ tenants:
             name: 'PR01-TRUST'
             tags: ['POD01', 'POD02']
             ip_address_virtual: 10.1.12.254/24
+            igmp_snooping_enabled: false
           113:
             name: 'PR01-DMZ'
             tags: [POD03]
             enabled: true
             ip_address_virtual: 10.1.13.254/24
-            igmp_snooping_enabled: false
+            igmp_snooping_enabled: true
       #     311:
       #       name: 'PR01-TRUST-DHCP'
       #       tags: ['DC1']

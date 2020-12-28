@@ -1,3 +1,0 @@
----
-type: overlay-controller
-evpn_overlay_controller_groups: [ 'DC1_SUPER_SPINES' ]

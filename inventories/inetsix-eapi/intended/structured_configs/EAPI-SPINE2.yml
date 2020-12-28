@@ -1,79 +1,49 @@
-## Ansible Generated ##
-
-### EAPI-SPINE2 ###
-
-### Spine Info ###
 switch_platform: vEOS-LAB
 switch_mgmt_ip: 10.73.254.2/24
-
 service_routing_protocols_model: multi-agent
 ip_routing: true
-
-### Hardware Counters
-hardware_counters:
-
-### Daemon TerminAttr ###
+hardware_counters: null
 daemon_terminattr:
   ingestgrpcurl:
     ips:
-      - 10.73.254.1
+    - 10.73.254.1
     port: 9910
-  ingestauth_key: 
+  ingestauth_key: null
   ingestvrf: MGMT
-  smashexcludes: "ale,flexCounter,hardware,kni,pulse,strata"
-  ingestexclude: "/Sysdb/cell/1/agent,/Sysdb/cell/2/agent"
-
+  smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
+  ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
+  disable_aaa: false
 vlan_internal_order:
   allocation: ascending
   range:
     beginning: 1006
     ending: 1199
-### Event Monitor ###
-event_monitor:
-
-### Event Handler ###
-event_handlers:
-
-### Load Interval ###
-load_interval:
-
-### Queue Monitor Lenght ###
-queue_monitor_length:
-
-### Name Servers ###
+event_monitor: null
+event_handlers: null
+load_interval: null
+queue_monitor_length: null
 name_server:
   source:
     vrf: MGMT
   nodes:
-    - 10.73.254.253
-    - 10.73.1.254
-
-### NTP Servers ###
+  - 10.73.254.253
+  - 10.73.1.254
 ntp_server:
   local_interface:
     vrf: MGMT
     interface: Management1
   nodes:
-    - 10.73.254.253
-    - 10.73.1.254
-
-### Redundancy ###
-redundancy:
-
-### Spanning-tree ###
+  - 10.73.254.253
+  - 10.73.1.254
+redundancy: null
 spanning_tree:
   mode: none
-
-
-### AAA authorization ###
-aaa_authorization:
-
-### local users ###
+aaa_authorization: null
 local_users:
   admin:
     privilege: 15
     role: network-admin
-    no_password: True
+    no_password: true
   ansible:
     privilege: 15
     role: network-admin
@@ -86,22 +56,14 @@ local_users:
     privilege: 15
     role: network-admin
     sha512_password: $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
-
-### Clock Timezone ###
-clock:
-
-
-### VRFs ###
+clock: null
 vrfs:
   MGMT:
-    ip_routing: False
-### bfd multihop ###
+    ip_routing: false
 bfd_multihop:
   interval: 1200
   min_rx: 1200
   multiplier: 3
-
-### Ethernet Interfaces ###
 ethernet_interfaces:
   Ethernet5:
     peer: EAPI-BL01A
@@ -111,9 +73,8 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.26/31
-    isis_enable: EVPN_UNDERLAY
-    isis_metric: 50
-    isis_network_point_to_point: true
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
   Ethernet6:
     peer: EAPI-BL01B
     peer_interface: Ethernet2
@@ -122,9 +83,8 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.30/31
-    isis_enable: EVPN_UNDERLAY
-    isis_metric: 50
-    isis_network_point_to_point: true
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
   Ethernet1:
     peer: EAPI-LEAF1A
     peer_interface: Ethernet2
@@ -133,9 +93,8 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.2/31
-    isis_enable: EVPN_UNDERLAY
-    isis_metric: 50
-    isis_network_point_to_point: true
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
   Ethernet2:
     peer: EAPI-LEAF1B
     peer_interface: Ethernet2
@@ -144,9 +103,8 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.6/31
-    isis_enable: EVPN_UNDERLAY
-    isis_metric: 50
-    isis_network_point_to_point: true
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
   Ethernet3:
     peer: EAPI-LEAF2A
     peer_interface: Ethernet2
@@ -155,9 +113,8 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.10/31
-    isis_enable: EVPN_UNDERLAY
-    isis_metric: 50
-    isis_network_point_to_point: true
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
   Ethernet4:
     peer: EAPI-LEAF2B
     peer_interface: Ethernet2
@@ -166,9 +123,8 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.14/31
-    isis_enable: EVPN_UNDERLAY
-    isis_metric: 50
-    isis_network_point_to_point: true
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
   Ethernet7:
     peer: EAPI-LEAF3A
     peer_interface: Ethernet2
@@ -177,9 +133,8 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.18/31
-    isis_enable: EVPN_UNDERLAY
-    isis_metric: 50
-    isis_network_point_to_point: true
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
   Ethernet8:
     peer: EAPI-LEAF4A
     peer_interface: Ethernet2
@@ -188,66 +143,41 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     ip_address: 172.31.255.22/31
-    isis_enable: EVPN_UNDERLAY
-    isis_metric: 50
-    isis_network_point_to_point: true
-
-
-### Loopback Interfaces ###
+    ospf_network_point_to_point: true
+    ospf_area: 0.0.0.0
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
     ip_address: 192.168.255.2/32
-    isis_enable: EVPN_UNDERLAY
-    isis_passive: true
-
-
-### Management Interfaces ###
+    ospf_area: 0.0.0.0
 management_interfaces:
   Management1:
     description: oob_management
     vrf: MGMT
     ip_address: 10.73.254.2/24
     gateway: 10.73.254.253
-
-### TCAM Profiles ###
-tcam_profile:
-
-### MAC address table ###
-mac_address_table:
-
-### static routes ###
+tcam_profile: null
+mac_address_table: null
 static_routes:
-  - vrf: MGMT
-    destination_address_prefix: 0.0.0.0/0
-    gateway: 10.73.254.253
-
-### prefix-lists ###
+- vrf: MGMT
+  destination_address_prefix: 0.0.0.0/0
+  gateway: 10.73.254.253
 prefix_lists:
   PL-LOOPBACKS-EVPN-OVERLAY:
     sequence_numbers:
       10:
-        action: "permit 192.168.255.0/24 le 32"
-
-
-### route-maps ###
-route_maps:
-
-
-### peer-filters ###
-peer_filters:
-
-
-### Routing - BGP ###
+        action: permit 192.168.255.0/24 le 32
+route_maps: null
+peer_filters: null
 router_bgp:
   as: 65001
   router_id: 192.168.255.2
   bgp_defaults:
-    - no bgp default ipv4-unicast
-    - distance bgp 20 200 200
-    - graceful-restart restart-time 300
-    - graceful-restart
-    - maximum-paths 2 ecmp 2
+  - no bgp default ipv4-unicast
+  - distance bgp 20 200 200
+  - graceful-restart restart-time 300
+  - graceful-restart
+  - maximum-paths 2 ecmp 2
   peer_groups:
     EVPN-OVERLAY-PEERS:
       type: evpn
@@ -256,7 +186,7 @@ router_bgp:
       update_source: Loopback0
       bfd: true
       ebgp_multihop: 3
-      password: "q+VNViP5i4rVjW1cxFv2wA=="
+      password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: true
       maximum_routes: 0
   neighbors:
@@ -284,7 +214,7 @@ router_bgp:
     192.168.255.8:
       peer_group: EVPN-OVERLAY-PEERS
       remote_as: 65104
-  redistribute_routes:
+  redistribute_routes: null
   address_family_evpn:
     peer_groups:
       EVPN-OVERLAY-PEERS:
@@ -293,34 +223,24 @@ router_bgp:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: false
-
-### Routing - OSPF ###
 router_ospf:
-
-### Routing - ISIS ###
-router_isis:
-  instance: EVPN_UNDERLAY
-  net: 49.0001.0001.0000.0002.00
-  router_id: 192.168.255.2
-  no_passive_interfaces:
-    - Ethernet5
-    - Ethernet6
-    - Ethernet1
-    - Ethernet2
-    - Ethernet3
-    - Ethernet4
-    - Ethernet7
-    - Ethernet8
-  is_type: level-2
-  address_family: ['ipv4 unicast']
-  isis_af_defaults:
-    - maximum-paths 2
-
-### Queue Monitor Streaming ###
-queue_monitor_streaming:
-
-### Management API http ###
+  process_ids:
+    100:
+      passive_interface_default: true
+      router_id: 192.168.255.2
+      no_passive_interfaces:
+      - Ethernet5
+      - Ethernet6
+      - Ethernet1
+      - Ethernet2
+      - Ethernet3
+      - Ethernet4
+      - Ethernet7
+      - Ethernet8
+      max_lsa: 12000
+router_isis: null
+queue_monitor_streaming: null
 management_api_http:
-  enable_https: True
+  enable_https: true
   enable_vrfs:
-    MGMT:
+    MGMT: null

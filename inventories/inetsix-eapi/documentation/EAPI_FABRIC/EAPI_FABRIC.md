@@ -10,26 +10,27 @@
     - [Point-To-Point Links Node Allocation](#point-to-point-links-node-allocation)
     - [Overlay Loopback Interfaces (BGP EVPN Peering)](#overlay-loopback-interfaces-bgp-evpn-peering)
     - [Loopback0 Interfaces Node Allocation](#loopback0-interfaces-node-allocation)
-    - [CLNS Interfaces](#isis-clns-interfaces)
     - [VTEP Loopback VXLAN Tunnel Source Interfaces (Leafs Only)](#vtep-loopback-vxlan-tunnel-source-interfaces-leafs-only)
     - [VTEP Loopback Node allocation](#vtep-loopback-node-allocation)
 
 ## Fabric Switches and Management IP
 
-| Node | Management IP | Platform |
-| ---- | ------------- | -------- |
-| EAPI-SPINE1 | 10.73.254.1/24 | vEOS-LAB |
-| EAPI-SPINE2 | 10.73.254.2/24 | vEOS-LAB |
-| EAPI-BL01A | 10.73.254.15/24 | vEOS-LAB |
-| EAPI-BL01B | 10.73.254.16/24 | vEOS-LAB |
-| EAPI-LEAF1A | 10.73.254.11/24 | vEOS-LAB |
-| EAPI-LEAF1B | 10.73.254.12/24 | vEOS-LAB |
-| EAPI-LEAF2A | 10.73.254.13/24 | vEOS-LAB |
-| EAPI-LEAF2B | 10.73.254.14/24 | vEOS-LAB |
-| EAPI-LEAF3A | 10.73.254.17/24 | vEOS-LAB |
-| EAPI-LEAF4A | 10.73.254.18/24 | vEOS-LAB |
-| EAPI-AGG01 | 10.73.254.21/24 | vEOS-LAB |
-| EAPI-AGG02 | 10.73.254.22/24 | vEOS-LAB |
+| Node | Management IP | Platform | Provisioned in Cloudvision |
+| ---- | ------------- | -------- | -------------------------- |
+| EAPI-SPINE1 | 10.73.254.1/24 | vEOS-LAB | Provisioned |
+| EAPI-SPINE2 | 10.73.254.2/24 | vEOS-LAB | Provisioned |
+| EAPI-BL01A | 10.73.254.15/24 | vEOS-LAB | Provisioned |
+| EAPI-BL01B | 10.73.254.16/24 | vEOS-LAB | Provisioned |
+| EAPI-LEAF1A | 10.73.254.11/24 | vEOS-LAB | Provisioned |
+| EAPI-LEAF1B | 10.73.254.12/24 | vEOS-LAB | Provisioned |
+| EAPI-LEAF2A | 10.73.254.13/24 | vEOS-LAB | Provisioned |
+| EAPI-LEAF2B | 10.73.254.14/24 | vEOS-LAB | Provisioned |
+| EAPI-LEAF3A | 10.73.254.17/24 | vEOS-LAB | Provisioned |
+| EAPI-LEAF4A | 10.73.254.18/24 | vEOS-LAB | Provisioned |
+| EAPI-AGG01 | 10.73.254.21/24 | vEOS-LAB | Provisioned |
+| EAPI-AGG02 | 10.73.254.22/24 | vEOS-LAB | Provisioned |
+
+> Provision status is based on Ansible inventory declaration and do not represent real status from Cloudvision.
 
 ## Fabric Topology
 
@@ -105,21 +106,6 @@
 | EAPI-LEAF2B | 192.168.255.6/32 |
 | EAPI-LEAF3A | 192.168.255.7/32 |
 | EAPI-LEAF4A | 192.168.255.8/32 |
-
-### ISIS CLNS interfaces
-
-| Node | CLNS Address |
-| ---- | ------------ |
-| EAPI-SPINE1 | 49.0001.0001.0000.0001.00 |
-| EAPI-SPINE2 | 49.0001.0001.0000.0002.00 |
-| EAPI-BL01A | 49.0001.0001.0001.0007.00 |
-| EAPI-BL01B | 49.0001.0001.0001.0008.00 |
-| EAPI-LEAF1A | 49.0001.0001.0001.0001.00 |
-| EAPI-LEAF1B | 49.0001.0001.0001.0002.00 |
-| EAPI-LEAF2A | 49.0001.0001.0001.0003.00 |
-| EAPI-LEAF2B | 49.0001.0001.0001.0004.00 |
-| EAPI-LEAF3A | 49.0001.0001.0001.0005.00 |
-| EAPI-LEAF4A | 49.0001.0001.0001.0006.00 |
 
 ### VTEP Loopback VXLAN Tunnel Source Interfaces (Leafs Only)
 
