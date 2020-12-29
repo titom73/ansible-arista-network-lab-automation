@@ -71,6 +71,7 @@
 - [Router L2 VPN](#router-l2-vpn)
 - [IP DHCP Relay](#ip-dhcp-relay)
 - [Errdisable](#errdisable)
+- [MAC security](#mac-security)
 
 # Management
 
@@ -96,6 +97,7 @@
 !
 interface Management1
    description oob_management
+   no shutdown
    vrf MGMT
    ip address 10.73.254.17/24
 ```
@@ -149,6 +151,10 @@ ntp local-interface vrf MGMT Management1
 ntp server vrf MGMT 10.73.254.253 prefer
 ntp server vrf MGMT 10.73.1.254
 ```
+
+## PTP
+
+PTP is not defined.
 
 ## Management SSH
 
@@ -391,14 +397,8 @@ vlan 201
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 |  P2P_LINK_TO_EAPI-SPINE1_Ethernet7  |  routed  | - |  172.31.255.17/31  |  default  |  1500  |  -  |  -  |  -  |
-| Ethernet2 |  P2P_LINK_TO_EAPI-SPINE2_Ethernet7  |  routed  | - |  172.31.255.19/31  |  default  |  1500  |  -  |  -  |  -  |
-
-#### OSPF
-| Interface | Channel Group | Area | Cost | Mode |
-| --------- | ------------- | ---- | ---- |----- |
-| Ethernet1 | - | 0.0.0.0 |  -  |  point-to-point  |
-| Ethernet2 | - | 0.0.0.0 |  -  |  point-to-point  |
+| Ethernet1 |  P2P_LINK_TO_EAPI-SPINE1_Ethernet7  |  routed  | - |  172.31.255.17/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet2 |  P2P_LINK_TO_EAPI-SPINE2_Ethernet7  |  routed  | - |  172.31.255.19/31  |  default  |  1500  |  false  |  -  |  -  |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -406,20 +406,19 @@ vlan 201
 !
 interface Ethernet1
    description P2P_LINK_TO_EAPI-SPINE1_Ethernet7
+   no shutdown
    no switchport
    ip address 172.31.255.17/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
 !
 interface Ethernet2
    description P2P_LINK_TO_EAPI-SPINE2_Ethernet7
+   no shutdown
    no switchport
    ip address 172.31.255.19/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
 !
 interface Ethernet5
    description SRV-POD03_Eth1
+   no shutdown
    channel-group 5 mode active
 ```
 
@@ -431,7 +430,7 @@ interface Ethernet5
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel5 | SRV-POD03_PortChanne1 | switched | access | 1-4000 | - | - | - | - | - | 0000:0000:0303:0202:0101 |
+| Port-Channel5 | SRV-POD03_PortChanne1 | switched | trunk | 1-4000 | - | - | - | - | - | 0000:0000:0303:0202:0101 |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -439,6 +438,8 @@ interface Ethernet5
 !
 interface Port-Channel5
    description SRV-POD03_PortChanne1
+   no shutdown
+   switchport
    switchport trunk allowed vlan 1-4000
    switchport mode trunk
    !
@@ -474,13 +475,13 @@ interface Port-Channel5
 !
 interface Loopback0
    description EVPN_Overlay_Peering
+   no shutdown
    ip address 192.168.255.7/32
-   ip ospf area 0.0.0.0
 !
 interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
+   no shutdown
    ip address 192.168.254.7/32
-   ip ospf area 0.0.0.0
 ```
 
 ## VLAN Interfaces
@@ -507,11 +508,13 @@ interface Loopback1
 !
 interface Vlan110
    description PR01-DEMO
+   no shutdown
    vrf TENANT_A_PROJECT01
    ip address virtual 10.1.10.254/24
 !
 interface Vlan113
    description PR01-DMZ
+   no shutdown
    vrf TENANT_A_PROJECT01
    ip address virtual 10.1.13.254/24
 ```
@@ -614,44 +617,6 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 IPv6 static routes not defined
 
-## Router OSPF
-
-### Router OSPF Summary
-
-| Process ID | Router ID | Default Passive Interface | No Passive Interface | BFD | Max LSA | Default Information Originate | Log Adjacency Changes Detail |
-| ---------- | --------- | ------------------------- | -------------------- | --- | ------- | ----------------------------- | ---------------------------- |
-| 100 | 192.168.255.7 |  enabled   |   Ethernet1 <br> Ethernet2 <br>|  disabled  | 12000 |  disabled  |  disabled |
-
-### Router OSPF Router Redistribution
-
-| Process ID | Redistribute Connected | Redistribute Connected Route-map | Redistribute Static | Redistribute Static Route-map |
-| ---------- | ---------------------- | -------------------------------- | ------------------- | ----------------------------- |
- 
-
-
-
-
-
-
-### OSPF Interfaces
-| Interface | Area | Cost | Point To Point |
-| -------- | -------- | -------- | -------- |
-| Ethernet1 | 0.0.0.0 |  -  |  True  |
-| Ethernet2 | 0.0.0.0 |  -  |  True  |
-| Loopback0 | 0.0.0.0 |  -  |  -  |
-| Loopback1 | 0.0.0.0 |  -  |  -  |
-
-### Router OSPF Device Configuration
-
-```eos
-!
-router ospf 100
-   router-id 192.168.255.7
-   passive-interface default
-   no passive-interface Ethernet1
-   no passive-interface Ethernet2
-   max-lsa 12000
-```
 ## ARP
 
 Global ARP timeout not defined.
@@ -690,10 +655,21 @@ Router ISIS not defined
 | Send community | true |
 | Maximum routes | 0 (no limit) |
 
+#### IPv4-UNDERLAY-PEERS
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | ipv4 |
+| Remote_as | 65001 |
+| Send community | true |
+| Maximum routes | 12000 |
+
 ### BGP Neighbors
 
 | Neighbor | Remote AS |
 | -------- | ---------
+| 172.31.255.16 | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 172.31.255.18 | Inherited from peer group IPv4-UNDERLAY-PEERS |
 | 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS |
 | 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS |
 
@@ -733,8 +709,16 @@ router bgp 65103
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor IPv4-UNDERLAY-PEERS peer group
+   neighbor IPv4-UNDERLAY-PEERS remote-as 65001
+   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
+   neighbor IPv4-UNDERLAY-PEERS send-community
+   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
+   neighbor 172.31.255.16 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.18 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
+   redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle B-ELAN-201
       rd 192.168.255.7:20201
@@ -750,9 +734,11 @@ router bgp 65103
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
+      no neighbor IPv4-UNDERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
+      neighbor IPv4-UNDERLAY-PEERS activate
    !
    vrf TENANT_A_PROJECT01
       rd 192.168.255.7:11
@@ -818,7 +804,23 @@ No peer filters defined
 
 ## Prefix-lists
 
-Prefix-lists not defined
+### Prefix-lists Summary
+
+#### PL-LOOPBACKS-EVPN-OVERLAY
+
+| Sequence | Action |
+| -------- | ------ |
+| 10 | permit 192.168.255.0/24 eq 32 |
+| 20 | permit 192.168.254.0/24 eq 32 |
+
+### Prefix-lists Device Configuration
+
+```eos
+!
+ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+   seq 10 permit 192.168.255.0/24 eq 32
+   seq 20 permit 192.168.254.0/24 eq 32
+```
 
 ## IPv6 Prefix-lists
 
@@ -826,7 +828,21 @@ IPv6 prefix-lists not defined
 
 ## Route-maps
 
-No route-maps defined
+### Route-maps Summary
+
+#### RM-CONN-2-BGP
+
+| Sequence | Type | Match and/or Set |
+| -------- | ---- | ---------------- |
+| 10 | permit | match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
+
+### Route-maps Device Configuration
+
+```eos
+!
+route-map RM-CONN-2-BGP permit 10
+   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+```
 
 ## IP Extended Communities
 
@@ -887,6 +903,9 @@ IP DHCP relay not defined
 # Errdisable
 
 Errdisable is not defined.
+# MACsec
+
+MACsec not defined
 
 # Custom Templates
 

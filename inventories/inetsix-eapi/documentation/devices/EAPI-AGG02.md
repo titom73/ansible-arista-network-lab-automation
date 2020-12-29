@@ -71,6 +71,7 @@
 - [Router L2 VPN](#router-l2-vpn)
 - [IP DHCP Relay](#ip-dhcp-relay)
 - [Errdisable](#errdisable)
+- [MAC security](#mac-security)
 
 # Management
 
@@ -96,6 +97,7 @@
 !
 interface Management1
    description oob_management
+   no shutdown
    vrf MGMT
    ip address 10.73.254.22/24
 ```
@@ -149,6 +151,10 @@ ntp local-interface vrf MGMT Management1
 ntp server vrf MGMT 10.73.254.253 prefer
 ntp server vrf MGMT 10.73.1.254
 ```
+
+## PTP
+
+PTP is not defined.
 
 ## Management SSH
 
@@ -399,20 +405,20 @@ vlan 201
 !
 interface Ethernet1
    description EAPI-LEAF2A_Ethernet5
+   no shutdown
    channel-group 1 mode active
 !
 interface Ethernet2
    description EAPI-LEAF2B_Ethernet5
+   no shutdown
    channel-group 1 mode active
 !
 interface Ethernet3
    description SRV-POD02_Eth1
+   no shutdown
+   switchport
    switchport trunk allowed vlan 1-4000
    switchport mode trunk
-   storm-control all level 10
-   storm-control broadcast level pps 100
-   storm-control multicast level 1
-   storm-control unknown-unicast level 2
 ```
 
 ## Port-Channel Interfaces
@@ -423,7 +429,7 @@ interface Ethernet3
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel1 | EAPI-LEAF2A_Po5 | switched | access | 110-112,201 | - | - | - | - | 1 | - |
+| Port-Channel1 | EAPI-LEAF2A_Po5 | switched | trunk | 110-112,201 | - | - | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -431,9 +437,10 @@ interface Ethernet3
 !
 interface Port-Channel1
    description EAPI-LEAF2A_Po5
+   no shutdown
+   switchport
    switchport trunk allowed vlan 110-112,201
    switchport mode trunk
-   mlag 1
 ```
 
 ## Loopback Interfaces
@@ -498,9 +505,6 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 IPv6 static routes not defined
 
-## Router OSPF
-
-Router OSPF not defined
 ## ARP
 
 Global ARP timeout not defined.
@@ -638,6 +642,9 @@ IP DHCP relay not defined
 # Errdisable
 
 Errdisable is not defined.
+# MACsec
+
+MACsec not defined
 
 # Custom Templates
 

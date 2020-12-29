@@ -101,6 +101,8 @@ bfd_multihop:
 port_channel_interfaces:
   Port-Channel5:
     description: SRV-POD03_PortChanne1
+    type: switched
+    shutdown: false
     vlans: 1-4000
     mode: trunk
     esi: 0000:0000:0303:0202:0101
@@ -114,9 +116,8 @@ ethernet_interfaces:
     description: P2P_LINK_TO_EAPI-SPINE1_Ethernet7
     mtu: 1500
     type: routed
+    shutdown: false
     ip_address: 172.31.255.17/31
-    ospf_network_point_to_point: true
-    ospf_area: 0.0.0.0
   Ethernet2:
     peer: EAPI-SPINE2
     peer_interface: Ethernet7
@@ -124,29 +125,17 @@ ethernet_interfaces:
     description: P2P_LINK_TO_EAPI-SPINE2_Ethernet7
     mtu: 1500
     type: routed
+    shutdown: false
     ip_address: 172.31.255.19/31
-    ospf_network_point_to_point: true
-    ospf_area: 0.0.0.0
   Ethernet5:
     peer: SRV-POD03
     peer_interface: Eth1
     peer_type: server
     description: SRV-POD03_Eth1
+    type: switched
+    shutdown: false
     mode: trunk
     vlans: 1-4000
-    storm_control:
-      all:
-        level: 10
-        unit: percent
-      broadcast:
-        level: 100
-        unit: pps
-      multicast:
-        level: 1
-        unit: percent
-      unknown-unicast:
-        level: 2
-        unit: percent
     channel_group:
       id: 5
       mode: active
@@ -154,15 +143,16 @@ ethernet_interfaces:
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
+    shutdown: false
     ip_address: 192.168.255.7/32
-    ospf_area: 0.0.0.0
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
+    shutdown: false
     ip_address: 192.168.254.7/32
-    ospf_area: 0.0.0.0
 management_interfaces:
   Management1:
     description: oob_management
+    shutdown: false
     vrf: MGMT
     ip_address: 10.73.254.17/24
     gateway: 10.73.254.253
@@ -212,8 +202,20 @@ static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
   gateway: 10.73.254.253
-prefix_lists: null
-route_maps: null
+prefix_lists:
+  PL-LOOPBACKS-EVPN-OVERLAY:
+    sequence_numbers:
+      10:
+        action: permit 192.168.255.0/24 eq 32
+      20:
+        action: permit 192.168.254.0/24 eq 32
+route_maps:
+  RM-CONN-2-BGP:
+    sequence_numbers:
+      10:
+        type: permit
+        match:
+        - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 router_bgp:
   as: 65103
   router_id: 192.168.255.7
@@ -224,6 +226,12 @@ router_bgp:
   - graceful-restart
   - maximum-paths 2 ecmp 2
   peer_groups:
+    IPv4-UNDERLAY-PEERS:
+      type: ipv4
+      remote_as: 65001
+      password: AQQvKeimxJu+uGQ/yYvv9w==
+      maximum_routes: 12000
+      send_community: true
     EVPN-OVERLAY-PEERS:
       type: evpn
       remote_as: 65001
@@ -234,19 +242,29 @@ router_bgp:
       send_community: true
       maximum_routes: 0
   neighbors:
+    172.31.255.16:
+      peer_group: IPv4-UNDERLAY-PEERS
+    172.31.255.18:
+      peer_group: IPv4-UNDERLAY-PEERS
     192.168.255.1:
       peer_group: EVPN-OVERLAY-PEERS
     192.168.255.2:
       peer_group: EVPN-OVERLAY-PEERS
-  redistribute_routes: null
+  redistribute_routes:
+    connected:
+      route_map: RM-CONN-2-BGP
   address_family_evpn:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
+      IPv4-UNDERLAY-PEERS:
+        activate: false
   address_family_ipv4:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: false
+      IPv4-UNDERLAY-PEERS:
+        activate: true
   vlan_aware_bundles:
     TENANT_A_PROJECT01:
       rd: 192.168.255.7:11
@@ -280,15 +298,7 @@ router_bgp:
       redistribute_routes:
       - connected
 ip_extcommunity_lists: null
-router_ospf:
-  process_ids:
-    100:
-      passive_interface_default: true
-      router_id: 192.168.255.7
-      no_passive_interfaces:
-      - Ethernet1
-      - Ethernet2
-      max_lsa: 12000
+router_ospf: null
 router_isis: null
 queue_monitor_streaming: null
 management_api_http:
