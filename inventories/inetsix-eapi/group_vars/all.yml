@@ -20,3 +20,5 @@ snmp_server:
       access_list_ipv4:
         name: inetsix-snmp-acl
       view: test
+
+validate_state_markdown_flavor: github
