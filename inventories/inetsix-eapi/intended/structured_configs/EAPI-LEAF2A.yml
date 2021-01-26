@@ -66,7 +66,9 @@ ntp_server:
 redundancy: null
 spanning_tree:
   mode: mstp
-  priority: 4096
+  mst_instances:
+    0:
+      priority: 4096
   no_spanning_tree_vlan: 4093-4094
 aaa_authorization: null
 local_users:
@@ -256,6 +258,7 @@ vlan_interfaces:
     description: 'MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01'
     vrf: TENANT_A_PROJECT01
     ip_address: 10.255.251.4/31
+    mtu: 1500
 vxlan_tunnel_interface:
   Vxlan1:
     description: EAPI-LEAF2A_VTEP

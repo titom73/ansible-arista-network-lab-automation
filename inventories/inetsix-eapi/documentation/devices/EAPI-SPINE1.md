@@ -35,6 +35,7 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
 - [VLANs](#vlans)
 - [Interfaces](#interfaces)
+  - [Interface Defaults](#internet-defaults)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
   - [Loopback Interfaces](#loopback-interfaces)
@@ -72,6 +73,8 @@
 - [IP DHCP Relay](#ip-dhcp-relay)
 - [Errdisable](#errdisable)
 - [MAC security](#mac-security)
+- [QOS](#qos)
+- [QOS Profiles](#qos-profiles)
 
 # Management
 
@@ -322,16 +325,23 @@ MLAG not defined
 
 # Spanning Tree
 
+
 ## Spanning Tree Summary
 
-Mode: none
+STP mode: **none**
 
-## Spanning Tree Device Configuration
+### MSTP Instance and Priority
 
-```eos
-!
-spanning-tree mode none
-```
+| Instance(s) | Priority |
+| -------- | -------- |
+
+### MST Configuration
+
+
+
+### Global Spanning-Tree Settings
+
+Spanning-tree not defined
 
 # Internal VLAN Allocation Policy
 
@@ -353,6 +363,10 @@ vlan internal order ascending range 1006 1199
 No VLANs defined
 
 # Interfaces
+
+## Interface Defaults
+
+No Interface Defaults defined
 
 ## Ethernet Interfaces
 
@@ -563,6 +577,7 @@ Router ISIS not defined
 | Settings | Value |
 | -------- | ----- |
 | Address Family | ipv4 |
+| Send community | true |
 | Maximum routes | 12000 |
 
 ### BGP Neighbors
@@ -613,6 +628,7 @@ router bgp 65001
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
    neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
+   neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor 172.31.255.1 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.1 remote-as 65101
@@ -793,9 +809,18 @@ IP DHCP relay not defined
 # Errdisable
 
 Errdisable is not defined.
+
 # MACsec
 
 MACsec not defined
+
+# QOS
+
+QOS is not defined.
+
+# QOS Profiles
+
+QOS Profiles are not defined
 
 # Custom Templates
 

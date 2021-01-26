@@ -15,20 +15,22 @@
 
 ## Fabric Switches and Management IP
 
-| Node | Management IP | Platform |
-| ---- | ------------- | -------- |
-| DC1-SPINE1 | 10.73.255.101/24 | vEOS-LAB |
-| DC1-SPINE2 | 10.73.255.102/24 | vEOS-LAB |
-| DC1-BL01A | 10.73.255.115/24 | vEOS-LAB |
-| DC1-BL01B | 10.73.255.116/24 | vEOS-LAB |
-| DC1-LEAF1A | 10.73.255.111/24 | vEOS-LAB |
-| DC1-LEAF1B | 10.73.255.112/24 | vEOS-LAB |
-| DC1-LEAF2A | 10.73.255.113/24 | vEOS-LAB |
-| DC1-LEAF2B | 10.73.255.114/24 | vEOS-LAB |
-| DC1-LEAF3A | 10.73.255.117/24 | vEOS-LAB |
-| DC1-LEAF4A | 10.73.255.118/24 | vEOS-LAB |
-| DC1-AGG01 | 10.73.255.121/24 | vEOS-LAB |
-| DC1-AGG02 | 10.73.255.122/24 | vEOS-LAB |
+| Node | Management IP | Platform | Provisioned in Cloudvision |
+| ---- | ------------- | -------- | -------------------------- |
+| DC1-SPINE1 | 10.73.255.101/24 | vEOS-LAB | Provisioned |
+| DC1-SPINE2 | 10.73.255.102/24 | vEOS-LAB | Provisioned |
+| DC1-BL01A | 10.73.255.115/24 | vEOS-LAB | Provisioned |
+| DC1-BL01B | 10.73.255.116/24 | vEOS-LAB | Provisioned |
+| DC1-LEAF1A | 10.73.255.111/24 | vEOS-LAB | Provisioned |
+| DC1-LEAF1B | 10.73.255.112/24 | vEOS-LAB | Provisioned |
+| DC1-LEAF2A | 10.73.255.113/24 | vEOS-LAB | Provisioned |
+| DC1-LEAF2B | 10.73.255.114/24 | vEOS-LAB | Provisioned |
+| DC1-LEAF3A | 10.73.255.117/24 | vEOS-LAB | Provisioned |
+| DC1-LEAF4A | 10.73.255.118/24 | vEOS-LAB | Provisioned |
+| DC1-AGG01 | 10.73.255.121/24 | vEOS-LAB | Provisioned |
+| DC1-AGG02 | 10.73.255.122/24 | vEOS-LAB | Provisioned |
+
+> Provision status is based on Ansible inventory declaration and do not represent real status from Cloudvision.
 
 ## Fabric Topology
 
