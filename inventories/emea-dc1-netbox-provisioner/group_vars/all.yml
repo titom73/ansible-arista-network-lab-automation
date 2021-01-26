@@ -1,0 +1,6 @@
+---
+### Netbox Access configuration
+netbox_url: 'http://10.83.28.163:31062'
+netbox_token: "keO49sqSPMfIHLWWgGvOg6F0wJZWTN4hJA9IV80g"
+netbox_fabric_group: "DC1_FABRIC"
+netbox_svc_group: "DC1_TENANTS_NETWORKS"

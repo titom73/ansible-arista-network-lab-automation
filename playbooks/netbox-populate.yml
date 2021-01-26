@@ -1,0 +1,12 @@
+---
+- name: Populate Netbox from AVD
+  hosts: DC1_FABRIC
+  connection: local
+  gather_facts: False
+  collections:
+    - arista.avd
+    - netbox.netbox
+  tasks:
+    - name: "AVD populated on Netbox {{ inventory_hostname }}"
+      import_role:
+        name: arista.avd.eos_netbox_provisioner
