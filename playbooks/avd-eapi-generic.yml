@@ -6,11 +6,11 @@
     - arista.cvp
   tasks:
     - name: build local folders
-      tags: [init]
+      tags: [init, build]
       import_role:
         name: build_output_folders
-      vars:
-        fabric_dir_name: '{{fabric_name}}'
+      # vars:
+      #   fabric_dir_name: '{{fabric_name}}'
     - name: generate intented variables
       tags: [build]
       import_role:

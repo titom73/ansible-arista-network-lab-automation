@@ -8,8 +8,8 @@ CVP_CONFIGLETS:
     \ 10.73.255.2\n!\nntp local-interface vrf MGMT Management1\nntp server vrf MGMT\
     \ 91.224.149.41 prefer\nntp server vrf MGMT 37.59.63.125\nntp server vrf MGMT\
     \ 188.165.240.21\n!\nspanning-tree mode mstp\nspanning-tree mst 0 priority 16384\n\
-    !\nno aaa root\n!\nusername admin privilege 15 role network-admin nopassword\n\
-    username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nno aaa root\nno enable password\n!\nusername admin privilege 15 role network-admin\
+    \ nopassword\nusername ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 110\n   name PR01-DMZ\n!\nvlan 201\n   name B-ELAN-201\n!\nvlan 311\n\
@@ -34,8 +34,8 @@ CVP_CONFIGLETS:
     \ 10.73.255.2\n!\nntp local-interface vrf MGMT Management1\nntp server vrf MGMT\
     \ 91.224.149.41 prefer\nntp server vrf MGMT 37.59.63.125\nntp server vrf MGMT\
     \ 188.165.240.21\n!\nspanning-tree mode mstp\nspanning-tree mst 0 priority 16384\n\
-    !\nno aaa root\n!\nusername admin privilege 15 role network-admin nopassword\n\
-    username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nno aaa root\nno enable password\n!\nusername admin privilege 15 role network-admin\
+    \ nopassword\nusername ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 110\n   name PR01-DMZ\n!\nvlan 201\n   name B-ELAN-201\n!\nvlan 311\n\
@@ -60,8 +60,8 @@ CVP_CONFIGLETS:
     \ vrf MGMT Management1\nntp server vrf MGMT 91.224.149.41 prefer\nntp server vrf\
     \ MGMT 37.59.63.125\nntp server vrf MGMT 188.165.240.21\n!\nspanning-tree mode\
     \ mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst 0 priority 4096\n\
-    !\nno aaa root\n!\nusername admin privilege 15 role network-admin nopassword\n\
-    username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nno aaa root\nno enable password\n!\nusername admin privilege 15 role network-admin\
+    \ nopassword\nusername ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group LEAF_PEER_L3\n!\nvlan 4094\n\
@@ -87,29 +87,30 @@ CVP_CONFIGLETS:
     !\nip routing\nno ip routing vrf MGMT\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
     \   seq 10 permit 192.168.255.0/24 eq 32\n   seq 20 permit 192.168.254.0/24 eq\
     \ 32\n!\nmlag configuration\n   domain-id DC1_BL01\n   local-interface Vlan4094\n\
-    \   peer-address 10.255.252.13\n   peer-address heartbeat 10.73.255.116 vrf MGMT\n\
-    \   peer-link Port-Channel3\n   dual-primary detection delay 5 action errdisable\
-    \ all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\n\
-    ip route vrf MGMT 0.0.0.0/0 10.73.255.2\n!\nroute-map RM-CONN-2-BGP permit 10\n\
-    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n  \
-    \ multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65105\n   router-id\
-    \ 192.168.255.9\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
-    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 2\
-    \ ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
-    \ remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n  \
-    \ neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop\
-    \ 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor\
-    \ EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes\
-    \ 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
+    \   peer-address 10.255.252.13\n   peer-link Port-Channel3\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route vrf MGMT 0.0.0.0/0 10.73.255.2\n\
+    !\nroute-map RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65105\n   router-id 192.168.255.9\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 2 ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
+    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
     \ remote-as 65001\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65105\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
     \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ maximum-routes 12000\n   neighbor 10.255.251.13 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \   neighbor 172.31.255.24 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.26\
-    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.13 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 172.31.255.24 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.26 peer\
+    \ group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
     \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   redistribute connected\
     \ route-map RM-CONN-2-BGP\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
     \ activate\n      no neighbor IPv4-UNDERLAY-PEERS activate\n      no neighbor\
@@ -126,8 +127,8 @@ CVP_CONFIGLETS:
     \ vrf MGMT Management1\nntp server vrf MGMT 91.224.149.41 prefer\nntp server vrf\
     \ MGMT 37.59.63.125\nntp server vrf MGMT 188.165.240.21\n!\nspanning-tree mode\
     \ mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree mst 0 priority 4096\n\
-    !\nno aaa root\n!\nusername admin privilege 15 role network-admin nopassword\n\
-    username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nno aaa root\nno enable password\n!\nusername admin privilege 15 role network-admin\
+    \ nopassword\nusername ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group LEAF_PEER_L3\n!\nvlan 4094\n\
@@ -153,29 +154,30 @@ CVP_CONFIGLETS:
     !\nip routing\nno ip routing vrf MGMT\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
     \   seq 10 permit 192.168.255.0/24 eq 32\n   seq 20 permit 192.168.254.0/24 eq\
     \ 32\n!\nmlag configuration\n   domain-id DC1_BL01\n   local-interface Vlan4094\n\
-    \   peer-address 10.255.252.12\n   peer-address heartbeat 10.73.255.115 vrf MGMT\n\
-    \   peer-link Port-Channel3\n   dual-primary detection delay 5 action errdisable\
-    \ all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\n\
-    ip route vrf MGMT 0.0.0.0/0 10.73.255.2\n!\nroute-map RM-CONN-2-BGP permit 10\n\
-    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n  \
-    \ multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65105\n   router-id\
-    \ 192.168.255.10\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
-    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 2\
-    \ ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
-    \ remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n  \
-    \ neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop\
-    \ 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor\
-    \ EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes\
-    \ 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
+    \   peer-address 10.255.252.12\n   peer-link Port-Channel3\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route vrf MGMT 0.0.0.0/0 10.73.255.2\n\
+    !\nroute-map RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65105\n   router-id 192.168.255.10\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 2 ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
+    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
     \ remote-as 65001\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65105\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
     \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ maximum-routes 12000\n   neighbor 10.255.251.12 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \   neighbor 172.31.255.28 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.30\
-    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.12 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 172.31.255.28 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.30 peer\
+    \ group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
     \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   redistribute connected\
     \ route-map RM-CONN-2-BGP\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
     \ activate\n      no neighbor IPv4-UNDERLAY-PEERS activate\n      no neighbor\
@@ -192,8 +194,9 @@ CVP_CONFIGLETS:
     !\nntp local-interface vrf MGMT Management1\nntp server vrf MGMT 91.224.149.41\
     \ prefer\nntp server vrf MGMT 37.59.63.125\nntp server vrf MGMT 188.165.240.21\n\
     !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 4096\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
-    \ nopassword\nusername ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ mst 0 priority 4096\n!\nno aaa root\nno enable password\n!\nusername admin privilege\
+    \ 15 role network-admin nopassword\nusername ansible privilege 15 role network-admin\
+    \ secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 110\n   name PR01-DMZ\n!\nvlan 111\n   name PR01-TRUST\n!\nvlan 112\n\
@@ -216,12 +219,11 @@ CVP_CONFIGLETS:
     \   no shutdown\n   channel-group 3 mode active\n!\ninterface Ethernet4\n   description\
     \ MLAG_PEER_DC1-LEAF1B_Ethernet4\n   no shutdown\n   channel-group 3 mode active\n\
     !\ninterface Ethernet5\n   description DC1-AGG01_Ethernet1\n   no shutdown\n \
-    \  channel-group 5 mode active\n!\ninterface Ethernet4000\n   description My test\n\
-    \   switchport\n   ip address 1.2.3.4/12\n!\ninterface Loopback0\n   description\
-    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.255.3/32\n!\ninterface\
-    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
-    \ 192.168.254.3/32\n!\ninterface Loopback100\n   description TENANT_A_PROJECT02_VTEP_DIAGNOSTICS\n\
-    \   no shutdown\n   vrf TENANT_A_PROJECT02\n   ip address 10.1.255.3/32\n!\ninterface\
+    \  channel-group 5 mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n\
+    \   no shutdown\n   ip address 192.168.255.3/32\n!\ninterface Loopback1\n   description\
+    \ VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 192.168.254.3/32\n!\n\
+    interface Loopback100\n   description TENANT_A_PROJECT02_VTEP_DIAGNOSTICS\n  \
+    \ no shutdown\n   vrf TENANT_A_PROJECT02\n   ip address 10.1.255.3/32\n!\ninterface\
     \ Management1\n   description oob_management\n   no shutdown\n   vrf MGMT\n  \
     \ ip address 10.73.255.111/24\n!\ninterface Vlan110\n   description PR01-DMZ\n\
     \   no shutdown\n   vrf TENANT_A_PROJECT01\n   ip address virtual 10.1.10.254/24\n\
@@ -252,29 +254,30 @@ CVP_CONFIGLETS:
     \ vrf TENANT_A_PROJECT02\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq\
     \ 10 permit 192.168.255.0/24 eq 32\n   seq 20 permit 192.168.254.0/24 eq 32\n\
     !\nmlag configuration\n   domain-id DC1_LEAF1\n   local-interface Vlan4094\n \
-    \  peer-address 10.255.252.1\n   peer-address heartbeat 10.73.255.112 vrf MGMT\n\
-    \   peer-link Port-Channel3\n   dual-primary detection delay 5 action errdisable\
-    \ all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\n\
-    ip route vrf MGMT 0.0.0.0/0 10.73.255.2\n!\nroute-map RM-CONN-2-BGP permit 10\n\
-    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n  \
-    \ multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65101\n   router-id\
-    \ 192.168.255.3\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
-    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 2\
-    \ ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
-    \ remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n  \
-    \ neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop\
-    \ 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor\
-    \ EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes\
-    \ 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
+    \  peer-address 10.255.252.1\n   peer-link Port-Channel3\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route vrf MGMT 0.0.0.0/0 10.73.255.2\n\
+    !\nroute-map RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65101\n   router-id 192.168.255.3\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 2 ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
+    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
     \ remote-as 65001\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65101\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
     \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ maximum-routes 12000\n   neighbor 10.255.251.1 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \   neighbor 172.31.255.0 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.2\
-    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.1 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 172.31.255.0 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.2 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
     \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   redistribute connected\
     \ route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle B-ELAN-201\n      rd 192.168.255.3:20201\n\
     \      route-target both 20201:20201\n      redistribute learned\n      vlan 201\n\
@@ -303,8 +306,9 @@ CVP_CONFIGLETS:
     !\nntp local-interface vrf MGMT Management1\nntp server vrf MGMT 91.224.149.41\
     \ prefer\nntp server vrf MGMT 37.59.63.125\nntp server vrf MGMT 188.165.240.21\n\
     !\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 4096\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin\
-    \ nopassword\nusername ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ mst 0 priority 4096\n!\nno aaa root\nno enable password\n!\nusername admin privilege\
+    \ 15 role network-admin nopassword\nusername ansible privilege 15 role network-admin\
+    \ secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 110\n   name PR01-DMZ\n!\nvlan 111\n   name PR01-TRUST\n!\nvlan 112\n\
@@ -362,29 +366,30 @@ CVP_CONFIGLETS:
     \ vrf TENANT_A_PROJECT02\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n   seq\
     \ 10 permit 192.168.255.0/24 eq 32\n   seq 20 permit 192.168.254.0/24 eq 32\n\
     !\nmlag configuration\n   domain-id DC1_LEAF1\n   local-interface Vlan4094\n \
-    \  peer-address 10.255.252.0\n   peer-address heartbeat 10.73.255.111 vrf MGMT\n\
-    \   peer-link Port-Channel3\n   dual-primary detection delay 5 action errdisable\
-    \ all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\n\
-    ip route vrf MGMT 0.0.0.0/0 10.73.255.2\n!\nroute-map RM-CONN-2-BGP permit 10\n\
-    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n  \
-    \ multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65101\n   router-id\
-    \ 192.168.255.4\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
-    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 2\
-    \ ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
-    \ remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n  \
-    \ neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop\
-    \ 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor\
-    \ EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes\
-    \ 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
+    \  peer-address 10.255.252.0\n   peer-link Port-Channel3\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route vrf MGMT 0.0.0.0/0 10.73.255.2\n\
+    !\nroute-map RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65101\n   router-id 192.168.255.4\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 2 ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
+    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
     \ remote-as 65001\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65101\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
     \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ maximum-routes 12000\n   neighbor 10.255.251.0 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \   neighbor 172.31.255.4 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.6\
-    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.0 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 172.31.255.4 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.6 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
     \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   redistribute connected\
     \ route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle B-ELAN-201\n      rd 192.168.255.4:20201\n\
     \      route-target both 20201:20201\n      redistribute learned\n      vlan 201\n\
@@ -413,9 +418,9 @@ CVP_CONFIGLETS:
     \ 10.73.255.2\n!\nntp local-interface vrf MGMT Management1\nntp server vrf MGMT\
     \ 91.224.149.41 prefer\nntp server vrf MGMT 37.59.63.125\nntp server vrf MGMT\
     \ 188.165.240.21\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
-    spanning-tree mst 0 priority 4096\n!\nno aaa root\n!\nusername admin privilege\
-    \ 15 role network-admin nopassword\nusername ansible privilege 15 role network-admin\
-    \ secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    spanning-tree mst 0 priority 4096\n!\nno aaa root\nno enable password\n!\nusername\
+    \ admin privilege 15 role network-admin nopassword\nusername ansible privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 110\n   name PR01-DMZ\n!\nvlan 201\n   name B-ELAN-201\n!\nvlan 311\n\
@@ -455,29 +460,30 @@ CVP_CONFIGLETS:
     no ip routing vrf MGMT\nip routing vrf TENANT_A_PROJECT01\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
     \   seq 10 permit 192.168.255.0/24 eq 32\n   seq 20 permit 192.168.254.0/24 eq\
     \ 32\n!\nmlag configuration\n   domain-id DC1_LEAF2\n   local-interface Vlan4094\n\
-    \   peer-address 10.255.252.5\n   peer-address heartbeat 10.73.255.114 vrf MGMT\n\
-    \   peer-link Port-Channel3\n   dual-primary detection delay 5 action errdisable\
-    \ all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\n\
-    ip route vrf MGMT 0.0.0.0/0 10.73.255.2\n!\nroute-map RM-CONN-2-BGP permit 10\n\
-    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n  \
-    \ multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65102\n   router-id\
-    \ 192.168.255.5\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
-    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 2\
-    \ ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
-    \ remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n  \
-    \ neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop\
-    \ 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor\
-    \ EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes\
-    \ 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
+    \   peer-address 10.255.252.5\n   peer-link Port-Channel3\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route vrf MGMT 0.0.0.0/0 10.73.255.2\n\
+    !\nroute-map RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65102\n   router-id 192.168.255.5\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 2 ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
+    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
     \ remote-as 65001\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65102\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
     \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ maximum-routes 12000\n   neighbor 10.255.251.5 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \   neighbor 172.31.255.8 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.10\
-    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.5 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 172.31.255.8 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.10 peer\
+    \ group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
     \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   redistribute connected\
     \ route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle B-ELAN-201\n      rd 192.168.255.5:20201\n\
     \      route-target both 20201:20201\n      redistribute learned\n      vlan 201\n\
@@ -501,9 +507,9 @@ CVP_CONFIGLETS:
     \ 10.73.255.2\n!\nntp local-interface vrf MGMT Management1\nntp server vrf MGMT\
     \ 91.224.149.41 prefer\nntp server vrf MGMT 37.59.63.125\nntp server vrf MGMT\
     \ 188.165.240.21\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\n\
-    spanning-tree mst 0 priority 4096\n!\nno aaa root\n!\nusername admin privilege\
-    \ 15 role network-admin nopassword\nusername ansible privilege 15 role network-admin\
-    \ secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    spanning-tree mst 0 priority 4096\n!\nno aaa root\nno enable password\n!\nusername\
+    \ admin privilege 15 role network-admin nopassword\nusername ansible privilege\
+    \ 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 110\n   name PR01-DMZ\n!\nvlan 201\n   name B-ELAN-201\n!\nvlan 311\n\
@@ -543,29 +549,30 @@ CVP_CONFIGLETS:
     no ip routing vrf MGMT\nip routing vrf TENANT_A_PROJECT01\n!\nip prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
     \   seq 10 permit 192.168.255.0/24 eq 32\n   seq 20 permit 192.168.254.0/24 eq\
     \ 32\n!\nmlag configuration\n   domain-id DC1_LEAF2\n   local-interface Vlan4094\n\
-    \   peer-address 10.255.252.4\n   peer-address heartbeat 10.73.255.113 vrf MGMT\n\
-    \   peer-link Port-Channel3\n   dual-primary detection delay 5 action errdisable\
-    \ all-interfaces\n   reload-delay mlag 300\n   reload-delay non-mlag 330\n!\n\
-    ip route vrf MGMT 0.0.0.0/0 10.73.255.2\n!\nroute-map RM-CONN-2-BGP permit 10\n\
-    \   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n!\nrouter bfd\n  \
-    \ multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65102\n   router-id\
-    \ 192.168.255.6\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
-    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 2\
-    \ ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
-    \ remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n  \
-    \ neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop\
-    \ 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor\
-    \ EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes\
-    \ 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
+    \   peer-address 10.255.252.4\n   peer-link Port-Channel3\n   reload-delay mlag\
+    \ 300\n   reload-delay non-mlag 330\n!\nip route vrf MGMT 0.0.0.0/0 10.73.255.2\n\
+    !\nroute-map RM-CONN-2-BGP permit 10\n   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY\n\
+    !\nroute-map RM-MLAG-PEER-IN permit 10\n   description Make routes learned over\
+    \ MLAG Peer-link less preferred on spines to ensure optimal routing\n   set origin\
+    \ incomplete\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier\
+    \ 3\n!\nrouter bgp 65102\n   router-id 192.168.255.6\n   no bgp default ipv4-unicast\n\
+    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
+    \   maximum-paths 2 ecmp 2\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
+    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
+    \ maximum-routes 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
     \ remote-as 65001\n   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==\n\
     \   neighbor IPv4-UNDERLAY-PEERS send-community\n   neighbor IPv4-UNDERLAY-PEERS\
     \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER peer group\n   neighbor\
     \ MLAG-IPv4-UNDERLAY-PEER remote-as 65102\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
     \ next-hop-self\n   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==\n\
     \   neighbor MLAG-IPv4-UNDERLAY-PEER send-community\n   neighbor MLAG-IPv4-UNDERLAY-PEER\
-    \ maximum-routes 12000\n   neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \   neighbor 172.31.255.12 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.14\
-    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
+    \ maximum-routes 12000\n   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN\
+    \ in\n   neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER\n   neighbor\
+    \ 172.31.255.12 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.14 peer\
+    \ group IPv4-UNDERLAY-PEERS\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
     \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   redistribute connected\
     \ route-map RM-CONN-2-BGP\n   !\n   vlan-aware-bundle B-ELAN-201\n      rd 192.168.255.6:20201\n\
     \      route-target both 20201:20201\n      redistribute learned\n      vlan 201\n\
@@ -589,8 +596,8 @@ CVP_CONFIGLETS:
     \ 10.73.255.2\n!\nntp local-interface vrf MGMT Management1\nntp server vrf MGMT\
     \ 91.224.149.41 prefer\nntp server vrf MGMT 37.59.63.125\nntp server vrf MGMT\
     \ 188.165.240.21\n!\nspanning-tree mode mstp\nspanning-tree mst 0 priority 4096\n\
-    !\nno aaa root\n!\nusername admin privilege 15 role network-admin nopassword\n\
-    username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nno aaa root\nno enable password\n!\nusername admin privilege 15 role network-admin\
+    \ nopassword\nusername ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 110\n   name PR01-DMZ\n!\nvlan 201\n   name B-ELAN-201\n!\nvlan 311\n\
@@ -653,8 +660,8 @@ CVP_CONFIGLETS:
     \ 10.73.255.2\n!\nntp local-interface vrf MGMT Management1\nntp server vrf MGMT\
     \ 91.224.149.41 prefer\nntp server vrf MGMT 37.59.63.125\nntp server vrf MGMT\
     \ 188.165.240.21\n!\nspanning-tree mode mstp\nspanning-tree mst 0 priority 4096\n\
-    !\nno aaa root\n!\nusername admin privilege 15 role network-admin nopassword\n\
-    username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    !\nno aaa root\nno enable password\n!\nusername admin privilege 15 role network-admin\
+    \ nopassword\nusername ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvlan 110\n   name PR01-DMZ\n!\nvlan 201\n   name B-ELAN-201\n!\nvlan 311\n\
@@ -716,8 +723,9 @@ CVP_CONFIGLETS:
     hostname DC1-SPINE1\nip name-server vrf MGMT 10.73.255.2\n!\nntp local-interface\
     \ vrf MGMT Management1\nntp server vrf MGMT 91.224.149.41 prefer\nntp server vrf\
     \ MGMT 37.59.63.125\nntp server vrf MGMT 188.165.240.21\n!\nspanning-tree mode\
-    \ none\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin nopassword\n\
-    username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ none\n!\nno aaa root\nno enable password\n!\nusername admin privilege 15 role\
+    \ network-admin nopassword\nusername ansible privilege 15 role network-admin secret\
+    \ sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvrf instance MGMT\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC1-LEAF1A_Ethernet1\n\
@@ -749,31 +757,32 @@ CVP_CONFIGLETS:
     \ 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor\
     \ EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes\
     \ 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
-    \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS maximum-routes\
-    \ 12000\n   neighbor 172.31.255.1 peer group IPv4-UNDERLAY-PEERS\n   neighbor\
-    \ 172.31.255.1 remote-as 65101\n   neighbor 172.31.255.5 peer group IPv4-UNDERLAY-PEERS\n\
-    \   neighbor 172.31.255.5 remote-as 65101\n   neighbor 172.31.255.9 peer group\
-    \ IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.9 remote-as 65102\n   neighbor 172.31.255.13\
-    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.13 remote-as 65102\n\
-    \   neighbor 172.31.255.17 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.17\
-    \ remote-as 65103\n   neighbor 172.31.255.21 peer group IPv4-UNDERLAY-PEERS\n\
-    \   neighbor 172.31.255.21 remote-as 65104\n   neighbor 172.31.255.25 peer group\
-    \ IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.25 remote-as 65105\n   neighbor\
-    \ 172.31.255.29 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.29 remote-as\
-    \ 65105\n   neighbor 192.168.255.3 peer group EVPN-OVERLAY-PEERS\n   neighbor\
-    \ 192.168.255.3 remote-as 65101\n   neighbor 192.168.255.4 peer group EVPN-OVERLAY-PEERS\n\
-    \   neighbor 192.168.255.4 remote-as 65101\n   neighbor 192.168.255.5 peer group\
-    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.5 remote-as 65102\n   neighbor 192.168.255.6\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.6 remote-as 65102\n \
-    \  neighbor 192.168.255.7 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.7\
-    \ remote-as 65103\n   neighbor 192.168.255.8 peer group EVPN-OVERLAY-PEERS\n \
-    \  neighbor 192.168.255.8 remote-as 65104\n   neighbor 192.168.255.9 peer group\
-    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.9 remote-as 65105\n   neighbor 192.168.255.10\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.10 remote-as 65105\n\
-    \   redistribute connected route-map RM-CONN-2-BGP\n   !\n   address-family evpn\n\
-    \      neighbor EVPN-OVERLAY-PEERS activate\n      no neighbor IPv4-UNDERLAY-PEERS\
-    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n!\nmanagement api http-commands\n\
+    \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
+    \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor 172.31.255.1\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.1 remote-as 65101\n \
+    \  neighbor 172.31.255.5 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.5\
+    \ remote-as 65101\n   neighbor 172.31.255.9 peer group IPv4-UNDERLAY-PEERS\n \
+    \  neighbor 172.31.255.9 remote-as 65102\n   neighbor 172.31.255.13 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.13 remote-as 65102\n   neighbor\
+    \ 172.31.255.17 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.17 remote-as\
+    \ 65103\n   neighbor 172.31.255.21 peer group IPv4-UNDERLAY-PEERS\n   neighbor\
+    \ 172.31.255.21 remote-as 65104\n   neighbor 172.31.255.25 peer group IPv4-UNDERLAY-PEERS\n\
+    \   neighbor 172.31.255.25 remote-as 65105\n   neighbor 172.31.255.29 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.29 remote-as 65105\n   neighbor\
+    \ 192.168.255.3 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.3 remote-as\
+    \ 65101\n   neighbor 192.168.255.4 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.255.4 remote-as 65101\n   neighbor 192.168.255.5 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.255.5 remote-as 65102\n   neighbor 192.168.255.6 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.6 remote-as 65102\n   neighbor 192.168.255.7\
+    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.7 remote-as 65103\n \
+    \  neighbor 192.168.255.8 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.8\
+    \ remote-as 65104\n   neighbor 192.168.255.9 peer group EVPN-OVERLAY-PEERS\n \
+    \  neighbor 192.168.255.9 remote-as 65105\n   neighbor 192.168.255.10 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.10 remote-as 65105\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   address-family evpn\n      neighbor\
+    \ EVPN-OVERLAY-PEERS activate\n      no neighbor IPv4-UNDERLAY-PEERS activate\n\
+    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
+    \      neighbor IPv4-UNDERLAY-PEERS activate\n!\nmanagement api http-commands\n\
     \   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend"
   AVD_DC1-SPINE2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.73.255.1:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
@@ -783,8 +792,9 @@ CVP_CONFIGLETS:
     hostname DC1-SPINE2\nip name-server vrf MGMT 10.73.255.2\n!\nntp local-interface\
     \ vrf MGMT Management1\nntp server vrf MGMT 91.224.149.41 prefer\nntp server vrf\
     \ MGMT 37.59.63.125\nntp server vrf MGMT 188.165.240.21\n!\nspanning-tree mode\
-    \ none\n!\nno aaa root\n!\nusername admin privilege 15 role network-admin nopassword\n\
-    username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
+    \ none\n!\nno aaa root\nno enable password\n!\nusername admin privilege 15 role\
+    \ network-admin nopassword\nusername ansible privilege 15 role network-admin secret\
+    \ sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
     username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/\n\
     !\nvrf instance MGMT\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC1-LEAF1A_Ethernet2\n\
@@ -816,31 +826,32 @@ CVP_CONFIGLETS:
     \ 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor\
     \ EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS maximum-routes\
     \ 0\n   neighbor IPv4-UNDERLAY-PEERS peer group\n   neighbor IPv4-UNDERLAY-PEERS\
-    \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS maximum-routes\
-    \ 12000\n   neighbor 172.31.255.3 peer group IPv4-UNDERLAY-PEERS\n   neighbor\
-    \ 172.31.255.3 remote-as 65101\n   neighbor 172.31.255.7 peer group IPv4-UNDERLAY-PEERS\n\
-    \   neighbor 172.31.255.7 remote-as 65101\n   neighbor 172.31.255.11 peer group\
-    \ IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.11 remote-as 65102\n   neighbor\
-    \ 172.31.255.15 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.15 remote-as\
-    \ 65102\n   neighbor 172.31.255.19 peer group IPv4-UNDERLAY-PEERS\n   neighbor\
-    \ 172.31.255.19 remote-as 65103\n   neighbor 172.31.255.23 peer group IPv4-UNDERLAY-PEERS\n\
-    \   neighbor 172.31.255.23 remote-as 65104\n   neighbor 172.31.255.27 peer group\
-    \ IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.27 remote-as 65105\n   neighbor\
-    \ 172.31.255.31 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.31 remote-as\
-    \ 65105\n   neighbor 192.168.255.3 peer group EVPN-OVERLAY-PEERS\n   neighbor\
-    \ 192.168.255.3 remote-as 65101\n   neighbor 192.168.255.4 peer group EVPN-OVERLAY-PEERS\n\
-    \   neighbor 192.168.255.4 remote-as 65101\n   neighbor 192.168.255.5 peer group\
-    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.5 remote-as 65102\n   neighbor 192.168.255.6\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.6 remote-as 65102\n \
-    \  neighbor 192.168.255.7 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.7\
-    \ remote-as 65103\n   neighbor 192.168.255.8 peer group EVPN-OVERLAY-PEERS\n \
-    \  neighbor 192.168.255.8 remote-as 65104\n   neighbor 192.168.255.9 peer group\
-    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.9 remote-as 65105\n   neighbor 192.168.255.10\
-    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.10 remote-as 65105\n\
-    \   redistribute connected route-map RM-CONN-2-BGP\n   !\n   address-family evpn\n\
-    \      neighbor EVPN-OVERLAY-PEERS activate\n      no neighbor IPv4-UNDERLAY-PEERS\
-    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
-    \ activate\n      neighbor IPv4-UNDERLAY-PEERS activate\n!\nmanagement api http-commands\n\
+    \ password 7 AQQvKeimxJu+uGQ/yYvv9w==\n   neighbor IPv4-UNDERLAY-PEERS send-community\n\
+    \   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000\n   neighbor 172.31.255.3\
+    \ peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.3 remote-as 65101\n \
+    \  neighbor 172.31.255.7 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.7\
+    \ remote-as 65101\n   neighbor 172.31.255.11 peer group IPv4-UNDERLAY-PEERS\n\
+    \   neighbor 172.31.255.11 remote-as 65102\n   neighbor 172.31.255.15 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.15 remote-as 65102\n   neighbor\
+    \ 172.31.255.19 peer group IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.19 remote-as\
+    \ 65103\n   neighbor 172.31.255.23 peer group IPv4-UNDERLAY-PEERS\n   neighbor\
+    \ 172.31.255.23 remote-as 65104\n   neighbor 172.31.255.27 peer group IPv4-UNDERLAY-PEERS\n\
+    \   neighbor 172.31.255.27 remote-as 65105\n   neighbor 172.31.255.31 peer group\
+    \ IPv4-UNDERLAY-PEERS\n   neighbor 172.31.255.31 remote-as 65105\n   neighbor\
+    \ 192.168.255.3 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.3 remote-as\
+    \ 65101\n   neighbor 192.168.255.4 peer group EVPN-OVERLAY-PEERS\n   neighbor\
+    \ 192.168.255.4 remote-as 65101\n   neighbor 192.168.255.5 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.255.5 remote-as 65102\n   neighbor 192.168.255.6 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.6 remote-as 65102\n   neighbor 192.168.255.7\
+    \ peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.7 remote-as 65103\n \
+    \  neighbor 192.168.255.8 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.8\
+    \ remote-as 65104\n   neighbor 192.168.255.9 peer group EVPN-OVERLAY-PEERS\n \
+    \  neighbor 192.168.255.9 remote-as 65105\n   neighbor 192.168.255.10 peer group\
+    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.10 remote-as 65105\n   redistribute\
+    \ connected route-map RM-CONN-2-BGP\n   !\n   address-family evpn\n      neighbor\
+    \ EVPN-OVERLAY-PEERS activate\n      no neighbor IPv4-UNDERLAY-PEERS activate\n\
+    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
+    \      neighbor IPv4-UNDERLAY-PEERS activate\n!\nmanagement api http-commands\n\
     \   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend"
 CVP_TOPOLOGY:
   DC1_BL01:

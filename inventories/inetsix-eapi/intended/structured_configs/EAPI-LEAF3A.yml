@@ -59,7 +59,7 @@ redundancy: null
 spanning_tree:
   mode: mstp
   mst_instances:
-    0:
+    '0':
       priority: 4096
 aaa_authorization: null
 local_users:
@@ -105,8 +105,8 @@ port_channel_interfaces:
     description: SRV-POD03_PortChanne1
     type: switched
     shutdown: false
-    vlans: 1-4000
     mode: trunk
+    vlans: 1-4000
     esi: 0000:0000:0303:0202:0101
     rt: 03:03:02:02:01:01
     lacp_id: 0303.0202.0101
@@ -192,6 +192,7 @@ vxlan_tunnel_interface:
         TENANT_A_PROJECT01:
           vni: 11
 tcam_profile: null
+platform: null
 mac_address_table: null
 ip_virtual_router_mac_address: 00:1c:73:00:dc:01
 virtual_source_nat_vrfs: null
@@ -267,6 +268,7 @@ router_bgp:
         activate: false
       IPv4-UNDERLAY-PEERS:
         activate: true
+  address_family_rtc: null
   vlan_aware_bundles:
     TENANT_A_PROJECT01:
       rd: 192.168.255.7:11

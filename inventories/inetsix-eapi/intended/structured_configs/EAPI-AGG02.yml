@@ -59,7 +59,7 @@ redundancy: null
 spanning_tree:
   mode: mstp
   mst_instances:
-    0:
+    '0':
       priority: 16384
 aaa_authorization: null
 local_users:
@@ -143,6 +143,7 @@ management_interfaces:
     gateway: 10.73.254.253
 vlan_interfaces: null
 tcam_profile: null
+platform: null
 mac_address_table: null
 ip_igmp_snooping:
   globally_enabled: true
