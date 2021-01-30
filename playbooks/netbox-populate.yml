@@ -6,6 +6,7 @@
   collections:
     - arista.avd
     - netbox.netbox
+    - inetsix.avd_tools
   tasks:
     - name: "AVD populated on Netbox {{ inventory_hostname }}"
       import_role:
