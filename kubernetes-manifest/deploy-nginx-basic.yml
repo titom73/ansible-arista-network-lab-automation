@@ -1,0 +1,55 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: nginx-basics
+spec:
+  selector:
+    matchLabels:
+      app: webui
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: webui
+    spec:
+      containers:
+      - name: nginx
+        image: titom73/nginx
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+  name: nginx-basics
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: webui
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-basics
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: test.lab.as73.inetsix.net
+    http:
+      paths:
+      - path: /basics
+        backend:
+          serviceName: nginx-basics
+          servicePort: 80
+      - path: /
+        backend:
+          serviceName: nginx-basics
+          servicePort: 80
