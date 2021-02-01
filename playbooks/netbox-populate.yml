@@ -10,4 +10,4 @@
   tasks:
     - name: "AVD populated on Netbox {{ inventory_hostname }}"
       import_role:
-        name: arista.avd.eos_netbox_provisioner
+        name: inetsix.avd_tools.eos_netbox_provisioner
