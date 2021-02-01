@@ -152,13 +152,13 @@ superuserExistingSecret:
 
 superuser:
   # superuser.email -- Email of the Netbox superuser to create on first launch
-  email: admin@example.com
+  email: tom@inetsix.net
   # superuser.name -- Username of the Netbox superuser to create on first launch
   name: admin
   # superuser.password -- Password of the Netbox superuser to create on first launch
   password: interdata
   # superuser.apiToken -- API access token of the Netbox superuser to create on first launch
-  apiToken:
+  apiToken: keO49sqSPMfIHLWWgGvOg6F0wJZWTN4hJA9IV80g
 
 # existingEnvSecret -- Provide secret environment variable. Should contain all netbox's expected secret env vars
 existingEnvSecret:
