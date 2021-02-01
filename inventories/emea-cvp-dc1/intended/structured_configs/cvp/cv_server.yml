@@ -73,18 +73,6 @@ CVP_DEVICES:
     configlets:
       - AVD_DC1-BL1B
     imageBundle: []
-  DC1-BL2A:
-    name: DC1-BL2A
-    parentContainerName: DC1_BL2
-    configlets:
-      - AVD_DC1-BL2A
-    imageBundle: []
-  DC1-BL2B:
-    name: DC1-BL2B
-    parentContainerName: DC1_BL2
-    configlets:
-      - AVD_DC1-BL2B
-    imageBundle: []
 CVP_CONTAINERS:
   DC1_FABRIC:
     parent_container: Tenant
