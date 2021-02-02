@@ -567,7 +567,7 @@ Router ISIS not defined
 | distance bgp 20 200 200 |
 | graceful-restart restart-time 300 |
 | graceful-restart |
-| maximum-paths 2 ecmp 2 |
+| maximum-paths 4 ecmp 4 |
 
 ### Router BGP Peer Groups
 
@@ -593,24 +593,24 @@ Router ISIS not defined
 
 ### BGP Neighbors
 
-| Neighbor | Remote AS |
-| -------- | ---------
-| 172.31.255.3 | 65101 |
-| 172.31.255.7 | 65101 |
-| 172.31.255.11 | 65102 |
-| 172.31.255.15 | 65102 |
-| 172.31.255.19 | 65103 |
-| 172.31.255.23 | 65104 |
-| 172.31.255.27 | 65105 |
-| 172.31.255.31 | 65105 |
-| 192.168.255.3 | 65101 |
-| 192.168.255.4 | 65101 |
-| 192.168.255.5 | 65102 |
-| 192.168.255.6 | 65102 |
-| 192.168.255.7 | 65103 |
-| 192.168.255.8 | 65104 |
-| 192.168.255.9 | 65105 |
-| 192.168.255.10 | 65105 |
+| Neighbor | Remote AS | VRF |
+| -------- | --------- | --- |
+| 172.31.255.3 | 65101 | default |
+| 172.31.255.7 | 65101 | default |
+| 172.31.255.11 | 65102 | default |
+| 172.31.255.15 | 65102 | default |
+| 172.31.255.19 | 65103 | default |
+| 172.31.255.23 | 65104 | default |
+| 172.31.255.27 | 65105 | default |
+| 172.31.255.31 | 65105 | default |
+| 192.168.255.3 | 65101 | default |
+| 192.168.255.4 | 65101 | default |
+| 192.168.255.5 | 65102 | default |
+| 192.168.255.6 | 65102 | default |
+| 192.168.255.7 | 65103 | default |
+| 192.168.255.8 | 65104 | default |
+| 192.168.255.9 | 65105 | default |
+| 192.168.255.10 | 65105 | default |
 
 ### Router BGP EVPN Address Family
 
@@ -628,7 +628,7 @@ router bgp 65001
    distance bgp 20 200 200
    graceful-restart restart-time 300
    graceful-restart
-   maximum-paths 2 ecmp 2
+   maximum-paths 4 ecmp 4
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
@@ -659,25 +659,32 @@ router bgp 65001
    neighbor 172.31.255.31 remote-as 65105
    neighbor 192.168.255.3 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.3 remote-as 65101
+   neighbor 192.168.255.3 description EAPI-LEAF1A
    neighbor 192.168.255.4 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.4 remote-as 65101
+   neighbor 192.168.255.4 description EAPI-LEAF1B
    neighbor 192.168.255.5 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.5 remote-as 65102
+   neighbor 192.168.255.5 description EAPI-LEAF2A
    neighbor 192.168.255.6 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.6 remote-as 65102
+   neighbor 192.168.255.6 description EAPI-LEAF2B
    neighbor 192.168.255.7 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.7 remote-as 65103
+   neighbor 192.168.255.7 description EAPI-LEAF3A
    neighbor 192.168.255.8 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.8 remote-as 65104
+   neighbor 192.168.255.8 description EAPI-LEAF4A
    neighbor 192.168.255.9 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.9 remote-as 65105
+   neighbor 192.168.255.9 description EAPI-BL01A
    neighbor 192.168.255.10 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.10 remote-as 65105
+   neighbor 192.168.255.10 description EAPI-BL01B
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
-      no neighbor IPv4-UNDERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
