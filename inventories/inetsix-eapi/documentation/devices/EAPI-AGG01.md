@@ -31,6 +31,7 @@
   - [Hardware Counters](#hardware-counters)
   - [VM Tracer Sessions](#vm-tracer-sessions)
   - [Event Handler](#event-handler)
+- [Hardware TCAM Profile](#hardware-tcam-profile)
 - [MLAG](#mlag)
 - [Spanning Tree](#spanning-tree)
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
@@ -48,6 +49,7 @@
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
   - [IPv6 Static Routes](#ipv6-static-routes)
+  - [Router General](#router-general)
   - [Router OSPF](#router-ospf)
   - [Router ISIS](#router-isis)
   - [Router BGP](#router-bgp)
@@ -74,9 +76,11 @@
 - [Router L2 VPN](#router-l2-vpn)
 - [IP DHCP Relay](#ip-dhcp-relay)
 - [Errdisable](#errdisable)
+- [Traffic Policies](#traffic-policies-1)
 - [MAC security](#mac-security)
 - [QOS](#qos)
 - [QOS Profiles](#qos-profiles)
+- [Class Maps](#class-maps)
 
 # Management
 
@@ -330,6 +334,10 @@ No VM tracer sessions defined
 
 No event handler defined
 
+# Hardware TCAM Profile
+
+Hardware TCAM profile is not defined
+
 # MLAG
 
 MLAG not defined
@@ -452,6 +460,7 @@ interface Ethernet3
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel1 | EAPI-LEAF1A_Po5 | switched | trunk | 110-112,201 | - | - | - | - | - | - |
 
+
 ### Port-Channel Interfaces Device Configuration
 
 ```eos
@@ -488,7 +497,8 @@ IP virtual router MAC address not defined
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | true|| MGMT | false |
+| default | true|
+| MGMT | false |
 
 ### IP Routing Device Configuration
 
@@ -529,6 +539,10 @@ IPv6 static routes not defined
 ## ARP
 
 Global ARP timeout not defined.
+
+## Router General
+
+Router general not defined
 
 ## Router OSPF
 
@@ -668,6 +682,10 @@ IP DHCP relay not defined
 
 Errdisable is not defined.
 
+# Traffic Policies
+
+Traffic Policies not defined
+
 # MACsec
 
 MACsec not defined
@@ -683,3 +701,11 @@ QOS Profiles are not defined
 # Custom Templates
 
 No custom templates defined
+
+# Class Maps
+
+Class-maps not defined
+
+# Policy Maps
+
+Class-maps not defined

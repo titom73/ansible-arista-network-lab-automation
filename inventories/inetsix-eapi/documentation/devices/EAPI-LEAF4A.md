@@ -31,6 +31,7 @@
   - [Hardware Counters](#hardware-counters)
   - [VM Tracer Sessions](#vm-tracer-sessions)
   - [Event Handler](#event-handler)
+- [Hardware TCAM Profile](#hardware-tcam-profile)
 - [MLAG](#mlag)
 - [Spanning Tree](#spanning-tree)
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
@@ -48,6 +49,7 @@
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
   - [IPv6 Static Routes](#ipv6-static-routes)
+  - [Router General](#router-general)
   - [Router OSPF](#router-ospf)
   - [Router ISIS](#router-isis)
   - [Router BGP](#router-bgp)
@@ -74,9 +76,11 @@
 - [Router L2 VPN](#router-l2-vpn)
 - [IP DHCP Relay](#ip-dhcp-relay)
 - [Errdisable](#errdisable)
+- [Traffic Policies](#traffic-policies-1)
 - [MAC security](#mac-security)
 - [QOS](#qos)
 - [QOS Profiles](#qos-profiles)
+- [Class Maps](#class-maps)
 
 # Management
 
@@ -330,6 +334,10 @@ No VM tracer sessions defined
 
 No event handler defined
 
+# Hardware TCAM Profile
+
+Hardware TCAM profile is not defined
+
 # MLAG
 
 MLAG not defined
@@ -452,6 +460,7 @@ interface Ethernet5
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel5 | SRV-POD03_PortChanne1 | switched | trunk | 1-4000 | - | - | - | - | - | 0000:0000:0303:0202:0101 |
+
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -597,7 +606,8 @@ ip virtual-router mac-address 00:1c:73:00:dc:01
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | true|| MGMT | false |
+| default | true|
+| MGMT | false |
 | TENANT_A_PROJECT01 | true |
 
 ### IP Routing Device Configuration
@@ -642,6 +652,10 @@ IPv6 static routes not defined
 
 Global ARP timeout not defined.
 
+## Router General
+
+Router general not defined
+
 ## Router OSPF
 
 Router OSPF not defined
@@ -664,7 +678,7 @@ Router ISIS not defined
 | distance bgp 20 200 200 |
 | graceful-restart restart-time 300 |
 | graceful-restart |
-| maximum-paths 4 ecmp 4 |
+| maximum-paths 2 ecmp 2 |
 
 ### Router BGP Peer Groups
 
@@ -673,6 +687,7 @@ Router ISIS not defined
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
+| Remote_as | 65001 |
 | Source | Loopback0 |
 | Bfd | true |
 | Ebgp multihop | 3 |
@@ -694,8 +709,8 @@ Router ISIS not defined
 | -------- | --------- | --- |
 | 172.31.255.20 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
 | 172.31.255.22 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
-| 192.168.255.1 | 65001 | default |
-| 192.168.255.2 | 65001 | default |
+| 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
+| 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
 
 ### Router BGP EVPN Address Family
 
@@ -724,8 +739,9 @@ router bgp 65104
    distance bgp 20 200 200
    graceful-restart restart-time 300
    graceful-restart
-   maximum-paths 4 ecmp 4
+   maximum-paths 2 ecmp 2
    neighbor EVPN-OVERLAY-PEERS peer group
+   neighbor EVPN-OVERLAY-PEERS remote-as 65001
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
    neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
@@ -740,11 +756,7 @@ router bgp 65104
    neighbor 172.31.255.20 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.22 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.1 remote-as 65001
-   neighbor 192.168.255.1 description EAPI-SPINE1
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.2 remote-as 65001
-   neighbor 192.168.255.2 description EAPI-SPINE2
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle B-ELAN-201
@@ -761,6 +773,7 @@ router bgp 65104
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
+      no neighbor IPv4-UNDERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
@@ -930,6 +943,10 @@ IP DHCP relay not defined
 
 Errdisable is not defined.
 
+# Traffic Policies
+
+Traffic Policies not defined
+
 # MACsec
 
 MACsec not defined
@@ -945,3 +962,11 @@ QOS Profiles are not defined
 # Custom Templates
 
 No custom templates defined
+
+# Class Maps
+
+Class-maps not defined
+
+# Policy Maps
+
+Class-maps not defined

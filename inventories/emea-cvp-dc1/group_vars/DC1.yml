@@ -43,6 +43,7 @@ name_servers:
 ntp_servers:
   - fr.pool.ntp.org
 
+
 # Required for EOS State Validation
 dns_domain: eve.emea.lab
 validation_mode_loose: true

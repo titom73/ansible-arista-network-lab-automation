@@ -1,15 +1,9 @@
 l3leaf_node_group: EAPI_LEAF2
 switch_platform: vEOS-LAB
-switch_bgp_as: 65102
+leaf_bgp_as: 65102
 leaf_id: 4
 switch_mgmt_ip: 10.73.254.14/24
 leaf_evpn_services_l2_only: false
-switch_router_id: 192.168.255.6
-switch_evpn_role: client
-switch_evpn_route_servers:
-- EAPI-SPINE1
-- EAPI-SPINE2
-switch_evpn_route_clients: []
 leaf_filter_tenants:
 - Tenant_A
 - Tenant_B
@@ -338,7 +332,7 @@ router_bgp:
   - distance bgp 20 200 200
   - graceful-restart restart-time 300
   - graceful-restart
-  - maximum-paths 4 ecmp 4
+  - maximum-paths 2 ecmp 2
   peer_groups:
     IPv4-UNDERLAY-PEERS:
       type: ipv4
@@ -356,9 +350,10 @@ router_bgp:
       route_map_in: RM-MLAG-PEER-IN
     EVPN-OVERLAY-PEERS:
       type: evpn
+      remote_as: 65001
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: '3'
+      ebgp_multihop: 3
       password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: true
       maximum_routes: 0
@@ -371,12 +366,8 @@ router_bgp:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
     192.168.255.1:
       peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-SPINE1
-      remote_as: 65001
     192.168.255.2:
       peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-SPINE2
-      remote_as: 65001
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
@@ -384,6 +375,10 @@ router_bgp:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
+      IPv4-UNDERLAY-PEERS:
+        activate: false
+      MLAG-IPv4-UNDERLAY-PEER:
+        activate: false
   address_family_ipv4:
     peer_groups:
       EVPN-OVERLAY-PEERS:

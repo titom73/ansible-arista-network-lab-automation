@@ -1,18 +1,5 @@
 switch_platform: vEOS-LAB
 switch_mgmt_ip: 10.73.254.2/24
-switch_bgp_as: 65001
-switch_router_id: 192.168.255.2
-switch_evpn_role: server
-switch_evpn_route_servers: []
-switch_evpn_route_clients:
-- EAPI-BL01A
-- EAPI-BL01B
-- EAPI-LEAF1A
-- EAPI-LEAF1B
-- EAPI-LEAF2A
-- EAPI-LEAF2B
-- EAPI-LEAF3A
-- EAPI-LEAF4A
 service_routing_protocols_model: multi-agent
 ip_routing: true
 hardware_counters: null
@@ -190,7 +177,7 @@ router_bgp:
   - distance bgp 20 200 200
   - graceful-restart restart-time 300
   - graceful-restart
-  - maximum-paths 4 ecmp 4
+  - maximum-paths 2 ecmp 2
   peer_groups:
     IPv4-UNDERLAY-PEERS:
       type: ipv4
@@ -200,75 +187,70 @@ router_bgp:
       send_community: true
     EVPN-OVERLAY-PEERS:
       type: evpn
+      peer_filter: LEAF-AS-RANGE
+      next_hop_unchanged: true
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: '3'
+      ebgp_multihop: 3
       password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: true
       maximum_routes: 0
-      next_hop_unchanged: true
   neighbors:
     172.31.255.27:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65105
+    192.168.255.9:
+      peer_group: EVPN-OVERLAY-PEERS
+      remote_as: 65105
     172.31.255.31:
       peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 65105
+    192.168.255.10:
+      peer_group: EVPN-OVERLAY-PEERS
       remote_as: 65105
     172.31.255.3:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65101
+    192.168.255.3:
+      peer_group: EVPN-OVERLAY-PEERS
+      remote_as: 65101
     172.31.255.7:
       peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 65101
+    192.168.255.4:
+      peer_group: EVPN-OVERLAY-PEERS
       remote_as: 65101
     172.31.255.11:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65102
+    192.168.255.5:
+      peer_group: EVPN-OVERLAY-PEERS
+      remote_as: 65102
     172.31.255.15:
       peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 65102
+    192.168.255.6:
+      peer_group: EVPN-OVERLAY-PEERS
       remote_as: 65102
     172.31.255.19:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65103
+    192.168.255.7:
+      peer_group: EVPN-OVERLAY-PEERS
+      remote_as: 65103
     172.31.255.23:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65104
-    192.168.255.9:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-BL01A
-      remote_as: 65105
-    192.168.255.10:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-BL01B
-      remote_as: 65105
-    192.168.255.3:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-LEAF1A
-      remote_as: 65101
-    192.168.255.4:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-LEAF1B
-      remote_as: 65101
-    192.168.255.5:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-LEAF2A
-      remote_as: 65102
-    192.168.255.6:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-LEAF2B
-      remote_as: 65102
-    192.168.255.7:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-LEAF3A
-      remote_as: 65103
     192.168.255.8:
       peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-LEAF4A
       remote_as: 65104
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
   address_family_evpn:
     peer_groups:
+      IPv4-UNDERLAY-PEERS:
+        activate: false
       EVPN-OVERLAY-PEERS:
         activate: true
   address_family_ipv4:
