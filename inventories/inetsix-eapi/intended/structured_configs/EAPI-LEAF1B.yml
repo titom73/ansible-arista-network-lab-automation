@@ -377,7 +377,7 @@ router_bgp:
   address_family_rtc: null
   vlan_aware_bundles:
     TENANT_A_PROJECT01:
-      rd: 192.168.255.4:11
+      rd: 192.168.254.3:11
       route_targets:
         both:
         - '11:11'
@@ -386,7 +386,7 @@ router_bgp:
       vlan: 110-112
     B-ELAN-201:
       tenant: Tenant_B
-      rd: 192.168.255.4:20201
+      rd: 192.168.254.3:20201
       route_targets:
         both:
         - 20201:20201
@@ -397,7 +397,7 @@ router_bgp:
   vrfs:
     TENANT_A_PROJECT01:
       router_id: 192.168.255.4
-      rd: 192.168.255.4:11
+      rd: 192.168.254.3:11
       route_targets:
         import:
           evpn:
@@ -410,6 +410,7 @@ router_bgp:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
+      - static
 ip_extcommunity_lists:
   ECL-EVPN-SOO:
   - type: permit

@@ -15,9 +15,14 @@ leaf_filter_tenants:
 - Tenant_B
 leaf_filter_tags:
 - BORDER
-leaf_allowed_vrfs: []
-leaf_allowed_svis: []
-leaf_allowed_vlans: []
+- DC1
+leaf_allowed_vrfs:
+- TENANT_A_PROJECT01
+leaf_allowed_svis:
+- 110
+leaf_allowed_vlans:
+- 110
+- 201
 leaf_mlag: true
 leaf_mlag_group: EAPI_BL01
 leaf_mlag_role: primary
@@ -98,9 +103,23 @@ vlans:
     name: MLAG_PEER
     trunk_groups:
     - MLAG
+  110:
+    tenant: Tenant_A
+    name: PR01-DEMO
+  3010:
+    tenant: Tenant_A
+    name: MLAG_iBGP_TENANT_A_PROJECT01
+    trunk_groups:
+    - LEAF_PEER_L3
+  201:
+    tenant: Tenant_B
+    name: B-ELAN-201
 vrfs:
   MGMT:
     ip_routing: false
+  TENANT_A_PROJECT01:
+    tenant: Tenant_A
+    ip_routing: true
 bfd_multihop:
   interval: 1200
   min_rx: 1200
@@ -195,6 +214,22 @@ vlan_interfaces:
     ip_address: 10.255.252.12/31
     no_autostate: true
     mtu: 1500
+  Vlan110:
+    tenant: Tenant_A
+    tags:
+    - DC1
+    description: PR01-DEMO
+    shutdown: false
+    vrf: TENANT_A_PROJECT01
+    ip_address_virtual: 10.1.10.254/24
+  Vlan3010:
+    tenant: Tenant_A
+    type: underlay_peering
+    shutdown: false
+    description: 'MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01'
+    vrf: TENANT_A_PROJECT01
+    ip_address: 10.255.251.12/31
+    mtu: 1500
 vxlan_tunnel_interface:
   Vxlan1:
     description: EAPI-BL01A_VTEP
@@ -203,8 +238,14 @@ vxlan_tunnel_interface:
       encapsulation_mac_address: mlag-system-id
     vxlan_udp_port: 4789
     vxlan_vni_mappings:
-      vlans: null
-      vrfs: null
+      vlans:
+        110:
+          vni: 10110
+        201:
+          vni: 20201
+      vrfs:
+        TENANT_A_PROJECT01:
+          vni: 11
 tcam_profile: null
 platform: null
 mac_address_table: null
@@ -217,6 +258,9 @@ static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
   gateway: 10.73.254.253
+- destination_address_prefix: 1.1.1.0/24
+  gateway: 10.1.10.1
+  vrf: TENANT_A_PROJECT01
 prefix_lists: null
 mlag_configuration:
   domain_id: EAPI_BL01
@@ -277,9 +321,42 @@ router_bgp:
       EVPN-OVERLAY-PEERS:
         activate: false
   address_family_rtc: null
-  vlan_aware_bundles: null
+  vlan_aware_bundles:
+    TENANT_A_PROJECT01:
+      rd: 192.168.254.9:11
+      route_targets:
+        both:
+        - '11:11'
+      redistribute_routes:
+      - learned
+      vlan: 110
+    B-ELAN-201:
+      tenant: Tenant_B
+      rd: 192.168.254.9:20201
+      route_targets:
+        both:
+        - 20201:20201
+      redistribute_routes:
+      - learned
+      vlan: 201
   vlans: null
-  vrfs: null
+  vrfs:
+    TENANT_A_PROJECT01:
+      router_id: 192.168.255.9
+      rd: 192.168.254.9:11
+      route_targets:
+        import:
+          evpn:
+          - '11:11'
+        export:
+          evpn:
+          - '11:11'
+      neighbors:
+        10.255.251.13:
+          peer_group: MLAG-IPv4-UNDERLAY-PEER
+      redistribute_routes:
+      - connected
+      - static
 ip_extcommunity_lists:
   ECL-EVPN-SOO:
   - type: permit

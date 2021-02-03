@@ -4,9 +4,11 @@
 
 fabric_name: EAPI_FABRIC
 
-underlay_routing_protocol: ebgp
-overlay_routing_protocol: ebgp
-# bgp_as: 65000
+underlay_routing_protocol: isis
+overlay_routing_protocol: ibgp
+
+# AS Number to use when overlay_routing_protocol=ibgp
+bgp_as: 65000
 
 # ISIS Parameters when underlay_routing_protocol=ISIS
 isis_area_id: "49.0001"
@@ -58,14 +60,15 @@ spine:
   nodes:
     EAPI-SPINE1:
       id: 1
+      evpn_role: server
       mgmt_ip: 10.73.254.1/24
       mac_address: '0c:1d:c0:1d:62:01'
-      bgp_route_reflector: true
     EAPI-SPINE2:
       id: 2
+      evpn_role: server
       mgmt_ip: 10.73.254.2/24
       mac_address: '0c:1d:c0:1d:62:02'
-      bgp_route_reflector: true
+
 
 # Leaf switch groups
 # A maximum of two nodes can form a leaf group
@@ -83,6 +86,8 @@ l3leaf:
     mlag_interfaces: [Ethernet3, Ethernet4]
     spanning_tree_priority: 4096
     spanning_tree_mode: mstp
+    evpn_role: client
+    evpn_route_servers: [EAPI-SPINE1, EAPI-SPINE2]
   node_groups:
     EAPI_LEAF1:
       bgp_as: 65101
@@ -146,7 +151,7 @@ l3leaf:
       bgp_as: 65105
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'BORDER' ]
+        tags: [ 'BORDER', 'DC1' ]
       nodes:
         EAPI-BL01A:
           id: 7

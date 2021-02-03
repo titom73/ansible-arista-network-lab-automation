@@ -852,14 +852,14 @@ router isis EVPN_UNDERLAY
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| B-ELAN-201 | 192.168.255.4:20201 |  20201:20201  |  |  | learned | 201 |
-| TENANT_A_PROJECT01 | 192.168.255.4:11 |  11:11  |  |  | learned | 110-112 |
+| B-ELAN-201 | 192.168.254.3:20201 |  20201:20201  |  |  | learned | 201 |
+| TENANT_A_PROJECT01 | 192.168.254.3:11 |  11:11  |  |  | learned | 110-112 |
 
 #### Router BGP EVPN VRFs
 
 | VRF | Route-Distinguisher | Redistribute |
 | --- | ------------------- | ------------ |
-| TENANT_A_PROJECT01 | 192.168.255.4:11 | connected |
+| TENANT_A_PROJECT01 | 192.168.254.3:11 | connected  static |
 
 ### Router BGP Device Configuration
 
@@ -885,13 +885,13 @@ router bgp 65000
    neighbor 192.168.255.2 description EAPI-SPINE2
    !
    vlan-aware-bundle B-ELAN-201
-      rd 192.168.255.4:20201
+      rd 192.168.254.3:20201
       route-target both 20201:20201
       redistribute learned
       vlan 201
    !
    vlan-aware-bundle TENANT_A_PROJECT01
-      rd 192.168.255.4:11
+      rd 192.168.254.3:11
       route-target both 11:11
       redistribute learned
       vlan 110-112
@@ -905,12 +905,13 @@ router bgp 65000
       no neighbor EVPN-OVERLAY-PEERS activate
    !
    vrf TENANT_A_PROJECT01
-      rd 192.168.255.4:11
+      rd 192.168.254.3:11
       route-target import evpn 11:11
       route-target export evpn 11:11
       router-id 192.168.255.4
       neighbor 10.255.251.0 peer group MLAG-IPv4-UNDERLAY-PEER
       redistribute connected
+      redistribute static
 ```
 
 ## Router BFD

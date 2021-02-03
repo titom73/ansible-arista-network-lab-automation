@@ -399,12 +399,25 @@ vlan internal order ascending range 1006 1199
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
+| 110 | PR01-DEMO | none  |
+| 201 | B-ELAN-201 | none  |
+| 3010 | MLAG_iBGP_TENANT_A_PROJECT01 | LEAF_PEER_L3  |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3  |
 | 4094 | MLAG_PEER | MLAG  |
 
 ## VLANs Device Configuration
 
 ```eos
+!
+vlan 110
+   name PR01-DEMO
+!
+vlan 201
+   name B-ELAN-201
+!
+vlan 3010
+   name MLAG_iBGP_TENANT_A_PROJECT01
+   trunk group LEAF_PEER_L3
 !
 vlan 4093
    name LEAF_PEER_L3
@@ -555,6 +568,8 @@ interface Loopback1
 
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
+| Vlan110 |  PR01-DEMO  |  TENANT_A_PROJECT01  |  -  |  false  |
+| Vlan3010 |  MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01  |  TENANT_A_PROJECT01  |  1500  |  false  |
 | Vlan4093 |  MLAG_PEER_L3_PEERING  |  default  |  1500  |  false  |
 | Vlan4094 |  MLAG_PEER  |  default  |  1500  |  false  |
 
@@ -562,6 +577,8 @@ interface Loopback1
 
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
+| Vlan110 |  TENANT_A_PROJECT01  |  -  |  10.1.10.254/24  |  -  |  -  |  -  |  -  |
+| Vlan3010 |  TENANT_A_PROJECT01  |  10.255.251.13/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  10.255.251.13/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  10.255.252.13/31  |  -  |  -  |  -  |  -  |  -  |
 
@@ -576,6 +593,18 @@ interface Loopback1
 ### VLAN Interfaces Device Configuration
 
 ```eos
+!
+interface Vlan110
+   description PR01-DEMO
+   no shutdown
+   vrf TENANT_A_PROJECT01
+   ip address virtual 10.1.10.254/24
+!
+interface Vlan3010
+   description MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01
+   no shutdown
+   vrf TENANT_A_PROJECT01
+   ip address 10.255.251.13/31
 !
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
@@ -604,7 +633,14 @@ interface Vlan4094
 
 | VLAN | VNI |
 | ---- | --- |
-| N/A | N/A |
+| 110 | 10110 |
+| 201 | 20201 |
+
+#### VRF to VNI Mappings
+
+| VLAN | VNI |
+| ---- | --- |
+| TENANT_A_PROJECT01 | 11 |
 
 ### VXLAN Interface Device Configuration
 
@@ -614,6 +650,9 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
+   vxlan vlan 110 vni 10110
+   vxlan vlan 201 vni 20201
+   vxlan vrf TENANT_A_PROJECT01 vni 11
 ```
 
 # Routing
@@ -639,6 +678,7 @@ ip virtual-router mac-address 00:1c:73:00:dc:01
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | true|| MGMT | false |
+| TENANT_A_PROJECT01 | true |
 
 ### IP Routing Device Configuration
 
@@ -646,6 +686,7 @@ ip virtual-router mac-address 00:1c:73:00:dc:01
 !
 ip routing
 no ip routing vrf MGMT
+ip routing vrf TENANT_A_PROJECT01
 ```
 
 ## IPv6 Routing
@@ -655,6 +696,7 @@ no ip routing vrf MGMT
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | false || MGMT | false |
+| TENANT_A_PROJECT01 | false |
 
 
 ## Static Routes
@@ -664,12 +706,14 @@ no ip routing vrf MGMT
 | VRF | Destination Prefix | Next Hop IP             | Exit interface      | Administrative Distance       | Tag               | Route Name                    | Metric         |
 | --- | ------------------ | ----------------------- | ------------------- | ----------------------------- | ----------------- | ----------------------------- | -------------- |
 | MGMT  | 0.0.0.0/0 |  10.73.254.253  |  -  |  1  |  -  |  -  |  - |
+| TENANT_A_PROJECT01  | 1.1.1.0/24 |  10.1.10.1  |  -  |  1  |  -  |  -  |  - |
 
 ### Static Routes Device Configuration
 
 ```eos
 !
 ip route vrf MGMT 0.0.0.0/0 10.73.254.253
+ip route vrf TENANT_A_PROJECT01 1.1.1.0/24 10.1.10.1
 ```
 
 ## IPv6 Static Routes
@@ -756,12 +800,24 @@ router isis EVPN_UNDERLAY
 | -------- | --------- | --- |
 | 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
 | 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
+| 10.255.251.12 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 |
 
 ### Router BGP EVPN Address Family
 
 #### Router BGP EVPN MAC-VRFs
 
+##### VLAN aware bundles
+
+| VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
+| ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
+| B-ELAN-201 | 192.168.254.9:20201 |  20201:20201  |  |  | learned | 201 |
+| TENANT_A_PROJECT01 | 192.168.254.9:11 |  11:11  |  |  | learned | 110 |
+
 #### Router BGP EVPN VRFs
+
+| VRF | Route-Distinguisher | Redistribute |
+| --- | ------------------- | ------------ |
+| TENANT_A_PROJECT01 | 192.168.254.9:11 | connected  static |
 
 ### Router BGP Device Configuration
 
@@ -786,6 +842,18 @@ router bgp 65000
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.2 description EAPI-SPINE2
    !
+   vlan-aware-bundle B-ELAN-201
+      rd 192.168.254.9:20201
+      route-target both 20201:20201
+      redistribute learned
+      vlan 201
+   !
+   vlan-aware-bundle TENANT_A_PROJECT01
+      rd 192.168.254.9:11
+      route-target both 11:11
+      redistribute learned
+      vlan 110
+   !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN in
       neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out
@@ -793,6 +861,15 @@ router bgp 65000
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
+   !
+   vrf TENANT_A_PROJECT01
+      rd 192.168.254.9:11
+      route-target import evpn 11:11
+      route-target export evpn 11:11
+      router-id 192.168.255.10
+      neighbor 10.255.251.12 peer group MLAG-IPv4-UNDERLAY-PEER
+      redistribute connected
+      redistribute static
 ```
 
 ## Router BFD
@@ -921,12 +998,15 @@ IPv6 extended access-lists not defined
 | VRF Name | IP Routing |
 | -------- | ---------- |
 | MGMT | disabled |
+| TENANT_A_PROJECT01 | enabled |
 
 ## VRF Instances Device Configuration
 
 ```eos
 !
 vrf instance MGMT
+!
+vrf instance TENANT_A_PROJECT01
 ```
 
 # Virtual Source NAT
