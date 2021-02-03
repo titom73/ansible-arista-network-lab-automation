@@ -79,7 +79,8 @@ local_users:
     privilege: 15
     role: network-admin
     sha512_password: $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
-clock: null
+clock:
+  timezone: Europe/Paris
 vlans:
   110:
     tenant: Tenant_A

@@ -31,7 +31,6 @@
   - [Hardware Counters](#hardware-counters)
   - [VM Tracer Sessions](#vm-tracer-sessions)
   - [Event Handler](#event-handler)
-- [Hardware TCAM Profile](#hardware-tcam-profile)
 - [MLAG](#mlag)
 - [Spanning Tree](#spanning-tree)
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
@@ -49,7 +48,6 @@
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
   - [IPv6 Static Routes](#ipv6-static-routes)
-  - [Router General](#router-general)
   - [Router OSPF](#router-ospf)
   - [Router ISIS](#router-isis)
   - [Router BGP](#router-bgp)
@@ -76,11 +74,9 @@
 - [Router L2 VPN](#router-l2-vpn)
 - [IP DHCP Relay](#ip-dhcp-relay)
 - [Errdisable](#errdisable)
-- [Traffic Policies](#traffic-policies-1)
 - [MAC security](#mac-security)
 - [QOS](#qos)
 - [QOS Profiles](#qos-profiles)
-- [Class Maps](#class-maps)
 
 # Management
 
@@ -334,10 +330,6 @@ No VM tracer sessions defined
 
 No event handler defined
 
-# Hardware TCAM Profile
-
-Hardware TCAM profile is not defined
-
 # MLAG
 
 MLAG not defined
@@ -429,6 +421,13 @@ No Interface Defaults defined
 | Ethernet1 |  P2P_LINK_TO_EAPI-SPINE1_Ethernet7  |  routed  | - |  172.31.255.17/31  |  default  |  1500  |  false  |  -  |  -  |
 | Ethernet2 |  P2P_LINK_TO_EAPI-SPINE2_Ethernet7  |  routed  | - |  172.31.255.19/31  |  default  |  1500  |  false  |  -  |  -  |
 
+#### ISIS
+
+| Interface | Channel Group | ISIS Instance | ISIS Metric | Mode |
+| --------- | ------------- | ------------- | ----------- | ---- |
+| Ethernet1 | - | EVPN_UNDERLAY |  50 |  point-to-point |
+| Ethernet2 | - | EVPN_UNDERLAY |  50 |  point-to-point |
+
 ### Ethernet Interfaces Device Configuration
 
 ```eos
@@ -438,12 +437,18 @@ interface Ethernet1
    no shutdown
    no switchport
    ip address 172.31.255.17/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
 !
 interface Ethernet2
    description P2P_LINK_TO_EAPI-SPINE2_Ethernet7
    no shutdown
    no switchport
    ip address 172.31.255.19/31
+   isis enable EVPN_UNDERLAY
+   isis metric 50
+   isis network point-to-point
 !
 interface Ethernet5
    description SRV-POD03_Eth1
@@ -460,7 +465,6 @@ interface Ethernet5
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel5 | SRV-POD03_PortChanne1 | switched | trunk | 1-4000 | - | - | - | - | - | 0000:0000:0303:0202:0101 |
-
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -498,6 +502,12 @@ interface Port-Channel5
 | Loopback0 | EVPN_Overlay_Peering | default | - |
 | Loopback1 | VTEP_VXLAN_Tunnel_Source | default | - |
 
+#### ISIS
+
+| Interface | ISIS instance | ISIS metric | Interface mode |
+| -------- | -------- | -------- | -------- |
+| Loopback0 | EVPN_UNDERLAY |  - |  passive |
+| Loopback1 | EVPN_UNDERLAY |  - |  passive |
 
 ### Loopback Interfaces Device Configuration
 
@@ -507,11 +517,15 @@ interface Loopback0
    description EVPN_Overlay_Peering
    no shutdown
    ip address 192.168.255.7/32
+   isis enable EVPN_UNDERLAY
+   isis passive
 !
 interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    no shutdown
    ip address 192.168.254.7/32
+   isis enable EVPN_UNDERLAY
+   isis passive
 ```
 
 ## VLAN Interfaces
@@ -606,8 +620,7 @@ ip virtual-router mac-address 00:1c:73:00:dc:01
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | true|
-| MGMT | false |
+| default | true|| MGMT | false |
 | TENANT_A_PROJECT01 | true |
 
 ### IP Routing Device Configuration
@@ -652,17 +665,45 @@ IPv6 static routes not defined
 
 Global ARP timeout not defined.
 
-## Router General
-
-Router general not defined
-
 ## Router OSPF
 
 Router OSPF not defined
 
 ## Router ISIS
 
-Router ISIS not defined
+### Router ISIS Summary
+
+| Settings | Value |
+| -------- | ----- |
+| Instance | EVPN_UNDERLAY |
+| Net-ID | 49.0001.0001.0001.0005.00 |
+| Type | level-2 |
+| Address Family | ipv4 unicast |
+
+### ISIS Interfaces Summary
+
+| Interface | ISIS Instance | ISIS Metric | Interface Mode |
+| -------- | -------- | -------- | -------- |
+| Ethernet1 | EVPN_UNDERLAY |  50 |  point-to-point |
+| Ethernet2 | EVPN_UNDERLAY |  50 |  point-to-point |
+| Loopback0 | EVPN_UNDERLAY |  - |  passive |
+| Loopback1 | EVPN_UNDERLAY |  - |  passive |
+
+### Router ISIS Device Configuration
+
+```eos
+router isis EVPN_UNDERLAY
+   net 49.0001.0001.0001.0005.00
+   is-type level-2
+   router-id ipv4 192.168.255.7
+   log-adjacency-changes
+   !
+   address-family ipv4 unicast
+      maximum-paths 2
+   !
+!
+```
+
 
 ## Router BGP
 
@@ -670,7 +711,7 @@ Router ISIS not defined
 
 | BGP AS | Router ID |
 | ------ | --------- |
-| 65103|  192.168.255.7 |
+| 65000|  192.168.255.7 |
 
 | BGP Tuning |
 | ---------- |
@@ -678,7 +719,7 @@ Router ISIS not defined
 | distance bgp 20 200 200 |
 | graceful-restart restart-time 300 |
 | graceful-restart |
-| maximum-paths 2 ecmp 2 |
+| maximum-paths 4 ecmp 4 |
 
 ### Router BGP Peer Groups
 
@@ -687,28 +728,16 @@ Router ISIS not defined
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
-| Remote_as | 65001 |
+| Remote_as | 65000 |
 | Source | Loopback0 |
 | Bfd | true |
-| Ebgp multihop | 3 |
 | Send community | true |
 | Maximum routes | 0 (no limit) |
-
-#### IPv4-UNDERLAY-PEERS
-
-| Settings | Value |
-| -------- | ----- |
-| Address Family | ipv4 |
-| Remote_as | 65001 |
-| Send community | true |
-| Maximum routes | 12000 |
 
 ### BGP Neighbors
 
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
-| 172.31.255.16 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
-| 172.31.255.18 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
 | 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
 | 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
 
@@ -733,31 +762,24 @@ Router ISIS not defined
 
 ```eos
 !
-router bgp 65103
+router bgp 65000
    router-id 192.168.255.7
    no bgp default ipv4-unicast
    distance bgp 20 200 200
    graceful-restart restart-time 300
    graceful-restart
-   maximum-paths 2 ecmp 2
+   maximum-paths 4 ecmp 4
    neighbor EVPN-OVERLAY-PEERS peer group
-   neighbor EVPN-OVERLAY-PEERS remote-as 65001
+   neighbor EVPN-OVERLAY-PEERS remote-as 65000
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
-   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS remote-as 65001
-   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
-   neighbor IPv4-UNDERLAY-PEERS send-community
-   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 172.31.255.16 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.18 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.1 description EAPI-SPINE1
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
-   redistribute connected route-map RM-CONN-2-BGP
+   neighbor 192.168.255.2 description EAPI-SPINE2
    !
    vlan-aware-bundle B-ELAN-201
       rd 192.168.255.7:20201
@@ -772,12 +794,12 @@ router bgp 65103
       vlan 110,113
    !
    address-family evpn
+      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN in
+      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out
       neighbor EVPN-OVERLAY-PEERS activate
-      no neighbor IPv4-UNDERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS activate
    !
    vrf TENANT_A_PROJECT01
       rd 192.168.255.7:11
@@ -843,23 +865,7 @@ No peer filters defined
 
 ## Prefix-lists
 
-### Prefix-lists Summary
-
-#### PL-LOOPBACKS-EVPN-OVERLAY
-
-| Sequence | Action |
-| -------- | ------ |
-| 10 | permit 192.168.255.0/24 eq 32 |
-| 20 | permit 192.168.254.0/24 eq 32 |
-
-### Prefix-lists Device Configuration
-
-```eos
-!
-ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-   seq 10 permit 192.168.255.0/24 eq 32
-   seq 20 permit 192.168.254.0/24 eq 32
-```
+Prefix-lists not defined
 
 ## IPv6 Prefix-lists
 
@@ -869,23 +875,45 @@ IPv6 prefix-lists not defined
 
 ### Route-maps Summary
 
-#### RM-CONN-2-BGP
+#### RM-EVPN-SOO-IN
 
 | Sequence | Type | Match and/or Set |
 | -------- | ---- | ---------------- |
-| 10 | permit | match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
+| 10 | deny | match extcommunity ECL-EVPN-SOO |
+
+#### RM-EVPN-SOO-OUT
+
+| Sequence | Type | Match and/or Set |
+| -------- | ---- | ---------------- |
+| 10 | permit | set extcommunity soo 192.168.254.7:1 additive |
 
 ### Route-maps Device Configuration
 
 ```eos
 !
-route-map RM-CONN-2-BGP permit 10
-   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+route-map RM-EVPN-SOO-IN deny 10
+   match extcommunity ECL-EVPN-SOO
+!
+route-map RM-EVPN-SOO-IN permit 20
+!
+route-map RM-EVPN-SOO-OUT permit 10
+   set extcommunity soo 192.168.254.7:1 additive
 ```
 
 ## IP Extended Communities
 
-No extended community defined
+### IP Extended Communities Summary
+
+| Sequence | Type | Match and/or Set |
+| -------- | ---- | ---------------- |
+| ECL-EVPN-SOO | permit | soo 192.168.254.7:1 |
+
+### IP Extended Communities configuration
+
+```eos
+!
+ip extcommunity-list ECL-EVPN-SOO permit soo 192.168.254.7:1
+```
 
 # ACL
 
@@ -943,10 +971,6 @@ IP DHCP relay not defined
 
 Errdisable is not defined.
 
-# Traffic Policies
-
-Traffic Policies not defined
-
 # MACsec
 
 MACsec not defined
@@ -962,11 +986,3 @@ QOS Profiles are not defined
 # Custom Templates
 
 No custom templates defined
-
-# Class Maps
-
-Class-maps not defined
-
-# Policy Maps
-
-Class-maps not defined
