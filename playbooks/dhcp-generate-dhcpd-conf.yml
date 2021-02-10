@@ -1,11 +1,11 @@
 ---
-- name: Configure DHCP Service for ZTP
-  hosts: cv_ztp
+- name: Configure DHCP Service configuration for ZTP
+  hosts: DHCP_SERVER
   gather_facts: false
   tasks:
     - name: 'Execute DHCP configuration role'
       import_role:
-        name: arista.cvp.dhcp_configuration
+        name: arista.avd.dhcp_provisioner
       vars:
-        mode: offline
-        output_dirs: '{{inventory}}'
+        # ztp_mode: offline
+        output_dirs: '{{ inventory_dir }}'

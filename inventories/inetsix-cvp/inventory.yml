@@ -23,6 +23,16 @@ all:
           ansible_host: 10.73.1.239
           ansible_user: ansible
           ansible_password: ansible
+    TOOLS:
+      hosts:
+        DHCP_SERVER:
+          ztp_network_summary: 10.73.255.0/24
+          ztp_pool_start: 10.73.255.200
+          ztp_pool_end: 10.73.255.210
+          ztp_lease_time: 300
+          fabric_group: 'DC1'
+          ztp_mac_source: system
+          ztp_mode: offline
     # DC1_Fabric - EVPN Fabric running in home lab
     DC1:
       vars:

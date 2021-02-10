@@ -1,8 +1,11 @@
 ---
-- name: Configure DHCP Service for ZTP
-  hosts: ZTP
-  gather_facts: true
+- name: Configure DHCP Service on {{ inventory_hostname }} for ZTP
+  hosts: TOOLS
+  gather_facts: false
   tasks:
     - name: 'Execute DHCP configuration role'
       import_role:
-        name: arista.cvp.dhcp_configuration
+        name: arista.avd.dhcp_provisioner
+      vars:
+        ztp_mode: online
+        output_dirs: '{{ inventory_dir }}'

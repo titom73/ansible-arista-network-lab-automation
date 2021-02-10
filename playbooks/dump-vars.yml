@@ -1,29 +1,31 @@
 ---
 - name: dump all
   hosts: all
+  vars:
+    debug_output: " {{inventory_dir}}/dump.json "
   tasks:
     - name: Print some debug information
       vars:
         msg: |
-          Module Variables ("vars"):
-          --------------------------------
+          // Module Variables ("vars"):
           {{ vars | to_nice_json }}
 
-          Environment Variables ("environment"):
-          --------------------------------
+          // Environment Variables ("environment"):
           {{ environment | to_nice_json }}
 
-          GROUP NAMES Variables ("group_names"):
-          --------------------------------
+          // GROUP NAMES Variables ("group_names"):
           {{ group_names | to_nice_json }}
 
-          GROUPS Variables ("groups"):
-          --------------------------------
+          // GROUPS Variables ("groups"):
           {{ groups | to_nice_json }}
 
-          HOST Variables ("hostvars"):
-          --------------------------------
+          // HOST Variables ("hostvars"):
           {{ hostvars | to_nice_json }}
+      register: DEBUG_MSG
+
+    # - name: "Save output to {{ debug_output }}"
+    #   ansible.builtin.template:
+
 
       debug:
         msg: "{{ msg.split('\n') }}"

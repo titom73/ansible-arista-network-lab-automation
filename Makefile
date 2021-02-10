@@ -190,10 +190,6 @@ unit-device: ## Unit test for cv_configlet
 # Tooling Management
 ################################################################################
 
-.PHONY: dhcp-configure
-dhcp-configure: ## Configure DHCP server with topology information.
-	ansible-playbook playbooks/dhcp-configuration.yml -i $(INVENTORY)/$(INVENTORY_FILE)
-
 .PHONY: centos-bootstrap
 centos-bootstrap: ## Initial Centos 7 Configuration
 	ansible-playbook playbooks/centos07-bootstrap.yml -i $(TOOLS)/$(INVENTORY_FILE)
@@ -202,9 +198,17 @@ centos-bootstrap: ## Initial Centos 7 Configuration
 dhcp-bootstrap: ## Configure DHCP service
 	ansible-playbook playbooks/dhcp-configuration.yml -i $(TOOLS)/$(INVENTORY_FILE)
 
-.PHONY: dhcp-generate
-dhcp-generate: ## Generate DHCPd configuration
+.PHONY: avd-dhcp-generate
+avd-dhcp-generate: ## Generate DHCPd configuration
 	ansible-playbook playbooks/dhcp-generate-dhcpd-conf.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+
+.PHONY: avd-dhcp-rollout
+avd-dhcp-rollout: ## Configure DHCP server with topology information.
+	ansible-playbook playbooks/dhcp-configuration.yml -i $(INVENTORY)/$(INVENTORY_FILE)
+
+.PHONY: dump-vars
+dump-vars: ## Dump all ansible variables into $(INVENTORY)/dump.json
+	ansible-playbook playbooks/dump-vars.yml -i $(INVENTORY)/$(INVENTORY_FILE) > $(INVENTORY)/dump.json
 
 ################################################################################
 # Repository Management
