@@ -1,0 +1,21 @@
+---
+  - name: Test Template rendering
+    hosts: all
+    connection: local
+    gather_facts: no
+    collections:
+       - arista.avd
+    vars:
+      template_path: '{{ playbook_dir }}/../test-template.j2'
+      template_output: '{{ inventory_dir }}/test-template.result'
+      filters:
+        10:
+          name: test
+          vrf: test
+    tasks:
+      - name: 'Render template to {{ template_output }}'
+        run_once: true
+        delegate_to: localhost
+        ansible.builtin.template:
+          src: '{{ template_path }}'
+          dest: '{{ template_output }}'

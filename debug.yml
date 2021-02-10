@@ -1,0 +1,1127 @@
+all:
+  children:
+    EAPI:
+      children:
+        EAPI_FABRIC:
+          children:
+            EAPI_L2LEAFS:
+              children:
+                EAPI_L2LEAF1:
+                  hosts:
+                    EAPI-AGG01:
+                      ansible_become: true
+                      ansible_become_method: enable
+                      ansible_connection: httpapi
+                      ansible_host: 10.73.1.241
+                      ansible_httpapi_host: '{{ ansible_host }}'
+                      ansible_httpapi_port: '{{ansible_port}}'
+                      ansible_httpapi_use_ssl: true
+                      ansible_httpapi_validate_certs: false
+                      ansible_network_os: eos
+                      ansible_port: 8021
+                      ansible_ssh_pass: ansible
+                      ansible_user: ansible
+                      bfd_multihop: &id001
+                        interval: 1200
+                        min_rx: 1200
+                        multiplier: 3
+                      bgp_as: 65000
+                      bgp_peer_groups: &id002
+                        EVPN_OVERLAY_PEERS:
+                          password: q+VNViP5i4rVjW1cxFv2wA==
+                        IPv4_UNDERLAY_PEERS:
+                          password: AQQvKeimxJu+uGQ/yYvv9w==
+                        MLAG_IPv4_UNDERLAY_PEER:
+                          password: vnEaG8gMeQf3d3cN6PktXQ==
+                      cvp_ingestauth_key: ''
+                      cvp_instance_ips: &id003
+                      - 10.73.254.1
+                      evpn_rd_type: &id004
+                        admin_subfield: vtep_loopback
+                      evpn_rt_type: &id005
+                        admin_subfield: vni
+                      fabric_name: EAPI_FABRIC
+                      isis_area_id: '49.0001'
+                      isis_site_id: '0001'
+                      l2leaf: &id006
+                        defaults:
+                          mlag_interfaces:
+                          - Ethernet3
+                          - Ethernet4
+                          parent_l3leafs:
+                          - EAPI-LEAF1A
+                          - EAPI-LEAF1B
+                          platform: vEOS-LAB
+                          spanning_tree_mode: mstp
+                          spanning_tree_priority: 16384
+                          uplink_interfaces:
+                          - Ethernet1
+                          - Ethernet2
+                        node_groups:
+                          EAPI_L2LEAF1:
+                            filter:
+                              tags:
+                              - POD01
+                              - DC1
+                              tenants:
+                              - Tenant_A
+                              - Tenant_B
+                            nodes:
+                              EAPI-AGG01:
+                                id: 9
+                                l3leaf_interfaces:
+                                - Ethernet5
+                                - Ethernet5
+                                mac_address: 0c:1d:c0:1d:62:01
+                                mgmt_ip: 10.73.254.21/24
+                            parent_l3leafs:
+                            - EAPI-LEAF1A
+                            - EAPI-LEAF1B
+                          EAPI_L2LEAF2:
+                            filter:
+                              tags:
+                              - POD02
+                              - DC1
+                              tenants:
+                              - Tenant_A
+                              - Tenant_B
+                            nodes:
+                              EAPI-AGG02:
+                                id: 10
+                                l3leaf_interfaces:
+                                - Ethernet5
+                                - Ethernet5
+                                mac_address: 0c:1d:c0:1d:62:01
+                                mgmt_ip: 10.73.254.22/24
+                            parent_l3leafs:
+                            - EAPI-LEAF2A
+                            - EAPI-LEAF2B
+                      l3leaf: &id007
+                        defaults:
+                          bgp_as: 65100
+                          evpn_role: client
+                          evpn_route_servers:
+                          - EAPI-SPINE1
+                          - EAPI-SPINE2
+                          mlag_interfaces:
+                          - Ethernet3
+                          - Ethernet4
+                          platform: vEOS-LAB
+                          spanning_tree_mode: mstp
+                          spanning_tree_priority: 4096
+                          spines:
+                          - EAPI-SPINE1
+                          - EAPI-SPINE2
+                          uplink_to_spine_interfaces:
+                          - Ethernet1
+                          - Ethernet2
+                          virtual_router_mac_address: 00:1c:73:00:dc:01
+                        node_groups:
+                          EAPI_BL01:
+                            bgp_as: 65105
+                            filter:
+                              tags:
+                              - BORDER
+                              - DC1
+                              tenants:
+                              - Tenant_A
+                              - Tenant_B
+                            nodes:
+                              EAPI-BL01A:
+                                id: 7
+                                mac_address: 0c:1d:c0:1d:62:01
+                                mgmt_ip: 10.73.254.15/24
+                                spine_interfaces:
+                                - Ethernet5
+                                - Ethernet5
+                              EAPI-BL01B:
+                                id: 8
+                                mac_address: 0c:1d:c0:1d:62:01
+                                mgmt_ip: 10.73.254.16/24
+                                spine_interfaces:
+                                - Ethernet6
+                                - Ethernet6
+                          EAPI_LEAF1:
+                            bgp_as: 65101
+                            filter:
+                              tags:
+                              - POD01
+                              - DC1
+                              tenants:
+                              - Tenant_A
+                              - Tenant_B
+                            nodes:
+                              EAPI-LEAF1A:
+                                id: 1
+                                mac_address: 0c:1d:c0:1d:62:01
+                                mgmt_ip: 10.73.254.11/24
+                                spine_interfaces:
+                                - Ethernet1
+                                - Ethernet1
+                              EAPI-LEAF1B:
+                                id: 2
+                                mac_address: 0c:1d:c0:1d:62:01
+                                mgmt_ip: 10.73.254.12/24
+                                spine_interfaces:
+                                - Ethernet2
+                                - Ethernet2
+                          EAPI_LEAF2:
+                            bgp_as: 65102
+                            filter:
+                              tags:
+                              - POD02
+                              - DC1
+                              tenants:
+                              - Tenant_A
+                              - Tenant_B
+                            nodes:
+                              EAPI-LEAF2A:
+                                id: 3
+                                mac_address: 0c:1d:c0:1d:62:01
+                                mgmt_ip: 10.73.254.13/24
+                                spine_interfaces:
+                                - Ethernet3
+                                - Ethernet3
+                              EAPI-LEAF2B:
+                                id: 4
+                                mac_address: 0c:1d:c0:1d:62:01
+                                mgmt_ip: 10.73.254.14/24
+                                spine_interfaces:
+                                - Ethernet4
+                                - Ethernet4
+                          EAPI_LEAF3:
+                            bgp_as: 65103
+                            filter:
+                              tags:
+                              - POD03
+                              - DC1
+                              tenants:
+                              - Tenant_A
+                              - Tenant_B
+                            nodes:
+                              EAPI-LEAF3A:
+                                id: 5
+                                mac_address: 0c:1d:c0:1d:62:01
+                                mgmt_ip: 10.73.254.17/24
+                                spine_interfaces:
+                                - Ethernet7
+                                - Ethernet7
+                          EAPI_LEAF4:
+                            bgp_as: 65104
+                            filter:
+                              tags:
+                              - POD03
+                              - DC1
+                              tenants:
+                              - Tenant_A
+                              - Tenant_B
+                            nodes:
+                              EAPI-LEAF4A:
+                                id: 6
+                                mac_address: 0c:1d:c0:1d:62:01
+                                mgmt_ip: 10.73.254.18/24
+                                spine_interfaces:
+                                - Ethernet8
+                                - Ethernet8
+                      leaf_bgp_defaults: &id008
+                      - no bgp default ipv4-unicast
+                      - distance bgp 20 200 200
+                      - graceful-restart restart-time 300
+                      - graceful-restart
+                      local_users: &id009
+                        admin:
+                          no_password: true
+                          privilege: 15
+                          role: network-admin
+                        ansible:
+                          privilege: 15
+                          role: network-admin
+                          sha512_password: $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
+                        cvpadmin:
+                          privilege: 15
+                          role: network-admin
+                          sha512_password: $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
+                        demo:
+                          privilege: 15
+                          role: network-admin
+                          sha512_password: $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
+                      mgmt_gateway: 10.73.254.253
+                      mlag_ibgp_peering_vrfs: &id010
+                        base_vlan: 3000
+                      mlag_ips: &id011
+                        leaf_peer_l3: 10.255.251.0/24
+                        mlag_peer: 10.255.252.0/24
+                      name_servers: &id012
+                      - 10.73.254.253
+                      - 10.73.1.254
+                      ntp_servers: &id013
+                      - 10.73.254.253
+                      - 10.73.1.254
+                      overlay_loopback_network_summary: 192.168.255.0/24
+                      overlay_routing_protocol: ibgp
+                      p2p_uplinks_mtu: 1500
+                      port_profiles: &id014
+                        A-PR01-DMZ:
+                          mode: access
+                          vlans: '110'
+                        A-PR01-TRUST:
+                          mode: access
+                          vlans: '111'
+                        ALL:
+                          mode: trunk
+                          vlans: 1-4000
+                        B-ELAN-201:
+                          mode: access
+                          vlans: '201'
+                        STORM_CONTROL_UNUSED:
+                          mode: trunk
+                          storm_control:
+                            all:
+                              level: 10
+                              unit: percent
+                            broadcast:
+                              level: 100
+                              unit: pps
+                            multicast:
+                              level: 1
+                              unit: percent
+                            unknown-unicast:
+                              level: 2
+                              unit: percent
+                          vlans: 1-4000
+                      servers: &id015
+                        SRV-POD01:
+                          adapters:
+                          - profile: ALL
+                            server_ports:
+                            - Eth1
+                            switch_ports:
+                            - Ethernet3
+                            switches:
+                            - EAPI-AGG01
+                            type: nic
+                          rack: POD01
+                        SRV-POD02:
+                          adapters:
+                          - profile: ALL
+                            server_ports:
+                            - Eth1
+                            switch_ports:
+                            - Ethernet3
+                            switches:
+                            - EAPI-AGG02
+                            type: nic
+                          rack: POD02
+                        SRV-POD03:
+                          adapters:
+                          - port_channel:
+                              description: PortChanne1
+                              mode: active
+                              short_esi: 0303:0202:0101
+                              state: present
+                            profile: ALL
+                            server_ports:
+                            - Eth1
+                            - Eth2
+                            switch_ports:
+                            - Ethernet5
+                            - Ethernet5
+                            switches:
+                            - EAPI-LEAF3A
+                            - EAPI-LEAF4A
+                          rack: POD03
+                      snmp_server: &id016
+                        communities:
+                          inetsix-ro:
+                            access: rw
+                            access_list_ipv4:
+                              name: inetsix-snmp-acl
+                            view: test
+                      spine: &id017
+                        bgp_as: 65001
+                        leaf_as_range: 65101-65132
+                        nodes:
+                          EAPI-SPINE1:
+                            evpn_role: server
+                            id: 1
+                            mac_address: 0c:1d:c0:1d:62:01
+                            mgmt_ip: 10.73.254.1/24
+                          EAPI-SPINE2:
+                            evpn_role: server
+                            id: 2
+                            mac_address: 0c:1d:c0:1d:62:02
+                            mgmt_ip: 10.73.254.2/24
+                        platform: vEOS-LAB
+                      spine_bgp_defaults: &id018
+                      - no bgp default ipv4-unicast
+                      - distance bgp 20 200 200
+                      - graceful-restart restart-time 300
+                      - graceful-restart
+                      svi_profiles: &id019
+                        GENERIC:
+                          enabled: true
+                          mtu: 1560
+                        GENERIC_FULL:
+                          enabled: false
+                          ip_address_virtual: 10.1.10.254/24
+                          mtu: 1560
+                          name: GENERIC Name
+                        WITH_DHCP_01_SNOOPING:
+                          enabled: true
+                          igmp_snooping_enabled: false
+                          ip_address_virtual: 10.1.11.254/24
+                          ip_helpers:
+                            1.1.1.1:
+                              source_interface: lo100
+                              source_vrf: TEST
+                        WITH_DHCP_02:
+                          enabled: true
+                          ip_helpers:
+                            1.1.1.1:
+                              source_interface: lo100
+                              source_vrf: MGMT
+                          tags:
+                          - DC1
+                        WITH_NO_MTU:
+                          enabled: true
+                      tenants: &id020
+                        Tenant_A:
+                          enable_mlag_ibgp_peering_vrfs: true
+                          mac_vrf_vni_base: 10000
+                          vrfs:
+                            TENANT_A_PROJECT01:
+                              redistribute_static: true
+                              static_routes:
+                              - destination_address_prefix: 1.1.1.0/24
+                                gateway: 10.1.10.1
+                                nodes:
+                                - EAPI-BL01A
+                                - EAPI-BL01B
+                              svis:
+                                110:
+                                  enabled: true
+                                  ip_address_virtual: 10.1.10.254/24
+                                  name: PR01-DEMO
+                                  tags:
+                                  - DC1
+                                111:
+                                  name: PR01-TRUST
+                                  profile: WITH_DHCP_01_SNOOPING
+                                  tags:
+                                  - POD01
+                                  - POD02
+                                112:
+                                  igmp_snooping_enabled: false
+                                  ip_address_virtual: 10.1.12.254/24
+                                  name: PR01-TRUST
+                                  tags:
+                                  - POD01
+                                  - POD02
+                                113:
+                                  enabled: true
+                                  igmp_snooping_enabled: true
+                                  ip_address_virtual: 10.1.13.254/24
+                                  name: PR01-DMZ
+                                  tags:
+                                  - POD03
+                              vrf_vni: 11
+                        Tenant_B:
+                          enable_mlag_ibgp_peering_vrfs: true
+                          l2vlans:
+                            201:
+                              igmp_snooping: false
+                              name: B-ELAN-201
+                              tags:
+                              - DC1
+                          mac_vrf_vni_base: 20000
+                      timezone: Europe/Paris
+                      type: l2leaf
+                      underlay_ospf_area: 0.0.0.0
+                      underlay_ospf_max_lsa: 12000
+                      underlay_ospf_process_id: 100
+                      underlay_p2p_network_summary: 172.31.255.0/24
+                      underlay_routing_protocol: isis
+                      validate_state_markdown_flavor: github
+                      vtep_loopback_network_summary: 192.168.254.0/24
+                      vxlan_vlan_aware_bundles: true
+                EAPI_L2LEAF2:
+                  hosts:
+                    EAPI-AGG02:
+                      ansible_become: true
+                      ansible_become_method: enable
+                      ansible_connection: httpapi
+                      ansible_host: 10.73.1.241
+                      ansible_httpapi_host: '{{ ansible_host }}'
+                      ansible_httpapi_port: '{{ansible_port}}'
+                      ansible_httpapi_use_ssl: true
+                      ansible_httpapi_validate_certs: false
+                      ansible_network_os: eos
+                      ansible_port: 8022
+                      ansible_ssh_pass: ansible
+                      ansible_user: ansible
+                      bfd_multihop: *id001
+                      bgp_as: 65000
+                      bgp_peer_groups: *id002
+                      cvp_ingestauth_key: ''
+                      cvp_instance_ips: *id003
+                      evpn_rd_type: *id004
+                      evpn_rt_type: *id005
+                      fabric_name: EAPI_FABRIC
+                      isis_area_id: '49.0001'
+                      isis_site_id: '0001'
+                      l2leaf: *id006
+                      l3leaf: *id007
+                      leaf_bgp_defaults: *id008
+                      local_users: *id009
+                      mgmt_gateway: 10.73.254.253
+                      mlag_ibgp_peering_vrfs: *id010
+                      mlag_ips: *id011
+                      name_servers: *id012
+                      ntp_servers: *id013
+                      overlay_loopback_network_summary: 192.168.255.0/24
+                      overlay_routing_protocol: ibgp
+                      p2p_uplinks_mtu: 1500
+                      port_profiles: *id014
+                      servers: *id015
+                      snmp_server: *id016
+                      spine: *id017
+                      spine_bgp_defaults: *id018
+                      svi_profiles: *id019
+                      tenants: *id020
+                      timezone: Europe/Paris
+                      type: l2leaf
+                      underlay_ospf_area: 0.0.0.0
+                      underlay_ospf_max_lsa: 12000
+                      underlay_ospf_process_id: 100
+                      underlay_p2p_network_summary: 172.31.255.0/24
+                      underlay_routing_protocol: isis
+                      validate_state_markdown_flavor: github
+                      vtep_loopback_network_summary: 192.168.254.0/24
+                      vxlan_vlan_aware_bundles: true
+            EAPI_L3LEAFS:
+              children:
+                EAPI_BL01:
+                  hosts:
+                    EAPI-BL01A:
+                      ansible_become: true
+                      ansible_become_method: enable
+                      ansible_connection: httpapi
+                      ansible_host: 10.73.1.241
+                      ansible_httpapi_host: '{{ ansible_host }}'
+                      ansible_httpapi_port: '{{ansible_port}}'
+                      ansible_httpapi_use_ssl: true
+                      ansible_httpapi_validate_certs: false
+                      ansible_network_os: eos
+                      ansible_port: 8015
+                      ansible_ssh_pass: ansible
+                      ansible_user: ansible
+                      bfd_multihop: *id001
+                      bgp_as: 65000
+                      bgp_peer_groups: *id002
+                      cvp_ingestauth_key: ''
+                      cvp_instance_ips: *id003
+                      evpn_rd_type: *id004
+                      evpn_rt_type: *id005
+                      fabric_name: EAPI_FABRIC
+                      isis_area_id: '49.0001'
+                      isis_site_id: '0001'
+                      l2leaf: *id006
+                      l3leaf: *id007
+                      leaf_bgp_defaults: *id008
+                      local_users: *id009
+                      mgmt_gateway: 10.73.254.253
+                      mlag_ibgp_peering_vrfs: *id010
+                      mlag_ips: *id011
+                      name_servers: *id012
+                      ntp_servers: *id013
+                      overlay_loopback_network_summary: 192.168.255.0/24
+                      overlay_routing_protocol: ibgp
+                      p2p_uplinks_mtu: 1500
+                      port_profiles: *id014
+                      servers: *id015
+                      snmp_server: *id016
+                      spine: *id017
+                      spine_bgp_defaults: *id018
+                      svi_profiles: *id019
+                      tenants: *id020
+                      timezone: Europe/Paris
+                      type: l3leaf
+                      underlay_ospf_area: 0.0.0.0
+                      underlay_ospf_max_lsa: 12000
+                      underlay_ospf_process_id: 100
+                      underlay_p2p_network_summary: 172.31.255.0/24
+                      underlay_routing_protocol: isis
+                      validate_state_markdown_flavor: github
+                      vtep_loopback_network_summary: 192.168.254.0/24
+                      vxlan_vlan_aware_bundles: true
+                    EAPI-BL01B:
+                      ansible_become: true
+                      ansible_become_method: enable
+                      ansible_connection: httpapi
+                      ansible_host: 10.73.1.241
+                      ansible_httpapi_host: '{{ ansible_host }}'
+                      ansible_httpapi_port: '{{ansible_port}}'
+                      ansible_httpapi_use_ssl: true
+                      ansible_httpapi_validate_certs: false
+                      ansible_network_os: eos
+                      ansible_port: 8016
+                      ansible_ssh_pass: ansible
+                      ansible_user: ansible
+                      bfd_multihop: *id001
+                      bgp_as: 65000
+                      bgp_peer_groups: *id002
+                      cvp_ingestauth_key: ''
+                      cvp_instance_ips: *id003
+                      evpn_rd_type: *id004
+                      evpn_rt_type: *id005
+                      fabric_name: EAPI_FABRIC
+                      isis_area_id: '49.0001'
+                      isis_site_id: '0001'
+                      l2leaf: *id006
+                      l3leaf: *id007
+                      leaf_bgp_defaults: *id008
+                      local_users: *id009
+                      mgmt_gateway: 10.73.254.253
+                      mlag_ibgp_peering_vrfs: *id010
+                      mlag_ips: *id011
+                      name_servers: *id012
+                      ntp_servers: *id013
+                      overlay_loopback_network_summary: 192.168.255.0/24
+                      overlay_routing_protocol: ibgp
+                      p2p_uplinks_mtu: 1500
+                      port_profiles: *id014
+                      servers: *id015
+                      snmp_server: *id016
+                      spine: *id017
+                      spine_bgp_defaults: *id018
+                      svi_profiles: *id019
+                      tenants: *id020
+                      timezone: Europe/Paris
+                      type: l3leaf
+                      underlay_ospf_area: 0.0.0.0
+                      underlay_ospf_max_lsa: 12000
+                      underlay_ospf_process_id: 100
+                      underlay_p2p_network_summary: 172.31.255.0/24
+                      underlay_routing_protocol: isis
+                      validate_state_markdown_flavor: github
+                      vtep_loopback_network_summary: 192.168.254.0/24
+                      vxlan_vlan_aware_bundles: true
+                EAPI_LEAF1:
+                  hosts:
+                    EAPI-LEAF1A:
+                      ansible_become: true
+                      ansible_become_method: enable
+                      ansible_connection: httpapi
+                      ansible_host: 10.73.1.241
+                      ansible_httpapi_host: '{{ ansible_host }}'
+                      ansible_httpapi_port: '{{ansible_port}}'
+                      ansible_httpapi_use_ssl: true
+                      ansible_httpapi_validate_certs: false
+                      ansible_network_os: eos
+                      ansible_port: 8011
+                      ansible_ssh_pass: ansible
+                      ansible_user: ansible
+                      bfd_multihop: *id001
+                      bgp_as: 65000
+                      bgp_peer_groups: *id002
+                      cvp_ingestauth_key: ''
+                      cvp_instance_ips: *id003
+                      evpn_rd_type: *id004
+                      evpn_rt_type: *id005
+                      fabric_name: EAPI_FABRIC
+                      isis_area_id: '49.0001'
+                      isis_site_id: '0001'
+                      l2leaf: *id006
+                      l3leaf: *id007
+                      leaf_bgp_defaults: *id008
+                      local_users: *id009
+                      mgmt_gateway: 10.73.254.253
+                      mlag_ibgp_peering_vrfs: *id010
+                      mlag_ips: *id011
+                      name_servers: *id012
+                      ntp_servers: *id013
+                      overlay_loopback_network_summary: 192.168.255.0/24
+                      overlay_routing_protocol: ibgp
+                      p2p_uplinks_mtu: 1500
+                      port_profiles: *id014
+                      servers: *id015
+                      snmp_server: *id016
+                      spine: *id017
+                      spine_bgp_defaults: *id018
+                      svi_profiles: *id019
+                      tenants: *id020
+                      timezone: Europe/Paris
+                      type: l3leaf
+                      underlay_ospf_area: 0.0.0.0
+                      underlay_ospf_max_lsa: 12000
+                      underlay_ospf_process_id: 100
+                      underlay_p2p_network_summary: 172.31.255.0/24
+                      underlay_routing_protocol: isis
+                      validate_state_markdown_flavor: github
+                      vtep_loopback_network_summary: 192.168.254.0/24
+                      vxlan_vlan_aware_bundles: true
+                    EAPI-LEAF1B:
+                      ansible_become: true
+                      ansible_become_method: enable
+                      ansible_connection: httpapi
+                      ansible_host: 10.73.1.241
+                      ansible_httpapi_host: '{{ ansible_host }}'
+                      ansible_httpapi_port: '{{ansible_port}}'
+                      ansible_httpapi_use_ssl: true
+                      ansible_httpapi_validate_certs: false
+                      ansible_network_os: eos
+                      ansible_port: 8012
+                      ansible_ssh_pass: ansible
+                      ansible_user: ansible
+                      bfd_multihop: *id001
+                      bgp_as: 65000
+                      bgp_peer_groups: *id002
+                      cvp_ingestauth_key: ''
+                      cvp_instance_ips: *id003
+                      evpn_rd_type: *id004
+                      evpn_rt_type: *id005
+                      fabric_name: EAPI_FABRIC
+                      isis_area_id: '49.0001'
+                      isis_site_id: '0001'
+                      l2leaf: *id006
+                      l3leaf: *id007
+                      leaf_bgp_defaults: *id008
+                      local_users: *id009
+                      mgmt_gateway: 10.73.254.253
+                      mlag_ibgp_peering_vrfs: *id010
+                      mlag_ips: *id011
+                      name_servers: *id012
+                      ntp_servers: *id013
+                      overlay_loopback_network_summary: 192.168.255.0/24
+                      overlay_routing_protocol: ibgp
+                      p2p_uplinks_mtu: 1500
+                      port_profiles: *id014
+                      servers: *id015
+                      snmp_server: *id016
+                      spine: *id017
+                      spine_bgp_defaults: *id018
+                      svi_profiles: *id019
+                      tenants: *id020
+                      timezone: Europe/Paris
+                      type: l3leaf
+                      underlay_ospf_area: 0.0.0.0
+                      underlay_ospf_max_lsa: 12000
+                      underlay_ospf_process_id: 100
+                      underlay_p2p_network_summary: 172.31.255.0/24
+                      underlay_routing_protocol: isis
+                      validate_state_markdown_flavor: github
+                      vtep_loopback_network_summary: 192.168.254.0/24
+                      vxlan_vlan_aware_bundles: true
+                EAPI_LEAF2:
+                  hosts:
+                    EAPI-LEAF2A:
+                      ansible_become: true
+                      ansible_become_method: enable
+                      ansible_connection: httpapi
+                      ansible_host: 10.73.1.241
+                      ansible_httpapi_host: '{{ ansible_host }}'
+                      ansible_httpapi_port: '{{ansible_port}}'
+                      ansible_httpapi_use_ssl: true
+                      ansible_httpapi_validate_certs: false
+                      ansible_network_os: eos
+                      ansible_port: 8013
+                      ansible_ssh_pass: ansible
+                      ansible_user: ansible
+                      bfd_multihop: *id001
+                      bgp_as: 65000
+                      bgp_peer_groups: *id002
+                      cvp_ingestauth_key: ''
+                      cvp_instance_ips: *id003
+                      evpn_rd_type: *id004
+                      evpn_rt_type: *id005
+                      fabric_name: EAPI_FABRIC
+                      isis_area_id: '49.0001'
+                      isis_site_id: '0001'
+                      l2leaf: *id006
+                      l3leaf: *id007
+                      leaf_bgp_defaults: *id008
+                      local_users: *id009
+                      mgmt_gateway: 10.73.254.253
+                      mlag_ibgp_peering_vrfs: *id010
+                      mlag_ips: *id011
+                      name_servers: *id012
+                      ntp_servers: *id013
+                      overlay_loopback_network_summary: 192.168.255.0/24
+                      overlay_routing_protocol: ibgp
+                      p2p_uplinks_mtu: 1500
+                      port_profiles: *id014
+                      servers: *id015
+                      snmp_server: *id016
+                      spine: *id017
+                      spine_bgp_defaults: *id018
+                      svi_profiles: *id019
+                      tenants: *id020
+                      timezone: Europe/Paris
+                      type: l3leaf
+                      underlay_ospf_area: 0.0.0.0
+                      underlay_ospf_max_lsa: 12000
+                      underlay_ospf_process_id: 100
+                      underlay_p2p_network_summary: 172.31.255.0/24
+                      underlay_routing_protocol: isis
+                      validate_state_markdown_flavor: github
+                      vtep_loopback_network_summary: 192.168.254.0/24
+                      vxlan_vlan_aware_bundles: true
+                    EAPI-LEAF2B:
+                      ansible_become: true
+                      ansible_become_method: enable
+                      ansible_connection: httpapi
+                      ansible_host: 10.73.1.241
+                      ansible_httpapi_host: '{{ ansible_host }}'
+                      ansible_httpapi_port: '{{ansible_port}}'
+                      ansible_httpapi_use_ssl: true
+                      ansible_httpapi_validate_certs: false
+                      ansible_network_os: eos
+                      ansible_port: 8014
+                      ansible_ssh_pass: ansible
+                      ansible_user: ansible
+                      bfd_multihop: *id001
+                      bgp_as: 65000
+                      bgp_peer_groups: *id002
+                      cvp_ingestauth_key: ''
+                      cvp_instance_ips: *id003
+                      evpn_rd_type: *id004
+                      evpn_rt_type: *id005
+                      fabric_name: EAPI_FABRIC
+                      isis_area_id: '49.0001'
+                      isis_site_id: '0001'
+                      l2leaf: *id006
+                      l3leaf: *id007
+                      leaf_bgp_defaults: *id008
+                      local_users: *id009
+                      mgmt_gateway: 10.73.254.253
+                      mlag_ibgp_peering_vrfs: *id010
+                      mlag_ips: *id011
+                      name_servers: *id012
+                      ntp_servers: *id013
+                      overlay_loopback_network_summary: 192.168.255.0/24
+                      overlay_routing_protocol: ibgp
+                      p2p_uplinks_mtu: 1500
+                      port_profiles: *id014
+                      servers: *id015
+                      snmp_server: *id016
+                      spine: *id017
+                      spine_bgp_defaults: *id018
+                      svi_profiles: *id019
+                      tenants: *id020
+                      timezone: Europe/Paris
+                      type: l3leaf
+                      underlay_ospf_area: 0.0.0.0
+                      underlay_ospf_max_lsa: 12000
+                      underlay_ospf_process_id: 100
+                      underlay_p2p_network_summary: 172.31.255.0/24
+                      underlay_routing_protocol: isis
+                      validate_state_markdown_flavor: github
+                      vtep_loopback_network_summary: 192.168.254.0/24
+                      vxlan_vlan_aware_bundles: true
+                EAPI_LEAF3:
+                  hosts:
+                    EAPI-LEAF3A:
+                      ansible_become: true
+                      ansible_become_method: enable
+                      ansible_connection: httpapi
+                      ansible_host: 10.73.1.241
+                      ansible_httpapi_host: '{{ ansible_host }}'
+                      ansible_httpapi_port: '{{ansible_port}}'
+                      ansible_httpapi_use_ssl: true
+                      ansible_httpapi_validate_certs: false
+                      ansible_network_os: eos
+                      ansible_port: 8017
+                      ansible_ssh_pass: ansible
+                      ansible_user: ansible
+                      bfd_multihop: *id001
+                      bgp_as: 65000
+                      bgp_peer_groups: *id002
+                      cvp_ingestauth_key: ''
+                      cvp_instance_ips: *id003
+                      evpn_rd_type: *id004
+                      evpn_rt_type: *id005
+                      fabric_name: EAPI_FABRIC
+                      isis_area_id: '49.0001'
+                      isis_site_id: '0001'
+                      l2leaf: *id006
+                      l3leaf: *id007
+                      leaf_bgp_defaults: *id008
+                      local_users: *id009
+                      mgmt_gateway: 10.73.254.253
+                      mlag_ibgp_peering_vrfs: *id010
+                      mlag_ips: *id011
+                      name_servers: *id012
+                      ntp_servers: *id013
+                      overlay_loopback_network_summary: 192.168.255.0/24
+                      overlay_routing_protocol: ibgp
+                      p2p_uplinks_mtu: 1500
+                      port_profiles: *id014
+                      servers: *id015
+                      snmp_server: *id016
+                      spine: *id017
+                      spine_bgp_defaults: *id018
+                      svi_profiles: *id019
+                      tenants: *id020
+                      timezone: Europe/Paris
+                      type: l3leaf
+                      underlay_ospf_area: 0.0.0.0
+                      underlay_ospf_max_lsa: 12000
+                      underlay_ospf_process_id: 100
+                      underlay_p2p_network_summary: 172.31.255.0/24
+                      underlay_routing_protocol: isis
+                      validate_state_markdown_flavor: github
+                      vtep_loopback_network_summary: 192.168.254.0/24
+                      vxlan_vlan_aware_bundles: true
+                EAPI_LEAF4:
+                  hosts:
+                    EAPI-LEAF4A:
+                      ansible_become: true
+                      ansible_become_method: enable
+                      ansible_connection: httpapi
+                      ansible_host: 10.73.1.241
+                      ansible_httpapi_host: '{{ ansible_host }}'
+                      ansible_httpapi_port: '{{ansible_port}}'
+                      ansible_httpapi_use_ssl: true
+                      ansible_httpapi_validate_certs: false
+                      ansible_network_os: eos
+                      ansible_port: 8018
+                      ansible_ssh_pass: ansible
+                      ansible_user: ansible
+                      bfd_multihop: *id001
+                      bgp_as: 65000
+                      bgp_peer_groups: *id002
+                      cvp_ingestauth_key: ''
+                      cvp_instance_ips: *id003
+                      evpn_rd_type: *id004
+                      evpn_rt_type: *id005
+                      fabric_name: EAPI_FABRIC
+                      isis_area_id: '49.0001'
+                      isis_site_id: '0001'
+                      l2leaf: *id006
+                      l3leaf: *id007
+                      leaf_bgp_defaults: *id008
+                      local_users: *id009
+                      mgmt_gateway: 10.73.254.253
+                      mlag_ibgp_peering_vrfs: *id010
+                      mlag_ips: *id011
+                      name_servers: *id012
+                      ntp_servers: *id013
+                      overlay_loopback_network_summary: 192.168.255.0/24
+                      overlay_routing_protocol: ibgp
+                      p2p_uplinks_mtu: 1500
+                      port_profiles: *id014
+                      servers: *id015
+                      snmp_server: *id016
+                      spine: *id017
+                      spine_bgp_defaults: *id018
+                      svi_profiles: *id019
+                      tenants: *id020
+                      timezone: Europe/Paris
+                      type: l3leaf
+                      underlay_ospf_area: 0.0.0.0
+                      underlay_ospf_max_lsa: 12000
+                      underlay_ospf_process_id: 100
+                      underlay_p2p_network_summary: 172.31.255.0/24
+                      underlay_routing_protocol: isis
+                      validate_state_markdown_flavor: github
+                      vtep_loopback_network_summary: 192.168.254.0/24
+                      vxlan_vlan_aware_bundles: true
+            EAPI_SPINES:
+              hosts:
+                EAPI-SPINE1:
+                  ansible_become: true
+                  ansible_become_method: enable
+                  ansible_connection: httpapi
+                  ansible_host: 10.73.1.241
+                  ansible_httpapi_host: '{{ ansible_host }}'
+                  ansible_httpapi_port: '{{ansible_port}}'
+                  ansible_httpapi_use_ssl: true
+                  ansible_httpapi_validate_certs: false
+                  ansible_network_os: eos
+                  ansible_port: 8001
+                  ansible_ssh_pass: ansible
+                  ansible_user: ansible
+                  bfd_multihop: *id001
+                  bgp_as: 65000
+                  bgp_peer_groups: *id002
+                  cvp_ingestauth_key: ''
+                  cvp_instance_ips: *id003
+                  fabric_name: EAPI_FABRIC
+                  isis_area_id: '49.0001'
+                  isis_site_id: '0001'
+                  l2leaf: *id006
+                  l3leaf: *id007
+                  leaf_bgp_defaults: *id008
+                  local_users: *id009
+                  mgmt_gateway: 10.73.254.253
+                  mlag_ips: *id011
+                  name_servers: *id012
+                  ntp_servers: *id013
+                  overlay_loopback_network_summary: 192.168.255.0/24
+                  overlay_routing_protocol: ibgp
+                  p2p_uplinks_mtu: 1500
+                  snmp_server: *id016
+                  spine: *id017
+                  spine_bgp_defaults: *id018
+                  timezone: Europe/Paris
+                  type: spine
+                  underlay_ospf_area: 0.0.0.0
+                  underlay_ospf_max_lsa: 12000
+                  underlay_ospf_process_id: 100
+                  underlay_p2p_network_summary: 172.31.255.0/24
+                  underlay_routing_protocol: isis
+                  validate_state_markdown_flavor: github
+                  vtep_loopback_network_summary: 192.168.254.0/24
+                  vxlan_vlan_aware_bundles: true
+                EAPI-SPINE2:
+                  ansible_become: true
+                  ansible_become_method: enable
+                  ansible_connection: httpapi
+                  ansible_host: 10.73.1.241
+                  ansible_httpapi_host: '{{ ansible_host }}'
+                  ansible_httpapi_port: '{{ansible_port}}'
+                  ansible_httpapi_use_ssl: true
+                  ansible_httpapi_validate_certs: false
+                  ansible_network_os: eos
+                  ansible_port: 8002
+                  ansible_ssh_pass: ansible
+                  ansible_user: ansible
+                  bfd_multihop: *id001
+                  bgp_as: 65000
+                  bgp_peer_groups: *id002
+                  cvp_ingestauth_key: ''
+                  cvp_instance_ips: *id003
+                  fabric_name: EAPI_FABRIC
+                  isis_area_id: '49.0001'
+                  isis_site_id: '0001'
+                  l2leaf: *id006
+                  l3leaf: *id007
+                  leaf_bgp_defaults: *id008
+                  local_users: *id009
+                  mgmt_gateway: 10.73.254.253
+                  mlag_ips: *id011
+                  name_servers: *id012
+                  ntp_servers: *id013
+                  overlay_loopback_network_summary: 192.168.255.0/24
+                  overlay_routing_protocol: ibgp
+                  p2p_uplinks_mtu: 1500
+                  snmp_server: *id016
+                  spine: *id017
+                  spine_bgp_defaults: *id018
+                  timezone: Europe/Paris
+                  type: spine
+                  underlay_ospf_area: 0.0.0.0
+                  underlay_ospf_max_lsa: 12000
+                  underlay_ospf_process_id: 100
+                  underlay_p2p_network_summary: 172.31.255.0/24
+                  underlay_routing_protocol: isis
+                  validate_state_markdown_flavor: github
+                  vtep_loopback_network_summary: 192.168.254.0/24
+                  vxlan_vlan_aware_bundles: true
+        EAPI_SERVERS:
+          children:
+            EAPI_L2LEAFS:
+              children:
+                EAPI_L2LEAF1:
+                  hosts:
+                    EAPI-AGG01: {}
+                EAPI_L2LEAF2:
+                  hosts:
+                    EAPI-AGG02: {}
+            EAPI_L3LEAFS:
+              children:
+                EAPI_BL01:
+                  hosts:
+                    EAPI-BL01A: {}
+                    EAPI-BL01B: {}
+                EAPI_LEAF1:
+                  hosts:
+                    EAPI-LEAF1A: {}
+                    EAPI-LEAF1B: {}
+                EAPI_LEAF2:
+                  hosts:
+                    EAPI-LEAF2A: {}
+                    EAPI-LEAF2B: {}
+                EAPI_LEAF3:
+                  hosts:
+                    EAPI-LEAF3A: {}
+                EAPI_LEAF4:
+                  hosts:
+                    EAPI-LEAF4A: {}
+        EAPI_TENANTS_NETWORKS:
+          children:
+            EAPI_L2LEAFS:
+              children:
+                EAPI_L2LEAF1:
+                  hosts:
+                    EAPI-AGG01: {}
+                EAPI_L2LEAF2:
+                  hosts:
+                    EAPI-AGG02: {}
+            EAPI_L3LEAFS:
+              children:
+                EAPI_BL01:
+                  hosts:
+                    EAPI-BL01A: {}
+                    EAPI-BL01B: {}
+                EAPI_LEAF1:
+                  hosts:
+                    EAPI-LEAF1A: {}
+                    EAPI-LEAF1B: {}
+                EAPI_LEAF2:
+                  hosts:
+                    EAPI-LEAF2A: {}
+                    EAPI-LEAF2B: {}
+                EAPI_LEAF3:
+                  hosts:
+                    EAPI-LEAF3A: {}
+                EAPI_LEAF4:
+                  hosts:
+                    EAPI-LEAF4A: {}
+    EOS:
+      children:
+        EAPI_FABRIC:
+          children:
+            EAPI_L2LEAFS:
+              children:
+                EAPI_L2LEAF1:
+                  hosts:
+                    EAPI-AGG01: {}
+                EAPI_L2LEAF2:
+                  hosts:
+                    EAPI-AGG02: {}
+            EAPI_L3LEAFS:
+              children:
+                EAPI_BL01:
+                  hosts:
+                    EAPI-BL01A: {}
+                    EAPI-BL01B: {}
+                EAPI_LEAF1:
+                  hosts:
+                    EAPI-LEAF1A: {}
+                    EAPI-LEAF1B: {}
+                EAPI_LEAF2:
+                  hosts:
+                    EAPI-LEAF2A: {}
+                    EAPI-LEAF2B: {}
+                EAPI_LEAF3:
+                  hosts:
+                    EAPI-LEAF3A: {}
+                EAPI_LEAF4:
+                  hosts:
+                    EAPI-LEAF4A: {}
+            EAPI_SPINES:
+              hosts:
+                EAPI-SPINE1: {}
+                EAPI-SPINE2: {}
+    TOOLS:
+      hosts:
+        DHCP_SERVER:
+          fabric_group: EAPI
+          ztp_lease_time: 300
+          ztp_mac_source: system
+          ztp_mode: offline
+          ztp_network_summary: 10.73.254.0/24
+          ztp_pool_end: 10.73.254.210
+          ztp_pool_start: 10.73.254.200
+    ungrouped: {}
