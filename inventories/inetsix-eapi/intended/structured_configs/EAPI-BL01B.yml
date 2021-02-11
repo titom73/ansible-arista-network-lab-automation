@@ -1,6 +1,6 @@
 l3leaf_node_group: EAPI_BL01
 switch_platform: vEOS-LAB
-switch_bgp_as: 65000
+switch_bgp_as: 65105
 leaf_id: 8
 switch_mgmt_ip: 10.73.254.16/24
 leaf_evpn_services_l2_only: false
@@ -144,9 +144,6 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 172.31.255.29/31
-    isis_enable: EVPN_UNDERLAY
-    isis_metric: 50
-    isis_network_point_to_point: true
   Ethernet2:
     peer: EAPI-SPINE2
     peer_interface: Ethernet6
@@ -156,9 +153,6 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 172.31.255.31/31
-    isis_enable: EVPN_UNDERLAY
-    isis_metric: 50
-    isis_network_point_to_point: true
   Ethernet3:
     peer: EAPI-BL01A
     peer_interface: Ethernet3
@@ -184,14 +178,10 @@ loopback_interfaces:
     description: EVPN_Overlay_Peering
     shutdown: false
     ip_address: 192.168.255.10/32
-    isis_enable: EVPN_UNDERLAY
-    isis_passive: true
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
     shutdown: false
     ip_address: 192.168.254.9/32
-    isis_enable: EVPN_UNDERLAY
-    isis_passive: true
 management_interfaces:
   Management1:
     description: oob_management
@@ -205,9 +195,6 @@ vlan_interfaces:
     shutdown: false
     ip_address: 10.255.251.13/31
     mtu: 1500
-    isis_enable: EVPN_UNDERLAY
-    isis_metric: 50
-    isis_network_point_to_point: true
   Vlan4094:
     description: MLAG_PEER
     shutdown: false
@@ -261,7 +248,13 @@ static_routes:
 - destination_address_prefix: 1.1.1.0/24
   gateway: 10.1.10.1
   vrf: TENANT_A_PROJECT01
-prefix_lists: null
+prefix_lists:
+  PL-LOOPBACKS-EVPN-OVERLAY:
+    sequence_numbers:
+      10:
+        action: permit 192.168.255.0/24 eq 32
+      20:
+        action: permit 192.168.254.0/24 eq 32
 mlag_configuration:
   domain_id: EAPI_BL01
   local_interface: Vlan4094
@@ -270,22 +263,22 @@ mlag_configuration:
   reload_delay_mlag: 300
   reload_delay_non_mlag: 330
 route_maps:
-  RM-EVPN-SOO-IN:
+  RM-CONN-2-BGP:
     sequence_numbers:
       10:
-        type: deny
-        match:
-        - extcommunity ECL-EVPN-SOO
-      20:
         type: permit
-  RM-EVPN-SOO-OUT:
+        match:
+        - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+  RM-MLAG-PEER-IN:
     sequence_numbers:
       10:
         type: permit
         set:
-        - extcommunity soo 192.168.254.9:1 additive
+        - origin incomplete
+        description: Make routes learned over MLAG Peer-link less preferred on spines
+          to ensure optimal routing
 router_bgp:
-  as: 65000
+  as: 65105
   router_id: 192.168.255.10
   bgp_defaults:
   - no bgp default ipv4-unicast
@@ -294,32 +287,58 @@ router_bgp:
   - graceful-restart
   - maximum-paths 4 ecmp 4
   peer_groups:
+    IPv4-UNDERLAY-PEERS:
+      type: ipv4
+      remote_as: 65001
+      password: AQQvKeimxJu+uGQ/yYvv9w==
+      maximum_routes: 12000
+      send_community: true
+    MLAG-IPv4-UNDERLAY-PEER:
+      type: ipv4
+      remote_as: 65105
+      next_hop_self: true
+      password: vnEaG8gMeQf3d3cN6PktXQ==
+      maximum_routes: 12000
+      send_community: true
+      route_map_in: RM-MLAG-PEER-IN
     EVPN-OVERLAY-PEERS:
       type: evpn
       update_source: Loopback0
-      remote_as: 65000
       bfd: true
+      ebgp_multihop: '3'
       password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: true
       maximum_routes: 0
   neighbors:
+    172.31.255.28:
+      peer_group: IPv4-UNDERLAY-PEERS
+    172.31.255.30:
+      peer_group: IPv4-UNDERLAY-PEERS
+    10.255.251.12:
+      peer_group: MLAG-IPv4-UNDERLAY-PEER
     192.168.255.1:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-SPINE1
+      remote_as: 65001
     192.168.255.2:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-SPINE2
-  redistribute_routes: null
+      remote_as: 65001
+  redistribute_routes:
+    connected:
+      route_map: RM-CONN-2-BGP
   address_family_evpn:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
-        route_map_in: RM-EVPN-SOO-IN
-        route_map_out: RM-EVPN-SOO-OUT
   address_family_ipv4:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: false
+      IPv4-UNDERLAY-PEERS:
+        activate: true
+      MLAG-IPv4-UNDERLAY-PEER:
+        activate: true
   address_family_rtc: null
   vlan_aware_bundles:
     TENANT_A_PROJECT01:
@@ -357,25 +376,9 @@ router_bgp:
       redistribute_routes:
       - connected
       - static
-ip_extcommunity_lists:
-  ECL-EVPN-SOO:
-  - type: permit
-    extcommunities: soo 192.168.254.9:1
+ip_extcommunity_lists: null
 router_ospf: null
-router_isis:
-  instance: EVPN_UNDERLAY
-  net: 49.0001.0001.0001.0008.00
-  router_id: 192.168.255.10
-  no_passive_interfaces:
-  - Ethernet1
-  - Ethernet2
-  - Vlan4093
-  - Loopback1
-  is_type: level-2
-  address_family:
-  - ipv4 unicast
-  isis_af_defaults:
-  - maximum-paths 2
+router_isis: null
 queue_monitor_streaming: null
 management_api_http:
   enable_https: true

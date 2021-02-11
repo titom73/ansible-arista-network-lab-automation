@@ -4,8 +4,8 @@
 
 fabric_name: EAPI_FABRIC
 
-underlay_routing_protocol: isis
-overlay_routing_protocol: ibgp
+# underlay_routing_protocol: isis
+# overlay_routing_protocol: ibgp
 
 # AS Number to use when overlay_routing_protocol=ibgp
 bgp_as: 65000
@@ -80,7 +80,7 @@ l3leaf:
     # format: xx:xx:xx:xx:xx:xx
     virtual_router_mac_address: 00:1c:73:00:dc:01
     platform: vEOS-LAB
-    bgp_as: 65100
+    bgp_as: 65110
     spines: [EAPI-SPINE1, EAPI-SPINE2]
     uplink_to_spine_interfaces: [Ethernet1, Ethernet2]
     mlag_interfaces: [Ethernet3, Ethernet4]
@@ -124,7 +124,7 @@ l3leaf:
           mac_address: '0c:1d:c0:1d:62:01'
           spine_interfaces: [Ethernet4, Ethernet4]
     EAPI_LEAF3:
-      bgp_as: 65103
+      mlag: false
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
         tags: [ 'POD03', 'DC1' ]
@@ -132,18 +132,20 @@ l3leaf:
       nodes:
         EAPI-LEAF3A:
           id: 5
+          bgp_as: 65103
           mgmt_ip: 10.73.254.17/24
           mac_address: '0c:1d:c0:1d:62:01'
           spine_interfaces: [Ethernet7, Ethernet7]
-    EAPI_LEAF4:
-      bgp_as: 65104
-      filter:
-        tenants: [ 'Tenant_A', 'Tenant_B' ]
-        tags: [ 'POD03', 'DC1' ]
-        # tags: [ border ]
-      nodes:
+    # EAPI_LEAF4:
+    #   bgp_as: 65104
+    #   filter:
+    #     tenants: [ 'Tenant_A', 'Tenant_B' ]
+    #     tags: [ 'POD03', 'DC1' ]
+    #     # tags: [ border ]
+    #   nodes:
         EAPI-LEAF4A:
           id: 6
+          bgp_as: 65104
           mgmt_ip: 10.73.254.18/24
           mac_address: '0c:1d:c0:1d:62:01'
           spine_interfaces: [Ethernet8, Ethernet8]
