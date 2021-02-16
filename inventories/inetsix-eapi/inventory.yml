@@ -33,12 +33,10 @@ EAPI:
                   ansible_port: 8013
                 EAPI-LEAF2B:
                   ansible_port: 8014
-            EAPI_LEAF3:
+            EAPI_LEAF_ESI:
               hosts:
                 EAPI-LEAF3A:
                   ansible_port: 8017
-            EAPI_LEAF4:
-              hosts:
                 EAPI-LEAF4A:
                   ansible_port: 8018
             EAPI_BL01:

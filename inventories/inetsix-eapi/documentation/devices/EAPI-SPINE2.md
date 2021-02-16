@@ -599,16 +599,16 @@ Router ISIS not defined
 | 172.31.255.7 | 65101 | default |
 | 172.31.255.11 | 65102 | default |
 | 172.31.255.15 | 65102 | default |
-| 172.31.255.19 | 65110 | default |
-| 172.31.255.23 | 65110 | default |
+| 172.31.255.19 | 65101 | default |
+| 172.31.255.23 | 65101 | default |
 | 172.31.255.27 | 65105 | default |
 | 172.31.255.31 | 65105 | default |
 | 192.168.255.3 | 65101 | default |
 | 192.168.255.4 | 65101 | default |
 | 192.168.255.5 | 65102 | default |
 | 192.168.255.6 | 65102 | default |
-| 192.168.255.7 | 65110 | default |
-| 192.168.255.8 | 65110 | default |
+| 192.168.255.7 | 65101 | default |
+| 192.168.255.8 | 65101 | default |
 | 192.168.255.9 | 65105 | default |
 | 192.168.255.10 | 65105 | default |
 
@@ -650,9 +650,9 @@ router bgp 65001
    neighbor 172.31.255.15 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.15 remote-as 65102
    neighbor 172.31.255.19 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.19 remote-as 65110
+   neighbor 172.31.255.19 remote-as 65101
    neighbor 172.31.255.23 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.23 remote-as 65110
+   neighbor 172.31.255.23 remote-as 65101
    neighbor 172.31.255.27 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.27 remote-as 65105
    neighbor 172.31.255.31 peer group IPv4-UNDERLAY-PEERS
@@ -670,10 +670,10 @@ router bgp 65001
    neighbor 192.168.255.6 remote-as 65102
    neighbor 192.168.255.6 description EAPI-LEAF2B
    neighbor 192.168.255.7 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.7 remote-as 65110
+   neighbor 192.168.255.7 remote-as 65101
    neighbor 192.168.255.7 description EAPI-LEAF3A
    neighbor 192.168.255.8 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.8 remote-as 65110
+   neighbor 192.168.255.8 remote-as 65101
    neighbor 192.168.255.8 description EAPI-LEAF4A
    neighbor 192.168.255.9 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.9 remote-as 65105

@@ -1,17 +1,12 @@
 ---
 port_profiles:
-
-
   TENANT_A_OPZone:
     mode: access
     vlans: "110"
-
   TENANT_A_ALL:
     mode: trunk
     vlans: "120-130,160-161"
-
 servers:
-
   server-1:
     rack: RackB
     adapters:
