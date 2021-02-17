@@ -369,8 +369,6 @@ No Interface Defaults defined
 | Ethernet6 |  P2P_LINK_TO_DC1-BL1A_Ethernet1  |  routed  | - |  172.31.255.32/31  |  default  |  1500  |  false  |  -  |  -  |
 | Ethernet7 |  P2P_LINK_TO_DC1-BL1B_Ethernet1  |  routed  | - |  172.31.255.36/31  |  default  |  1500  |  false  |  -  |  -  |
 | Ethernet8 |  P2P_LINK_TO_DC1-LEAF4A_Ethernet1  |  routed  | - |  172.31.255.40/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet9 |  P2P_LINK_TO_DC1-BL2A_Ethernet1  |  routed  | - |  172.31.255.44/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet10 |  P2P_LINK_TO_DC1-BL2B_Ethernet1  |  routed  | - |  172.31.255.48/31  |  default  |  1500  |  false  |  -  |  -  |
 
 #### ISIS
 
@@ -384,8 +382,6 @@ No Interface Defaults defined
 | Ethernet6 | - | EVPN_UNDERLAY |  50 |  point-to-point |
 | Ethernet7 | - | EVPN_UNDERLAY |  50 |  point-to-point |
 | Ethernet8 | - | EVPN_UNDERLAY |  50 |  point-to-point |
-| Ethernet9 | - | EVPN_UNDERLAY |  50 |  point-to-point |
-| Ethernet10 | - | EVPN_UNDERLAY |  50 |  point-to-point |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -459,24 +455,6 @@ interface Ethernet8
    no shutdown
    no switchport
    ip address 172.31.255.40/31
-   isis enable EVPN_UNDERLAY
-   isis metric 50
-   isis network point-to-point
-!
-interface Ethernet9
-   description P2P_LINK_TO_DC1-BL2A_Ethernet1
-   no shutdown
-   no switchport
-   ip address 172.31.255.44/31
-   isis enable EVPN_UNDERLAY
-   isis metric 50
-   isis network point-to-point
-!
-interface Ethernet10
-   description P2P_LINK_TO_DC1-BL2B_Ethernet1
-   no shutdown
-   no switchport
-   ip address 172.31.255.48/31
    isis enable EVPN_UNDERLAY
    isis metric 50
    isis network point-to-point
@@ -609,8 +587,6 @@ Router OSPF not defined
 | Ethernet6 | EVPN_UNDERLAY |  50 |  point-to-point |
 | Ethernet7 | EVPN_UNDERLAY |  50 |  point-to-point |
 | Ethernet8 | EVPN_UNDERLAY |  50 |  point-to-point |
-| Ethernet9 | EVPN_UNDERLAY |  50 |  point-to-point |
-| Ethernet10 | EVPN_UNDERLAY |  50 |  point-to-point |
 | Loopback0 | EVPN_UNDERLAY |  - |  passive |
 
 ### Router ISIS Device Configuration
@@ -647,6 +623,7 @@ router isis EVPN_UNDERLAY
 | distance bgp 20 200 200 |
 | graceful-restart restart-time 300 |
 | graceful-restart |
+| maximum-paths 4 ecmp 4 |
 
 ### Router BGP Peer Groups
 
@@ -666,17 +643,14 @@ router isis EVPN_UNDERLAY
 
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
-| 192.168.255.3 | 65000 | default |
-| 192.168.255.4 | 65000 | default |
-| 192.168.255.5 | 65000 | default |
-| 192.168.255.6 | 65000 | default |
-| 192.168.255.10 | 65000 | default |
-| 192.168.255.11 | 65000 | default |
-| 192.168.255.12 | 65000 | default |
-| 192.168.255.13 | 65000 | default |
-| 192.168.255.14 | 65000 | default |
-| 192.168.255.15 | 65000 | default |
-
+| 192.168.255.3 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
+| 192.168.255.4 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
+| 192.168.255.5 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
+| 192.168.255.6 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
+| 192.168.255.10 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
+| 192.168.255.11 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
+| 192.168.255.12 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
+| 192.168.255.13 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
 
 ### Router BGP EVPN Address Family
 
@@ -695,6 +669,7 @@ router bgp 65000
    distance bgp 20 200 200
    graceful-restart restart-time 300
    graceful-restart
+   maximum-paths 4 ecmp 4
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS remote-as 65000
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
@@ -704,25 +679,21 @@ router bgp 65000
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor 192.168.255.3 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.3 remote-as 65000
+   neighbor 192.168.255.3 description DC1-LEAF1A
    neighbor 192.168.255.4 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.4 remote-as 65000
+   neighbor 192.168.255.4 description DC1-LEAF1B
    neighbor 192.168.255.5 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.5 remote-as 65000
+   neighbor 192.168.255.5 description DC1-LEAF2A
    neighbor 192.168.255.6 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.6 remote-as 65000
+   neighbor 192.168.255.6 description DC1-LEAF2B
    neighbor 192.168.255.10 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.10 remote-as 65000
+   neighbor 192.168.255.10 description DC1-LEAF3A
    neighbor 192.168.255.11 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.11 remote-as 65000
+   neighbor 192.168.255.11 description DC1-BL1A
    neighbor 192.168.255.12 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.12 remote-as 65000
+   neighbor 192.168.255.12 description DC1-BL1B
    neighbor 192.168.255.13 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.13 remote-as 65000
-   neighbor 192.168.255.14 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.14 remote-as 65000
-   neighbor 192.168.255.15 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.15 remote-as 65000
+   neighbor 192.168.255.13 description DC1-LEAF4A
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate

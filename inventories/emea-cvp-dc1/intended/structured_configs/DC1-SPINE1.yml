@@ -1,5 +1,18 @@
 switch_platform: vEOS-LAB
 switch_mgmt_ip: 10.73.1.11/16
+switch_bgp_as: 65000
+switch_router_id: 192.168.255.1
+switch_evpn_role: server
+switch_evpn_route_servers: []
+switch_evpn_route_clients:
+- DC1-BL1A
+- DC1-BL1B
+- DC1-LEAF1A
+- DC1-LEAF1B
+- DC1-LEAF2A
+- DC1-LEAF2B
+- DC1-LEAF3A
+- DC1-LEAF4A
 service_routing_protocols_model: multi-agent
 ip_routing: true
 hardware_counters: null
@@ -80,30 +93,6 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 172.31.255.36/31
-    isis_enable: EVPN_UNDERLAY
-    isis_metric: 50
-    isis_network_point_to_point: true
-  Ethernet9:
-    peer: DC1-BL2A
-    peer_interface: Ethernet1
-    peer_type: l3leaf
-    description: P2P_LINK_TO_DC1-BL2A_Ethernet1
-    mtu: 1500
-    type: routed
-    shutdown: false
-    ip_address: 172.31.255.44/31
-    isis_enable: EVPN_UNDERLAY
-    isis_metric: 50
-    isis_network_point_to_point: true
-  Ethernet10:
-    peer: DC1-BL2B
-    peer_interface: Ethernet1
-    peer_type: l3leaf
-    description: P2P_LINK_TO_DC1-BL2B_Ethernet1
-    mtu: 1500
-    type: routed
-    shutdown: false
-    ip_address: 172.31.255.48/31
     isis_enable: EVPN_UNDERLAY
     isis_metric: 50
     isis_network_point_to_point: true
@@ -211,48 +200,43 @@ router_bgp:
   - distance bgp 20 200 200
   - graceful-restart restart-time 300
   - graceful-restart
+  - maximum-paths 4 ecmp 4
   bgp_cluster_id: 192.168.255.1
   peer_groups:
     EVPN-OVERLAY-PEERS:
       type: evpn
-      remote_as: 65000
       update_source: Loopback0
-      route_reflector_client: true
+      remote_as: 65000
       bfd: true
       password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: true
       maximum_routes: 0
+      route_reflector_client: true
   neighbors:
     192.168.255.11:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65000
+      description: DC1-BL1A
     192.168.255.12:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65000
-    192.168.255.14:
-      peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65000
-    192.168.255.15:
-      peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65000
+      description: DC1-BL1B
     192.168.255.3:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65000
+      description: DC1-LEAF1A
     192.168.255.4:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65000
+      description: DC1-LEAF1B
     192.168.255.5:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65000
+      description: DC1-LEAF2A
     192.168.255.6:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65000
+      description: DC1-LEAF2B
     192.168.255.10:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65000
+      description: DC1-LEAF3A
     192.168.255.13:
       peer_group: EVPN-OVERLAY-PEERS
-      remote_as: 65000
+      description: DC1-LEAF4A
   redistribute_routes: null
   address_family_evpn:
     peer_groups:
@@ -271,8 +255,6 @@ router_isis:
   no_passive_interfaces:
   - Ethernet6
   - Ethernet7
-  - Ethernet9
-  - Ethernet10
   - Ethernet1
   - Ethernet2
   - Ethernet3

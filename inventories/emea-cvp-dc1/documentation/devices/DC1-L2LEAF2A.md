@@ -383,7 +383,6 @@ No Interface Defaults defined
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet1 | DC1-LEAF2A_Ethernet5 | *trunk | *110-111,114 | *- | *- | 1 |
 | Ethernet2 | DC1-LEAF2B_Ethernet5 | *trunk | *110-111,114 | *- | *- | 1 |
-| Ethernet5 |  POD02-SRV_Eth1 | trunk | 110-114,210,211 | - | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -400,13 +399,6 @@ interface Ethernet2
    description DC1-LEAF2B_Ethernet5
    no shutdown
    channel-group 1 mode active
-!
-interface Ethernet5
-   description POD02-SRV_Eth1
-   no shutdown
-   switchport
-   switchport trunk allowed vlan 110-114,210,211
-   switchport mode trunk
 ```
 
 ## Port-Channel Interfaces

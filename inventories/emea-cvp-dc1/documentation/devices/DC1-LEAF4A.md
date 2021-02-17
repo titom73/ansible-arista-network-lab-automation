@@ -718,6 +718,7 @@ router isis EVPN_UNDERLAY
 | distance bgp 20 200 200 |
 | graceful-restart restart-time 300 |
 | graceful-restart |
+| maximum-paths 4 ecmp 4 |
 
 ### Router BGP Peer Groups
 
@@ -729,7 +730,6 @@ router isis EVPN_UNDERLAY
 | Remote_as | 65000 |
 | Source | Loopback0 |
 | Bfd | true |
-| Ebgp multihop | 3 |
 | Send community | true |
 | Maximum routes | 0 (no limit) |
 
@@ -739,7 +739,6 @@ router isis EVPN_UNDERLAY
 | -------- | --------- | --- |
 | 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
 | 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
-
 
 ### Router BGP EVPN Address Family
 
@@ -769,16 +768,18 @@ router bgp 65000
    distance bgp 20 200 200
    graceful-restart restart-time 300
    graceful-restart
+   maximum-paths 4 ecmp 4
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS remote-as 65000
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
-   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.1 description DC1-SPINE1
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.2 description DC1-SPINE2
    !
    vlan-aware-bundle Tenant_A_OP_Zone
       rd 192.168.255.13:10

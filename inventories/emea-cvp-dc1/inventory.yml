@@ -60,14 +60,6 @@ all:
                       ansible_port: 8012
                     DC1-BL1B:
                       ansible_port: 8013
-                DC1_BL2:
-                  hosts:
-                    DC1-BL2A:
-                      ansible_port: 8012
-                      is_deployed: false
-                    DC1-BL2B:
-                      ansible_port: 8013
-                      is_deployed: false
             DC1_L2LEAFS:
               children:
                 DC1_L2LEAF1:

@@ -61,29 +61,30 @@ CVP_CONFIGLETS:
     \ additive\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n\
     !\nrouter bgp 65000\n   router-id 192.168.255.11\n   no bgp default ipv4-unicast\n\
     \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
-    \   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as\
-    \ 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 192.168.255.1 peer\
-    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n\
-    \   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd 192.168.255.11:10\n   \
-    \   route-target both 10:10\n      redistribute learned\n      vlan 110-111,114\n\
-    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_1\n      rd 192.168.255.11:40411\n\
-    \      route-target both 40411:40411\n      redistribute learned\n      vlan 411\n\
-    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n      rd 192.168.255.11:40412\n\
-    \      route-target both 40412:40412\n      redistribute learned\n      vlan 412\n\
-    \   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN\
-    \ in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out\n      neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n      rd 192.168.255.11:10\n\
-    \      route-target import evpn 10:10\n      route-target export evpn 10:10\n\
-    \      router-id 192.168.255.11\n      neighbor 10.255.251.17 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \      redistribute connected\nrouter isis EVPN_UNDERLAY\n   net 49.0001.0001.0001.0009.00\n\
-    \   is-type level-2\n   router-id ipv4 192.168.255.11\n   log-adjacency-changes\n\
-    \   !\n   address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
-    \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
-    end"
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.1 description DC1-SPINE1\n\
+    \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2\
+    \ description DC1-SPINE2\n   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd\
+    \ 192.168.255.11:10\n      route-target both 10:10\n      redistribute learned\n\
+    \      vlan 110-111,114\n   !\n   vlan-aware-bundle Tenant_D_OP_Zone_1\n     \
+    \ rd 192.168.255.11:40411\n      route-target both 40411:40411\n      redistribute\
+    \ learned\n      vlan 411\n   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n   \
+    \   rd 192.168.255.11:40412\n      route-target both 40412:40412\n      redistribute\
+    \ learned\n      vlan 412\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ route-map RM-EVPN-SOO-IN in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT\
+    \ out\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n\
+    \      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n\
+    \      rd 192.168.255.11:10\n      route-target import evpn 10:10\n      route-target\
+    \ export evpn 10:10\n      router-id 192.168.255.11\n      neighbor 10.255.251.17\
+    \ peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\nrouter isis\
+    \ EVPN_UNDERLAY\n   net 49.0001.0001.0001.0009.00\n   is-type level-2\n   router-id\
+    \ ipv4 192.168.255.11\n   log-adjacency-changes\n   !\n   address-family ipv4\
+    \ unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement api http-commands\n \
+    \  no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend"
   AVD_DC1-BL1B: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -146,199 +147,30 @@ CVP_CONFIGLETS:
     \ additive\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n\
     !\nrouter bgp 65000\n   router-id 192.168.255.12\n   no bgp default ipv4-unicast\n\
     \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
-    \   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as\
-    \ 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 192.168.255.1 peer\
-    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n\
-    \   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd 192.168.255.12:10\n   \
-    \   route-target both 10:10\n      redistribute learned\n      vlan 110-111,114\n\
-    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_1\n      rd 192.168.255.12:40411\n\
-    \      route-target both 40411:40411\n      redistribute learned\n      vlan 411\n\
-    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n      rd 192.168.255.12:40412\n\
-    \      route-target both 40412:40412\n      redistribute learned\n      vlan 412\n\
-    \   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN\
-    \ in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out\n      neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n      rd 192.168.255.12:10\n\
-    \      route-target import evpn 10:10\n      route-target export evpn 10:10\n\
-    \      router-id 192.168.255.12\n      neighbor 10.255.251.16 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \      redistribute connected\nrouter isis EVPN_UNDERLAY\n   net 49.0001.0001.0001.0010.00\n\
-    \   is-type level-2\n   router-id ipv4 192.168.255.12\n   log-adjacency-changes\n\
-    \   !\n   address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
-    \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
-    end"
-  AVD_DC1-BL2A: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
-    \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
-    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
-    \   no shutdown\n!\nvlan internal order descending range 4000 4090\n!\ntransceiver\
-    \ qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n!\n\
-    hostname DC1-BL2A\nip name-server vrf MGMT 1.1.1.1\ndns domain eve.emea.lab\n\
-    !\nntp local-interface vrf MGMT Management1\nntp server vrf MGMT fr.pool.ntp.org\
-    \ prefer\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 4096\n!\nno aaa root\nno enable password\n!\nusername admin privilege\
-    \ 15 role network-admin nopassword\nusername ansible privilege 15 role network-admin\
-    \ secret sha512 $6$ZMTiXhLqBo7v1si1$sytOdfL9pAFj4paRrqnQeolINyi1zTrBECVQimMvYRAR5wL8RQa02Qet9Jz7D6PXANdb.CEyeVrLbWv8INv7K0\n\
-    username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
-    !\nvlan 110\n   name Tenant_A_OP_Zone_1\n!\nvlan 111\n   name Tenant_A_OP_Zone_2\n\
-    !\nvlan 114\n   name Tenant_A_OP_Zone_3\n!\nvlan 411\n   name Tenant_D_OP_Zone_1\n\
-    !\nvlan 412\n   name Tenant_D_OP_Zone_2\n!\nvlan 3009\n   name MLAG_iBGP_Tenant_A_OP_Zone\n\
-    \   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group\
-    \ LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance\
-    \ MGMT\n!\nvrf instance Tenant_A_OP_Zone\n!\ninterface Port-Channel3\n   description\
-    \ MLAG_PEER_DC1-BL2B_Po3\n   no shutdown\n   switchport\n   switchport trunk allowed\
-    \ vlan 2-4094\n   switchport mode trunk\n   switchport trunk group LEAF_PEER_L3\n\
-    \   switchport trunk group MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC1-SPINE1_Ethernet9\n\
-    \   no shutdown\n   no switchport\n   ip address 172.31.255.45/31\n   isis enable\
-    \ EVPN_UNDERLAY\n   isis metric 50\n   isis network point-to-point\n!\ninterface\
-    \ Ethernet2\n   description P2P_LINK_TO_DC1-SPINE2_Ethernet9\n   no shutdown\n\
-    \   no switchport\n   ip address 172.31.255.47/31\n   isis enable EVPN_UNDERLAY\n\
-    \   isis metric 50\n   isis network point-to-point\n!\ninterface Ethernet3\n \
-    \  description MLAG_PEER_DC1-BL2B_Ethernet3\n   no shutdown\n   channel-group\
-    \ 3 mode active\n!\ninterface Ethernet4\n   description MLAG_PEER_DC1-BL2B_Ethernet4\n\
-    \   no shutdown\n   channel-group 3 mode active\n!\ninterface Loopback0\n   description\
-    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.255.14/32\n   isis\
-    \ enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback1\n   description\
-    \ VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 192.168.254.14/32\n\
-    \   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback100\n   description\
-    \ Tenant_A_OP_Zone_VTEP_DIAGNOSTICS\n   no shutdown\n   vrf Tenant_A_OP_Zone\n\
-    \   ip address 10.255.1.14/32\n!\ninterface Management1\n   description oob_management\n\
-    \   no shutdown\n   vrf MGMT\n   ip address 10.73.1.25/16\n!\ninterface Vlan110\n\
-    \   description Tenant_A_OP_Zone_1\n   no shutdown\n   vrf Tenant_A_OP_Zone\n\
-    \   ip address virtual 10.1.10.254/24\n!\ninterface Vlan111\n   description Tenant_A_OP_Zone_2\n\
-    \   no shutdown\n   vrf Tenant_A_OP_Zone\n   ip address virtual 10.1.11.254/24\n\
-    !\ninterface Vlan114\n   description Tenant_A_OP_Zone_3\n   no shutdown\n   vrf\
-    \ Tenant_A_OP_Zone\n   ip address virtual 10.1.14.254/24\n!\ninterface Vlan3009\n\
-    \   description MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone\n   no shutdown\n   vrf\
-    \ Tenant_A_OP_Zone\n   ip address 10.255.251.22/31\n!\ninterface Vlan4093\n  \
-    \ description MLAG_PEER_L3_PEERING\n   no shutdown\n   ip address 10.255.251.22/31\n\
-    \   isis enable EVPN_UNDERLAY\n   isis metric 50\n   isis network point-to-point\n\
-    !\ninterface Vlan4094\n   description MLAG_PEER\n   no shutdown\n   no autostate\n\
-    \   ip address 10.255.252.22/31\n!\ninterface Vxlan1\n   vxlan source-interface\
-    \ Loopback1\n   vxlan virtual-router encapsulation mac-address mlag-system-id\n\
-    \   vxlan udp-port 4789\n   vxlan vlan 110 vni 10110\n   vxlan vlan 111 vni 50111\n\
-    \   vxlan vlan 114 vni 50114\n   vxlan vlan 411 vni 40411\n   vxlan vlan 412 vni\
-    \ 40412\n   vxlan vrf Tenant_A_OP_Zone vni 10\n!\nip virtual-router mac-address\
-    \ 00:1c:73:00:dc:01\n!\nip address virtual source-nat vrf Tenant_A_OP_Zone address\
-    \ 10.255.1.14\n!\nip routing\nno ip routing vrf MGMT\nip routing vrf Tenant_A_OP_Zone\n\
-    !\nip extcommunity-list ECL-EVPN-SOO permit soo 192.168.254.14:1\n!\nmlag configuration\n\
-    \   domain-id DC1_BL2\n   local-interface Vlan4094\n   peer-address 10.255.252.23\n\
-    \   peer-link Port-Channel3\n   reload-delay mlag 300\n   reload-delay non-mlag\
-    \ 330\n!\nip route vrf MGMT 0.0.0.0/0 10.73.0.1\n!\nroute-map RM-EVPN-SOO-IN deny\
-    \ 10\n   match extcommunity ECL-EVPN-SOO\n!\nroute-map RM-EVPN-SOO-IN permit 20\n\
-    !\nroute-map RM-EVPN-SOO-OUT permit 10\n   set extcommunity soo 192.168.254.14:1\
-    \ additive\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n\
-    !\nrouter bgp 65000\n   router-id 192.168.255.14\n   no bgp default ipv4-unicast\n\
-    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
-    \   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as\
-    \ 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
-    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
-    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 192.168.255.1 peer\
-    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n\
-    \   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd 192.168.255.14:10\n   \
-    \   route-target both 10:10\n      redistribute learned\n      vlan 110-111,114\n\
-    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_1\n      rd 192.168.255.14:40411\n\
-    \      route-target both 40411:40411\n      redistribute learned\n      vlan 411\n\
-    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n      rd 192.168.255.14:40412\n\
-    \      route-target both 40412:40412\n      redistribute learned\n      vlan 412\n\
-    \   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN\
-    \ in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out\n      neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n      rd 192.168.255.14:10\n\
-    \      route-target import evpn 10:10\n      route-target export evpn 10:10\n\
-    \      router-id 192.168.255.14\n      neighbor 10.255.251.23 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \      redistribute connected\nrouter isis EVPN_UNDERLAY\n   net 49.0001.0001.0001.0012.00\n\
-    \   is-type level-2\n   router-id ipv4 192.168.255.14\n   log-adjacency-changes\n\
-    \   !\n   address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
-    \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
-    end"
-  AVD_DC1-BL2B: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
-    \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
-    \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
-    \   no shutdown\n!\nvlan internal order descending range 4000 4090\n!\ntransceiver\
-    \ qsfp default-mode 4x10G\n!\nservice routing protocols model multi-agent\n!\n\
-    hostname DC1-BL2B\nip name-server vrf MGMT 1.1.1.1\ndns domain eve.emea.lab\n\
-    !\nntp local-interface vrf MGMT Management1\nntp server vrf MGMT fr.pool.ntp.org\
-    \ prefer\n!\nspanning-tree mode mstp\nno spanning-tree vlan-id 4093-4094\nspanning-tree\
-    \ mst 0 priority 4096\n!\nno aaa root\nno enable password\n!\nusername admin privilege\
-    \ 15 role network-admin nopassword\nusername ansible privilege 15 role network-admin\
-    \ secret sha512 $6$ZMTiXhLqBo7v1si1$sytOdfL9pAFj4paRrqnQeolINyi1zTrBECVQimMvYRAR5wL8RQa02Qet9Jz7D6PXANdb.CEyeVrLbWv8INv7K0\n\
-    username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.\n\
-    !\nvlan 110\n   name Tenant_A_OP_Zone_1\n!\nvlan 111\n   name Tenant_A_OP_Zone_2\n\
-    !\nvlan 114\n   name Tenant_A_OP_Zone_3\n!\nvlan 411\n   name Tenant_D_OP_Zone_1\n\
-    !\nvlan 412\n   name Tenant_D_OP_Zone_2\n!\nvlan 3009\n   name MLAG_iBGP_Tenant_A_OP_Zone\n\
-    \   trunk group LEAF_PEER_L3\n!\nvlan 4093\n   name LEAF_PEER_L3\n   trunk group\
-    \ LEAF_PEER_L3\n!\nvlan 4094\n   name MLAG_PEER\n   trunk group MLAG\n!\nvrf instance\
-    \ MGMT\n!\nvrf instance Tenant_A_OP_Zone\n!\ninterface Port-Channel3\n   description\
-    \ MLAG_PEER_DC1-BL2A_Po3\n   no shutdown\n   switchport\n   switchport trunk allowed\
-    \ vlan 2-4094\n   switchport mode trunk\n   switchport trunk group LEAF_PEER_L3\n\
-    \   switchport trunk group MLAG\n!\ninterface Ethernet1\n   description P2P_LINK_TO_DC1-SPINE1_Ethernet10\n\
-    \   no shutdown\n   no switchport\n   ip address 172.31.255.49/31\n   isis enable\
-    \ EVPN_UNDERLAY\n   isis metric 50\n   isis network point-to-point\n!\ninterface\
-    \ Ethernet2\n   description P2P_LINK_TO_DC1-SPINE2_Ethernet10\n   no shutdown\n\
-    \   no switchport\n   ip address 172.31.255.51/31\n   isis enable EVPN_UNDERLAY\n\
-    \   isis metric 50\n   isis network point-to-point\n!\ninterface Ethernet3\n \
-    \  description MLAG_PEER_DC1-BL2A_Ethernet3\n   no shutdown\n   channel-group\
-    \ 3 mode active\n!\ninterface Ethernet4\n   description MLAG_PEER_DC1-BL2A_Ethernet4\n\
-    \   no shutdown\n   channel-group 3 mode active\n!\ninterface Loopback0\n   description\
-    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.255.15/32\n   isis\
-    \ enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback1\n   description\
-    \ VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 192.168.254.14/32\n\
-    \   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Loopback100\n   description\
-    \ Tenant_A_OP_Zone_VTEP_DIAGNOSTICS\n   no shutdown\n   vrf Tenant_A_OP_Zone\n\
-    \   ip address 10.255.1.15/32\n!\ninterface Management1\n   description oob_management\n\
-    \   no shutdown\n   vrf MGMT\n   ip address 10.73.1.26/16\n!\ninterface Vlan110\n\
-    \   description Tenant_A_OP_Zone_1\n   no shutdown\n   vrf Tenant_A_OP_Zone\n\
-    \   ip address virtual 10.1.10.254/24\n!\ninterface Vlan111\n   description Tenant_A_OP_Zone_2\n\
-    \   no shutdown\n   vrf Tenant_A_OP_Zone\n   ip address virtual 10.1.11.254/24\n\
-    !\ninterface Vlan114\n   description Tenant_A_OP_Zone_3\n   no shutdown\n   vrf\
-    \ Tenant_A_OP_Zone\n   ip address virtual 10.1.14.254/24\n!\ninterface Vlan3009\n\
-    \   description MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone\n   no shutdown\n   vrf\
-    \ Tenant_A_OP_Zone\n   ip address 10.255.251.23/31\n!\ninterface Vlan4093\n  \
-    \ description MLAG_PEER_L3_PEERING\n   no shutdown\n   ip address 10.255.251.23/31\n\
-    \   isis enable EVPN_UNDERLAY\n   isis metric 50\n   isis network point-to-point\n\
-    !\ninterface Vlan4094\n   description MLAG_PEER\n   no shutdown\n   no autostate\n\
-    \   ip address 10.255.252.23/31\n!\ninterface Vxlan1\n   vxlan source-interface\
-    \ Loopback1\n   vxlan virtual-router encapsulation mac-address mlag-system-id\n\
-    \   vxlan udp-port 4789\n   vxlan vlan 110 vni 10110\n   vxlan vlan 111 vni 50111\n\
-    \   vxlan vlan 114 vni 50114\n   vxlan vlan 411 vni 40411\n   vxlan vlan 412 vni\
-    \ 40412\n   vxlan vrf Tenant_A_OP_Zone vni 10\n!\nip virtual-router mac-address\
-    \ 00:1c:73:00:dc:01\n!\nip address virtual source-nat vrf Tenant_A_OP_Zone address\
-    \ 10.255.1.15\n!\nip routing\nno ip routing vrf MGMT\nip routing vrf Tenant_A_OP_Zone\n\
-    !\nip extcommunity-list ECL-EVPN-SOO permit soo 192.168.254.14:1\n!\nmlag configuration\n\
-    \   domain-id DC1_BL2\n   local-interface Vlan4094\n   peer-address 10.255.252.22\n\
-    \   peer-link Port-Channel3\n   reload-delay mlag 300\n   reload-delay non-mlag\
-    \ 330\n!\nip route vrf MGMT 0.0.0.0/0 10.73.0.1\n!\nroute-map RM-EVPN-SOO-IN deny\
-    \ 10\n   match extcommunity ECL-EVPN-SOO\n!\nroute-map RM-EVPN-SOO-IN permit 20\n\
-    !\nroute-map RM-EVPN-SOO-OUT permit 10\n   set extcommunity soo 192.168.254.14:1\
-    \ additive\n!\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n\
-    !\nrouter bgp 65000\n   router-id 192.168.255.15\n   no bgp default ipv4-unicast\n\
-    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
-    \   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as\
-    \ 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
-    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
-    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 192.168.255.1 peer\
-    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n\
-    \   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd 192.168.255.15:10\n   \
-    \   route-target both 10:10\n      redistribute learned\n      vlan 110-111,114\n\
-    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_1\n      rd 192.168.255.15:40411\n\
-    \      route-target both 40411:40411\n      redistribute learned\n      vlan 411\n\
-    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n      rd 192.168.255.15:40412\n\
-    \      route-target both 40412:40412\n      redistribute learned\n      vlan 412\n\
-    \   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN\
-    \ in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out\n      neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n      rd 192.168.255.15:10\n\
-    \      route-target import evpn 10:10\n      route-target export evpn 10:10\n\
-    \      router-id 192.168.255.15\n      neighbor 10.255.251.22 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \      redistribute connected\nrouter isis EVPN_UNDERLAY\n   net 49.0001.0001.0001.0013.00\n\
-    \   is-type level-2\n   router-id ipv4 192.168.255.15\n   log-adjacency-changes\n\
-    \   !\n   address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
-    \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
-    end"
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.1 description DC1-SPINE1\n\
+    \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2\
+    \ description DC1-SPINE2\n   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd\
+    \ 192.168.255.12:10\n      route-target both 10:10\n      redistribute learned\n\
+    \      vlan 110-111,114\n   !\n   vlan-aware-bundle Tenant_D_OP_Zone_1\n     \
+    \ rd 192.168.255.12:40411\n      route-target both 40411:40411\n      redistribute\
+    \ learned\n      vlan 411\n   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n   \
+    \   rd 192.168.255.12:40412\n      route-target both 40412:40412\n      redistribute\
+    \ learned\n      vlan 412\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ route-map RM-EVPN-SOO-IN in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT\
+    \ out\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n\
+    \      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n\
+    \      rd 192.168.255.12:10\n      route-target import evpn 10:10\n      route-target\
+    \ export evpn 10:10\n      router-id 192.168.255.12\n      neighbor 10.255.251.16\
+    \ peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\nrouter isis\
+    \ EVPN_UNDERLAY\n   net 49.0001.0001.0001.0010.00\n   is-type level-2\n   router-id\
+    \ ipv4 192.168.255.12\n   log-adjacency-changes\n   !\n   address-family ipv4\
+    \ unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement api http-commands\n \
+    \  no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend"
   AVD_DC1-L2LEAF1A: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -380,9 +212,7 @@ CVP_CONFIGLETS:
     \ allowed vlan 110-111,114\n   switchport mode trunk\n!\ninterface Ethernet1\n\
     \   description DC1-LEAF2A_Ethernet5\n   no shutdown\n   channel-group 1 mode\
     \ active\n!\ninterface Ethernet2\n   description DC1-LEAF2B_Ethernet5\n   no shutdown\n\
-    \   channel-group 1 mode active\n!\ninterface Ethernet5\n   description POD02-SRV_Eth1\n\
-    \   no shutdown\n   switchport\n   switchport trunk allowed vlan 110-114,210,211\n\
-    \   switchport mode trunk\n!\ninterface Management1\n   description oob_management\n\
+    \   channel-group 1 mode active\n!\ninterface Management1\n   description oob_management\n\
     \   no shutdown\n   vrf MGMT\n   ip address 10.73.1.18/16\n!\nip routing\nno ip\
     \ routing vrf MGMT\n!\nip route vrf MGMT 0.0.0.0/0 10.73.0.1\n!\nrouter bfd\n\
     \   multihop interval 1200 min-rx 1200 multiplier 3\n!\nmanagement api http-commands\n\
@@ -454,25 +284,26 @@ CVP_CONFIGLETS:
     !\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp\
     \ 65000\n   router-id 192.168.255.3\n   no bgp default ipv4-unicast\n   distance\
     \ bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
-    \   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as\
-    \ 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 192.168.255.1 peer\
-    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n\
-    \   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd 192.168.255.3:10\n    \
-    \  route-target both 10:10\n      redistribute learned\n      vlan 110-111,114\n\
-    \   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN\
-    \ in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out\n      neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n      rd 192.168.255.3:10\n\
-    \      route-target import evpn 10:10\n      route-target export evpn 10:10\n\
-    \      router-id 192.168.255.3\n      neighbor 10.255.251.1 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \      redistribute connected\nrouter isis EVPN_UNDERLAY\n   net 49.0001.0001.0001.0001.00\n\
-    \   is-type level-2\n   router-id ipv4 192.168.255.3\n   log-adjacency-changes\n\
-    \   !\n   address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
-    \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
-    end"
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.1 description DC1-SPINE1\n\
+    \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2\
+    \ description DC1-SPINE2\n   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd\
+    \ 192.168.255.3:10\n      route-target both 10:10\n      redistribute learned\n\
+    \      vlan 110-111,114\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ route-map RM-EVPN-SOO-IN in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT\
+    \ out\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n\
+    \      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n\
+    \      rd 192.168.255.3:10\n      route-target import evpn 10:10\n      route-target\
+    \ export evpn 10:10\n      router-id 192.168.255.3\n      neighbor 10.255.251.1\
+    \ peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\nrouter isis\
+    \ EVPN_UNDERLAY\n   net 49.0001.0001.0001.0001.00\n   is-type level-2\n   router-id\
+    \ ipv4 192.168.255.3\n   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n\
+    \      maximum-paths 2\n   !\n!\n!\nmanagement api http-commands\n   no shutdown\n\
+    \   !\n   vrf MGMT\n      no shutdown\n!\nend"
   AVD_DC1-LEAF1B: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -540,25 +371,26 @@ CVP_CONFIGLETS:
     !\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp\
     \ 65000\n   router-id 192.168.255.4\n   no bgp default ipv4-unicast\n   distance\
     \ bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
-    \   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as\
-    \ 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 192.168.255.1 peer\
-    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n\
-    \   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd 192.168.255.4:10\n    \
-    \  route-target both 10:10\n      redistribute learned\n      vlan 110-111,114\n\
-    \   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN\
-    \ in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out\n      neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n      rd 192.168.255.4:10\n\
-    \      route-target import evpn 10:10\n      route-target export evpn 10:10\n\
-    \      router-id 192.168.255.4\n      neighbor 10.255.251.0 peer group MLAG-IPv4-UNDERLAY-PEER\n\
-    \      redistribute connected\nrouter isis EVPN_UNDERLAY\n   net 49.0001.0001.0001.0002.00\n\
-    \   is-type level-2\n   router-id ipv4 192.168.255.4\n   log-adjacency-changes\n\
-    \   !\n   address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
-    \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
-    end"
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.1 description DC1-SPINE1\n\
+    \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2\
+    \ description DC1-SPINE2\n   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd\
+    \ 192.168.255.4:10\n      route-target both 10:10\n      redistribute learned\n\
+    \      vlan 110-111,114\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ route-map RM-EVPN-SOO-IN in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT\
+    \ out\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n\
+    \      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n\
+    \      rd 192.168.255.4:10\n      route-target import evpn 10:10\n      route-target\
+    \ export evpn 10:10\n      router-id 192.168.255.4\n      neighbor 10.255.251.0\
+    \ peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\nrouter isis\
+    \ EVPN_UNDERLAY\n   net 49.0001.0001.0001.0002.00\n   is-type level-2\n   router-id\
+    \ ipv4 192.168.255.4\n   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n\
+    \      maximum-paths 2\n   !\n!\n!\nmanagement api http-commands\n   no shutdown\n\
+    \   !\n   vrf MGMT\n      no shutdown\n!\nend"
   AVD_DC1-LEAF2A: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -627,29 +459,31 @@ CVP_CONFIGLETS:
     \ permit 10\n   set extcommunity soo 192.168.254.5:1 additive\n!\nrouter bfd\n\
     \   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65000\n   router-id\
     \ 192.168.255.5\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
-    \   graceful-restart restart-time 300\n   graceful-restart\n   neighbor EVPN-OVERLAY-PEERS\
-    \ peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS\
-    \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
-    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 4\
+    \ ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
+    \ remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n  \
+    \ neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
     \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
     \ maximum-routes 0\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
-    \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   !\n   vlan-aware-bundle\
-    \ Tenant_A_OP_Zone\n      rd 192.168.255.5:10\n      route-target both 10:10\n\
-    \      redistribute learned\n      vlan 110-111,114\n   !\n   vlan-aware-bundle\
-    \ Tenant_D_OP_Zone_1\n      rd 192.168.255.5:40411\n      route-target both 40411:40411\n\
-    \      redistribute learned\n      vlan 411\n   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n\
-    \      rd 192.168.255.5:40412\n      route-target both 40412:40412\n      redistribute\
-    \ learned\n      vlan 412\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
-    \ route-map RM-EVPN-SOO-IN in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT\
-    \ out\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n\
-    \      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n\
-    \      rd 192.168.255.5:10\n      route-target import evpn 10:10\n      route-target\
-    \ export evpn 10:10\n      router-id 192.168.255.5\n      neighbor 10.255.251.5\
-    \ peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\nrouter isis\
-    \ EVPN_UNDERLAY\n   net 49.0001.0001.0001.0003.00\n   is-type level-2\n   router-id\
-    \ ipv4 192.168.255.5\n   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n\
-    \      maximum-paths 2\n   !\n!\n!\nmanagement api http-commands\n   no shutdown\n\
-    \   !\n   vrf MGMT\n      no shutdown\n!\nend"
+    \   neighbor 192.168.255.1 description DC1-SPINE1\n   neighbor 192.168.255.2 peer\
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2 description DC1-SPINE2\n\
+    \   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd 192.168.255.5:10\n    \
+    \  route-target both 10:10\n      redistribute learned\n      vlan 110-111,114\n\
+    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_1\n      rd 192.168.255.5:40411\n\
+    \      route-target both 40411:40411\n      redistribute learned\n      vlan 411\n\
+    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n      rd 192.168.255.5:40412\n\
+    \      route-target both 40412:40412\n      redistribute learned\n      vlan 412\n\
+    \   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN\
+    \ in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out\n      neighbor\
+    \ EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no neighbor\
+    \ EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n      rd 192.168.255.5:10\n\
+    \      route-target import evpn 10:10\n      route-target export evpn 10:10\n\
+    \      router-id 192.168.255.5\n      neighbor 10.255.251.5 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\nrouter isis EVPN_UNDERLAY\n   net 49.0001.0001.0001.0003.00\n\
+    \   is-type level-2\n   router-id ipv4 192.168.255.5\n   log-adjacency-changes\n\
+    \   !\n   address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
+    \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
+    end"
   AVD_DC1-LEAF2B: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -718,29 +552,31 @@ CVP_CONFIGLETS:
     \ permit 10\n   set extcommunity soo 192.168.254.5:1 additive\n!\nrouter bfd\n\
     \   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65000\n   router-id\
     \ 192.168.255.6\n   no bgp default ipv4-unicast\n   distance bgp 20 200 200\n\
-    \   graceful-restart restart-time 300\n   graceful-restart\n   neighbor EVPN-OVERLAY-PEERS\
-    \ peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS\
-    \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
-    \ ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
+    \   graceful-restart restart-time 300\n   graceful-restart\n   maximum-paths 4\
+    \ ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS\
+    \ remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n  \
+    \ neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==\n\
     \   neighbor EVPN-OVERLAY-PEERS send-community\n   neighbor EVPN-OVERLAY-PEERS\
     \ maximum-routes 0\n   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS\n\
-    \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   !\n   vlan-aware-bundle\
-    \ Tenant_A_OP_Zone\n      rd 192.168.255.6:10\n      route-target both 10:10\n\
-    \      redistribute learned\n      vlan 110-111,114\n   !\n   vlan-aware-bundle\
-    \ Tenant_D_OP_Zone_1\n      rd 192.168.255.6:40411\n      route-target both 40411:40411\n\
-    \      redistribute learned\n      vlan 411\n   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n\
-    \      rd 192.168.255.6:40412\n      route-target both 40412:40412\n      redistribute\
-    \ learned\n      vlan 412\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
-    \ route-map RM-EVPN-SOO-IN in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT\
-    \ out\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n\
-    \      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n\
-    \      rd 192.168.255.6:10\n      route-target import evpn 10:10\n      route-target\
-    \ export evpn 10:10\n      router-id 192.168.255.6\n      neighbor 10.255.251.4\
-    \ peer group MLAG-IPv4-UNDERLAY-PEER\n      redistribute connected\nrouter isis\
-    \ EVPN_UNDERLAY\n   net 49.0001.0001.0001.0004.00\n   is-type level-2\n   router-id\
-    \ ipv4 192.168.255.6\n   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n\
-    \      maximum-paths 2\n   !\n!\n!\nmanagement api http-commands\n   no shutdown\n\
-    \   !\n   vrf MGMT\n      no shutdown\n!\nend"
+    \   neighbor 192.168.255.1 description DC1-SPINE1\n   neighbor 192.168.255.2 peer\
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2 description DC1-SPINE2\n\
+    \   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd 192.168.255.6:10\n    \
+    \  route-target both 10:10\n      redistribute learned\n      vlan 110-111,114\n\
+    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_1\n      rd 192.168.255.6:40411\n\
+    \      route-target both 40411:40411\n      redistribute learned\n      vlan 411\n\
+    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n      rd 192.168.255.6:40412\n\
+    \      route-target both 40412:40412\n      redistribute learned\n      vlan 412\n\
+    \   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN\
+    \ in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out\n      neighbor\
+    \ EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no neighbor\
+    \ EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n      rd 192.168.255.6:10\n\
+    \      route-target import evpn 10:10\n      route-target export evpn 10:10\n\
+    \      router-id 192.168.255.6\n      neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER\n\
+    \      redistribute connected\nrouter isis EVPN_UNDERLAY\n   net 49.0001.0001.0001.0004.00\n\
+    \   is-type level-2\n   router-id ipv4 192.168.255.6\n   log-adjacency-changes\n\
+    \   !\n   address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
+    \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
+    end"
   AVD_DC1-LEAF3A: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -791,28 +627,29 @@ CVP_CONFIGLETS:
     !\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp\
     \ 65000\n   router-id 192.168.255.10\n   no bgp default ipv4-unicast\n   distance\
     \ bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
-    \   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as\
-    \ 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 192.168.255.1 peer\
-    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n\
-    \   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd 192.168.255.10:10\n   \
-    \   route-target both 10:10\n      redistribute learned\n      vlan 110-111,114\n\
-    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_1\n      rd 192.168.255.10:40411\n\
-    \      route-target both 40411:40411\n      redistribute learned\n      vlan 411\n\
-    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n      rd 192.168.255.10:40412\n\
-    \      route-target both 40412:40412\n      redistribute learned\n      vlan 412\n\
-    \   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN\
-    \ in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out\n      neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n      rd 192.168.255.10:10\n\
-    \      route-target import evpn 10:10\n      route-target export evpn 10:10\n\
-    \      router-id 192.168.255.10\n      redistribute connected\nrouter isis EVPN_UNDERLAY\n\
-    \   net 49.0001.0001.0001.0008.00\n   is-type level-2\n   router-id ipv4 192.168.255.10\n\
-    \   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths\
-    \ 2\n   !\n!\n!\nmanagement api http-commands\n   no shutdown\n   !\n   vrf MGMT\n\
-    \      no shutdown\n!\nend"
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.1 description DC1-SPINE1\n\
+    \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2\
+    \ description DC1-SPINE2\n   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd\
+    \ 192.168.255.10:10\n      route-target both 10:10\n      redistribute learned\n\
+    \      vlan 110-111,114\n   !\n   vlan-aware-bundle Tenant_D_OP_Zone_1\n     \
+    \ rd 192.168.255.10:40411\n      route-target both 40411:40411\n      redistribute\
+    \ learned\n      vlan 411\n   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n   \
+    \   rd 192.168.255.10:40412\n      route-target both 40412:40412\n      redistribute\
+    \ learned\n      vlan 412\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ route-map RM-EVPN-SOO-IN in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT\
+    \ out\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n\
+    \      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n\
+    \      rd 192.168.255.10:10\n      route-target import evpn 10:10\n      route-target\
+    \ export evpn 10:10\n      router-id 192.168.255.10\n      redistribute connected\n\
+    router isis EVPN_UNDERLAY\n   net 49.0001.0001.0001.0008.00\n   is-type level-2\n\
+    \   router-id ipv4 192.168.255.10\n   log-adjacency-changes\n   !\n   address-family\
+    \ ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement api http-commands\n\
+    \   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend"
   AVD_DC1-LEAF4A: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -863,28 +700,29 @@ CVP_CONFIGLETS:
     !\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp\
     \ 65000\n   router-id 192.168.255.13\n   no bgp default ipv4-unicast\n   distance\
     \ bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
-    \   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as\
-    \ 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ bfd\n   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3\n   neighbor EVPN-OVERLAY-PEERS\
+    \   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor\
+    \ EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS update-source\
+    \ Loopback0\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
     \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
     \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 192.168.255.1 peer\
-    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n\
-    \   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd 192.168.255.13:10\n   \
-    \   route-target both 10:10\n      redistribute learned\n      vlan 110-111,114\n\
-    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_1\n      rd 192.168.255.13:40411\n\
-    \      route-target both 40411:40411\n      redistribute learned\n      vlan 411\n\
-    \   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n      rd 192.168.255.13:40412\n\
-    \      route-target both 40412:40412\n      redistribute learned\n      vlan 412\n\
-    \   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN\
-    \ in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out\n      neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n      no neighbor\
-    \ EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n      rd 192.168.255.13:10\n\
-    \      route-target import evpn 10:10\n      route-target export evpn 10:10\n\
-    \      router-id 192.168.255.13\n      redistribute connected\nrouter isis EVPN_UNDERLAY\n\
-    \   net 49.0001.0001.0001.0011.00\n   is-type level-2\n   router-id ipv4 192.168.255.13\n\
-    \   log-adjacency-changes\n   !\n   address-family ipv4 unicast\n      maximum-paths\
-    \ 2\n   !\n!\n!\nmanagement api http-commands\n   no shutdown\n   !\n   vrf MGMT\n\
-    \      no shutdown\n!\nend"
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.1 description DC1-SPINE1\n\
+    \   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.2\
+    \ description DC1-SPINE2\n   !\n   vlan-aware-bundle Tenant_A_OP_Zone\n      rd\
+    \ 192.168.255.13:10\n      route-target both 10:10\n      redistribute learned\n\
+    \      vlan 110-111,114\n   !\n   vlan-aware-bundle Tenant_D_OP_Zone_1\n     \
+    \ rd 192.168.255.13:40411\n      route-target both 40411:40411\n      redistribute\
+    \ learned\n      vlan 411\n   !\n   vlan-aware-bundle Tenant_D_OP_Zone_2\n   \
+    \   rd 192.168.255.13:40412\n      route-target both 40412:40412\n      redistribute\
+    \ learned\n      vlan 412\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ route-map RM-EVPN-SOO-IN in\n      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT\
+    \ out\n      neighbor EVPN-OVERLAY-PEERS activate\n   !\n   address-family ipv4\n\
+    \      no neighbor EVPN-OVERLAY-PEERS activate\n   !\n   vrf Tenant_A_OP_Zone\n\
+    \      rd 192.168.255.13:10\n      route-target import evpn 10:10\n      route-target\
+    \ export evpn 10:10\n      router-id 192.168.255.13\n      redistribute connected\n\
+    router isis EVPN_UNDERLAY\n   net 49.0001.0001.0001.0011.00\n   is-type level-2\n\
+    \   router-id ipv4 192.168.255.13\n   log-adjacency-changes\n   !\n   address-family\
+    \ ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement api http-commands\n\
+    \   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend"
   AVD_DC1-SPINE1: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -917,43 +755,37 @@ CVP_CONFIGLETS:
     \ EVPN_UNDERLAY\n   isis metric 50\n   isis network point-to-point\n!\ninterface\
     \ Ethernet8\n   description P2P_LINK_TO_DC1-LEAF4A_Ethernet1\n   no shutdown\n\
     \   no switchport\n   ip address 172.31.255.40/31\n   isis enable EVPN_UNDERLAY\n\
-    \   isis metric 50\n   isis network point-to-point\n!\ninterface Ethernet9\n \
-    \  description P2P_LINK_TO_DC1-BL2A_Ethernet1\n   no shutdown\n   no switchport\n\
-    \   ip address 172.31.255.44/31\n   isis enable EVPN_UNDERLAY\n   isis metric\
-    \ 50\n   isis network point-to-point\n!\ninterface Ethernet10\n   description\
-    \ P2P_LINK_TO_DC1-BL2B_Ethernet1\n   no shutdown\n   no switchport\n   ip address\
-    \ 172.31.255.48/31\n   isis enable EVPN_UNDERLAY\n   isis metric 50\n   isis network\
-    \ point-to-point\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n\
-    \   no shutdown\n   ip address 192.168.255.1/32\n   isis enable EVPN_UNDERLAY\n\
-    \   isis passive\n!\ninterface Management1\n   description oob_management\n  \
-    \ no shutdown\n   vrf MGMT\n   ip address 10.73.1.11/16\n!\nip routing\nno ip\
-    \ routing vrf MGMT\n!\nip route vrf MGMT 0.0.0.0/0 10.73.0.1\n!\nrouter bfd\n\
-    \   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65000\n   router-id\
-    \ 192.168.255.1\n   bgp cluster-id 192.168.255.1\n   no bgp default ipv4-unicast\n\
-    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
-    \   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as\
-    \ 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ route-reflector-client\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
-    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
-    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 192.168.255.3 peer\
-    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.3 remote-as 65000\n   neighbor\
-    \ 192.168.255.4 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.4 remote-as\
-    \ 65000\n   neighbor 192.168.255.5 peer group EVPN-OVERLAY-PEERS\n   neighbor\
-    \ 192.168.255.5 remote-as 65000\n   neighbor 192.168.255.6 peer group EVPN-OVERLAY-PEERS\n\
-    \   neighbor 192.168.255.6 remote-as 65000\n   neighbor 192.168.255.10 peer group\
-    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.10 remote-as 65000\n   neighbor\
-    \ 192.168.255.11 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.11 remote-as\
-    \ 65000\n   neighbor 192.168.255.12 peer group EVPN-OVERLAY-PEERS\n   neighbor\
-    \ 192.168.255.12 remote-as 65000\n   neighbor 192.168.255.13 peer group EVPN-OVERLAY-PEERS\n\
-    \   neighbor 192.168.255.13 remote-as 65000\n   neighbor 192.168.255.14 peer group\
-    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.14 remote-as 65000\n   neighbor\
-    \ 192.168.255.15 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.15 remote-as\
-    \ 65000\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    router isis EVPN_UNDERLAY\n   net 49.0001.0001.0000.0001.00\n   is-type level-2\n\
-    \   router-id ipv4 192.168.255.1\n   log-adjacency-changes\n   !\n   address-family\
-    \ ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement api http-commands\n\
-    \   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend"
+    \   isis metric 50\n   isis network point-to-point\n!\ninterface Loopback0\n \
+    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.255.1/32\n\
+    \   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n   description\
+    \ oob_management\n   no shutdown\n   vrf MGMT\n   ip address 10.73.1.11/16\n!\n\
+    ip routing\nno ip routing vrf MGMT\n!\nip route vrf MGMT 0.0.0.0/0 10.73.0.1\n\
+    !\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp\
+    \ 65000\n   router-id 192.168.255.1\n   bgp cluster-id 192.168.255.1\n   no bgp\
+    \ default ipv4-unicast\n   distance bgp 20 200 200\n   graceful-restart restart-time\
+    \ 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS\
+    \ peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS\
+    \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS route-reflector-client\n\
+    \   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS password 7\
+    \ q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n  \
+    \ neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 192.168.255.3 peer\
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.3 description DC1-LEAF1A\n\
+    \   neighbor 192.168.255.4 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.4\
+    \ description DC1-LEAF1B\n   neighbor 192.168.255.5 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.255.5 description DC1-LEAF2A\n   neighbor 192.168.255.6 peer\
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.6 description DC1-LEAF2B\n\
+    \   neighbor 192.168.255.10 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.10\
+    \ description DC1-LEAF3A\n   neighbor 192.168.255.11 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.255.11 description DC1-BL1A\n   neighbor 192.168.255.12 peer\
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.12 description DC1-BL1B\n\
+    \   neighbor 192.168.255.13 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.13\
+    \ description DC1-LEAF4A\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\nrouter isis EVPN_UNDERLAY\n   net 49.0001.0001.0000.0001.00\n   is-type\
+    \ level-2\n   router-id ipv4 192.168.255.1\n   log-adjacency-changes\n   !\n \
+    \  address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
+    \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
+    end"
   AVD_DC1-SPINE2: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -986,51 +818,42 @@ CVP_CONFIGLETS:
     \ EVPN_UNDERLAY\n   isis metric 50\n   isis network point-to-point\n!\ninterface\
     \ Ethernet8\n   description P2P_LINK_TO_DC1-LEAF4A_Ethernet2\n   no shutdown\n\
     \   no switchport\n   ip address 172.31.255.42/31\n   isis enable EVPN_UNDERLAY\n\
-    \   isis metric 50\n   isis network point-to-point\n!\ninterface Ethernet9\n \
-    \  description P2P_LINK_TO_DC1-BL2A_Ethernet2\n   no shutdown\n   no switchport\n\
-    \   ip address 172.31.255.46/31\n   isis enable EVPN_UNDERLAY\n   isis metric\
-    \ 50\n   isis network point-to-point\n!\ninterface Ethernet10\n   description\
-    \ P2P_LINK_TO_DC1-BL2B_Ethernet2\n   no shutdown\n   no switchport\n   ip address\
-    \ 172.31.255.50/31\n   isis enable EVPN_UNDERLAY\n   isis metric 50\n   isis network\
-    \ point-to-point\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n\
-    \   no shutdown\n   ip address 192.168.255.2/32\n   isis enable EVPN_UNDERLAY\n\
-    \   isis passive\n!\ninterface Management1\n   description oob_management\n  \
-    \ no shutdown\n   vrf MGMT\n   ip address 10.73.1.12/16\n!\nip routing\nno ip\
-    \ routing vrf MGMT\n!\nip route vrf MGMT 0.0.0.0/0 10.73.0.1\n!\nrouter bfd\n\
-    \   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp 65000\n   router-id\
-    \ 192.168.255.2\n   bgp cluster-id 192.168.255.2\n   no bgp default ipv4-unicast\n\
-    \   distance bgp 20 200 200\n   graceful-restart restart-time 300\n   graceful-restart\n\
-    \   neighbor EVPN-OVERLAY-PEERS peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as\
-    \ 65000\n   neighbor EVPN-OVERLAY-PEERS update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS\
-    \ route-reflector-client\n   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS\
-    \ password 7 q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n\
-    \   neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 192.168.255.3 peer\
-    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.3 remote-as 65000\n   neighbor\
-    \ 192.168.255.4 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.4 remote-as\
-    \ 65000\n   neighbor 192.168.255.5 peer group EVPN-OVERLAY-PEERS\n   neighbor\
-    \ 192.168.255.5 remote-as 65000\n   neighbor 192.168.255.6 peer group EVPN-OVERLAY-PEERS\n\
-    \   neighbor 192.168.255.6 remote-as 65000\n   neighbor 192.168.255.10 peer group\
-    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.10 remote-as 65000\n   neighbor\
-    \ 192.168.255.11 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.11 remote-as\
-    \ 65000\n   neighbor 192.168.255.12 peer group EVPN-OVERLAY-PEERS\n   neighbor\
-    \ 192.168.255.12 remote-as 65000\n   neighbor 192.168.255.13 peer group EVPN-OVERLAY-PEERS\n\
-    \   neighbor 192.168.255.13 remote-as 65000\n   neighbor 192.168.255.14 peer group\
-    \ EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.14 remote-as 65000\n   neighbor\
-    \ 192.168.255.15 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.15 remote-as\
-    \ 65000\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS activate\n\
-    \   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS activate\n\
-    router isis EVPN_UNDERLAY\n   net 49.0001.0001.0000.0002.00\n   is-type level-2\n\
-    \   router-id ipv4 192.168.255.2\n   log-adjacency-changes\n   !\n   address-family\
-    \ ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement api http-commands\n\
-    \   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend"
+    \   isis metric 50\n   isis network point-to-point\n!\ninterface Loopback0\n \
+    \  description EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.168.255.2/32\n\
+    \   isis enable EVPN_UNDERLAY\n   isis passive\n!\ninterface Management1\n   description\
+    \ oob_management\n   no shutdown\n   vrf MGMT\n   ip address 10.73.1.12/16\n!\n\
+    ip routing\nno ip routing vrf MGMT\n!\nip route vrf MGMT 0.0.0.0/0 10.73.0.1\n\
+    !\nrouter bfd\n   multihop interval 1200 min-rx 1200 multiplier 3\n!\nrouter bgp\
+    \ 65000\n   router-id 192.168.255.2\n   bgp cluster-id 192.168.255.2\n   no bgp\
+    \ default ipv4-unicast\n   distance bgp 20 200 200\n   graceful-restart restart-time\
+    \ 300\n   graceful-restart\n   maximum-paths 4 ecmp 4\n   neighbor EVPN-OVERLAY-PEERS\
+    \ peer group\n   neighbor EVPN-OVERLAY-PEERS remote-as 65000\n   neighbor EVPN-OVERLAY-PEERS\
+    \ update-source Loopback0\n   neighbor EVPN-OVERLAY-PEERS route-reflector-client\n\
+    \   neighbor EVPN-OVERLAY-PEERS bfd\n   neighbor EVPN-OVERLAY-PEERS password 7\
+    \ q+VNViP5i4rVjW1cxFv2wA==\n   neighbor EVPN-OVERLAY-PEERS send-community\n  \
+    \ neighbor EVPN-OVERLAY-PEERS maximum-routes 0\n   neighbor 192.168.255.3 peer\
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.3 description DC1-LEAF1A\n\
+    \   neighbor 192.168.255.4 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.4\
+    \ description DC1-LEAF1B\n   neighbor 192.168.255.5 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.255.5 description DC1-LEAF2A\n   neighbor 192.168.255.6 peer\
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.6 description DC1-LEAF2B\n\
+    \   neighbor 192.168.255.10 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.10\
+    \ description DC1-LEAF3A\n   neighbor 192.168.255.11 peer group EVPN-OVERLAY-PEERS\n\
+    \   neighbor 192.168.255.11 description DC1-BL1A\n   neighbor 192.168.255.12 peer\
+    \ group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.12 description DC1-BL1B\n\
+    \   neighbor 192.168.255.13 peer group EVPN-OVERLAY-PEERS\n   neighbor 192.168.255.13\
+    \ description DC1-LEAF4A\n   !\n   address-family evpn\n      neighbor EVPN-OVERLAY-PEERS\
+    \ activate\n   !\n   address-family ipv4\n      no neighbor EVPN-OVERLAY-PEERS\
+    \ activate\nrouter isis EVPN_UNDERLAY\n   net 49.0001.0001.0000.0002.00\n   is-type\
+    \ level-2\n   router-id ipv4 192.168.255.2\n   log-adjacency-changes\n   !\n \
+    \  address-family ipv4 unicast\n      maximum-paths 2\n   !\n!\n!\nmanagement\
+    \ api http-commands\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\n\
+    end"
 CVP_TOPOLOGY:
   DC1_BL1:
     devices:
     - DC1-BL1A
     - DC1-BL1B
-    parent_container: DC1_L3LEAFS
-  DC1_BL2:
-    devices: []
     parent_container: DC1_L3LEAFS
   DC1_FABRIC:
     parent_container: Tenant

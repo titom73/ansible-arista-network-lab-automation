@@ -88,8 +88,6 @@ CVP_CONTAINERS:
       - ASE_GLOBAL-ALIASES2
   DC1_BL1:
     parent_container: DC1_L3LEAFS
-  DC1_BL2:
-    parent_container: DC1_L3LEAFS
   DC1_LEAF1:
     parent_container: DC1_L3LEAFS
   DC1_LEAF2:
