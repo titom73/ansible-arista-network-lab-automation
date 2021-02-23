@@ -173,13 +173,6 @@ ethernet_interfaces:
     channel_group:
       id: 3
       mode: active
-  Ethernet50/1:
-    peer: leaf-remote-topo
-    peer_interface: Ethernet50/1
-    peer_type: mlag_peer
-    description: MLAG_PEER_leaf-remote-topo_Ethernet50/1
-    type: switched
-    shutdown: false
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering

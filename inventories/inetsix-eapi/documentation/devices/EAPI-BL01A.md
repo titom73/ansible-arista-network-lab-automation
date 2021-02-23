@@ -444,7 +444,6 @@ No Interface Defaults defined
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet3 | MLAG_PEER_EAPI-BL01B_Ethernet3 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
 | Ethernet4 | MLAG_PEER_EAPI-BL01B_Ethernet4 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
-| Ethernet50/1 |  MLAG_PEER_leaf-remote-topo_Ethernet50/1 | access | - | - | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -480,11 +479,6 @@ interface Ethernet4
    description MLAG_PEER_EAPI-BL01B_Ethernet4
    no shutdown
    channel-group 3 mode active
-!
-interface Ethernet50/1
-   description MLAG_PEER_leaf-remote-topo_Ethernet50/1
-   no shutdown
-   switchport
 ```
 
 ## Port-Channel Interfaces
@@ -580,20 +574,17 @@ interface Vlan110
 interface Vlan3010
    description MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01
    no shutdown
-   mtu 1500
    vrf TENANT_A_PROJECT01
    ip address 10.255.251.12/31
 !
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
    no shutdown
-   mtu 1500
    ip address 10.255.251.12/31
 !
 interface Vlan4094
    description MLAG_PEER
    no shutdown
-   mtu 1500
    no autostate
    ip address 10.255.252.12/31
 ```
