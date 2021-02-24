@@ -70,3 +70,9 @@ snmp_server:
       view: test
 
 validate_state_markdown_flavor: github
+
+# custom_structured_configuration_static_routes:
+#   static_routes:
+#     - vrf: default
+#       destination_address_prefix: 5.5.5.0/24
+#       gateway: 2.2.2.2
