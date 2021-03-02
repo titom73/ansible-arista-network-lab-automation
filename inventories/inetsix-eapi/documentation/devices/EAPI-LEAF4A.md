@@ -188,6 +188,7 @@ Management API gnmi is not defined
 ```eos
 !
 management api http-commands
+   protocol https
    no shutdown
    !
    vrf MGMT
@@ -428,12 +429,14 @@ No Interface Defaults defined
 interface Ethernet1
    description P2P_LINK_TO_EAPI-SPINE1_Ethernet8
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.21/31
 !
 interface Ethernet2
    description P2P_LINK_TO_EAPI-SPINE2_Ethernet8
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.23/31
 !

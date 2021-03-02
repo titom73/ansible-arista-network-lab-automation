@@ -188,6 +188,7 @@ Management API gnmi is not defined
 ```eos
 !
 management api http-commands
+   protocol https
    no shutdown
    !
    vrf MGMT
@@ -461,12 +462,14 @@ No Interface Defaults defined
 interface Ethernet1
    description P2P_LINK_TO_EAPI-SPINE1_Ethernet6
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.29/31
 !
 interface Ethernet2
    description P2P_LINK_TO_EAPI-SPINE2_Ethernet6
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.31/31
 !
@@ -574,17 +577,20 @@ interface Vlan110
 interface Vlan3010
    description MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01
    no shutdown
+   mtu 1500
    vrf TENANT_A_PROJECT01
    ip address 10.255.251.13/31
 !
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
    no shutdown
+   mtu 1500
    ip address 10.255.251.13/31
 !
 interface Vlan4094
    description MLAG_PEER
    no shutdown
+   mtu 1500
    no autostate
    ip address 10.255.252.13/31
 ```
