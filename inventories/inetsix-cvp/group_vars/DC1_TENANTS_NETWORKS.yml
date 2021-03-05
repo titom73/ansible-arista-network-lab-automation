@@ -28,12 +28,12 @@ tenants:
           112:
             name: 'PR01-TRUST'
             tags: [POD01]
-            ip_address_virtual: 10.1.11.254/24
+            ip_address_virtual: 10.1.12.254/24
           113:
             name: 'PR01-TRUST'
             tags: [POD01]
             enabled: true
-            ip_address_virtual: 10.1.11.254/24
+            ip_address_virtual: 10.1.13.254/24
           311:
             name: 'PR01-TRUST-DHCP'
             tags: [DC1]
@@ -56,7 +56,7 @@ tenants:
             name: 'PR02-DMZ'
             tags: [POD01]
             enabled: true
-            ip_address_virtual: 10.1.12.254/24
+            ip_address_virtual: 10.1.14.254/24
 
 # Tenant D Specific Information - Pure L2 tenant
   Tenant_B:

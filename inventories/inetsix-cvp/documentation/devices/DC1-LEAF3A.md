@@ -188,6 +188,7 @@ Management API gnmi is not defined
 ```eos
 !
 management api http-commands
+   protocol https
    no shutdown
    !
    vrf MGMT
@@ -398,12 +399,14 @@ No Interface Defaults defined
 interface Ethernet1
    description P2P_LINK_TO_DC1-SPINE1_Ethernet7
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.17/31
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-SPINE2_Ethernet7
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.19/31
 !
@@ -508,7 +511,7 @@ interface Vlan311
    no shutdown
    vrf TENANT_A_PROJECT01
    ip address virtual 10.1.31.254/24
-   ip helper-address 1.1.1.1 vrf TENANT_A_PROJECT01  source-interface lo100
+   ip helper-address 1.1.1.1 vrf TENANT_A_PROJECT01 source-interface lo100
 ```
 
 ## VXLAN Interface
@@ -635,7 +638,7 @@ Router ISIS not defined
 | distance bgp 20 200 200 |
 | graceful-restart restart-time 300 |
 | graceful-restart |
-| maximum-paths 2 ecmp 2 |
+| maximum-paths 4 ecmp 4 |
 
 ### Router BGP Peer Groups
 
@@ -644,7 +647,6 @@ Router ISIS not defined
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
-| Remote_as | 65000 |
 | Source | Loopback0 |
 | Bfd | true |
 | Ebgp multihop | 3 |
@@ -662,12 +664,12 @@ Router ISIS not defined
 
 ### BGP Neighbors
 
-| Neighbor | Remote AS |
-| -------- | ---------
-| 172.31.255.16 | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.18 | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS |
+| Neighbor | Remote AS | VRF |
+| -------- | --------- | --- |
+| 172.31.255.16 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
+| 172.31.255.18 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
+| 192.168.255.1 | 65001 | default |
+| 192.168.255.2 | 65001 | default |
 
 ### Router BGP EVPN Address Family
 
@@ -696,9 +698,8 @@ router bgp 65103
    distance bgp 20 200 200
    graceful-restart restart-time 300
    graceful-restart
-   maximum-paths 2 ecmp 2
+   maximum-paths 4 ecmp 4
    neighbor EVPN-OVERLAY-PEERS peer group
-   neighbor EVPN-OVERLAY-PEERS remote-as 65000
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
    neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
@@ -713,7 +714,11 @@ router bgp 65103
    neighbor 172.31.255.16 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.18 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.1 remote-as 65001
+   neighbor 192.168.255.1 description DC1-SPINE1
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.2 remote-as 65001
+   neighbor 192.168.255.2 description DC1-SPINE2
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle B-ELAN-201
@@ -730,7 +735,6 @@ router bgp 65103
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
-      no neighbor IPv4-UNDERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate

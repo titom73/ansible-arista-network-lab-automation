@@ -229,10 +229,10 @@ router_bgp:
       remote_as: 65102
     172.31.255.19:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65101
+      remote_as: 65103
     172.31.255.23:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65101
+      remote_as: 65104
     192.168.255.9:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-BL01A
@@ -260,11 +260,11 @@ router_bgp:
     192.168.255.7:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-LEAF3A
-      remote_as: 65101
+      remote_as: 65103
     192.168.255.8:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-LEAF4A
-      remote_as: 65101
+      remote_as: 65104
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP

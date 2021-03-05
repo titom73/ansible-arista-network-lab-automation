@@ -14,41 +14,49 @@
 
 | Total Tests | Total Tests Passed | Total Tests Failed |
 | ----------- | ------------------ | ------------------ |
-| 242 | 240 | 2 |
+| 518 | 511 | 7 |
 
 ### Summary Totals Devices Under Tests
 
 | DUT | Total Tests | Tests Passed | Tests Failed | Categories Failed |
 | --- | ----------- | ------------ | ------------ | ----------------- |
-| DC1-AGG01 |  5 | 5 | 0 | - |
-| DC1-AGG02 |  5 | 5 | 0 | - |
-| DC1-BL01A |  20 | 19 | 1 | Interface State |
-| DC1-BL01B |  20 | 19 | 1 | Interface State |
-| DC1-LEAF1A |  21 | 21 | 0 | - |
-| DC1-LEAF1B |  21 | 21 | 0 | - |
-| DC1-LEAF2A |  24 | 24 | 0 | - |
-| DC1-LEAF2B |  24 | 24 | 0 | - |
-| DC1-LEAF3A |  16 | 16 | 0 | - |
-| DC1-LEAF4A |  16 | 16 | 0 | - |
-| DC1-SPINE1 |  35 | 35 | 0 | - |
-| DC1-SPINE2 |  35 | 35 | 0 | - |
+| DC1-AGG01 |  7 | 7 | 0 | - |
+| DC1-AGG02 |  7 | 7 | 0 | - |
+| DC1-BL01A |  45 | 44 | 1 | Interface State |
+| DC1-BL01B |  45 | 44 | 1 | Interface State |
+| DC1-LEAF1A |  57 | 55 | 2 | Interface State |
+| DC1-LEAF1B |  57 | 55 | 2 | Interface State |
+| DC1-LEAF2A |  51 | 51 | 0 | - |
+| DC1-LEAF2B |  51 | 51 | 0 | - |
+| DC1-LEAF3A |  40 | 40 | 0 | - |
+| DC1-LEAF4A |  40 | 40 | 0 | - |
+| DC1-SPINE1 |  59 | 58 | 1 | NTP |
+| DC1-SPINE2 |  59 | 59 | 0 | - |
 
 ### Summary Totals Per Category
 
 | Test Category | Total Tests | Tests Passed | Tests Failed |
 | ------------- | ----------- | ------------ | ------------ |
-| NTP |  12 | 12 | 0 |
-| Interface State |  112 | 110 | 2 |
+| NTP |  12 | 11 | 1 |
+| Interface State |  136 | 130 | 6 |
+| LLDP Topology |  52 | 52 | 0 |
 | MLAG |  6 | 6 | 0 |
 | IP Reachability |  32 | 32 | 0 |
 | BGP |  80 | 80 | 0 |
+| Routing Table |  120 | 120 | 0 |
+| Loopback0 Reachability |  80 | 80 | 0 |
 
 ## Failed Test Results Summary
 
 | Test ID | Node | Test Category | Test Description | Test | Test Result | Failure Reason |
 | ------- | ---- | ------------- | ---------------- | ---- | ----------- | -------------- |
-| 97 | DC1-BL01A | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | FAIL | interface status: down - line protocol status: down |
-| 98 | DC1-BL01B | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | FAIL | interface status: down - line protocol status: down |
+| 11 | DC1-SPINE1 | NTP | Synchronised with NTP server | NTP | FAIL | not synchronised to NTP server |
+| 90 | DC1-LEAF1A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan111 - PR01-TRUST | FAIL | interface status: adminDown - line protocol status: down |
+| 91 | DC1-LEAF1A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan112 - PR01-TRUST | FAIL | interface status: adminDown - line protocol status: down |
+| 100 | DC1-LEAF1B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan111 - PR01-TRUST | FAIL | interface status: adminDown - line protocol status: down |
+| 101 | DC1-LEAF1B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan112 - PR01-TRUST | FAIL | interface status: adminDown - line protocol status: down |
+| 121 | DC1-BL01A | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | FAIL | interface status: down - line protocol status: down |
+| 122 | DC1-BL01B | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | FAIL | interface status: down - line protocol status: down |
 
 ## All Test Results
 
@@ -64,7 +72,7 @@
 | 8 | DC1-LEAF2B | NTP | Synchronised with NTP server | NTP | PASS |  |
 | 9 | DC1-LEAF3A | NTP | Synchronised with NTP server | NTP | PASS |  |
 | 10 | DC1-LEAF4A | NTP | Synchronised with NTP server | NTP | PASS |  |
-| 11 | DC1-SPINE1 | NTP | Synchronised with NTP server | NTP | PASS |  |
+| 11 | DC1-SPINE1 | NTP | Synchronised with NTP server | NTP | FAIL | not synchronised to NTP server |
 | 12 | DC1-SPINE2 | NTP | Synchronised with NTP server | NTP | PASS |  |
 | 13 | DC1-AGG01 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet1 - DC1-LEAF1A_Ethernet5 | PASS |  |
 | 14 | DC1-AGG01 | Interface State | Ethernet Interface Status & Line Protocol == "up" | Ethernet2 - DC1-LEAF1B_Ethernet5 | PASS |  |
@@ -140,159 +148,435 @@
 | 84 | DC1-BL01A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4094 - MLAG_PEER | PASS |  |
 | 85 | DC1-BL01B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4093 - MLAG_PEER_L3_PEERING | PASS |  |
 | 86 | DC1-BL01B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4094 - MLAG_PEER | PASS |  |
-| 87 | DC1-LEAF2A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4093 - MLAG_PEER_L3_PEERING | PASS |  |
-| 88 | DC1-LEAF2A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4094 - MLAG_PEER | PASS |  |
-| 89 | DC1-LEAF2A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan110 - PR01-DMZ | PASS |  |
-| 90 | DC1-LEAF2A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan3010 - MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01 | PASS |  |
-| 91 | DC1-LEAF2B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4093 - MLAG_PEER_L3_PEERING | PASS |  |
-| 92 | DC1-LEAF2B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4094 - MLAG_PEER | PASS |  |
-| 93 | DC1-LEAF2B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan110 - PR01-DMZ | PASS |  |
-| 94 | DC1-LEAF2B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan3010 - MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01 | PASS |  |
-| 95 | DC1-LEAF3A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan110 - PR01-DMZ | PASS |  |
-| 96 | DC1-LEAF4A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan110 - PR01-DMZ | PASS |  |
-| 97 | DC1-BL01A | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | FAIL | interface status: down - line protocol status: down |
-| 98 | DC1-BL01B | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | FAIL | interface status: down - line protocol status: down |
-| 99 | DC1-LEAF1A | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS |  |
-| 100 | DC1-LEAF1B | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS |  |
-| 101 | DC1-LEAF2A | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS |  |
-| 102 | DC1-LEAF2B | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS |  |
-| 103 | DC1-LEAF3A | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS |  |
-| 104 | DC1-LEAF4A | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS |  |
-| 105 | DC1-BL01A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
-| 106 | DC1-BL01A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
-| 107 | DC1-BL01B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
-| 108 | DC1-BL01B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
-| 109 | DC1-LEAF1A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
-| 110 | DC1-LEAF1A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
-| 111 | DC1-LEAF1A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback100 - TENANT_A_PROJECT02_VTEP_DIAGNOSTICS | PASS |  |
-| 112 | DC1-LEAF1B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
-| 113 | DC1-LEAF1B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
-| 114 | DC1-LEAF1B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback100 - TENANT_A_PROJECT02_VTEP_DIAGNOSTICS | PASS |  |
-| 115 | DC1-LEAF2A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
-| 116 | DC1-LEAF2A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
-| 117 | DC1-LEAF2B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
-| 118 | DC1-LEAF2B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
-| 119 | DC1-LEAF3A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
-| 120 | DC1-LEAF3A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
-| 121 | DC1-LEAF4A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
-| 122 | DC1-LEAF4A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
-| 123 | DC1-SPINE1 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
-| 124 | DC1-SPINE2 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
-| 125 | DC1-BL01A | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
-| 126 | DC1-BL01B | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
-| 127 | DC1-LEAF1A | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
-| 128 | DC1-LEAF1B | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
-| 129 | DC1-LEAF2A | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
-| 130 | DC1-LEAF2B | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
-| 131 | DC1-BL01A | IP Reachability | ip reachability test p2p links | Source: DC1-BL01A_Ethernet1 - Destination: DC1-SPINE1_Ethernet5 | PASS |  |
-| 132 | DC1-BL01A | IP Reachability | ip reachability test p2p links | Source: DC1-BL01A_Ethernet2 - Destination: DC1-SPINE2_Ethernet5 | PASS |  |
-| 133 | DC1-BL01B | IP Reachability | ip reachability test p2p links | Source: DC1-BL01B_Ethernet1 - Destination: DC1-SPINE1_Ethernet6 | PASS |  |
-| 134 | DC1-BL01B | IP Reachability | ip reachability test p2p links | Source: DC1-BL01B_Ethernet2 - Destination: DC1-SPINE2_Ethernet6 | PASS |  |
-| 135 | DC1-LEAF1A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF1A_Ethernet1 - Destination: DC1-SPINE1_Ethernet1 | PASS |  |
-| 136 | DC1-LEAF1A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF1A_Ethernet2 - Destination: DC1-SPINE2_Ethernet1 | PASS |  |
-| 137 | DC1-LEAF1B | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF1B_Ethernet1 - Destination: DC1-SPINE1_Ethernet2 | PASS |  |
-| 138 | DC1-LEAF1B | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF1B_Ethernet2 - Destination: DC1-SPINE2_Ethernet2 | PASS |  |
-| 139 | DC1-LEAF2A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF2A_Ethernet1 - Destination: DC1-SPINE1_Ethernet3 | PASS |  |
-| 140 | DC1-LEAF2A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF2A_Ethernet2 - Destination: DC1-SPINE2_Ethernet3 | PASS |  |
-| 141 | DC1-LEAF2B | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF2B_Ethernet1 - Destination: DC1-SPINE1_Ethernet4 | PASS |  |
-| 142 | DC1-LEAF2B | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF2B_Ethernet2 - Destination: DC1-SPINE2_Ethernet4 | PASS |  |
-| 143 | DC1-LEAF3A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF3A_Ethernet1 - Destination: DC1-SPINE1_Ethernet7 | PASS |  |
-| 144 | DC1-LEAF3A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF3A_Ethernet2 - Destination: DC1-SPINE2_Ethernet7 | PASS |  |
-| 145 | DC1-LEAF4A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF4A_Ethernet1 - Destination: DC1-SPINE1_Ethernet8 | PASS |  |
-| 146 | DC1-LEAF4A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF4A_Ethernet2 - Destination: DC1-SPINE2_Ethernet8 | PASS |  |
-| 147 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet5 - Destination: DC1-BL01A_Ethernet1 | PASS |  |
-| 148 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet6 - Destination: DC1-BL01B_Ethernet1 | PASS |  |
-| 149 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet1 - Destination: DC1-LEAF1A_Ethernet1 | PASS |  |
-| 150 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet2 - Destination: DC1-LEAF1B_Ethernet1 | PASS |  |
-| 151 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet3 - Destination: DC1-LEAF2A_Ethernet1 | PASS |  |
-| 152 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet4 - Destination: DC1-LEAF2B_Ethernet1 | PASS |  |
-| 153 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet7 - Destination: DC1-LEAF3A_Ethernet1 | PASS |  |
-| 154 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet8 - Destination: DC1-LEAF4A_Ethernet1 | PASS |  |
-| 155 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet5 - Destination: DC1-BL01A_Ethernet2 | PASS |  |
-| 156 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet6 - Destination: DC1-BL01B_Ethernet2 | PASS |  |
-| 157 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet1 - Destination: DC1-LEAF1A_Ethernet2 | PASS |  |
-| 158 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet2 - Destination: DC1-LEAF1B_Ethernet2 | PASS |  |
-| 159 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet3 - Destination: DC1-LEAF2A_Ethernet2 | PASS |  |
-| 160 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet4 - Destination: DC1-LEAF2B_Ethernet2 | PASS |  |
-| 161 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet7 - Destination: DC1-LEAF3A_Ethernet2 | PASS |  |
-| 162 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet8 - Destination: DC1-LEAF4A_Ethernet2 | PASS |  |
-| 163 | DC1-BL01A | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
-| 164 | DC1-BL01B | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
-| 165 | DC1-LEAF1A | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
-| 166 | DC1-LEAF1B | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
-| 167 | DC1-LEAF2A | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
-| 168 | DC1-LEAF2B | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
-| 169 | DC1-LEAF3A | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
-| 170 | DC1-LEAF4A | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
-| 171 | DC1-SPINE1 | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
-| 172 | DC1-SPINE2 | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
-| 173 | DC1-BL01A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.24 | PASS |  |
-| 174 | DC1-BL01A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.26 | PASS |  |
-| 175 | DC1-BL01A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.13 | PASS |  |
-| 176 | DC1-BL01B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.28 | PASS |  |
-| 177 | DC1-BL01B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.30 | PASS |  |
-| 178 | DC1-BL01B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.12 | PASS |  |
-| 179 | DC1-LEAF1A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.0 | PASS |  |
-| 180 | DC1-LEAF1A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.2 | PASS |  |
-| 181 | DC1-LEAF1A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.1 | PASS |  |
-| 182 | DC1-LEAF1B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.4 | PASS |  |
-| 183 | DC1-LEAF1B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.6 | PASS |  |
-| 184 | DC1-LEAF1B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.0 | PASS |  |
-| 185 | DC1-LEAF2A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.8 | PASS |  |
-| 186 | DC1-LEAF2A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.10 | PASS |  |
-| 187 | DC1-LEAF2A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.5 | PASS |  |
-| 188 | DC1-LEAF2B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.12 | PASS |  |
-| 189 | DC1-LEAF2B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.14 | PASS |  |
-| 190 | DC1-LEAF2B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.4 | PASS |  |
-| 191 | DC1-LEAF3A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.16 | PASS |  |
-| 192 | DC1-LEAF3A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.18 | PASS |  |
-| 193 | DC1-LEAF4A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.20 | PASS |  |
-| 194 | DC1-LEAF4A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.22 | PASS |  |
-| 195 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.25 | PASS |  |
-| 196 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.29 | PASS |  |
-| 197 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.1 | PASS |  |
-| 198 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.5 | PASS |  |
-| 199 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.9 | PASS |  |
-| 200 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.13 | PASS |  |
-| 201 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.17 | PASS |  |
-| 202 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.21 | PASS |  |
-| 203 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.27 | PASS |  |
-| 204 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.31 | PASS |  |
-| 205 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.3 | PASS |  |
-| 206 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.7 | PASS |  |
-| 207 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.11 | PASS |  |
-| 208 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.15 | PASS |  |
-| 209 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.19 | PASS |  |
-| 210 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.23 | PASS |  |
-| 211 | DC1-BL01A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
-| 212 | DC1-BL01A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
-| 213 | DC1-BL01B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
-| 214 | DC1-BL01B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
-| 215 | DC1-LEAF1A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
-| 216 | DC1-LEAF1A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
-| 217 | DC1-LEAF1B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
-| 218 | DC1-LEAF1B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
-| 219 | DC1-LEAF2A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
-| 220 | DC1-LEAF2A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
-| 221 | DC1-LEAF2B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
-| 222 | DC1-LEAF2B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
-| 223 | DC1-LEAF3A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
-| 224 | DC1-LEAF3A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
-| 225 | DC1-LEAF4A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
-| 226 | DC1-LEAF4A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
-| 227 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.9 | PASS |  |
-| 228 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.10 | PASS |  |
-| 229 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.3 | PASS |  |
-| 230 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.4 | PASS |  |
-| 231 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.5 | PASS |  |
-| 232 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.6 | PASS |  |
-| 233 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.7 | PASS |  |
-| 234 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.8 | PASS |  |
-| 235 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.9 | PASS |  |
-| 236 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.10 | PASS |  |
-| 237 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.3 | PASS |  |
-| 238 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.4 | PASS |  |
-| 239 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.5 | PASS |  |
-| 240 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.6 | PASS |  |
-| 241 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.7 | PASS |  |
-| 242 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.8 | PASS |  |
+| 87 | DC1-LEAF1A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4093 - MLAG_PEER_L3_PEERING | PASS |  |
+| 88 | DC1-LEAF1A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4094 - MLAG_PEER | PASS |  |
+| 89 | DC1-LEAF1A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan110 - PR01-DMZ | PASS |  |
+| 90 | DC1-LEAF1A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan111 - PR01-TRUST | FAIL | interface status: adminDown - line protocol status: down |
+| 91 | DC1-LEAF1A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan112 - PR01-TRUST | FAIL | interface status: adminDown - line protocol status: down |
+| 92 | DC1-LEAF1A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan113 - PR01-TRUST | PASS |  |
+| 93 | DC1-LEAF1A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan311 - PR01-TRUST-DHCP | PASS |  |
+| 94 | DC1-LEAF1A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan3010 - MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01 | PASS |  |
+| 95 | DC1-LEAF1A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan114 - PR02-DMZ | PASS |  |
+| 96 | DC1-LEAF1A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan3011 - MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT02 | PASS |  |
+| 97 | DC1-LEAF1B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4093 - MLAG_PEER_L3_PEERING | PASS |  |
+| 98 | DC1-LEAF1B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4094 - MLAG_PEER | PASS |  |
+| 99 | DC1-LEAF1B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan110 - PR01-DMZ | PASS |  |
+| 100 | DC1-LEAF1B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan111 - PR01-TRUST | FAIL | interface status: adminDown - line protocol status: down |
+| 101 | DC1-LEAF1B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan112 - PR01-TRUST | FAIL | interface status: adminDown - line protocol status: down |
+| 102 | DC1-LEAF1B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan113 - PR01-TRUST | PASS |  |
+| 103 | DC1-LEAF1B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan311 - PR01-TRUST-DHCP | PASS |  |
+| 104 | DC1-LEAF1B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan3010 - MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01 | PASS |  |
+| 105 | DC1-LEAF1B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan114 - PR02-DMZ | PASS |  |
+| 106 | DC1-LEAF1B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan3011 - MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT02 | PASS |  |
+| 107 | DC1-LEAF2A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4093 - MLAG_PEER_L3_PEERING | PASS |  |
+| 108 | DC1-LEAF2A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4094 - MLAG_PEER | PASS |  |
+| 109 | DC1-LEAF2A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan110 - PR01-DMZ | PASS |  |
+| 110 | DC1-LEAF2A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan311 - PR01-TRUST-DHCP | PASS |  |
+| 111 | DC1-LEAF2A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan3010 - MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01 | PASS |  |
+| 112 | DC1-LEAF2B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4093 - MLAG_PEER_L3_PEERING | PASS |  |
+| 113 | DC1-LEAF2B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan4094 - MLAG_PEER | PASS |  |
+| 114 | DC1-LEAF2B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan110 - PR01-DMZ | PASS |  |
+| 115 | DC1-LEAF2B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan311 - PR01-TRUST-DHCP | PASS |  |
+| 116 | DC1-LEAF2B | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan3010 - MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01 | PASS |  |
+| 117 | DC1-LEAF3A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan110 - PR01-DMZ | PASS |  |
+| 118 | DC1-LEAF3A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan311 - PR01-TRUST-DHCP | PASS |  |
+| 119 | DC1-LEAF4A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan110 - PR01-DMZ | PASS |  |
+| 120 | DC1-LEAF4A | Interface State | Vlan Interface Status & Line Protocol == "up" | Vlan311 - PR01-TRUST-DHCP | PASS |  |
+| 121 | DC1-BL01A | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | FAIL | interface status: down - line protocol status: down |
+| 122 | DC1-BL01B | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | FAIL | interface status: down - line protocol status: down |
+| 123 | DC1-LEAF1A | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS |  |
+| 124 | DC1-LEAF1B | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS |  |
+| 125 | DC1-LEAF2A | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS |  |
+| 126 | DC1-LEAF2B | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS |  |
+| 127 | DC1-LEAF3A | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS |  |
+| 128 | DC1-LEAF4A | Interface State | Vxlan Interface Status & Line Protocol == "up" | Vxlan1 | PASS |  |
+| 129 | DC1-BL01A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
+| 130 | DC1-BL01A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
+| 131 | DC1-BL01B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
+| 132 | DC1-BL01B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
+| 133 | DC1-LEAF1A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
+| 134 | DC1-LEAF1A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
+| 135 | DC1-LEAF1A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback100 - TENANT_A_PROJECT02_VTEP_DIAGNOSTICS | PASS |  |
+| 136 | DC1-LEAF1B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
+| 137 | DC1-LEAF1B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
+| 138 | DC1-LEAF1B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback100 - TENANT_A_PROJECT02_VTEP_DIAGNOSTICS | PASS |  |
+| 139 | DC1-LEAF2A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
+| 140 | DC1-LEAF2A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
+| 141 | DC1-LEAF2B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
+| 142 | DC1-LEAF2B | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
+| 143 | DC1-LEAF3A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
+| 144 | DC1-LEAF3A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
+| 145 | DC1-LEAF4A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
+| 146 | DC1-LEAF4A | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback1 - VTEP_VXLAN_Tunnel_Source | PASS |  |
+| 147 | DC1-SPINE1 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
+| 148 | DC1-SPINE2 | Interface State | Loopback Interface Status & Line Protocol == "up" | Loopback0 - EVPN_Overlay_Peering | PASS |  |
+| 149 | DC1-AGG01 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: DC1-LEAF1A_Ethernet5 | PASS |  |
+| 150 | DC1-AGG01 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: DC1-LEAF1B_Ethernet5 | PASS |  |
+| 151 | DC1-AGG02 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: DC1-LEAF2A_Ethernet5 | PASS |  |
+| 152 | DC1-AGG02 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: DC1-LEAF2B_Ethernet5 | PASS |  |
+| 153 | DC1-BL01A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: DC1-SPINE1_Ethernet5 | PASS |  |
+| 154 | DC1-BL01A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: DC1-SPINE2_Ethernet5 | PASS |  |
+| 155 | DC1-BL01A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: DC1-BL01B_Ethernet3 | PASS |  |
+| 156 | DC1-BL01A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: DC1-BL01B_Ethernet4 | PASS |  |
+| 157 | DC1-BL01B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: DC1-SPINE1_Ethernet6 | PASS |  |
+| 158 | DC1-BL01B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: DC1-SPINE2_Ethernet6 | PASS |  |
+| 159 | DC1-BL01B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: DC1-BL01A_Ethernet3 | PASS |  |
+| 160 | DC1-BL01B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: DC1-BL01A_Ethernet4 | PASS |  |
+| 161 | DC1-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: DC1-SPINE1_Ethernet1 | PASS |  |
+| 162 | DC1-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: DC1-SPINE2_Ethernet1 | PASS |  |
+| 163 | DC1-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: DC1-LEAF1B_Ethernet3 | PASS |  |
+| 164 | DC1-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: DC1-LEAF1B_Ethernet4 | PASS |  |
+| 165 | DC1-LEAF1A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet5 - remote: DC1-AGG01_Ethernet1 | PASS |  |
+| 166 | DC1-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: DC1-SPINE1_Ethernet2 | PASS |  |
+| 167 | DC1-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: DC1-SPINE2_Ethernet2 | PASS |  |
+| 168 | DC1-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: DC1-LEAF1A_Ethernet3 | PASS |  |
+| 169 | DC1-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: DC1-LEAF1A_Ethernet4 | PASS |  |
+| 170 | DC1-LEAF1B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet5 - remote: DC1-AGG01_Ethernet2 | PASS |  |
+| 171 | DC1-LEAF2A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: DC1-SPINE1_Ethernet3 | PASS |  |
+| 172 | DC1-LEAF2A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: DC1-SPINE2_Ethernet3 | PASS |  |
+| 173 | DC1-LEAF2A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: DC1-LEAF2B_Ethernet3 | PASS |  |
+| 174 | DC1-LEAF2A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: DC1-LEAF2B_Ethernet4 | PASS |  |
+| 175 | DC1-LEAF2A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet5 - remote: DC1-AGG02_Ethernet1 | PASS |  |
+| 176 | DC1-LEAF2B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: DC1-SPINE1_Ethernet4 | PASS |  |
+| 177 | DC1-LEAF2B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: DC1-SPINE2_Ethernet4 | PASS |  |
+| 178 | DC1-LEAF2B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: DC1-LEAF2A_Ethernet3 | PASS |  |
+| 179 | DC1-LEAF2B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: DC1-LEAF2A_Ethernet4 | PASS |  |
+| 180 | DC1-LEAF2B | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet5 - remote: DC1-AGG02_Ethernet2 | PASS |  |
+| 181 | DC1-LEAF3A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: DC1-SPINE1_Ethernet7 | PASS |  |
+| 182 | DC1-LEAF3A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: DC1-SPINE2_Ethernet7 | PASS |  |
+| 183 | DC1-LEAF4A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: DC1-SPINE1_Ethernet8 | PASS |  |
+| 184 | DC1-LEAF4A | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: DC1-SPINE2_Ethernet8 | PASS |  |
+| 185 | DC1-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet5 - remote: DC1-BL01A_Ethernet1 | PASS |  |
+| 186 | DC1-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet6 - remote: DC1-BL01B_Ethernet1 | PASS |  |
+| 187 | DC1-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: DC1-LEAF1A_Ethernet1 | PASS |  |
+| 188 | DC1-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: DC1-LEAF1B_Ethernet1 | PASS |  |
+| 189 | DC1-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: DC1-LEAF2A_Ethernet1 | PASS |  |
+| 190 | DC1-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: DC1-LEAF2B_Ethernet1 | PASS |  |
+| 191 | DC1-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet7 - remote: DC1-LEAF3A_Ethernet1 | PASS |  |
+| 192 | DC1-SPINE1 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet8 - remote: DC1-LEAF4A_Ethernet1 | PASS |  |
+| 193 | DC1-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet5 - remote: DC1-BL01A_Ethernet2 | PASS |  |
+| 194 | DC1-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet6 - remote: DC1-BL01B_Ethernet2 | PASS |  |
+| 195 | DC1-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet1 - remote: DC1-LEAF1A_Ethernet2 | PASS |  |
+| 196 | DC1-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet2 - remote: DC1-LEAF1B_Ethernet2 | PASS |  |
+| 197 | DC1-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet3 - remote: DC1-LEAF2A_Ethernet2 | PASS |  |
+| 198 | DC1-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet4 - remote: DC1-LEAF2B_Ethernet2 | PASS |  |
+| 199 | DC1-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet7 - remote: DC1-LEAF3A_Ethernet2 | PASS |  |
+| 200 | DC1-SPINE2 | LLDP Topology | lldp topology - validate peer and interface | local: Ethernet8 - remote: DC1-LEAF4A_Ethernet2 | PASS |  |
+| 201 | DC1-BL01A | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
+| 202 | DC1-BL01B | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
+| 203 | DC1-LEAF1A | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
+| 204 | DC1-LEAF1B | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
+| 205 | DC1-LEAF2A | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
+| 206 | DC1-LEAF2B | MLAG | MLAG State active & Status connected | MLAG | PASS |  |
+| 207 | DC1-BL01A | IP Reachability | ip reachability test p2p links | Source: DC1-BL01A_Ethernet1 - Destination: DC1-SPINE1_Ethernet5 | PASS |  |
+| 208 | DC1-BL01A | IP Reachability | ip reachability test p2p links | Source: DC1-BL01A_Ethernet2 - Destination: DC1-SPINE2_Ethernet5 | PASS |  |
+| 209 | DC1-BL01B | IP Reachability | ip reachability test p2p links | Source: DC1-BL01B_Ethernet1 - Destination: DC1-SPINE1_Ethernet6 | PASS |  |
+| 210 | DC1-BL01B | IP Reachability | ip reachability test p2p links | Source: DC1-BL01B_Ethernet2 - Destination: DC1-SPINE2_Ethernet6 | PASS |  |
+| 211 | DC1-LEAF1A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF1A_Ethernet1 - Destination: DC1-SPINE1_Ethernet1 | PASS |  |
+| 212 | DC1-LEAF1A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF1A_Ethernet2 - Destination: DC1-SPINE2_Ethernet1 | PASS |  |
+| 213 | DC1-LEAF1B | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF1B_Ethernet1 - Destination: DC1-SPINE1_Ethernet2 | PASS |  |
+| 214 | DC1-LEAF1B | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF1B_Ethernet2 - Destination: DC1-SPINE2_Ethernet2 | PASS |  |
+| 215 | DC1-LEAF2A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF2A_Ethernet1 - Destination: DC1-SPINE1_Ethernet3 | PASS |  |
+| 216 | DC1-LEAF2A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF2A_Ethernet2 - Destination: DC1-SPINE2_Ethernet3 | PASS |  |
+| 217 | DC1-LEAF2B | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF2B_Ethernet1 - Destination: DC1-SPINE1_Ethernet4 | PASS |  |
+| 218 | DC1-LEAF2B | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF2B_Ethernet2 - Destination: DC1-SPINE2_Ethernet4 | PASS |  |
+| 219 | DC1-LEAF3A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF3A_Ethernet1 - Destination: DC1-SPINE1_Ethernet7 | PASS |  |
+| 220 | DC1-LEAF3A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF3A_Ethernet2 - Destination: DC1-SPINE2_Ethernet7 | PASS |  |
+| 221 | DC1-LEAF4A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF4A_Ethernet1 - Destination: DC1-SPINE1_Ethernet8 | PASS |  |
+| 222 | DC1-LEAF4A | IP Reachability | ip reachability test p2p links | Source: DC1-LEAF4A_Ethernet2 - Destination: DC1-SPINE2_Ethernet8 | PASS |  |
+| 223 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet5 - Destination: DC1-BL01A_Ethernet1 | PASS |  |
+| 224 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet6 - Destination: DC1-BL01B_Ethernet1 | PASS |  |
+| 225 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet1 - Destination: DC1-LEAF1A_Ethernet1 | PASS |  |
+| 226 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet2 - Destination: DC1-LEAF1B_Ethernet1 | PASS |  |
+| 227 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet3 - Destination: DC1-LEAF2A_Ethernet1 | PASS |  |
+| 228 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet4 - Destination: DC1-LEAF2B_Ethernet1 | PASS |  |
+| 229 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet7 - Destination: DC1-LEAF3A_Ethernet1 | PASS |  |
+| 230 | DC1-SPINE1 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE1_Ethernet8 - Destination: DC1-LEAF4A_Ethernet1 | PASS |  |
+| 231 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet5 - Destination: DC1-BL01A_Ethernet2 | PASS |  |
+| 232 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet6 - Destination: DC1-BL01B_Ethernet2 | PASS |  |
+| 233 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet1 - Destination: DC1-LEAF1A_Ethernet2 | PASS |  |
+| 234 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet2 - Destination: DC1-LEAF1B_Ethernet2 | PASS |  |
+| 235 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet3 - Destination: DC1-LEAF2A_Ethernet2 | PASS |  |
+| 236 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet4 - Destination: DC1-LEAF2B_Ethernet2 | PASS |  |
+| 237 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet7 - Destination: DC1-LEAF3A_Ethernet2 | PASS |  |
+| 238 | DC1-SPINE2 | IP Reachability | ip reachability test p2p links | Source: DC1-SPINE2_Ethernet8 - Destination: DC1-LEAF4A_Ethernet2 | PASS |  |
+| 239 | DC1-BL01A | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
+| 240 | DC1-BL01B | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
+| 241 | DC1-LEAF1A | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
+| 242 | DC1-LEAF1B | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
+| 243 | DC1-LEAF2A | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
+| 244 | DC1-LEAF2B | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
+| 245 | DC1-LEAF3A | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
+| 246 | DC1-LEAF4A | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
+| 247 | DC1-SPINE1 | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
+| 248 | DC1-SPINE2 | BGP | ArBGP is configured and operating | ArBGP | PASS |  |
+| 249 | DC1-BL01A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.24 | PASS |  |
+| 250 | DC1-BL01A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.26 | PASS |  |
+| 251 | DC1-BL01A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.13 | PASS |  |
+| 252 | DC1-BL01B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.28 | PASS |  |
+| 253 | DC1-BL01B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.30 | PASS |  |
+| 254 | DC1-BL01B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.12 | PASS |  |
+| 255 | DC1-LEAF1A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.0 | PASS |  |
+| 256 | DC1-LEAF1A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.2 | PASS |  |
+| 257 | DC1-LEAF1A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.1 | PASS |  |
+| 258 | DC1-LEAF1B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.4 | PASS |  |
+| 259 | DC1-LEAF1B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.6 | PASS |  |
+| 260 | DC1-LEAF1B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.0 | PASS |  |
+| 261 | DC1-LEAF2A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.8 | PASS |  |
+| 262 | DC1-LEAF2A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.10 | PASS |  |
+| 263 | DC1-LEAF2A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.5 | PASS |  |
+| 264 | DC1-LEAF2B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.12 | PASS |  |
+| 265 | DC1-LEAF2B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.14 | PASS |  |
+| 266 | DC1-LEAF2B | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 10.255.251.4 | PASS |  |
+| 267 | DC1-LEAF3A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.16 | PASS |  |
+| 268 | DC1-LEAF3A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.18 | PASS |  |
+| 269 | DC1-LEAF4A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.20 | PASS |  |
+| 270 | DC1-LEAF4A | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.22 | PASS |  |
+| 271 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.25 | PASS |  |
+| 272 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.29 | PASS |  |
+| 273 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.1 | PASS |  |
+| 274 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.5 | PASS |  |
+| 275 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.9 | PASS |  |
+| 276 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.13 | PASS |  |
+| 277 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.17 | PASS |  |
+| 278 | DC1-SPINE1 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.21 | PASS |  |
+| 279 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.27 | PASS |  |
+| 280 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.31 | PASS |  |
+| 281 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.3 | PASS |  |
+| 282 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.7 | PASS |  |
+| 283 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.11 | PASS |  |
+| 284 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.15 | PASS |  |
+| 285 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.19 | PASS |  |
+| 286 | DC1-SPINE2 | BGP | ip bgp peer state established (ipv4) | bgp_neighbor: 172.31.255.23 | PASS |  |
+| 287 | DC1-BL01A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 288 | DC1-BL01A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 289 | DC1-BL01B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 290 | DC1-BL01B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 291 | DC1-LEAF1A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 292 | DC1-LEAF1A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 293 | DC1-LEAF1B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 294 | DC1-LEAF1B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 295 | DC1-LEAF2A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 296 | DC1-LEAF2A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 297 | DC1-LEAF2B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 298 | DC1-LEAF2B | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 299 | DC1-LEAF3A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 300 | DC1-LEAF3A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 301 | DC1-LEAF4A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.1 | PASS |  |
+| 302 | DC1-LEAF4A | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.2 | PASS |  |
+| 303 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.9 | PASS |  |
+| 304 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.10 | PASS |  |
+| 305 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.3 | PASS |  |
+| 306 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.4 | PASS |  |
+| 307 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.5 | PASS |  |
+| 308 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.6 | PASS |  |
+| 309 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.7 | PASS |  |
+| 310 | DC1-SPINE1 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.8 | PASS |  |
+| 311 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.9 | PASS |  |
+| 312 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.10 | PASS |  |
+| 313 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.3 | PASS |  |
+| 314 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.4 | PASS |  |
+| 315 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.5 | PASS |  |
+| 316 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.6 | PASS |  |
+| 317 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.7 | PASS |  |
+| 318 | DC1-SPINE2 | BGP | bgp evpn peer state established (evpn) | bgp_neighbor: 192.168.255.8 | PASS |  |
+| 319 | DC1-BL01A | Routing Table | Remote Lo1 address | 192.168.254.9 | PASS |  |
+| 320 | DC1-BL01A | Routing Table | Remote Lo1 address | 192.168.254.3 | PASS |  |
+| 321 | DC1-BL01A | Routing Table | Remote Lo1 address | 192.168.254.5 | PASS |  |
+| 322 | DC1-BL01A | Routing Table | Remote Lo1 address | 192.168.254.7 | PASS |  |
+| 323 | DC1-BL01A | Routing Table | Remote Lo1 address | 192.168.254.8 | PASS |  |
+| 324 | DC1-BL01B | Routing Table | Remote Lo1 address | 192.168.254.9 | PASS |  |
+| 325 | DC1-BL01B | Routing Table | Remote Lo1 address | 192.168.254.3 | PASS |  |
+| 326 | DC1-BL01B | Routing Table | Remote Lo1 address | 192.168.254.5 | PASS |  |
+| 327 | DC1-BL01B | Routing Table | Remote Lo1 address | 192.168.254.7 | PASS |  |
+| 328 | DC1-BL01B | Routing Table | Remote Lo1 address | 192.168.254.8 | PASS |  |
+| 329 | DC1-LEAF1A | Routing Table | Remote Lo1 address | 192.168.254.9 | PASS |  |
+| 330 | DC1-LEAF1A | Routing Table | Remote Lo1 address | 192.168.254.3 | PASS |  |
+| 331 | DC1-LEAF1A | Routing Table | Remote Lo1 address | 192.168.254.5 | PASS |  |
+| 332 | DC1-LEAF1A | Routing Table | Remote Lo1 address | 192.168.254.7 | PASS |  |
+| 333 | DC1-LEAF1A | Routing Table | Remote Lo1 address | 192.168.254.8 | PASS |  |
+| 334 | DC1-LEAF1B | Routing Table | Remote Lo1 address | 192.168.254.9 | PASS |  |
+| 335 | DC1-LEAF1B | Routing Table | Remote Lo1 address | 192.168.254.3 | PASS |  |
+| 336 | DC1-LEAF1B | Routing Table | Remote Lo1 address | 192.168.254.5 | PASS |  |
+| 337 | DC1-LEAF1B | Routing Table | Remote Lo1 address | 192.168.254.7 | PASS |  |
+| 338 | DC1-LEAF1B | Routing Table | Remote Lo1 address | 192.168.254.8 | PASS |  |
+| 339 | DC1-LEAF2A | Routing Table | Remote Lo1 address | 192.168.254.9 | PASS |  |
+| 340 | DC1-LEAF2A | Routing Table | Remote Lo1 address | 192.168.254.3 | PASS |  |
+| 341 | DC1-LEAF2A | Routing Table | Remote Lo1 address | 192.168.254.5 | PASS |  |
+| 342 | DC1-LEAF2A | Routing Table | Remote Lo1 address | 192.168.254.7 | PASS |  |
+| 343 | DC1-LEAF2A | Routing Table | Remote Lo1 address | 192.168.254.8 | PASS |  |
+| 344 | DC1-LEAF2B | Routing Table | Remote Lo1 address | 192.168.254.9 | PASS |  |
+| 345 | DC1-LEAF2B | Routing Table | Remote Lo1 address | 192.168.254.3 | PASS |  |
+| 346 | DC1-LEAF2B | Routing Table | Remote Lo1 address | 192.168.254.5 | PASS |  |
+| 347 | DC1-LEAF2B | Routing Table | Remote Lo1 address | 192.168.254.7 | PASS |  |
+| 348 | DC1-LEAF2B | Routing Table | Remote Lo1 address | 192.168.254.8 | PASS |  |
+| 349 | DC1-LEAF3A | Routing Table | Remote Lo1 address | 192.168.254.9 | PASS |  |
+| 350 | DC1-LEAF3A | Routing Table | Remote Lo1 address | 192.168.254.3 | PASS |  |
+| 351 | DC1-LEAF3A | Routing Table | Remote Lo1 address | 192.168.254.5 | PASS |  |
+| 352 | DC1-LEAF3A | Routing Table | Remote Lo1 address | 192.168.254.7 | PASS |  |
+| 353 | DC1-LEAF3A | Routing Table | Remote Lo1 address | 192.168.254.8 | PASS |  |
+| 354 | DC1-LEAF4A | Routing Table | Remote Lo1 address | 192.168.254.9 | PASS |  |
+| 355 | DC1-LEAF4A | Routing Table | Remote Lo1 address | 192.168.254.3 | PASS |  |
+| 356 | DC1-LEAF4A | Routing Table | Remote Lo1 address | 192.168.254.5 | PASS |  |
+| 357 | DC1-LEAF4A | Routing Table | Remote Lo1 address | 192.168.254.7 | PASS |  |
+| 358 | DC1-LEAF4A | Routing Table | Remote Lo1 address | 192.168.254.8 | PASS |  |
+| 359 | DC1-BL01A | Routing Table | Remote Lo0 address | 192.168.255.9 | PASS |  |
+| 360 | DC1-BL01A | Routing Table | Remote Lo0 address | 192.168.255.10 | PASS |  |
+| 361 | DC1-BL01A | Routing Table | Remote Lo0 address | 192.168.255.3 | PASS |  |
+| 362 | DC1-BL01A | Routing Table | Remote Lo0 address | 192.168.255.4 | PASS |  |
+| 363 | DC1-BL01A | Routing Table | Remote Lo0 address | 192.168.255.5 | PASS |  |
+| 364 | DC1-BL01A | Routing Table | Remote Lo0 address | 192.168.255.6 | PASS |  |
+| 365 | DC1-BL01A | Routing Table | Remote Lo0 address | 192.168.255.7 | PASS |  |
+| 366 | DC1-BL01A | Routing Table | Remote Lo0 address | 192.168.255.8 | PASS |  |
+| 367 | DC1-BL01B | Routing Table | Remote Lo0 address | 192.168.255.9 | PASS |  |
+| 368 | DC1-BL01B | Routing Table | Remote Lo0 address | 192.168.255.10 | PASS |  |
+| 369 | DC1-BL01B | Routing Table | Remote Lo0 address | 192.168.255.3 | PASS |  |
+| 370 | DC1-BL01B | Routing Table | Remote Lo0 address | 192.168.255.4 | PASS |  |
+| 371 | DC1-BL01B | Routing Table | Remote Lo0 address | 192.168.255.5 | PASS |  |
+| 372 | DC1-BL01B | Routing Table | Remote Lo0 address | 192.168.255.6 | PASS |  |
+| 373 | DC1-BL01B | Routing Table | Remote Lo0 address | 192.168.255.7 | PASS |  |
+| 374 | DC1-BL01B | Routing Table | Remote Lo0 address | 192.168.255.8 | PASS |  |
+| 375 | DC1-LEAF1A | Routing Table | Remote Lo0 address | 192.168.255.9 | PASS |  |
+| 376 | DC1-LEAF1A | Routing Table | Remote Lo0 address | 192.168.255.10 | PASS |  |
+| 377 | DC1-LEAF1A | Routing Table | Remote Lo0 address | 192.168.255.3 | PASS |  |
+| 378 | DC1-LEAF1A | Routing Table | Remote Lo0 address | 192.168.255.4 | PASS |  |
+| 379 | DC1-LEAF1A | Routing Table | Remote Lo0 address | 192.168.255.5 | PASS |  |
+| 380 | DC1-LEAF1A | Routing Table | Remote Lo0 address | 192.168.255.6 | PASS |  |
+| 381 | DC1-LEAF1A | Routing Table | Remote Lo0 address | 192.168.255.7 | PASS |  |
+| 382 | DC1-LEAF1A | Routing Table | Remote Lo0 address | 192.168.255.8 | PASS |  |
+| 383 | DC1-LEAF1B | Routing Table | Remote Lo0 address | 192.168.255.9 | PASS |  |
+| 384 | DC1-LEAF1B | Routing Table | Remote Lo0 address | 192.168.255.10 | PASS |  |
+| 385 | DC1-LEAF1B | Routing Table | Remote Lo0 address | 192.168.255.3 | PASS |  |
+| 386 | DC1-LEAF1B | Routing Table | Remote Lo0 address | 192.168.255.4 | PASS |  |
+| 387 | DC1-LEAF1B | Routing Table | Remote Lo0 address | 192.168.255.5 | PASS |  |
+| 388 | DC1-LEAF1B | Routing Table | Remote Lo0 address | 192.168.255.6 | PASS |  |
+| 389 | DC1-LEAF1B | Routing Table | Remote Lo0 address | 192.168.255.7 | PASS |  |
+| 390 | DC1-LEAF1B | Routing Table | Remote Lo0 address | 192.168.255.8 | PASS |  |
+| 391 | DC1-LEAF2A | Routing Table | Remote Lo0 address | 192.168.255.9 | PASS |  |
+| 392 | DC1-LEAF2A | Routing Table | Remote Lo0 address | 192.168.255.10 | PASS |  |
+| 393 | DC1-LEAF2A | Routing Table | Remote Lo0 address | 192.168.255.3 | PASS |  |
+| 394 | DC1-LEAF2A | Routing Table | Remote Lo0 address | 192.168.255.4 | PASS |  |
+| 395 | DC1-LEAF2A | Routing Table | Remote Lo0 address | 192.168.255.5 | PASS |  |
+| 396 | DC1-LEAF2A | Routing Table | Remote Lo0 address | 192.168.255.6 | PASS |  |
+| 397 | DC1-LEAF2A | Routing Table | Remote Lo0 address | 192.168.255.7 | PASS |  |
+| 398 | DC1-LEAF2A | Routing Table | Remote Lo0 address | 192.168.255.8 | PASS |  |
+| 399 | DC1-LEAF2B | Routing Table | Remote Lo0 address | 192.168.255.9 | PASS |  |
+| 400 | DC1-LEAF2B | Routing Table | Remote Lo0 address | 192.168.255.10 | PASS |  |
+| 401 | DC1-LEAF2B | Routing Table | Remote Lo0 address | 192.168.255.3 | PASS |  |
+| 402 | DC1-LEAF2B | Routing Table | Remote Lo0 address | 192.168.255.4 | PASS |  |
+| 403 | DC1-LEAF2B | Routing Table | Remote Lo0 address | 192.168.255.5 | PASS |  |
+| 404 | DC1-LEAF2B | Routing Table | Remote Lo0 address | 192.168.255.6 | PASS |  |
+| 405 | DC1-LEAF2B | Routing Table | Remote Lo0 address | 192.168.255.7 | PASS |  |
+| 406 | DC1-LEAF2B | Routing Table | Remote Lo0 address | 192.168.255.8 | PASS |  |
+| 407 | DC1-LEAF3A | Routing Table | Remote Lo0 address | 192.168.255.9 | PASS |  |
+| 408 | DC1-LEAF3A | Routing Table | Remote Lo0 address | 192.168.255.10 | PASS |  |
+| 409 | DC1-LEAF3A | Routing Table | Remote Lo0 address | 192.168.255.3 | PASS |  |
+| 410 | DC1-LEAF3A | Routing Table | Remote Lo0 address | 192.168.255.4 | PASS |  |
+| 411 | DC1-LEAF3A | Routing Table | Remote Lo0 address | 192.168.255.5 | PASS |  |
+| 412 | DC1-LEAF3A | Routing Table | Remote Lo0 address | 192.168.255.6 | PASS |  |
+| 413 | DC1-LEAF3A | Routing Table | Remote Lo0 address | 192.168.255.7 | PASS |  |
+| 414 | DC1-LEAF3A | Routing Table | Remote Lo0 address | 192.168.255.8 | PASS |  |
+| 415 | DC1-LEAF4A | Routing Table | Remote Lo0 address | 192.168.255.9 | PASS |  |
+| 416 | DC1-LEAF4A | Routing Table | Remote Lo0 address | 192.168.255.10 | PASS |  |
+| 417 | DC1-LEAF4A | Routing Table | Remote Lo0 address | 192.168.255.3 | PASS |  |
+| 418 | DC1-LEAF4A | Routing Table | Remote Lo0 address | 192.168.255.4 | PASS |  |
+| 419 | DC1-LEAF4A | Routing Table | Remote Lo0 address | 192.168.255.5 | PASS |  |
+| 420 | DC1-LEAF4A | Routing Table | Remote Lo0 address | 192.168.255.6 | PASS |  |
+| 421 | DC1-LEAF4A | Routing Table | Remote Lo0 address | 192.168.255.7 | PASS |  |
+| 422 | DC1-LEAF4A | Routing Table | Remote Lo0 address | 192.168.255.8 | PASS |  |
+| 423 | DC1-SPINE1 | Routing Table | Remote Lo0 address | 192.168.255.9 | PASS |  |
+| 424 | DC1-SPINE1 | Routing Table | Remote Lo0 address | 192.168.255.10 | PASS |  |
+| 425 | DC1-SPINE1 | Routing Table | Remote Lo0 address | 192.168.255.3 | PASS |  |
+| 426 | DC1-SPINE1 | Routing Table | Remote Lo0 address | 192.168.255.4 | PASS |  |
+| 427 | DC1-SPINE1 | Routing Table | Remote Lo0 address | 192.168.255.5 | PASS |  |
+| 428 | DC1-SPINE1 | Routing Table | Remote Lo0 address | 192.168.255.6 | PASS |  |
+| 429 | DC1-SPINE1 | Routing Table | Remote Lo0 address | 192.168.255.7 | PASS |  |
+| 430 | DC1-SPINE1 | Routing Table | Remote Lo0 address | 192.168.255.8 | PASS |  |
+| 431 | DC1-SPINE2 | Routing Table | Remote Lo0 address | 192.168.255.9 | PASS |  |
+| 432 | DC1-SPINE2 | Routing Table | Remote Lo0 address | 192.168.255.10 | PASS |  |
+| 433 | DC1-SPINE2 | Routing Table | Remote Lo0 address | 192.168.255.3 | PASS |  |
+| 434 | DC1-SPINE2 | Routing Table | Remote Lo0 address | 192.168.255.4 | PASS |  |
+| 435 | DC1-SPINE2 | Routing Table | Remote Lo0 address | 192.168.255.5 | PASS |  |
+| 436 | DC1-SPINE2 | Routing Table | Remote Lo0 address | 192.168.255.6 | PASS |  |
+| 437 | DC1-SPINE2 | Routing Table | Remote Lo0 address | 192.168.255.7 | PASS |  |
+| 438 | DC1-SPINE2 | Routing Table | Remote Lo0 address | 192.168.255.8 | PASS |  |
+| 439 | DC1-BL01A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01A - 192.168.255.9 Destination: 192.168.255.9 | PASS |  |
+| 440 | DC1-BL01A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01A - 192.168.255.9 Destination: 192.168.255.10 | PASS |  |
+| 441 | DC1-BL01A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01A - 192.168.255.9 Destination: 192.168.255.3 | PASS |  |
+| 442 | DC1-BL01A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01A - 192.168.255.9 Destination: 192.168.255.4 | PASS |  |
+| 443 | DC1-BL01A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01A - 192.168.255.9 Destination: 192.168.255.5 | PASS |  |
+| 444 | DC1-BL01A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01A - 192.168.255.9 Destination: 192.168.255.6 | PASS |  |
+| 445 | DC1-BL01A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01A - 192.168.255.9 Destination: 192.168.255.7 | PASS |  |
+| 446 | DC1-BL01A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01A - 192.168.255.9 Destination: 192.168.255.8 | PASS |  |
+| 447 | DC1-BL01B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01B - 192.168.255.10 Destination: 192.168.255.9 | PASS |  |
+| 448 | DC1-BL01B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01B - 192.168.255.10 Destination: 192.168.255.10 | PASS |  |
+| 449 | DC1-BL01B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01B - 192.168.255.10 Destination: 192.168.255.3 | PASS |  |
+| 450 | DC1-BL01B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01B - 192.168.255.10 Destination: 192.168.255.4 | PASS |  |
+| 451 | DC1-BL01B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01B - 192.168.255.10 Destination: 192.168.255.5 | PASS |  |
+| 452 | DC1-BL01B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01B - 192.168.255.10 Destination: 192.168.255.6 | PASS |  |
+| 453 | DC1-BL01B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01B - 192.168.255.10 Destination: 192.168.255.7 | PASS |  |
+| 454 | DC1-BL01B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-BL01B - 192.168.255.10 Destination: 192.168.255.8 | PASS |  |
+| 455 | DC1-LEAF1A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1A - 192.168.255.3 Destination: 192.168.255.9 | PASS |  |
+| 456 | DC1-LEAF1A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1A - 192.168.255.3 Destination: 192.168.255.10 | PASS |  |
+| 457 | DC1-LEAF1A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1A - 192.168.255.3 Destination: 192.168.255.3 | PASS |  |
+| 458 | DC1-LEAF1A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1A - 192.168.255.3 Destination: 192.168.255.4 | PASS |  |
+| 459 | DC1-LEAF1A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1A - 192.168.255.3 Destination: 192.168.255.5 | PASS |  |
+| 460 | DC1-LEAF1A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1A - 192.168.255.3 Destination: 192.168.255.6 | PASS |  |
+| 461 | DC1-LEAF1A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1A - 192.168.255.3 Destination: 192.168.255.7 | PASS |  |
+| 462 | DC1-LEAF1A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1A - 192.168.255.3 Destination: 192.168.255.8 | PASS |  |
+| 463 | DC1-LEAF1B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1B - 192.168.255.4 Destination: 192.168.255.9 | PASS |  |
+| 464 | DC1-LEAF1B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1B - 192.168.255.4 Destination: 192.168.255.10 | PASS |  |
+| 465 | DC1-LEAF1B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1B - 192.168.255.4 Destination: 192.168.255.3 | PASS |  |
+| 466 | DC1-LEAF1B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1B - 192.168.255.4 Destination: 192.168.255.4 | PASS |  |
+| 467 | DC1-LEAF1B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1B - 192.168.255.4 Destination: 192.168.255.5 | PASS |  |
+| 468 | DC1-LEAF1B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1B - 192.168.255.4 Destination: 192.168.255.6 | PASS |  |
+| 469 | DC1-LEAF1B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1B - 192.168.255.4 Destination: 192.168.255.7 | PASS |  |
+| 470 | DC1-LEAF1B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF1B - 192.168.255.4 Destination: 192.168.255.8 | PASS |  |
+| 471 | DC1-LEAF2A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2A - 192.168.255.5 Destination: 192.168.255.9 | PASS |  |
+| 472 | DC1-LEAF2A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2A - 192.168.255.5 Destination: 192.168.255.10 | PASS |  |
+| 473 | DC1-LEAF2A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2A - 192.168.255.5 Destination: 192.168.255.3 | PASS |  |
+| 474 | DC1-LEAF2A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2A - 192.168.255.5 Destination: 192.168.255.4 | PASS |  |
+| 475 | DC1-LEAF2A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2A - 192.168.255.5 Destination: 192.168.255.5 | PASS |  |
+| 476 | DC1-LEAF2A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2A - 192.168.255.5 Destination: 192.168.255.6 | PASS |  |
+| 477 | DC1-LEAF2A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2A - 192.168.255.5 Destination: 192.168.255.7 | PASS |  |
+| 478 | DC1-LEAF2A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2A - 192.168.255.5 Destination: 192.168.255.8 | PASS |  |
+| 479 | DC1-LEAF2B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2B - 192.168.255.6 Destination: 192.168.255.9 | PASS |  |
+| 480 | DC1-LEAF2B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2B - 192.168.255.6 Destination: 192.168.255.10 | PASS |  |
+| 481 | DC1-LEAF2B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2B - 192.168.255.6 Destination: 192.168.255.3 | PASS |  |
+| 482 | DC1-LEAF2B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2B - 192.168.255.6 Destination: 192.168.255.4 | PASS |  |
+| 483 | DC1-LEAF2B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2B - 192.168.255.6 Destination: 192.168.255.5 | PASS |  |
+| 484 | DC1-LEAF2B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2B - 192.168.255.6 Destination: 192.168.255.6 | PASS |  |
+| 485 | DC1-LEAF2B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2B - 192.168.255.6 Destination: 192.168.255.7 | PASS |  |
+| 486 | DC1-LEAF2B | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF2B - 192.168.255.6 Destination: 192.168.255.8 | PASS |  |
+| 487 | DC1-LEAF3A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF3A - 192.168.255.7 Destination: 192.168.255.9 | PASS |  |
+| 488 | DC1-LEAF3A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF3A - 192.168.255.7 Destination: 192.168.255.10 | PASS |  |
+| 489 | DC1-LEAF3A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF3A - 192.168.255.7 Destination: 192.168.255.3 | PASS |  |
+| 490 | DC1-LEAF3A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF3A - 192.168.255.7 Destination: 192.168.255.4 | PASS |  |
+| 491 | DC1-LEAF3A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF3A - 192.168.255.7 Destination: 192.168.255.5 | PASS |  |
+| 492 | DC1-LEAF3A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF3A - 192.168.255.7 Destination: 192.168.255.6 | PASS |  |
+| 493 | DC1-LEAF3A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF3A - 192.168.255.7 Destination: 192.168.255.7 | PASS |  |
+| 494 | DC1-LEAF3A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF3A - 192.168.255.7 Destination: 192.168.255.8 | PASS |  |
+| 495 | DC1-LEAF4A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF4A - 192.168.255.8 Destination: 192.168.255.9 | PASS |  |
+| 496 | DC1-LEAF4A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF4A - 192.168.255.8 Destination: 192.168.255.10 | PASS |  |
+| 497 | DC1-LEAF4A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF4A - 192.168.255.8 Destination: 192.168.255.3 | PASS |  |
+| 498 | DC1-LEAF4A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF4A - 192.168.255.8 Destination: 192.168.255.4 | PASS |  |
+| 499 | DC1-LEAF4A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF4A - 192.168.255.8 Destination: 192.168.255.5 | PASS |  |
+| 500 | DC1-LEAF4A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF4A - 192.168.255.8 Destination: 192.168.255.6 | PASS |  |
+| 501 | DC1-LEAF4A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF4A - 192.168.255.8 Destination: 192.168.255.7 | PASS |  |
+| 502 | DC1-LEAF4A | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-LEAF4A - 192.168.255.8 Destination: 192.168.255.8 | PASS |  |
+| 503 | DC1-SPINE1 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE1 - 192.168.255.1 Destination: 192.168.255.9 | PASS |  |
+| 504 | DC1-SPINE1 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE1 - 192.168.255.1 Destination: 192.168.255.10 | PASS |  |
+| 505 | DC1-SPINE1 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE1 - 192.168.255.1 Destination: 192.168.255.3 | PASS |  |
+| 506 | DC1-SPINE1 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE1 - 192.168.255.1 Destination: 192.168.255.4 | PASS |  |
+| 507 | DC1-SPINE1 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE1 - 192.168.255.1 Destination: 192.168.255.5 | PASS |  |
+| 508 | DC1-SPINE1 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE1 - 192.168.255.1 Destination: 192.168.255.6 | PASS |  |
+| 509 | DC1-SPINE1 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE1 - 192.168.255.1 Destination: 192.168.255.7 | PASS |  |
+| 510 | DC1-SPINE1 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE1 - 192.168.255.1 Destination: 192.168.255.8 | PASS |  |
+| 511 | DC1-SPINE2 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE2 - 192.168.255.2 Destination: 192.168.255.9 | PASS |  |
+| 512 | DC1-SPINE2 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE2 - 192.168.255.2 Destination: 192.168.255.10 | PASS |  |
+| 513 | DC1-SPINE2 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE2 - 192.168.255.2 Destination: 192.168.255.3 | PASS |  |
+| 514 | DC1-SPINE2 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE2 - 192.168.255.2 Destination: 192.168.255.4 | PASS |  |
+| 515 | DC1-SPINE2 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE2 - 192.168.255.2 Destination: 192.168.255.5 | PASS |  |
+| 516 | DC1-SPINE2 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE2 - 192.168.255.2 Destination: 192.168.255.6 | PASS |  |
+| 517 | DC1-SPINE2 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE2 - 192.168.255.2 Destination: 192.168.255.7 | PASS |  |
+| 518 | DC1-SPINE2 | Loopback0 Reachability | Loopback0 Reachability | Source: DC1-SPINE2 - 192.168.255.2 Destination: 192.168.255.8 | PASS |  |

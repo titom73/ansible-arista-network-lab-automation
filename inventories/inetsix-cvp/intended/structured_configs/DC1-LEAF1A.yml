@@ -1,9 +1,15 @@
 l3leaf_node_group: DC1_LEAF1
 switch_platform: vEOS-LAB
-leaf_bgp_as: 65101
+switch_bgp_as: 65101
 leaf_id: 1
 switch_mgmt_ip: 10.73.255.111/24
 leaf_evpn_services_l2_only: false
+switch_router_id: 192.168.255.3
+switch_evpn_role: client
+switch_evpn_route_servers:
+- DC1-SPINE1
+- DC1-SPINE2
+switch_evpn_route_clients: []
 leaf_filter_tenants:
 - Tenant_A
 - Tenant_B
@@ -273,7 +279,7 @@ vlan_interfaces:
     description: PR01-TRUST
     shutdown: true
     vrf: TENANT_A_PROJECT01
-    ip_address_virtual: 10.1.11.254/24
+    ip_address_virtual: 10.1.12.254/24
   Vlan113:
     tenant: Tenant_A
     tags:
@@ -281,7 +287,7 @@ vlan_interfaces:
     description: PR01-TRUST
     shutdown: false
     vrf: TENANT_A_PROJECT01
-    ip_address_virtual: 10.1.11.254/24
+    ip_address_virtual: 10.1.13.254/24
   Vlan311:
     tenant: Tenant_A
     tags:
@@ -309,7 +315,7 @@ vlan_interfaces:
     description: PR02-DMZ
     shutdown: false
     vrf: TENANT_A_PROJECT02
-    ip_address_virtual: 10.1.12.254/24
+    ip_address_virtual: 10.1.14.254/24
     ip_helpers:
       1.1.1.1:
         source_interface: lo100
@@ -401,7 +407,7 @@ router_bgp:
   - distance bgp 20 200 200
   - graceful-restart restart-time 300
   - graceful-restart
-  - maximum-paths 2 ecmp 2
+  - maximum-paths 4 ecmp 4
   peer_groups:
     IPv4-UNDERLAY-PEERS:
       type: ipv4
@@ -419,10 +425,9 @@ router_bgp:
       route_map_in: RM-MLAG-PEER-IN
     EVPN-OVERLAY-PEERS:
       type: evpn
-      remote_as: 65000
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: 3
+      ebgp_multihop: '3'
       password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: true
       maximum_routes: 0
@@ -435,8 +440,12 @@ router_bgp:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
     192.168.255.1:
       peer_group: EVPN-OVERLAY-PEERS
+      description: DC1-SPINE1
+      remote_as: 65001
     192.168.255.2:
       peer_group: EVPN-OVERLAY-PEERS
+      description: DC1-SPINE2
+      remote_as: 65001
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
@@ -444,10 +453,6 @@ router_bgp:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
-      IPv4-UNDERLAY-PEERS:
-        activate: false
-      MLAG-IPv4-UNDERLAY-PEER:
-        activate: false
   address_family_ipv4:
     peer_groups:
       EVPN-OVERLAY-PEERS:

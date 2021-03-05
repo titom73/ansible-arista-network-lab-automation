@@ -188,6 +188,7 @@ Management API gnmi is not defined
 ```eos
 !
 management api http-commands
+   protocol https
    no shutdown
    !
    vrf MGMT
@@ -457,12 +458,14 @@ No Interface Defaults defined
 interface Ethernet1
    description P2P_LINK_TO_DC1-SPINE1_Ethernet2
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.5/31
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-SPINE2_Ethernet2
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.7/31
 !
@@ -580,9 +583,9 @@ interface Loopback100
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan110 |  TENANT_A_PROJECT01  |  -  |  10.1.10.254/24  |  -  |  -  |  -  |  -  |
 | Vlan111 |  TENANT_A_PROJECT01  |  -  |  -  |  -  |  -  |  -  |  -  |
-| Vlan112 |  TENANT_A_PROJECT01  |  -  |  10.1.11.254/24  |  -  |  -  |  -  |  -  |
-| Vlan113 |  TENANT_A_PROJECT01  |  -  |  10.1.11.254/24  |  -  |  -  |  -  |  -  |
-| Vlan114 |  TENANT_A_PROJECT02  |  -  |  10.1.12.254/24  |  -  |  -  |  -  |  -  |
+| Vlan112 |  TENANT_A_PROJECT01  |  -  |  10.1.12.254/24  |  -  |  -  |  -  |  -  |
+| Vlan113 |  TENANT_A_PROJECT01  |  -  |  10.1.13.254/24  |  -  |  -  |  -  |  -  |
+| Vlan114 |  TENANT_A_PROJECT02  |  -  |  10.1.14.254/24  |  -  |  -  |  -  |  -  |
 | Vlan311 |  TENANT_A_PROJECT01  |  -  |  10.1.31.254/24  |  -  |  -  |  -  |  -  |
 | Vlan3010 |  TENANT_A_PROJECT01  |  10.255.251.1/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan3011 |  TENANT_A_PROJECT02  |  10.255.251.1/31  |  -  |  -  |  -  |  -  |  -  |
@@ -611,48 +614,52 @@ interface Vlan112
    description PR01-TRUST
    shutdown
    vrf TENANT_A_PROJECT01
-   ip address virtual 10.1.11.254/24
+   ip address virtual 10.1.12.254/24
 !
 interface Vlan113
    description PR01-TRUST
    no shutdown
    vrf TENANT_A_PROJECT01
-   ip address virtual 10.1.11.254/24
+   ip address virtual 10.1.13.254/24
 !
 interface Vlan114
    description PR02-DMZ
    no shutdown
    vrf TENANT_A_PROJECT02
-   ip address virtual 10.1.12.254/24
-   ip helper-address 1.1.1.1 vrf TENANT_A_PROJECT02  source-interface lo100
+   ip address virtual 10.1.14.254/24
+   ip helper-address 1.1.1.1 vrf TENANT_A_PROJECT02 source-interface lo100
 !
 interface Vlan311
    description PR01-TRUST-DHCP
    no shutdown
    vrf TENANT_A_PROJECT01
    ip address virtual 10.1.31.254/24
-   ip helper-address 1.1.1.1 vrf TENANT_A_PROJECT01  source-interface lo100
+   ip helper-address 1.1.1.1 vrf TENANT_A_PROJECT01 source-interface lo100
 !
 interface Vlan3010
    description MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01
    no shutdown
+   mtu 1500
    vrf TENANT_A_PROJECT01
    ip address 10.255.251.1/31
 !
 interface Vlan3011
    description MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT02
    no shutdown
+   mtu 1500
    vrf TENANT_A_PROJECT02
    ip address 10.255.251.1/31
 !
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
    no shutdown
+   mtu 1500
    ip address 10.255.251.1/31
 !
 interface Vlan4094
    description MLAG_PEER
    no shutdown
+   mtu 1500
    no autostate
    ip address 10.255.252.1/31
 ```
@@ -795,7 +802,7 @@ Router ISIS not defined
 | distance bgp 20 200 200 |
 | graceful-restart restart-time 300 |
 | graceful-restart |
-| maximum-paths 2 ecmp 2 |
+| maximum-paths 4 ecmp 4 |
 
 ### Router BGP Peer Groups
 
@@ -804,7 +811,6 @@ Router ISIS not defined
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
-| Remote_as | 65000 |
 | Source | Loopback0 |
 | Bfd | true |
 | Ebgp multihop | 3 |
@@ -832,13 +838,15 @@ Router ISIS not defined
 
 ### BGP Neighbors
 
-| Neighbor | Remote AS |
-| -------- | ---------
-| 10.255.251.0 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
-| 172.31.255.4 | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.6 | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS |
+| Neighbor | Remote AS | VRF |
+| -------- | --------- | --- |
+| 10.255.251.0 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default |
+| 172.31.255.4 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
+| 172.31.255.6 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
+| 192.168.255.1 | 65001 | default |
+| 192.168.255.2 | 65001 | default |
+| 10.255.251.0 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 |
+| 10.255.251.0 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT02 |
 
 ### Router BGP EVPN Address Family
 
@@ -869,9 +877,8 @@ router bgp 65101
    distance bgp 20 200 200
    graceful-restart restart-time 300
    graceful-restart
-   maximum-paths 2 ecmp 2
+   maximum-paths 4 ecmp 4
    neighbor EVPN-OVERLAY-PEERS peer group
-   neighbor EVPN-OVERLAY-PEERS remote-as 65000
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
    neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
@@ -894,7 +901,11 @@ router bgp 65101
    neighbor 172.31.255.4 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.6 peer group IPv4-UNDERLAY-PEERS
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.1 remote-as 65001
+   neighbor 192.168.255.1 description DC1-SPINE1
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.2 remote-as 65001
+   neighbor 192.168.255.2 description DC1-SPINE2
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle B-ELAN-201
@@ -917,8 +928,6 @@ router bgp 65101
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
-      no neighbor IPv4-UNDERLAY-PEERS activate
-      no neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
