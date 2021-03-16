@@ -22,6 +22,7 @@
   - [AAA Authorization](#aaa-authorization)
   - [AAA Accounting](#aaa-accounting)
 - [Management Security](#management-security)
+- [Prompt](#prompt)
 - [Aliases](#aliases)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
@@ -36,6 +37,7 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
 - [VLANs](#vlans)
 - [Interfaces](#interfaces)
+  - [Switchport Default](#switchport-default)
   - [Interface Defaults](#interface-defaults)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
@@ -114,6 +116,7 @@ interface Management1
 ### DNS Domain Device Configuration
 
 ```eos
+!
 dns domain eve.emea.lab
 !
 ```
@@ -178,19 +181,21 @@ Management API gnmi is not defined
 
 | HTTP | HTTPS |
 | ---------- | ---------- |
-|  default  |  true  |
+| default | true |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT |  -  |  -  |
+| MGMT | - | - |
+
 
 ### Management API HTTP Configuration
 
 ```eos
 !
 management api http-commands
+   protocol https
    no shutdown
    !
    vrf MGMT
@@ -253,6 +258,10 @@ AAA accounting not defined
 # Management Security
 
 Management security not defined
+
+# Prompt
+
+Prompt not defined
 
 # Aliases
 
@@ -342,6 +351,10 @@ No VLANs defined
 
 # Interfaces
 
+## Switchport Default
+
+No switchport default defined
+
 ## Interface Defaults
 
 No Interface Defaults defined
@@ -390,6 +403,7 @@ No Interface Defaults defined
 interface Ethernet1
    description P2P_LINK_TO_DC1-LEAF1A_Ethernet1
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.0/31
    isis enable EVPN_UNDERLAY
@@ -399,6 +413,7 @@ interface Ethernet1
 interface Ethernet2
    description P2P_LINK_TO_DC1-LEAF1B_Ethernet1
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.4/31
    isis enable EVPN_UNDERLAY
@@ -408,6 +423,7 @@ interface Ethernet2
 interface Ethernet3
    description P2P_LINK_TO_DC1-LEAF2A_Ethernet1
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.8/31
    isis enable EVPN_UNDERLAY
@@ -417,6 +433,7 @@ interface Ethernet3
 interface Ethernet4
    description P2P_LINK_TO_DC1-LEAF2B_Ethernet1
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.12/31
    isis enable EVPN_UNDERLAY
@@ -426,6 +443,7 @@ interface Ethernet4
 interface Ethernet5
    description P2P_LINK_TO_DC1-LEAF3A_Ethernet1
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.28/31
    isis enable EVPN_UNDERLAY
@@ -435,6 +453,7 @@ interface Ethernet5
 interface Ethernet6
    description P2P_LINK_TO_DC1-BL1A_Ethernet1
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.32/31
    isis enable EVPN_UNDERLAY
@@ -444,6 +463,7 @@ interface Ethernet6
 interface Ethernet7
    description P2P_LINK_TO_DC1-BL1B_Ethernet1
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.36/31
    isis enable EVPN_UNDERLAY
@@ -453,6 +473,7 @@ interface Ethernet7
 interface Ethernet8
    description P2P_LINK_TO_DC1-LEAF4A_Ethernet1
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.40/31
    isis enable EVPN_UNDERLAY
@@ -592,6 +613,7 @@ Router OSPF not defined
 ### Router ISIS Device Configuration
 
 ```eos
+!
 router isis EVPN_UNDERLAY
    net 49.0001.0001.0000.0001.00
    is-type level-2
@@ -601,7 +623,6 @@ router isis EVPN_UNDERLAY
    address-family ipv4 unicast
       maximum-paths 2
    !
-!
 ```
 
 

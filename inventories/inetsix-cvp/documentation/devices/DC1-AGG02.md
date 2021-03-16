@@ -22,6 +22,7 @@
   - [AAA Authorization](#aaa-authorization)
   - [AAA Accounting](#aaa-accounting)
 - [Management Security](#management-security)
+- [Prompt](#prompt)
 - [Aliases](#aliases)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
@@ -36,6 +37,7 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
 - [VLANs](#vlans)
 - [Interfaces](#interfaces)
+  - [Switchport Default](#switchport-default)
   - [Interface Defaults](#interface-defaults)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
@@ -175,13 +177,14 @@ Management API gnmi is not defined
 
 | HTTP | HTTPS |
 | ---------- | ---------- |
-|  default  |  true  |
+| default | true |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT |  -  |  -  |
+| MGMT | - | - |
+
 
 ### Management API HTTP Configuration
 
@@ -253,6 +256,10 @@ AAA accounting not defined
 # Management Security
 
 Management security not defined
+
+# Prompt
+
+Prompt not defined
 
 # Aliases
 
@@ -350,6 +357,7 @@ vlan internal order ascending range 1006 1199
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 110 | PR01-DMZ | none  |
+| 111 | PR01-TRUST | none  |
 | 201 | B-ELAN-201 | none  |
 | 311 | PR01-TRUST-DHCP | none  |
 
@@ -360,6 +368,9 @@ vlan internal order ascending range 1006 1199
 vlan 110
    name PR01-DMZ
 !
+vlan 111
+   name PR01-TRUST
+!
 vlan 201
    name B-ELAN-201
 !
@@ -368,6 +379,10 @@ vlan 311
 ```
 
 # Interfaces
+
+## Switchport Default
+
+No switchport default defined
 
 ## Interface Defaults
 
@@ -381,8 +396,10 @@ No Interface Defaults defined
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet1 | DC1-LEAF2A_Ethernet5 | *trunk | *110,201,311 | *- | *- | 1 |
-| Ethernet2 | DC1-LEAF2B_Ethernet5 | *trunk | *110,201,311 | *- | *- | 1 |
+| Ethernet1 | DC1-LEAF2A_Ethernet5 | *trunk | *110-111,201,311 | *- | *- | 1 |
+| Ethernet2 | DC1-LEAF2B_Ethernet5 | *trunk | *110-111,201,311 | *- | *- | 1 |
+| Ethernet3 |  POD02-DOCKER_111_Eth1 | access | 111 | - | - | - |
+| Ethernet4 |  POD02-DOCKER_110_Eth1 | access | 110 | - | - | - |
 | Ethernet5 |  SRV-POD02_Eth1 | trunk | 110-111,210-211 | - | - | - |
 
 *Inherited from Port-Channel Interface
@@ -401,6 +418,20 @@ interface Ethernet2
    no shutdown
    channel-group 1 mode active
 !
+interface Ethernet3
+   description POD02-DOCKER_111_Eth1
+   no shutdown
+   switchport
+   switchport access vlan 111
+   switchport mode access
+!
+interface Ethernet4
+   description POD02-DOCKER_110_Eth1
+   no shutdown
+   switchport
+   switchport access vlan 110
+   switchport mode access
+!
 interface Ethernet5
    description SRV-POD02_Eth1
    no shutdown
@@ -417,7 +448,7 @@ interface Ethernet5
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel1 | DC1-LEAF2A_Po5 | switched | trunk | 110,201,311 | - | - | - | - | - | - |
+| Port-Channel1 | DC1-LEAF2A_Po5 | switched | trunk | 110-111,201,311 | - | - | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -427,7 +458,7 @@ interface Port-Channel1
    description DC1-LEAF2A_Po5
    no shutdown
    switchport
-   switchport trunk allowed vlan 110,201,311
+   switchport trunk allowed vlan 110-111,201,311
    switchport mode trunk
 ```
 

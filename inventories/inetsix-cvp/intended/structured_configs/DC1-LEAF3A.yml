@@ -20,15 +20,18 @@ leaf_allowed_vrfs:
 - TENANT_A_PROJECT01
 leaf_allowed_svis:
 - 110
+- 111
 - 311
 leaf_allowed_vlans:
 - 110
+- 111
 - 311
 - 201
 leaf_mlag: false
 service_routing_protocols_model: multi-agent
 ip_routing: true
 hardware_counters: null
+hardware: null
 daemon_terminattr:
   ingestgrpcurl:
     ips:
@@ -90,6 +93,9 @@ vlans:
   110:
     tenant: Tenant_A
     name: PR01-DMZ
+  111:
+    tenant: Tenant_A
+    name: PR01-TRUST
   311:
     tenant: Tenant_A
     name: PR01-TRUST-DHCP
@@ -173,6 +179,14 @@ vlan_interfaces:
     shutdown: false
     vrf: TENANT_A_PROJECT01
     ip_address_virtual: 10.1.10.254/24
+  Vlan111:
+    tenant: Tenant_A
+    tags:
+    - DC1
+    description: PR01-TRUST
+    shutdown: false
+    vrf: TENANT_A_PROJECT01
+    ip_address_virtual: 10.1.11.254/24
   Vlan311:
     tenant: Tenant_A
     tags:
@@ -194,6 +208,8 @@ vxlan_tunnel_interface:
       vlans:
         110:
           vni: 10110
+        111:
+          vni: 10111
         311:
           vni: 10311
         201:
@@ -288,7 +304,7 @@ router_bgp:
         - '11:11'
       redistribute_routes:
       - learned
-      vlan: 110,311
+      vlan: 110-111,311
     B-ELAN-201:
       tenant: Tenant_B
       rd: 192.168.255.7:20201

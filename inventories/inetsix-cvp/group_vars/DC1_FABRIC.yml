@@ -225,10 +225,10 @@ bfd_multihop:
 
 # List of additional CVP configlets to bind to devices and containers
 # Configlets MUST be configured on CVP before running AVD playbooks.
-cv_configlets:
-  containers:
-    DC1_L3LEAFS:
-      - ASE_GLOBAL-ALIASES
-  devices:
-    DC1-LEAF1A:
-       - ASE_DEVICE-ALIASES
+# cv_configlets:
+#   containers:
+#     DC1_L3LEAFS:
+#       - ASE_GLOBAL-ALIASES
+#   devices:
+#     DC1-LEAF1A:
+#        - ASE_DEVICE-ALIASES

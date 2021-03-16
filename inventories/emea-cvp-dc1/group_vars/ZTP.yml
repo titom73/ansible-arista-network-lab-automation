@@ -16,6 +16,10 @@ ztp:
         end: 10.73.255.250
         lease_time: 300
   clients:
+  # CVP Ansible Collection tester
+    - name: CV_EOS
+      mac: '50:8d:00:10:0f:00'
+      ip4: 10.73.1.254
   # AVD/CVP Integration
     - name: DC1-SPINE1
       mac: 0c:1d:c0:1d:62:01

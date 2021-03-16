@@ -22,6 +22,7 @@
   - [AAA Authorization](#aaa-authorization)
   - [AAA Accounting](#aaa-accounting)
 - [Management Security](#management-security)
+- [Prompt](#prompt)
 - [Aliases](#aliases)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
@@ -36,6 +37,7 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
 - [VLANs](#vlans)
 - [Interfaces](#interfaces)
+  - [Switchport Default](#switchport-default)
   - [Interface Defaults](#interface-defaults)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
@@ -175,13 +177,14 @@ Management API gnmi is not defined
 
 | HTTP | HTTPS |
 | ---------- | ---------- |
-|  default  |  true  |
+| default | true |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT |  -  |  -  |
+| MGMT | - | - |
+
 
 ### Management API HTTP Configuration
 
@@ -253,6 +256,10 @@ AAA accounting not defined
 # Management Security
 
 Management security not defined
+
+# Prompt
+
+Prompt not defined
 
 # Aliases
 
@@ -350,6 +357,7 @@ vlan internal order ascending range 1006 1199
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
 | 110 | PR01-DMZ | none  |
+| 111 | PR01-TRUST | none  |
 | 201 | B-ELAN-201 | none  |
 | 311 | PR01-TRUST-DHCP | none  |
 
@@ -360,6 +368,9 @@ vlan internal order ascending range 1006 1199
 vlan 110
    name PR01-DMZ
 !
+vlan 111
+   name PR01-TRUST
+!
 vlan 201
    name B-ELAN-201
 !
@@ -368,6 +379,10 @@ vlan 311
 ```
 
 # Interfaces
+
+## Switchport Default
+
+No switchport default defined
 
 ## Interface Defaults
 
@@ -485,6 +500,7 @@ interface Loopback1
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan110 |  PR01-DMZ  |  TENANT_A_PROJECT01  |  -  |  false  |
+| Vlan111 |  PR01-TRUST  |  TENANT_A_PROJECT01  |  -  |  false  |
 | Vlan311 |  PR01-TRUST-DHCP  |  TENANT_A_PROJECT01  |  -  |  false  |
 
 #### IPv4
@@ -492,6 +508,7 @@ interface Loopback1
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan110 |  TENANT_A_PROJECT01  |  -  |  10.1.10.254/24  |  -  |  -  |  -  |  -  |
+| Vlan111 |  TENANT_A_PROJECT01  |  -  |  10.1.11.254/24  |  -  |  -  |  -  |  -  |
 | Vlan311 |  TENANT_A_PROJECT01  |  -  |  10.1.31.254/24  |  -  |  -  |  -  |  -  |
 
 
@@ -505,6 +522,12 @@ interface Vlan110
    no shutdown
    vrf TENANT_A_PROJECT01
    ip address virtual 10.1.10.254/24
+!
+interface Vlan111
+   description PR01-TRUST
+   no shutdown
+   vrf TENANT_A_PROJECT01
+   ip address virtual 10.1.11.254/24
 !
 interface Vlan311
    description PR01-TRUST-DHCP
@@ -527,6 +550,7 @@ interface Vlan311
 | VLAN | VNI |
 | ---- | --- |
 | 110 | 10110 |
+| 111 | 10111 |
 | 201 | 20201 |
 | 311 | 10311 |
 
@@ -544,6 +568,7 @@ interface Vxlan1
    vxlan source-interface Loopback1
    vxlan udp-port 4789
    vxlan vlan 110 vni 10110
+   vxlan vlan 111 vni 10111
    vxlan vlan 201 vni 20201
    vxlan vlan 311 vni 10311
    vxlan vrf TENANT_A_PROJECT01 vni 11
@@ -680,7 +705,7 @@ Router ISIS not defined
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
 | B-ELAN-201 | 192.168.255.8:20201 |  20201:20201  |  |  | learned | 201 |
-| TENANT_A_PROJECT01 | 192.168.255.8:11 |  11:11  |  |  | learned | 110,311 |
+| TENANT_A_PROJECT01 | 192.168.255.8:11 |  11:11  |  |  | learned | 110-111,311 |
 
 #### Router BGP EVPN VRFs
 
@@ -731,7 +756,7 @@ router bgp 65104
       rd 192.168.255.8:11
       route-target both 11:11
       redistribute learned
-      vlan 110,311
+      vlan 110-111,311
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate

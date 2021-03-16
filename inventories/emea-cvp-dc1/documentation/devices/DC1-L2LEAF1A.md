@@ -22,6 +22,7 @@
   - [AAA Authorization](#aaa-authorization)
   - [AAA Accounting](#aaa-accounting)
 - [Management Security](#management-security)
+- [Prompt](#prompt)
 - [Aliases](#aliases)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
@@ -36,6 +37,7 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
 - [VLANs](#vlans)
 - [Interfaces](#interfaces)
+  - [Switchport Default](#switchport-default)
   - [Interface Defaults](#interface-defaults)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
@@ -114,6 +116,7 @@ interface Management1
 ### DNS Domain Device Configuration
 
 ```eos
+!
 dns domain eve.emea.lab
 !
 ```
@@ -178,19 +181,21 @@ Management API gnmi is not defined
 
 | HTTP | HTTPS |
 | ---------- | ---------- |
-|  default  |  true  |
+| default | true |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT |  -  |  -  |
+| MGMT | - | - |
+
 
 ### Management API HTTP Configuration
 
 ```eos
 !
 management api http-commands
+   protocol https
    no shutdown
    !
    vrf MGMT
@@ -253,6 +258,10 @@ AAA accounting not defined
 # Management Security
 
 Management security not defined
+
+# Prompt
+
+Prompt not defined
 
 # Aliases
 
@@ -369,6 +378,10 @@ vlan 114
 
 # Interfaces
 
+## Switchport Default
+
+No switchport default defined
+
 ## Interface Defaults
 
 No Interface Defaults defined
@@ -383,6 +396,7 @@ No Interface Defaults defined
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet1 | DC1-LEAF1A_Ethernet5 | *trunk | *110-111,114 | *- | *- | 1 |
 | Ethernet2 | DC1-LEAF1B_Ethernet5 | *trunk | *110-111,114 | *- | *- | 1 |
+| Ethernet3 |  POD01-DOCKER_Eth1 | access | 111 | - | - | - |
 | Ethernet5 |  POD01-SRV_Eth1 | trunk | 110-114,210,211 | - | - | - |
 
 *Inherited from Port-Channel Interface
@@ -400,6 +414,13 @@ interface Ethernet2
    description DC1-LEAF1B_Ethernet5
    no shutdown
    channel-group 1 mode active
+!
+interface Ethernet3
+   description POD01-DOCKER_Eth1
+   no shutdown
+   switchport
+   switchport access vlan 111
+   switchport mode access
 !
 interface Ethernet5
    description POD01-SRV_Eth1

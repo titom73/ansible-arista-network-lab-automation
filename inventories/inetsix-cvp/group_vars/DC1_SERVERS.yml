@@ -12,6 +12,12 @@ port_profiles:
   B-ELAN-201:
     mode: access
     vlans: "201"
+  DOCKER_111:
+    mode: access
+    vlans: "111"
+  DOCKER_110:
+    mode: access
+    vlans: "110"
 
 servers:
   SRV-POD01:
@@ -42,4 +48,27 @@ servers:
           description: PortChanne1
           mode: active
           short_esi: '0303:0202:0101'
-
+  POD01-DOCKER_111:
+    rack: POD01
+    adapters:
+      - type: nic
+        server_ports: [Eth1]
+        switch_ports: [Ethernet3]
+        switches: [DC1-AGG01]
+        profile: DOCKER_111
+  POD02-DOCKER_111:
+    rack: POD02
+    adapters:
+      - type: nic
+        server_ports: [Eth1]
+        switch_ports: [Ethernet3]
+        switches: [DC1-AGG02]
+        profile: DOCKER_111
+  POD02-DOCKER_110:
+    rack: POD02
+    adapters:
+      - type: nic
+        server_ports: [Eth1]
+        switch_ports: [Ethernet4]
+        switches: [DC1-AGG02]
+        profile: DOCKER_110

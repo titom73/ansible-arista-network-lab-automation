@@ -22,6 +22,7 @@
   - [AAA Authorization](#aaa-authorization)
   - [AAA Accounting](#aaa-accounting)
 - [Management Security](#management-security)
+- [Prompt](#prompt)
 - [Aliases](#aliases)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
@@ -36,6 +37,7 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
 - [VLANs](#vlans)
 - [Interfaces](#interfaces)
+  - [Switchport Default](#switchport-default)
   - [Interface Defaults](#interface-defaults)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
@@ -114,6 +116,7 @@ interface Management1
 ### DNS Domain Device Configuration
 
 ```eos
+!
 dns domain eve.emea.lab
 !
 ```
@@ -178,19 +181,21 @@ Management API gnmi is not defined
 
 | HTTP | HTTPS |
 | ---------- | ---------- |
-|  default  |  true  |
+| default | true |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT |  -  |  -  |
+| MGMT | - | - |
+
 
 ### Management API HTTP Configuration
 
 ```eos
 !
 management api http-commands
+   protocol https
    no shutdown
    !
    vrf MGMT
@@ -253,6 +258,10 @@ AAA accounting not defined
 # Management Security
 
 Management security not defined
+
+# Prompt
+
+Prompt not defined
 
 # Aliases
 
@@ -352,6 +361,8 @@ vlan internal order descending range 4000 4090
 | 110 | Tenant_A_OP_Zone_1 | none  |
 | 111 | Tenant_A_OP_Zone_2 | none  |
 | 114 | Tenant_A_OP_Zone_3 | none  |
+| 411 | Tenant_D_OP_Zone_1 | none  |
+| 412 | Tenant_D_OP_Zone_2 | none  |
 
 ## VLANs Device Configuration
 
@@ -365,9 +376,19 @@ vlan 111
 !
 vlan 114
    name Tenant_A_OP_Zone_3
+!
+vlan 411
+   name Tenant_D_OP_Zone_1
+!
+vlan 412
+   name Tenant_D_OP_Zone_2
 ```
 
 # Interfaces
+
+## Switchport Default
+
+No switchport default defined
 
 ## Interface Defaults
 
@@ -381,8 +402,9 @@ No Interface Defaults defined
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet1 | DC1-LEAF2A_Ethernet5 | *trunk | *110-111,114 | *- | *- | 1 |
-| Ethernet2 | DC1-LEAF2B_Ethernet5 | *trunk | *110-111,114 | *- | *- | 1 |
+| Ethernet1 | DC1-LEAF2A_Ethernet5 | *trunk | *110-111,114,411-412 | *- | *- | 1 |
+| Ethernet2 | DC1-LEAF2B_Ethernet5 | *trunk | *110-111,114,411-412 | *- | *- | 1 |
+| Ethernet3 |  POD02-DOCKER_Eth1 | access | 111 | - | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -399,6 +421,13 @@ interface Ethernet2
    description DC1-LEAF2B_Ethernet5
    no shutdown
    channel-group 1 mode active
+!
+interface Ethernet3
+   description POD02-DOCKER_Eth1
+   no shutdown
+   switchport
+   switchport access vlan 111
+   switchport mode access
 ```
 
 ## Port-Channel Interfaces
@@ -409,7 +438,7 @@ interface Ethernet2
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel1 | DC1-LEAF2A_Po5 | switched | trunk | 110-111,114 | - | - | - | - | - | - |
+| Port-Channel1 | DC1-LEAF2A_Po5 | switched | trunk | 110-111,114,411-412 | - | - | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -419,7 +448,7 @@ interface Port-Channel1
    description DC1-LEAF2A_Po5
    no shutdown
    switchport
-   switchport trunk allowed vlan 110-111,114
+   switchport trunk allowed vlan 110-111,114,411-412
    switchport mode trunk
 ```
 

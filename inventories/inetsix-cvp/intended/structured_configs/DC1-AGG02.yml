@@ -2,6 +2,8 @@ l2leaf_node_group: DC1_L2LEAF2
 switch_platform: vEOS-LAB
 leaf_id: 10
 switch_mgmt_ip: 10.73.255.122/24
+switch_inband_management_ip: null
+switch_inband_management_interface: null
 leaf_filter_tenants:
 - Tenant_A
 - Tenant_B
@@ -11,15 +13,18 @@ leaf_allowed_vrfs:
 - TENANT_A_PROJECT01
 leaf_allowed_svis:
 - 110
+- 111
 - 311
 leaf_allowed_vlans:
 - 110
+- 111
 - 311
 - 201
 leaf_mlag: false
 service_routing_protocols_model: multi-agent
 ip_routing: true
 hardware_counters: null
+hardware: null
 daemon_terminattr:
   ingestgrpcurl:
     ips:
@@ -81,6 +86,9 @@ vlans:
   110:
     tenant: Tenant_A
     name: PR01-DMZ
+  111:
+    tenant: Tenant_A
+    name: PR01-TRUST
   311:
     tenant: Tenant_A
     name: PR01-TRUST-DHCP
@@ -95,7 +103,7 @@ port_channel_interfaces:
     description: DC1-LEAF2A_Po5
     type: switched
     shutdown: false
-    vlans: 110,201,311
+    vlans: 110-111,201,311
     mode: trunk
 ethernet_interfaces:
   Ethernet1:
@@ -118,6 +126,26 @@ ethernet_interfaces:
     channel_group:
       id: 1
       mode: active
+  Ethernet4:
+    peer: POD02-DOCKER_110
+    peer_interface: Eth1
+    peer_type: server
+    description: POD02-DOCKER_110_Eth1
+    type: switched
+    shutdown: false
+    mode: access
+    vlans: 110
+    profile: DOCKER_110
+  Ethernet3:
+    peer: POD02-DOCKER_111
+    peer_interface: Eth1
+    peer_type: server
+    description: POD02-DOCKER_111_Eth1
+    type: switched
+    shutdown: false
+    mode: access
+    vlans: 111
+    profile: DOCKER_111
   Ethernet5:
     peer: SRV-POD02
     peer_interface: Eth1

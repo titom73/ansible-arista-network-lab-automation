@@ -22,6 +22,7 @@
   - [AAA Authorization](#aaa-authorization)
   - [AAA Accounting](#aaa-accounting)
 - [Management Security](#management-security)
+- [Prompt](#prompt)
 - [Aliases](#aliases)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
@@ -36,6 +37,7 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
 - [VLANs](#vlans)
 - [Interfaces](#interfaces)
+  - [Switchport Default](#switchport-default)
   - [Interface Defaults](#interface-defaults)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
@@ -175,13 +177,14 @@ Management API gnmi is not defined
 
 | HTTP | HTTPS |
 | ---------- | ---------- |
-|  default  |  true  |
+| default | true |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT |  -  |  -  |
+| MGMT | - | - |
+
 
 ### Management API HTTP Configuration
 
@@ -253,6 +256,10 @@ AAA accounting not defined
 # Management Security
 
 Management security not defined
+
+# Prompt
+
+Prompt not defined
 
 # Aliases
 
@@ -426,6 +433,10 @@ vlan 4094
 
 # Interfaces
 
+## Switchport Default
+
+No switchport default defined
+
 ## Interface Defaults
 
 No Interface Defaults defined
@@ -440,7 +451,7 @@ No Interface Defaults defined
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet3 | MLAG_PEER_DC1-LEAF1A_Ethernet3 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
 | Ethernet4 | MLAG_PEER_DC1-LEAF1A_Ethernet4 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
-| Ethernet5 | DC1-AGG01_Ethernet2 | *trunk | *110,201,311 | *- | *- | 5 |
+| Ethernet5 | DC1-AGG01_Ethernet2 | *trunk | *110-111,201,311 | *- | *- | 5 |
 
 *Inherited from Port-Channel Interface
 
@@ -494,7 +505,7 @@ interface Ethernet5
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel3 | MLAG_PEER_DC1-LEAF1A_Po3 | switched | trunk | 2-4094 | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
-| Port-Channel5 | DC1_L2LEAF1_Po1 | switched | trunk | 110,201,311 | - | - | - | - | 5 | - |
+| Port-Channel5 | DC1_L2LEAF1_Po1 | switched | trunk | 110-111,201,311 | - | - | - | - | 5 | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -513,7 +524,7 @@ interface Port-Channel5
    description DC1_L2LEAF1_Po1
    no shutdown
    switchport
-   switchport trunk allowed vlan 110,201,311
+   switchport trunk allowed vlan 110-111,201,311
    switchport mode trunk
    mlag 5
 ```
@@ -567,7 +578,7 @@ interface Loopback100
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan110 |  PR01-DMZ  |  TENANT_A_PROJECT01  |  -  |  false  |
-| Vlan111 |  PR01-TRUST  |  TENANT_A_PROJECT01  |  1560  |  true  |
+| Vlan111 |  PR01-TRUST  |  TENANT_A_PROJECT01  |  -  |  false  |
 | Vlan112 |  PR01-TRUST  |  TENANT_A_PROJECT01  |  -  |  true  |
 | Vlan113 |  PR01-TRUST  |  TENANT_A_PROJECT01  |  -  |  false  |
 | Vlan114 |  PR02-DMZ  |  TENANT_A_PROJECT02  |  -  |  false  |
@@ -582,7 +593,7 @@ interface Loopback100
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan110 |  TENANT_A_PROJECT01  |  -  |  10.1.10.254/24  |  -  |  -  |  -  |  -  |
-| Vlan111 |  TENANT_A_PROJECT01  |  -  |  -  |  -  |  -  |  -  |  -  |
+| Vlan111 |  TENANT_A_PROJECT01  |  -  |  10.1.11.254/24  |  -  |  -  |  -  |  -  |
 | Vlan112 |  TENANT_A_PROJECT01  |  -  |  10.1.12.254/24  |  -  |  -  |  -  |  -  |
 | Vlan113 |  TENANT_A_PROJECT01  |  -  |  10.1.13.254/24  |  -  |  -  |  -  |  -  |
 | Vlan114 |  TENANT_A_PROJECT02  |  -  |  10.1.14.254/24  |  -  |  -  |  -  |  -  |
@@ -606,9 +617,9 @@ interface Vlan110
 !
 interface Vlan111
    description PR01-TRUST
-   shutdown
-   mtu 1560
+   no shutdown
    vrf TENANT_A_PROJECT01
+   ip address virtual 10.1.11.254/24
 !
 interface Vlan112
    description PR01-TRUST

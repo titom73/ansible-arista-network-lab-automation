@@ -22,6 +22,7 @@
   - [AAA Authorization](#aaa-authorization)
   - [AAA Accounting](#aaa-accounting)
 - [Management Security](#management-security)
+- [Prompt](#prompt)
 - [Aliases](#aliases)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
@@ -36,6 +37,7 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
 - [VLANs](#vlans)
 - [Interfaces](#interfaces)
+  - [Switchport Default](#switchport-default)
   - [Interface Defaults](#interface-defaults)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
@@ -114,6 +116,7 @@ interface Management1
 ### DNS Domain Device Configuration
 
 ```eos
+!
 dns domain eve.emea.lab
 !
 ```
@@ -178,19 +181,21 @@ Management API gnmi is not defined
 
 | HTTP | HTTPS |
 | ---------- | ---------- |
-|  default  |  true  |
+| default | true |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT |  -  |  -  |
+| MGMT | - | - |
+
 
 ### Management API HTTP Configuration
 
 ```eos
 !
 management api http-commands
+   protocol https
    no shutdown
    !
    vrf MGMT
@@ -253,6 +258,10 @@ AAA accounting not defined
 # Management Security
 
 Management security not defined
+
+# Prompt
+
+Prompt not defined
 
 # Aliases
 
@@ -405,6 +414,10 @@ vlan 4094
 
 # Interfaces
 
+## Switchport Default
+
+No switchport default defined
+
 ## Interface Defaults
 
 No Interface Defaults defined
@@ -420,7 +433,6 @@ No Interface Defaults defined
 | Ethernet3 | MLAG_PEER_DC1-LEAF1A_Ethernet3 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
 | Ethernet4 | MLAG_PEER_DC1-LEAF1A_Ethernet4 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
 | Ethernet5 | DC1-L2LEAF1A_Ethernet2 | *trunk | *110-111,114 | *- | *- | 5 |
-| Ethernet6 | server01_MLAG_Eth1 | *trunk | *110-114,210,211 | *- | *- | 6 |
 
 *Inherited from Port-Channel Interface
 
@@ -445,6 +457,7 @@ No Interface Defaults defined
 interface Ethernet1
    description P2P_LINK_TO_DC1-SPINE1_Ethernet2
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.5/31
    isis enable EVPN_UNDERLAY
@@ -454,6 +467,7 @@ interface Ethernet1
 interface Ethernet2
    description P2P_LINK_TO_DC1-SPINE2_Ethernet2
    no shutdown
+   mtu 1500
    no switchport
    ip address 172.31.255.7/31
    isis enable EVPN_UNDERLAY
@@ -474,11 +488,6 @@ interface Ethernet5
    description DC1-L2LEAF1A_Ethernet2
    no shutdown
    channel-group 5 mode active
-!
-interface Ethernet6
-   description server01_MLAG_Eth1
-   no shutdown
-   channel-group 6 mode active
 ```
 
 ## Port-Channel Interfaces
@@ -491,7 +500,6 @@ interface Ethernet6
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel3 | MLAG_PEER_DC1-LEAF1A_Po3 | switched | trunk | 2-4094 | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
 | Port-Channel5 | DC1_L2LEAF1_Po1 | switched | trunk | 110-111,114 | - | - | - | - | 5 | - |
-| Port-Channel6 | server01_MLAG_data | switched | trunk | 110-114,210,211 | - | - | - | - | 6 | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -513,14 +521,6 @@ interface Port-Channel5
    switchport trunk allowed vlan 110-111,114
    switchport mode trunk
    mlag 5
-!
-interface Port-Channel6
-   description server01_MLAG_data
-   no shutdown
-   switchport
-   switchport trunk allowed vlan 110-114,210,211
-   switchport mode trunk
-   mlag 6
 ```
 
 ## Loopback Interfaces
@@ -632,12 +632,14 @@ interface Vlan114
 interface Vlan3009
    description MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone
    no shutdown
+   mtu 1500
    vrf Tenant_A_OP_Zone
    ip address 10.255.251.1/31
 !
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
    no shutdown
+   mtu 1500
    ip address 10.255.251.1/31
    isis enable EVPN_UNDERLAY
    isis metric 50
@@ -646,6 +648,7 @@ interface Vlan4093
 interface Vlan4094
    description MLAG_PEER
    no shutdown
+   mtu 1500
    no autostate
    ip address 10.255.252.1/31
 ```
@@ -781,6 +784,7 @@ Router OSPF not defined
 ### Router ISIS Device Configuration
 
 ```eos
+!
 router isis EVPN_UNDERLAY
    net 49.0001.0001.0001.0002.00
    is-type level-2
@@ -790,7 +794,6 @@ router isis EVPN_UNDERLAY
    address-family ipv4 unicast
       maximum-paths 2
    !
-!
 ```
 
 

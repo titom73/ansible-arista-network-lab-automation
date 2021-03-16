@@ -2,8 +2,8 @@
 # SVI Profile
 svi_profiles:
   GENERIC:
-    mtu: 1560
-    enabled: false
+    mtu: 1500
+    enabled: true
 
 # DC1 Tenants Networks
 # Documentation of Tenant specific information - Vlans/VRFs
@@ -23,8 +23,9 @@ tenants:
             igmp_snooping: false
           111:
             name: 'PR01-TRUST'
-            tags: [POD01]
-            profile: 'GENERIC'
+            tags: [DC1]
+            enabled: true
+            ip_address_virtual: 10.1.11.254/24
           112:
             name: 'PR01-TRUST'
             tags: [POD01]

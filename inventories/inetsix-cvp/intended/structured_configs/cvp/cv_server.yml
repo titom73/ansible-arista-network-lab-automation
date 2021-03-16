@@ -28,7 +28,6 @@ CVP_DEVICES:
     name: DC1-LEAF1A
     parentContainerName: DC1_LEAF1
     configlets:
-      - ASE_DEVICE-ALIASES
       - AVD_DC1-LEAF1A
     imageBundle: []
   DC1-LEAF1B:

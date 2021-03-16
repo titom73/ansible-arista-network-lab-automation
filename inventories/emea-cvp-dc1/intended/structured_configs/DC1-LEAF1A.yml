@@ -36,6 +36,7 @@ leaf_mlag_peer_id: 2
 service_routing_protocols_model: multi-agent
 ip_routing: true
 hardware_counters: null
+hardware: null
 daemon_terminattr:
   ingestgrpcurl:
     ips:
@@ -140,13 +141,6 @@ port_channel_interfaces:
     trunk_groups:
     - LEAF_PEER_L3
     - MLAG
-  Port-Channel6:
-    description: server01_MLAG_data
-    type: switched
-    shutdown: false
-    mode: trunk
-    vlans: 110-114,210,211
-    mlag: 6
 ethernet_interfaces:
   Ethernet1:
     peer: DC1-SPINE1
@@ -202,19 +196,6 @@ ethernet_interfaces:
     channel_group:
       id: 5
       mode: active
-  Ethernet6:
-    peer: server01_MLAG
-    peer_interface: Eth0
-    peer_type: server
-    description: server01_MLAG_Eth0
-    type: switched
-    shutdown: false
-    mode: trunk
-    vlans: 110-114,210,211
-    channel_group:
-      id: 6
-      mode: active
-    profile: ALL
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
