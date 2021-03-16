@@ -1,0 +1,24 @@
+---
+- name: Build Switch configuration
+  hosts: [all]
+  collections:
+    - arista.eos
+  vars:
+    command: "show ntp status"
+  tasks:
+    # - name: 'Collect EOS SHOW COMMAND: {{ command }}'
+    #   arista.eos.eos_command:
+    #     commands: "{{ command }}"
+    #   register: EOS_RESPONSE
+
+    - name: Validate ntp status
+      assert:
+        that:
+          - EOS_RESPONSE.stdout[0] | regex_search("synchronised to NTP server")
+        fail_msg: not synchronised to NTP server
+        quiet: true
+
+
+    - name: Display EOS result
+      debug:
+        msg: '{{ EOS_RESPONSE }}'

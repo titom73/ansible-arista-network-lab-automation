@@ -6,24 +6,25 @@
     - arista.avd
     - arista.cvp
   vars:
+    execute_tasks: true
     CVP_DEVICES:
       - fqdn: CV-ANSIBLE-EOS01
         # systemMacAddress: '50:8d:00:e3:78:aa'
         parentContainerName: 'ANSIBLE'
         configlets:
-            - '< SET ADDITIONAL CONFIGLETS >'
+            - '01TRAINING-01'
 
     CVP_CONTAINERS:
       DC2:
-        parent_container: Tenant
+        parentContainerName: Tenant
       Leafs:
-        parent_container: DC2
+        parentContainerName: DC2
       Spines:
-        parent_container: DC2
+        parentContainerName: DC2
         configlets:
-          - '< SET A CONFIGLET HERE >'
+          - '01TRAINING-01'
       POD01:
-        parent_container: Leafs
+        parentContainerName: Leafs
 
     CVP_CONFIGLETS:
       01TRAINING-alias: "alias a101 show version"
@@ -48,41 +49,80 @@
       debug:
         msg: "{{ CVP_CONFIGLET_RESULT }}"
 
+    - name: Pause for 60 secondss to review on CV
+      tags: [full, configlet]
+      pause:
+        seconds: 60
+
     - name: "Configure configlet on {{inventory_hostname}}"
       tags: [full, configlet, configlet_update]
       arista.cvp.cv_configlet_v3:
         configlets: "{{CVP_CONFIGLETS_2}}"
         state: present
-      register: CVP_CONFIGLET_RESULT_2
+      register: CVP_CONFIGLET_RESULT
     - name: "Print logs"
       tags: [full, configlet, configlet_update]
       debug:
-        msg: "{{ CVP_CONFIGLET_RESULT_2 }}"
+        msg: "{{ CVP_CONFIGLET_RESULT }}"
+
+    - name: Pause for 60 secondss to review on CV
+      tags: [full, configlet]
+      pause:
+        seconds: 60
 
     - name: "Configure configlet on {{inventory_hostname}}"
-      tags: [full, cconfiglet, onfiglet_delete]
+      tags: [full, configlet, configlet_delete]
       arista.cvp.cv_configlet_v3:
-        configlets: "{{CVP_CONFIGLETS_2}}"
+        configlets: "{{CVP_CONFIGLETS}}"
         state: absent
-      register: CVP_CONFIGLET_RESULT_2
+      register: CVP_CONFIGLET_RESULT
     - name: "Print logs"
       tags: [full, configlet, configlet_delete]
       debug:
-        msg: "{{ CVP_CONFIGLET_RESULT_2 }}"
+        msg: "{{ CVP_CONFIGLET_RESULT }}"
+
+    - name: Pause for 60 secondss to review on CV
+      tags: [full]
+      pause:
+        seconds: 60
+
+    - name: "Execute pending tasks on {{ inventory_hostname }}"
+      tags: [full, configlet, configlet_delete, configlet_create, configlet_update]
+      arista.cvp.cv_task_v3:
+        tasks: "{{ CVP_CONFIGLET_RESULT.taskIds }}"
+        # wait: 60
+      when:
+        - execute_tasks|bool
 
     # --------------------
     # CONTAINERS
     # --------------------
-    - name: 'running cv_container_v3 in {{state}} on {{inventory_hostname}}'
+    - name: 'running cv_container_v3 in present on {{inventory_hostname}}'
       tags: [full, container_add]
       arista.cvp.cv_container_v3:
         topology: "{{CVP_CONTAINERS}}"
-        state: '{{state}}'
-      register: result
+        state: present
+      register: RESULT
     - name: Display result
       tags: [full, container_add]
       debug:
-        msg: '{{result}}'
+        msg: '{{RESULT}}'
+
+    - name: Pause for 60 secondss to review on CV
+      tags: [full, container]
+      pause:
+        seconds: 60
+
+    - name: 'running cv_container_v3 with absent on {{inventory_hostname}}'
+      tags: [full, container, container_delete]
+      arista.cvp.cv_container_v3:
+        topology: "{{CVP_CONTAINERS}}"
+        state: absent
+      register: RESULT
+    - name: Display result
+      tags: [full, container, container_delete]
+      debug:
+        msg: '{{RESULT}}'
 
     # --------------------
     # DEVICES

@@ -1,0 +1,24 @@
+---
+- name: cv_configlet unit testing
+  hosts: cv_server
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.avd
+    - arista.cvp
+  vars:
+    CVP_CONFIGLETS:
+      01TRAINING-alias: "alias a101 show version"
+      01TRAINING-01: "alias a102 show version"
+    CVP_CONFIGLETS_2:
+      01TRAINING-alias: "alias a103 show version"
+      01TRAINING-01: "alias a102 show version"
+  tasks:
+    - name: "Gather CVP facts {{inventory_hostname}}"
+      arista.cvp.cv_test:
+        tasks: "{{ hostvars | to_json }}"
+      register: CVP_FACTS
+
+    - name: "Print logs"
+      debug:
+        msg: "{{ CVP_FACTS }}"

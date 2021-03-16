@@ -8,6 +8,8 @@
   vars:
     run_tasks: false
     run_mode: merge
+    state: present
+
     CVP_CONTAINERS:
       DC2:
         parent_container: Tenant
@@ -15,20 +17,40 @@
         parent_container: DC2
       Spines:
         parent_container: DC2
+        configlets:
+          - 'ASE_DEVICE-ALIASES'
       POD01:
         parent_container: Leafs
 
   tasks:
     - name: "collect CV facts on {{inventory_hostname}}"
+      tags: v1
       arista.cvp.cv_facts:
       register: CVP_FACTS
 
-    - name: 'running cv_container in {{run_mode}} on {{inventory_hostname}}'
+    - name: 'running cv_container in {{state}} on {{inventory_hostname}}'
+      tags: v1
       arista.cvp.cv_container:
         cvp_facts: "{{CVP_FACTS.ansible_facts}}"
         topology: "{{CVP_CONTAINERS}}"
         mode: '{{run_mode}}'
       register: result
 
-    - debug:
+    - name: 'running cv_container_v3 in {{state}} on {{inventory_hostname}}'
+      tags: v3
+      arista.cvp.cv_container_v3:
+        topology: "{{CVP_CONTAINERS}}"
+        state: '{{state}}'
+      register: result
+
+    # - name: 'running cv_container_v4 in {{state}} on {{inventory_hostname}}'
+    #   tags: v4
+    #   arista.cvp.cv_container_v4:
+    #     topology: "{{CVP_CONTAINERS}}"
+    #     state: '{{state}}'
+    #   register: result
+
+    - name: Display result
+      tags: always
+      debug:
         msg: '{{result}}'

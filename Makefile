@@ -170,9 +170,17 @@ configlet-delete: ## Delete Configlets (GLOBAL-ALIASES*) from CVP
 unit-configlet: ## Unit test for cv_configlet
 	ansible-playbook playbooks/unit-cv-configlets.yml --extra-vars "configlets_prefix_var=$(CV_PREFIX)" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
-.PHONY: unit-container
-unit-container: ## Unit test for cv_container
-	ansible-playbook playbooks/unit-cv-container.yml --extra-vars "configlets_prefix_var=$(CV_PREFIX)" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+.PHONY: unit-container-v1
+unit-container-v1: ## Unit test for cv_container
+	ansible-playbook playbooks/unit-cv-container.yml --extra-vars "configlets_prefix_var=$(CV_PREFIX)" --tags v1 -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
+.PHONY: unit-container-v3
+unit-container-v3: ## Unit test for cv_container
+	ansible-playbook playbooks/unit-cv-container.yml --extra-vars "configlets_prefix_var=$(CV_PREFIX)" --tags v3 -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
+.PHONY: unit-container-v4
+unit-container-v4: ## Unit test for cv_container
+	ansible-playbook playbooks/unit-cv-container.yml --extra-vars "configlets_prefix_var=$(CV_PREFIX)" --tags v4 -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: container-create
 container-create: unit-container ## Create DC2 container topology on CVP.
