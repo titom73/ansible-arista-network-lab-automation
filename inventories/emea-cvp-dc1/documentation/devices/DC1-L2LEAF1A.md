@@ -88,15 +88,15 @@
 
 #### IPv4
 
-| Management Interface | description | VRF | IP Address | Gateway |
-| -------------------- | ----------- | --- | ---------- | ------- |
-| Management1 | oob_management | MGMT | 10.73.1.17/16 | 10.73.0.1 |
+| Management Interface | description | Type | VRF | IP Address | Gateway |
+| -------------------- | ----------- | ---- | --- | ---------- | ------- |
+| Management1 | oob_management | oob | MGMT | 10.73.1.17/16 | 10.73.0.1 |
 
 #### IPv6
 
-| Management Interface | description | VRF | IPv6 Address | IPv6 Gateway |
-| -------------------- | ----------- | --- | ------------ | ------------ |
-| Management1 | oob_management | MGMT | -  | - |
+| Management Interface | description | Type | VRF | IPv6 Address | IPv6 Gateway |
+| -------------------- | ----------- | ---- | --- | ------------ | ------------ |
+| Management1 | oob_management | oob | MGMT | -  | - |
 
 ### Management Interfaces Device Configuration
 
@@ -354,27 +354,7 @@ vlan internal order descending range 4000 4090
 
 # VLANs
 
-## VLANs Summary
-
-| VLAN ID | Name | Trunk Groups |
-| ------- | ---- | ------------ |
-| 110 | Tenant_A_OP_Zone_1 | none  |
-| 111 | Tenant_A_OP_Zone_2 | none  |
-| 114 | Tenant_A_OP_Zone_3 | none  |
-
-## VLANs Device Configuration
-
-```eos
-!
-vlan 110
-   name Tenant_A_OP_Zone_1
-!
-vlan 111
-   name Tenant_A_OP_Zone_2
-!
-vlan 114
-   name Tenant_A_OP_Zone_3
-```
+No VLANs defined
 
 # Interfaces
 
@@ -394,8 +374,8 @@ No Interface Defaults defined
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet1 | DC1-LEAF1A_Ethernet5 | *trunk | *110-111,114 | *- | *- | 1 |
-| Ethernet2 | DC1-LEAF1B_Ethernet5 | *trunk | *110-111,114 | *- | *- | 1 |
+| Ethernet1 | DC1-LEAF1A_Ethernet5 | *trunk | * | *- | *- | 1 |
+| Ethernet2 | DC1-LEAF1B_Ethernet5 | *trunk | * | *- | *- | 1 |
 | Ethernet3 |  POD01-DOCKER_Eth1 | access | 111 | - | - | - |
 | Ethernet5 |  POD01-SRV_Eth1 | trunk | 110-114,210,211 | - | - | - |
 
@@ -438,7 +418,7 @@ interface Ethernet5
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel1 | DC1-LEAF1A_Po5 | switched | trunk | 110-111,114 | - | - | - | - | - | - |
+| Port-Channel1 | DC1-LEAF1A_Po5 | switched | trunk |  | - | - | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -448,7 +428,6 @@ interface Port-Channel1
    description DC1-LEAF1A_Po5
    no shutdown
    switchport
-   switchport trunk allowed vlan 110-111,114
    switchport mode trunk
 ```
 

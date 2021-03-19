@@ -88,15 +88,15 @@
 
 #### IPv4
 
-| Management Interface | description | VRF | IP Address | Gateway |
-| -------------------- | ----------- | --- | ---------- | ------- |
-| Management1 | oob_management | MGMT | 10.73.1.14/16 | 10.73.0.1 |
+| Management Interface | description | Type | VRF | IP Address | Gateway |
+| -------------------- | ----------- | ---- | --- | ---------- | ------- |
+| Management1 | oob_management | oob | MGMT | 10.73.1.14/16 | 10.73.0.1 |
 
 #### IPv6
 
-| Management Interface | description | VRF | IPv6 Address | IPv6 Gateway |
-| -------------------- | ----------- | --- | ------------ | ------------ |
-| Management1 | oob_management | MGMT | -  | - |
+| Management Interface | description | Type | VRF | IPv6 Address | IPv6 Gateway |
+| -------------------- | ----------- | ---- | --- | ------------ | ------------ |
+| Management1 | oob_management | oob | MGMT | -  | - |
 
 ### Management Interfaces Device Configuration
 
@@ -432,7 +432,7 @@ No Interface Defaults defined
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet3 | MLAG_PEER_DC1-LEAF1A_Ethernet3 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
 | Ethernet4 | MLAG_PEER_DC1-LEAF1A_Ethernet4 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
-| Ethernet5 | DC1-L2LEAF1A_Ethernet2 | *trunk | *110-111,114 | *- | *- | 5 |
+| Ethernet5 | DC1-L2LEAF1A_Ethernet2 | *trunk | * | *- | *- | 5 |
 
 *Inherited from Port-Channel Interface
 
@@ -499,7 +499,7 @@ interface Ethernet5
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel3 | MLAG_PEER_DC1-LEAF1A_Po3 | switched | trunk | 2-4094 | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
-| Port-Channel5 | DC1_L2LEAF1_Po1 | switched | trunk | 110-111,114 | - | - | - | - | 5 | - |
+| Port-Channel5 | DC1_L2LEAF1_Po1 | switched | trunk |  | - | - | - | - | 5 | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -518,7 +518,6 @@ interface Port-Channel5
    description DC1_L2LEAF1_Po1
    no shutdown
    switchport
-   switchport trunk allowed vlan 110-111,114
    switchport mode trunk
    mlag 5
 ```

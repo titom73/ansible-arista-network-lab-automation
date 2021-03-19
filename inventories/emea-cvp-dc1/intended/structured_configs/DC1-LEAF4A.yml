@@ -181,6 +181,7 @@ management_interfaces:
     vrf: MGMT
     ip_address: 10.73.1.24/16
     gateway: 10.73.0.1
+    type: oob
 vlan_interfaces:
   Vlan110:
     tenant: Tenant_A
