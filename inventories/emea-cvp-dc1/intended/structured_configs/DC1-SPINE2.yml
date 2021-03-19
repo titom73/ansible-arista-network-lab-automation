@@ -68,10 +68,6 @@ clock: null
 vrfs:
   MGMT:
     ip_routing: false
-bfd_multihop:
-  interval: 1200
-  min_rx: 1200
-  multiplier: 3
 ethernet_interfaces:
   Ethernet6:
     peer: DC1-BL1A
@@ -193,6 +189,11 @@ static_routes:
   gateway: 10.73.0.1
 prefix_lists: null
 route_maps: null
+router_bfd:
+  multihop:
+    interval: 1200
+    min_rx: 1200
+    multiplier: 3
 peer_filters: null
 router_bgp:
   as: 65000
@@ -211,7 +212,7 @@ router_bgp:
       remote_as: 65000
       bfd: true
       password: q+VNViP5i4rVjW1cxFv2wA==
-      send_community: true
+      send_community: all
       maximum_routes: 0
       route_reflector_client: true
   neighbors:
@@ -252,6 +253,7 @@ router_bgp:
 router_ospf: null
 router_isis:
   instance: EVPN_UNDERLAY
+  log_adjacency_changes: true
   net: 49.0001.0001.0000.0002.00
   router_id: 192.168.255.2
   no_passive_interfaces:

@@ -194,9 +194,8 @@ CVP_CONFIGLETS:
     \   switchport\n   switchport trunk allowed vlan 110-114,210,211\n   switchport\
     \ mode trunk\n!\ninterface Management1\n   description oob_management\n   no shutdown\n\
     \   vrf MGMT\n   ip address 10.73.1.17/16\n!\nip routing\nno ip routing vrf MGMT\n\
-    !\nip route vrf MGMT 0.0.0.0/0 10.73.0.1\n!\nrouter bfd\n   multihop interval\
-    \ 1200 min-rx 1200 multiplier 3\n!\nmanagement api http-commands\n   protocol\
-    \ https\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend\n"
+    !\nip route vrf MGMT 0.0.0.0/0 10.73.0.1\n!\nmanagement api http-commands\n  \
+    \ protocol https\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend\n"
   AVD_DC1-L2LEAF2A: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
@@ -219,9 +218,8 @@ CVP_CONFIGLETS:
     \   no shutdown\n   switchport\n   switchport access vlan 111\n   switchport mode\
     \ access\n!\ninterface Management1\n   description oob_management\n   no shutdown\n\
     \   vrf MGMT\n   ip address 10.73.1.18/16\n!\nip routing\nno ip routing vrf MGMT\n\
-    !\nip route vrf MGMT 0.0.0.0/0 10.73.0.1\n!\nrouter bfd\n   multihop interval\
-    \ 1200 min-rx 1200 multiplier 3\n!\nmanagement api http-commands\n   protocol\
-    \ https\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend\n"
+    !\nip route vrf MGMT 0.0.0.0/0 10.73.0.1\n!\nmanagement api http-commands\n  \
+    \ protocol https\n   no shutdown\n   !\n   vrf MGMT\n      no shutdown\n!\nend\n"
   AVD_DC1-LEAF1A: "!RANCID-CONTENT-TYPE: arista\n!\ndaemon TerminAttr\n   exec /usr/bin/TerminAttr\
     \ -ingestgrpcurl=10.83.28.164:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata\
     \ -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs\n\
