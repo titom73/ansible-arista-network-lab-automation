@@ -1,0 +1,27 @@
+- name: Cloudvision v3 test playbook
+  hosts: cv_server
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.avd
+    - arista.cvp
+  vars:
+    execute_tasks: true
+    CVP_DEVICES:
+      - fqdn: CV-ANSIBLE-EOS02
+        parentContainerName: 'ANSIBLE'
+        configlets:
+            - 'CV-EOS-ANSIBLE02'
+  tasks:
+    # --------------------
+    # DEVICES
+    # --------------------
+    - name: "Configure devices on {{inventory_hostname}}"
+      arista.cvp.cv_device_v3:
+        devices: "{{CVP_DEVICES}}"
+        state: present
+      register: CVP_DEVICES_RESULTS
+
+    - name: 'Display debug'
+      debug:
+        msg: '{{CVP_DEVICES_RESULTS}}'
