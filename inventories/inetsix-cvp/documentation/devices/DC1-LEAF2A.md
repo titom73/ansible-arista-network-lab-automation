@@ -22,7 +22,6 @@
   - [AAA Authorization](#aaa-authorization)
   - [AAA Accounting](#aaa-accounting)
 - [Management Security](#management-security)
-- [Prompt](#prompt)
 - [Aliases](#aliases)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
@@ -37,7 +36,6 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
 - [VLANs](#vlans)
 - [Interfaces](#interfaces)
-  - [Switchport Default](#switchport-default)
   - [Interface Defaults](#interface-defaults)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
@@ -177,21 +175,19 @@ Management API gnmi is not defined
 
 | HTTP | HTTPS |
 | ---------- | ---------- |
-| default | true |
+|  default  |  true  |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT | - | - |
-
+| MGMT |  -  |  -  |
 
 ### Management API HTTP Configuration
 
 ```eos
 !
 management api http-commands
-   protocol https
    no shutdown
    !
    vrf MGMT
@@ -256,10 +252,6 @@ AAA accounting not defined
 # Management Security
 
 Management security not defined
-
-# Prompt
-
-Prompt not defined
 
 # Aliases
 
@@ -416,10 +408,6 @@ vlan 4094
 
 # Interfaces
 
-## Switchport Default
-
-No switchport default defined
-
 ## Interface Defaults
 
 No Interface Defaults defined
@@ -452,14 +440,12 @@ No Interface Defaults defined
 interface Ethernet1
    description P2P_LINK_TO_DC1-SPINE1_Ethernet3
    no shutdown
-   mtu 1500
    no switchport
    ip address 172.31.255.9/31
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-SPINE2_Ethernet3
    no shutdown
-   mtu 1500
    no switchport
    ip address 172.31.255.11/31
 !
@@ -593,25 +579,22 @@ interface Vlan311
    no shutdown
    vrf TENANT_A_PROJECT01
    ip address virtual 10.1.31.254/24
-   ip helper-address 1.1.1.1 vrf TENANT_A_PROJECT01 source-interface lo100
+   ip helper-address 1.1.1.1 vrf TENANT_A_PROJECT01  source-interface lo100
 !
 interface Vlan3010
    description MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01
    no shutdown
-   mtu 1500
    vrf TENANT_A_PROJECT01
    ip address 10.255.251.4/31
 !
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
    no shutdown
-   mtu 1500
    ip address 10.255.251.4/31
 !
 interface Vlan4094
    description MLAG_PEER
    no shutdown
-   mtu 1500
    no autostate
    ip address 10.255.252.4/31
 ```

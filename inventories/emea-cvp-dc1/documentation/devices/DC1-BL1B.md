@@ -37,6 +37,7 @@
   - [Static Routes](#static-routes)
   - [Router ISIS](#router-isis)
   - [Router BGP](#router-bgp)
+- [BFD](#bfd)
   - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
@@ -50,6 +51,7 @@
 - [Virtual Source NAT](#virtual-source-nat)
   - [Virtual Source NAT Summary](#virtual-source-nat-summary)
   - [Virtual Source NAT Configuration](#virtual-source-nat-configuration)
+- [Quality Of Service](#quality-of-service)
 
 <!-- toc -->
 # Management
@@ -325,6 +327,7 @@ vlan 4094
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
 | Ethernet1 |  P2P_LINK_TO_DC1-SPINE1_Ethernet7  |  routed  | - |  172.31.255.37/31  |  default  |  1500  |  false  |  -  |  -  |
 | Ethernet2 |  P2P_LINK_TO_DC1-SPINE2_Ethernet7  |  routed  | - |  172.31.255.39/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet5 |  P2P_LINK_TO_DC2-BL01A_Ethernet5  |  routed  | - |  172.255.0.3/31  |  default  |  1500  |  -  |  -  |  -  |
 
 #### ISIS
 
@@ -366,6 +369,12 @@ interface Ethernet4
    description MLAG_PEER_DC1-BL1A_Ethernet4
    no shutdown
    channel-group 3 mode active
+!
+interface Ethernet5
+   description P2P_LINK_TO_DC2-BL01A_Ethernet5
+   mtu 1500
+   no switchport
+   ip address 172.255.0.3/31
 ```
 
 ## Port-Channel Interfaces
@@ -467,7 +476,6 @@ interface Loopback100
 | Vlan3009 |  Tenant_A_OP_Zone  |  10.255.251.17/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  10.255.251.17/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  10.255.252.17/31  |  -  |  -  |  -  |  -  |  -  |
-
 
 
 #### ISIS
@@ -674,6 +682,27 @@ router isis EVPN_UNDERLAY
 
 ### Router BGP Peer Groups
 
+#### DCI-EVPN-OVERLAY-PEERS
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | evpn |
+| Remote_as | 65201 |
+| Source | Loopback0 |
+| Bfd | true |
+| Ebgp multihop | 3 |
+| Send community | True |
+| Maximum routes | 0 (no limit) |
+
+#### DCI-IPv4-UNDERLAY-PEERS
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | ipv4 |
+| Remote_as | 65201 |
+| Send community | True |
+| Maximum routes | 12000 |
+
 #### EVPN-OVERLAY-PEERS
 
 | Settings | Value |
@@ -689,6 +718,8 @@ router isis EVPN_UNDERLAY
 
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
+| 172.255.0.2 | Inherited from peer group DCI-IPv4-UNDERLAY-PEERS | default |
+| 192.168.253.6 | Inherited from peer group DCI-EVPN-OVERLAY-PEERS | default |
 | 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
 | 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
 | 10.255.251.16 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Tenant_A_OP_Zone |
@@ -722,6 +753,17 @@ router bgp 65000
    graceful-restart restart-time 300
    graceful-restart
    maximum-paths 4 ecmp 4
+   neighbor DCI-EVPN-OVERLAY-PEERS peer group
+   neighbor DCI-EVPN-OVERLAY-PEERS remote-as 65201
+   neighbor DCI-EVPN-OVERLAY-PEERS update-source Loopback0
+   neighbor DCI-EVPN-OVERLAY-PEERS bfd
+   neighbor DCI-EVPN-OVERLAY-PEERS ebgp-multihop 3
+   neighbor DCI-EVPN-OVERLAY-PEERS send-community True
+   neighbor DCI-EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor DCI-IPv4-UNDERLAY-PEERS peer group
+   neighbor DCI-IPv4-UNDERLAY-PEERS remote-as 65201
+   neighbor DCI-IPv4-UNDERLAY-PEERS send-community True
+   neighbor DCI-IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS remote-as 65000
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
@@ -729,6 +771,8 @@ router bgp 65000
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor 172.255.0.2 peer group DCI-IPv4-UNDERLAY-PEERS
+   neighbor 192.168.253.6 peer group DCI-EVPN-OVERLAY-PEERS
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.1 description DC1-SPINE1
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
@@ -753,11 +797,13 @@ router bgp 65000
       vlan 412
    !
    address-family evpn
+      neighbor DCI-EVPN-OVERLAY-PEERS activate
       neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN in
       neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out
       neighbor EVPN-OVERLAY-PEERS activate
    !
    address-family ipv4
+      neighbor DCI-IPv4-UNDERLAY-PEERS activate
       no neighbor EVPN-OVERLAY-PEERS activate
    !
    vrf Tenant_A_OP_Zone
@@ -768,6 +814,8 @@ router bgp 65000
       neighbor 10.255.251.16 peer group MLAG-IPv4-UNDERLAY-PEER
       redistribute connected
 ```
+
+# BFD
 
 ## Router BFD
 
@@ -879,3 +927,5 @@ vrf instance Tenant_A_OP_Zone
 !
 ip address virtual source-nat vrf Tenant_A_OP_Zone address 10.255.1.12
 ```
+
+# Quality Of Service

@@ -22,7 +22,6 @@
   - [AAA Authorization](#aaa-authorization)
   - [AAA Accounting](#aaa-accounting)
 - [Management Security](#management-security)
-- [Prompt](#prompt)
 - [Aliases](#aliases)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
@@ -37,7 +36,6 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
 - [VLANs](#vlans)
 - [Interfaces](#interfaces)
-  - [Switchport Default](#switchport-default)
   - [Interface Defaults](#interface-defaults)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
@@ -177,21 +175,19 @@ Management API gnmi is not defined
 
 | HTTP | HTTPS |
 | ---------- | ---------- |
-| default | true |
+|  default  |  true  |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT | - | - |
-
+| MGMT |  -  |  -  |
 
 ### Management API HTTP Configuration
 
 ```eos
 !
 management api http-commands
-   protocol https
    no shutdown
    !
    vrf MGMT
@@ -256,10 +252,6 @@ AAA accounting not defined
 # Management Security
 
 Management security not defined
-
-# Prompt
-
-Prompt not defined
 
 # Aliases
 
@@ -380,10 +372,6 @@ vlan 311
 
 # Interfaces
 
-## Switchport Default
-
-No switchport default defined
-
 ## Interface Defaults
 
 No Interface Defaults defined
@@ -423,14 +411,12 @@ interface Ethernet3
    no shutdown
    switchport
    switchport access vlan 111
-   switchport mode access
 !
 interface Ethernet4
    description POD02-DOCKER_110_Eth1
    no shutdown
    switchport
    switchport access vlan 110
-   switchport mode access
 !
 interface Ethernet5
    description SRV-POD02_Eth1

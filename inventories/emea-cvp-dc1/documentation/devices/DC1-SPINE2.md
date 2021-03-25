@@ -27,6 +27,7 @@
   - [Static Routes](#static-routes)
   - [Router ISIS](#router-isis)
   - [Router BGP](#router-bgp)
+- [BFD](#bfd)
   - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
 - [Filters](#filters)
@@ -34,6 +35,7 @@
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
+- [Quality Of Service](#quality-of-service)
 
 <!-- toc -->
 # Management
@@ -546,6 +548,8 @@ router bgp 65000
       no neighbor EVPN-OVERLAY-PEERS activate
 ```
 
+# BFD
+
 ## Router BFD
 
 ### Router BFD Multihop Summary
@@ -582,3 +586,5 @@ router bfd
 !
 vrf instance MGMT
 ```
+
+# Quality Of Service

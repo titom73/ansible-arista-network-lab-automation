@@ -22,7 +22,6 @@
   - [AAA Authorization](#aaa-authorization)
   - [AAA Accounting](#aaa-accounting)
 - [Management Security](#management-security)
-- [Prompt](#prompt)
 - [Aliases](#aliases)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
@@ -37,7 +36,6 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
 - [VLANs](#vlans)
 - [Interfaces](#interfaces)
-  - [Switchport Default](#switchport-default)
   - [Interface Defaults](#interface-defaults)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
@@ -177,21 +175,19 @@ Management API gnmi is not defined
 
 | HTTP | HTTPS |
 | ---------- | ---------- |
-| default | true |
+|  default  |  true  |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
-| MGMT | - | - |
-
+| MGMT |  -  |  -  |
 
 ### Management API HTTP Configuration
 
 ```eos
 !
 management api http-commands
-   protocol https
    no shutdown
    !
    vrf MGMT
@@ -256,10 +252,6 @@ AAA accounting not defined
 # Management Security
 
 Management security not defined
-
-# Prompt
-
-Prompt not defined
 
 # Aliases
 
@@ -349,10 +341,6 @@ No VLANs defined
 
 # Interfaces
 
-## Switchport Default
-
-No switchport default defined
-
 ## Interface Defaults
 
 No Interface Defaults defined
@@ -388,56 +376,48 @@ No Interface Defaults defined
 interface Ethernet1
    description P2P_LINK_TO_DC1-LEAF1A_Ethernet2
    no shutdown
-   mtu 1500
    no switchport
    ip address 172.31.255.2/31
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-LEAF1B_Ethernet2
    no shutdown
-   mtu 1500
    no switchport
    ip address 172.31.255.6/31
 !
 interface Ethernet3
    description P2P_LINK_TO_DC1-LEAF2A_Ethernet2
    no shutdown
-   mtu 1500
    no switchport
    ip address 172.31.255.10/31
 !
 interface Ethernet4
    description P2P_LINK_TO_DC1-LEAF2B_Ethernet2
    no shutdown
-   mtu 1500
    no switchport
    ip address 172.31.255.14/31
 !
 interface Ethernet5
    description P2P_LINK_TO_DC1-BL01A_Ethernet2
    no shutdown
-   mtu 1500
    no switchport
    ip address 172.31.255.26/31
 !
 interface Ethernet6
    description P2P_LINK_TO_DC1-BL01B_Ethernet2
    no shutdown
-   mtu 1500
    no switchport
    ip address 172.31.255.30/31
 !
 interface Ethernet7
    description P2P_LINK_TO_DC1-LEAF3A_Ethernet2
    no shutdown
-   mtu 1500
    no switchport
    ip address 172.31.255.18/31
 !
 interface Ethernet8
    description P2P_LINK_TO_DC1-LEAF4A_Ethernet2
    no shutdown
-   mtu 1500
    no switchport
    ip address 172.31.255.22/31
 ```
