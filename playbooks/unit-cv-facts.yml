@@ -1,0 +1,28 @@
+---
+- name: cv_configlet unit testing
+  hosts: cv_server
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.avd
+    - arista.cvp
+  vars:
+    CVP_CONFIGLETS:
+      01TRAINING-alias: "alias a101 show version"
+      01TRAINING-01: "alias a102 show version"
+    CVP_CONFIGLETS_2:
+      01TRAINING-alias: "alias a103 show version"
+      01TRAINING-01: "alias a102 show version"
+  tasks:
+    - name: Get CV Facts
+      arista.cvp.cv_facts:
+        facts:
+          devices
+      register: cv_facts
+
+    - name: "Print out facts from CVP"
+      debug:
+        msg: "{{item.fqdn}}"
+      when:
+        - item.fqdn == 'DC1-L2LEAF1A.eve.emea.lab'
+      loop: "{{cv_facts.ansible_facts.devices}}"
