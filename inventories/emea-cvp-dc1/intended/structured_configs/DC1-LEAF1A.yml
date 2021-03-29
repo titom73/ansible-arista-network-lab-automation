@@ -22,10 +22,12 @@ leaf_allowed_svis:
 - 110
 - 111
 - 114
+- 115
 leaf_allowed_vlans:
 - 110
 - 111
 - 114
+- 115
 leaf_mlag: true
 leaf_mlag_group: DC1_LEAF1
 leaf_mlag_role: primary
@@ -107,6 +109,9 @@ vlans:
     tenant: Tenant_A
     name: Tenant_A_OP_Zone_2
   114:
+    tenant: Tenant_A
+    name: Tenant_A_OP_Zone_3
+  115:
     tenant: Tenant_A
     name: Tenant_A_OP_Zone_3
   3009:
@@ -257,6 +262,14 @@ vlan_interfaces:
     shutdown: false
     vrf: Tenant_A_OP_Zone
     ip_address_virtual: 10.1.14.254/24
+  Vlan115:
+    tenant: Tenant_A
+    tags:
+    - opzone
+    description: Tenant_A_OP_Zone_3
+    shutdown: false
+    vrf: Tenant_A_OP_Zone
+    ip_address_virtual: 10.1.15.254/24
   Vlan3009:
     tenant: Tenant_A
     type: underlay_peering
@@ -280,6 +293,8 @@ vxlan_tunnel_interface:
           vni: 50111
         114:
           vni: 50114
+        115:
+          vni: 50115
       vrfs:
         Tenant_A_OP_Zone:
           vni: 10
@@ -370,7 +385,7 @@ router_bgp:
         - '10:10'
       redistribute_routes:
       - learned
-      vlan: 110-111,114
+      vlan: 110-111,114-115
   vlans: null
   vrfs:
     Tenant_A_OP_Zone:

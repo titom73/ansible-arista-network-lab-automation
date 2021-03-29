@@ -227,6 +227,7 @@ vlan internal order descending range 4000 4090
 | 110 | Tenant_A_OP_Zone_1 | none  |
 | 111 | Tenant_A_OP_Zone_2 | none  |
 | 114 | Tenant_A_OP_Zone_3 | none  |
+| 115 | Tenant_A_OP_Zone_3 | none  |
 | 411 | Tenant_D_OP_Zone_1 | none  |
 | 412 | Tenant_D_OP_Zone_2 | none  |
 
@@ -241,6 +242,9 @@ vlan 111
    name Tenant_A_OP_Zone_2
 !
 vlan 114
+   name Tenant_A_OP_Zone_3
+!
+vlan 115
    name Tenant_A_OP_Zone_3
 !
 vlan 411
@@ -260,8 +264,8 @@ vlan 412
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet1 | DC1-LEAF2A_Ethernet5 | *trunk | *110-111,114,411-412 | *- | *- | 1 |
-| Ethernet2 | DC1-LEAF2B_Ethernet5 | *trunk | *110-111,114,411-412 | *- | *- | 1 |
+| Ethernet1 | DC1-LEAF2A_Ethernet5 | *trunk | *110-111,114-115,411-412 | *- | *- | 1 |
+| Ethernet2 | DC1-LEAF2B_Ethernet5 | *trunk | *110-111,114-115,411-412 | *- | *- | 1 |
 | Ethernet3 |  POD02-DOCKER_Eth1 | access | 111 | - | - | - |
 
 *Inherited from Port-Channel Interface
@@ -296,7 +300,7 @@ interface Ethernet3
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel1 | DC1-LEAF2A_Po5 | switched | trunk | 110-111,114,411-412 | - | - | - | - | - | - |
+| Port-Channel1 | DC1-LEAF2A_Po5 | switched | trunk | 110-111,114-115,411-412 | - | - | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -306,7 +310,7 @@ interface Port-Channel1
    description DC1-LEAF2A_Po5
    no shutdown
    switchport
-   switchport trunk allowed vlan 110-111,114,411-412
+   switchport trunk allowed vlan 110-111,114-115,411-412
    switchport mode trunk
 ```
 

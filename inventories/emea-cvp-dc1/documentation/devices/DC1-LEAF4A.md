@@ -240,6 +240,7 @@ vlan internal order descending range 4000 4090
 | 110 | Tenant_A_OP_Zone_1 | none  |
 | 111 | Tenant_A_OP_Zone_2 | none  |
 | 114 | Tenant_A_OP_Zone_3 | none  |
+| 115 | Tenant_A_OP_Zone_3 | none  |
 | 411 | Tenant_D_OP_Zone_1 | none  |
 | 412 | Tenant_D_OP_Zone_2 | none  |
 
@@ -254,6 +255,9 @@ vlan 111
    name Tenant_A_OP_Zone_2
 !
 vlan 114
+   name Tenant_A_OP_Zone_3
+!
+vlan 115
    name Tenant_A_OP_Zone_3
 !
 vlan 411
@@ -410,6 +414,7 @@ interface Loopback100
 | Vlan110 |  Tenant_A_OP_Zone_1  |  Tenant_A_OP_Zone  |  -  |  false  |
 | Vlan111 |  Tenant_A_OP_Zone_2  |  Tenant_A_OP_Zone  |  -  |  false  |
 | Vlan114 |  Tenant_A_OP_Zone_3  |  Tenant_A_OP_Zone  |  -  |  false  |
+| Vlan115 |  Tenant_A_OP_Zone_3  |  Tenant_A_OP_Zone  |  -  |  false  |
 
 #### IPv4
 
@@ -418,6 +423,7 @@ interface Loopback100
 | Vlan110 |  Tenant_A_OP_Zone  |  -  |  10.1.10.254/24  |  -  |  -  |  -  |  -  |
 | Vlan111 |  Tenant_A_OP_Zone  |  -  |  10.1.11.254/24  |  -  |  -  |  -  |  -  |
 | Vlan114 |  Tenant_A_OP_Zone  |  -  |  10.1.14.254/24  |  -  |  -  |  -  |  -  |
+| Vlan115 |  Tenant_A_OP_Zone  |  -  |  10.1.15.254/24  |  -  |  -  |  -  |  -  |
 
 
 ### VLAN Interfaces Device Configuration
@@ -441,6 +447,12 @@ interface Vlan114
    no shutdown
    vrf Tenant_A_OP_Zone
    ip address virtual 10.1.14.254/24
+!
+interface Vlan115
+   description Tenant_A_OP_Zone_3
+   no shutdown
+   vrf Tenant_A_OP_Zone
+   ip address virtual 10.1.15.254/24
 ```
 
 ## VXLAN Interface
@@ -458,6 +470,7 @@ interface Vlan114
 | 110 | 10110 |
 | 111 | 50111 |
 | 114 | 50114 |
+| 115 | 50115 |
 | 411 | 40411 |
 | 412 | 40412 |
 
@@ -477,6 +490,7 @@ interface Vxlan1
    vxlan vlan 110 vni 10110
    vxlan vlan 111 vni 50111
    vxlan vlan 114 vni 50114
+   vxlan vlan 115 vni 50115
    vxlan vlan 411 vni 40411
    vxlan vlan 412 vni 40412
    vxlan vrf Tenant_A_OP_Zone vni 10
@@ -619,7 +633,7 @@ router isis EVPN_UNDERLAY
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| Tenant_A_OP_Zone | 192.168.255.13:10 |  10:10  |  |  | learned | 110-111,114 |
+| Tenant_A_OP_Zone | 192.168.255.13:10 |  10:10  |  |  | learned | 110-111,114-115 |
 | Tenant_D_OP_Zone_1 | 192.168.255.13:40411 |  40411:40411  |  |  | learned | 411 |
 | Tenant_D_OP_Zone_2 | 192.168.255.13:40412 |  40412:40412  |  |  | learned | 412 |
 
@@ -656,7 +670,7 @@ router bgp 65000
       rd 192.168.255.13:10
       route-target both 10:10
       redistribute learned
-      vlan 110-111,114
+      vlan 110-111,114-115
    !
    vlan-aware-bundle Tenant_D_OP_Zone_1
       rd 192.168.255.13:40411

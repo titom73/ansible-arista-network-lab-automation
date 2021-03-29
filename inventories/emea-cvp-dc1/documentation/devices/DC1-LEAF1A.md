@@ -268,6 +268,7 @@ vlan internal order descending range 4000 4090
 | 110 | Tenant_A_OP_Zone_1 | none  |
 | 111 | Tenant_A_OP_Zone_2 | none  |
 | 114 | Tenant_A_OP_Zone_3 | none  |
+| 115 | Tenant_A_OP_Zone_3 | none  |
 | 3009 | MLAG_iBGP_Tenant_A_OP_Zone | LEAF_PEER_L3  |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3  |
 | 4094 | MLAG_PEER | MLAG  |
@@ -283,6 +284,9 @@ vlan 111
    name Tenant_A_OP_Zone_2
 !
 vlan 114
+   name Tenant_A_OP_Zone_3
+!
+vlan 115
    name Tenant_A_OP_Zone_3
 !
 vlan 3009
@@ -461,6 +465,7 @@ interface Loopback100
 | Vlan110 |  Tenant_A_OP_Zone_1  |  Tenant_A_OP_Zone  |  -  |  false  |
 | Vlan111 |  Tenant_A_OP_Zone_2  |  Tenant_A_OP_Zone  |  -  |  false  |
 | Vlan114 |  Tenant_A_OP_Zone_3  |  Tenant_A_OP_Zone  |  -  |  false  |
+| Vlan115 |  Tenant_A_OP_Zone_3  |  Tenant_A_OP_Zone  |  -  |  false  |
 | Vlan3009 |  MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone  |  Tenant_A_OP_Zone  |  1500  |  false  |
 | Vlan4093 |  MLAG_PEER_L3_PEERING  |  default  |  1500  |  false  |
 | Vlan4094 |  MLAG_PEER  |  default  |  1500  |  false  |
@@ -472,6 +477,7 @@ interface Loopback100
 | Vlan110 |  Tenant_A_OP_Zone  |  -  |  10.1.10.254/24  |  -  |  -  |  -  |  -  |
 | Vlan111 |  Tenant_A_OP_Zone  |  -  |  10.1.11.254/24  |  -  |  -  |  -  |  -  |
 | Vlan114 |  Tenant_A_OP_Zone  |  -  |  10.1.14.254/24  |  -  |  -  |  -  |  -  |
+| Vlan115 |  Tenant_A_OP_Zone  |  -  |  10.1.15.254/24  |  -  |  -  |  -  |  -  |
 | Vlan3009 |  Tenant_A_OP_Zone  |  10.255.251.0/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  10.255.251.0/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  10.255.252.0/31  |  -  |  -  |  -  |  -  |  -  |
@@ -504,6 +510,12 @@ interface Vlan114
    no shutdown
    vrf Tenant_A_OP_Zone
    ip address virtual 10.1.14.254/24
+!
+interface Vlan115
+   description Tenant_A_OP_Zone_3
+   no shutdown
+   vrf Tenant_A_OP_Zone
+   ip address virtual 10.1.15.254/24
 !
 interface Vlan3009
    description MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone
@@ -544,6 +556,7 @@ interface Vlan4094
 | 110 | 10110 |
 | 111 | 50111 |
 | 114 | 50114 |
+| 115 | 50115 |
 
 #### VRF to VNI Mappings
 
@@ -562,6 +575,7 @@ interface Vxlan1
    vxlan vlan 110 vni 10110
    vxlan vlan 111 vni 50111
    vxlan vlan 114 vni 50114
+   vxlan vlan 115 vni 50115
    vxlan vrf Tenant_A_OP_Zone vni 10
 ```
 
@@ -704,7 +718,7 @@ router isis EVPN_UNDERLAY
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| Tenant_A_OP_Zone | 192.168.255.3:10 |  10:10  |  |  | learned | 110-111,114 |
+| Tenant_A_OP_Zone | 192.168.255.3:10 |  10:10  |  |  | learned | 110-111,114-115 |
 
 #### Router BGP EVPN VRFs
 
@@ -739,7 +753,7 @@ router bgp 65000
       rd 192.168.255.3:10
       route-target both 10:10
       redistribute learned
-      vlan 110-111,114
+      vlan 110-111,114-115
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN in

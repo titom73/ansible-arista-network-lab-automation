@@ -268,6 +268,7 @@ vlan internal order descending range 4000 4090
 | 110 | Tenant_A_OP_Zone_1 | none  |
 | 111 | Tenant_A_OP_Zone_2 | none  |
 | 114 | Tenant_A_OP_Zone_3 | none  |
+| 115 | Tenant_A_OP_Zone_3 | none  |
 | 411 | Tenant_D_OP_Zone_1 | none  |
 | 412 | Tenant_D_OP_Zone_2 | none  |
 | 3009 | MLAG_iBGP_Tenant_A_OP_Zone | LEAF_PEER_L3  |
@@ -285,6 +286,9 @@ vlan 111
    name Tenant_A_OP_Zone_2
 !
 vlan 114
+   name Tenant_A_OP_Zone_3
+!
+vlan 115
    name Tenant_A_OP_Zone_3
 !
 vlan 411
@@ -318,7 +322,7 @@ vlan 4094
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet3 | MLAG_PEER_DC1-LEAF2B_Ethernet3 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
 | Ethernet4 | MLAG_PEER_DC1-LEAF2B_Ethernet4 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
-| Ethernet5 | DC1-L2LEAF2A_Ethernet1 | *trunk | *110-111,114,411-412 | *- | *- | 5 |
+| Ethernet5 | DC1-L2LEAF2A_Ethernet1 | *trunk | *110-111,114-115,411-412 | *- | *- | 5 |
 
 *Inherited from Port-Channel Interface
 
@@ -385,7 +389,7 @@ interface Ethernet5
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel3 | MLAG_PEER_DC1-LEAF2B_Po3 | switched | trunk | 2-4094 | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
-| Port-Channel5 | DC1_L2LEAF2_Po1 | switched | trunk | 110-111,114,411-412 | - | - | - | - | 5 | - |
+| Port-Channel5 | DC1_L2LEAF2_Po1 | switched | trunk | 110-111,114-115,411-412 | - | - | - | - | 5 | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -404,7 +408,7 @@ interface Port-Channel5
    description DC1_L2LEAF2_Po1
    no shutdown
    switchport
-   switchport trunk allowed vlan 110-111,114,411-412
+   switchport trunk allowed vlan 110-111,114-115,411-412
    switchport mode trunk
    mlag 5
 ```
@@ -470,6 +474,7 @@ interface Loopback100
 | Vlan110 |  Tenant_A_OP_Zone_1  |  Tenant_A_OP_Zone  |  -  |  false  |
 | Vlan111 |  Tenant_A_OP_Zone_2  |  Tenant_A_OP_Zone  |  -  |  false  |
 | Vlan114 |  Tenant_A_OP_Zone_3  |  Tenant_A_OP_Zone  |  -  |  false  |
+| Vlan115 |  Tenant_A_OP_Zone_3  |  Tenant_A_OP_Zone  |  -  |  false  |
 | Vlan3009 |  MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone  |  Tenant_A_OP_Zone  |  1500  |  false  |
 | Vlan4093 |  MLAG_PEER_L3_PEERING  |  default  |  1500  |  false  |
 | Vlan4094 |  MLAG_PEER  |  default  |  1500  |  false  |
@@ -481,6 +486,7 @@ interface Loopback100
 | Vlan110 |  Tenant_A_OP_Zone  |  -  |  10.1.10.254/24  |  -  |  -  |  -  |  -  |
 | Vlan111 |  Tenant_A_OP_Zone  |  -  |  10.1.11.254/24  |  -  |  -  |  -  |  -  |
 | Vlan114 |  Tenant_A_OP_Zone  |  -  |  10.1.14.254/24  |  -  |  -  |  -  |  -  |
+| Vlan115 |  Tenant_A_OP_Zone  |  -  |  10.1.15.254/24  |  -  |  -  |  -  |  -  |
 | Vlan3009 |  Tenant_A_OP_Zone  |  10.255.251.4/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  10.255.251.4/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  10.255.252.4/31  |  -  |  -  |  -  |  -  |  -  |
@@ -513,6 +519,12 @@ interface Vlan114
    no shutdown
    vrf Tenant_A_OP_Zone
    ip address virtual 10.1.14.254/24
+!
+interface Vlan115
+   description Tenant_A_OP_Zone_3
+   no shutdown
+   vrf Tenant_A_OP_Zone
+   ip address virtual 10.1.15.254/24
 !
 interface Vlan3009
    description MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone
@@ -553,6 +565,7 @@ interface Vlan4094
 | 110 | 10110 |
 | 111 | 50111 |
 | 114 | 50114 |
+| 115 | 50115 |
 | 411 | 40411 |
 | 412 | 40412 |
 
@@ -573,6 +586,7 @@ interface Vxlan1
    vxlan vlan 110 vni 10110
    vxlan vlan 111 vni 50111
    vxlan vlan 114 vni 50114
+   vxlan vlan 115 vni 50115
    vxlan vlan 411 vni 40411
    vxlan vlan 412 vni 40412
    vxlan vrf Tenant_A_OP_Zone vni 10
@@ -717,7 +731,7 @@ router isis EVPN_UNDERLAY
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| Tenant_A_OP_Zone | 192.168.255.5:10 |  10:10  |  |  | learned | 110-111,114 |
+| Tenant_A_OP_Zone | 192.168.255.5:10 |  10:10  |  |  | learned | 110-111,114-115 |
 | Tenant_D_OP_Zone_1 | 192.168.255.5:40411 |  40411:40411  |  |  | learned | 411 |
 | Tenant_D_OP_Zone_2 | 192.168.255.5:40412 |  40412:40412  |  |  | learned | 412 |
 
@@ -754,7 +768,7 @@ router bgp 65000
       rd 192.168.255.5:10
       route-target both 10:10
       redistribute learned
-      vlan 110-111,114
+      vlan 110-111,114-115
    !
    vlan-aware-bundle Tenant_D_OP_Zone_1
       rd 192.168.255.5:40411

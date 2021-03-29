@@ -268,6 +268,7 @@ vlan internal order descending range 4000 4090
 | 110 | Tenant_A_OP_Zone_1 | none  |
 | 111 | Tenant_A_OP_Zone_2 | none  |
 | 114 | Tenant_A_OP_Zone_3 | none  |
+| 115 | Tenant_A_OP_Zone_3 | none  |
 | 411 | Tenant_D_OP_Zone_1 | none  |
 | 412 | Tenant_D_OP_Zone_2 | none  |
 | 3009 | MLAG_iBGP_Tenant_A_OP_Zone | LEAF_PEER_L3  |
@@ -285,6 +286,9 @@ vlan 111
    name Tenant_A_OP_Zone_2
 !
 vlan 114
+   name Tenant_A_OP_Zone_3
+!
+vlan 115
    name Tenant_A_OP_Zone_3
 !
 vlan 411
@@ -327,7 +331,6 @@ vlan 4094
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
 | Ethernet1 |  P2P_LINK_TO_DC1-SPINE1_Ethernet7  |  routed  | - |  172.31.255.37/31  |  default  |  1500  |  false  |  -  |  -  |
 | Ethernet2 |  P2P_LINK_TO_DC1-SPINE2_Ethernet7  |  routed  | - |  172.31.255.39/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet5 |  P2P_LINK_TO_DC2-BL01A_Ethernet5  |  routed  | - |  172.255.0.3/31  |  default  |  1500  |  -  |  -  |  -  |
 
 #### ISIS
 
@@ -369,12 +372,6 @@ interface Ethernet4
    description MLAG_PEER_DC1-BL1A_Ethernet4
    no shutdown
    channel-group 3 mode active
-!
-interface Ethernet5
-   description P2P_LINK_TO_DC2-BL01A_Ethernet5
-   mtu 1500
-   no switchport
-   ip address 172.255.0.3/31
 ```
 
 ## Port-Channel Interfaces
@@ -462,6 +459,7 @@ interface Loopback100
 | Vlan110 |  Tenant_A_OP_Zone_1  |  Tenant_A_OP_Zone  |  -  |  false  |
 | Vlan111 |  Tenant_A_OP_Zone_2  |  Tenant_A_OP_Zone  |  -  |  false  |
 | Vlan114 |  Tenant_A_OP_Zone_3  |  Tenant_A_OP_Zone  |  -  |  false  |
+| Vlan115 |  Tenant_A_OP_Zone_3  |  Tenant_A_OP_Zone  |  -  |  false  |
 | Vlan3009 |  MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone  |  Tenant_A_OP_Zone  |  1500  |  false  |
 | Vlan4093 |  MLAG_PEER_L3_PEERING  |  default  |  1500  |  false  |
 | Vlan4094 |  MLAG_PEER  |  default  |  1500  |  false  |
@@ -473,6 +471,7 @@ interface Loopback100
 | Vlan110 |  Tenant_A_OP_Zone  |  -  |  10.1.10.254/24  |  -  |  -  |  -  |  -  |
 | Vlan111 |  Tenant_A_OP_Zone  |  -  |  10.1.11.254/24  |  -  |  -  |  -  |  -  |
 | Vlan114 |  Tenant_A_OP_Zone  |  -  |  10.1.14.254/24  |  -  |  -  |  -  |  -  |
+| Vlan115 |  Tenant_A_OP_Zone  |  -  |  10.1.15.254/24  |  -  |  -  |  -  |  -  |
 | Vlan3009 |  Tenant_A_OP_Zone  |  10.255.251.17/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  10.255.251.17/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  10.255.252.17/31  |  -  |  -  |  -  |  -  |  -  |
@@ -505,6 +504,12 @@ interface Vlan114
    no shutdown
    vrf Tenant_A_OP_Zone
    ip address virtual 10.1.14.254/24
+!
+interface Vlan115
+   description Tenant_A_OP_Zone_3
+   no shutdown
+   vrf Tenant_A_OP_Zone
+   ip address virtual 10.1.15.254/24
 !
 interface Vlan3009
    description MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone
@@ -545,6 +550,7 @@ interface Vlan4094
 | 110 | 10110 |
 | 111 | 50111 |
 | 114 | 50114 |
+| 115 | 50115 |
 | 411 | 40411 |
 | 412 | 40412 |
 
@@ -565,6 +571,7 @@ interface Vxlan1
    vxlan vlan 110 vni 10110
    vxlan vlan 111 vni 50111
    vxlan vlan 114 vni 50114
+   vxlan vlan 115 vni 50115
    vxlan vlan 411 vni 40411
    vxlan vlan 412 vni 40412
    vxlan vrf Tenant_A_OP_Zone vni 10
@@ -682,27 +689,6 @@ router isis EVPN_UNDERLAY
 
 ### Router BGP Peer Groups
 
-#### DCI-EVPN-OVERLAY-PEERS
-
-| Settings | Value |
-| -------- | ----- |
-| Address Family | evpn |
-| Remote_as | 65201 |
-| Source | Loopback0 |
-| Bfd | true |
-| Ebgp multihop | 3 |
-| Send community | True |
-| Maximum routes | 0 (no limit) |
-
-#### DCI-IPv4-UNDERLAY-PEERS
-
-| Settings | Value |
-| -------- | ----- |
-| Address Family | ipv4 |
-| Remote_as | 65201 |
-| Send community | True |
-| Maximum routes | 12000 |
-
 #### EVPN-OVERLAY-PEERS
 
 | Settings | Value |
@@ -718,8 +704,6 @@ router isis EVPN_UNDERLAY
 
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
-| 172.255.0.2 | Inherited from peer group DCI-IPv4-UNDERLAY-PEERS | default |
-| 192.168.253.6 | Inherited from peer group DCI-EVPN-OVERLAY-PEERS | default |
 | 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
 | 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
 | 10.255.251.16 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Tenant_A_OP_Zone |
@@ -732,7 +716,7 @@ router isis EVPN_UNDERLAY
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| Tenant_A_OP_Zone | 192.168.255.12:10 |  10:10  |  |  | learned | 110-111,114 |
+| Tenant_A_OP_Zone | 192.168.255.12:10 |  10:10  |  |  | learned | 110-111,114-115 |
 | Tenant_D_OP_Zone_1 | 192.168.255.12:40411 |  40411:40411  |  |  | learned | 411 |
 | Tenant_D_OP_Zone_2 | 192.168.255.12:40412 |  40412:40412  |  |  | learned | 412 |
 
@@ -753,17 +737,6 @@ router bgp 65000
    graceful-restart restart-time 300
    graceful-restart
    maximum-paths 4 ecmp 4
-   neighbor DCI-EVPN-OVERLAY-PEERS peer group
-   neighbor DCI-EVPN-OVERLAY-PEERS remote-as 65201
-   neighbor DCI-EVPN-OVERLAY-PEERS update-source Loopback0
-   neighbor DCI-EVPN-OVERLAY-PEERS bfd
-   neighbor DCI-EVPN-OVERLAY-PEERS ebgp-multihop 3
-   neighbor DCI-EVPN-OVERLAY-PEERS send-community True
-   neighbor DCI-EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor DCI-IPv4-UNDERLAY-PEERS peer group
-   neighbor DCI-IPv4-UNDERLAY-PEERS remote-as 65201
-   neighbor DCI-IPv4-UNDERLAY-PEERS send-community True
-   neighbor DCI-IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS remote-as 65000
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
@@ -771,8 +744,6 @@ router bgp 65000
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor 172.255.0.2 peer group DCI-IPv4-UNDERLAY-PEERS
-   neighbor 192.168.253.6 peer group DCI-EVPN-OVERLAY-PEERS
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.1 description DC1-SPINE1
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
@@ -782,7 +753,7 @@ router bgp 65000
       rd 192.168.255.12:10
       route-target both 10:10
       redistribute learned
-      vlan 110-111,114
+      vlan 110-111,114-115
    !
    vlan-aware-bundle Tenant_D_OP_Zone_1
       rd 192.168.255.12:40411
@@ -797,13 +768,11 @@ router bgp 65000
       vlan 412
    !
    address-family evpn
-      neighbor DCI-EVPN-OVERLAY-PEERS activate
       neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN in
       neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out
       neighbor EVPN-OVERLAY-PEERS activate
    !
    address-family ipv4
-      neighbor DCI-IPv4-UNDERLAY-PEERS activate
       no neighbor EVPN-OVERLAY-PEERS activate
    !
    vrf Tenant_A_OP_Zone

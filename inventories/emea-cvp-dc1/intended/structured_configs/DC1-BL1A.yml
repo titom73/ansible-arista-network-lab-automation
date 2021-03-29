@@ -1,1004 +1,441 @@
-aaa_authorization: null
-ansible_become: true
-ansible_become_method: enable
-ansible_check_mode: false
-ansible_config_file: /Users/tgrimonet/Projects/arista-ansible/lab-validation/ansible.cfg
-ansible_connection: httpapi
-ansible_diff_mode: true
-ansible_facts: {}
-ansible_forks: 15
-ansible_host: 10.83.28.162
-ansible_httpapi_host: 10.83.28.162
-ansible_httpapi_port: 8012
-ansible_httpapi_use_ssl: true
-ansible_httpapi_validate_certs: false
-ansible_inventory_sources:
-- /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/emea-cvp-dc1/inventory.yml
-ansible_network_os: eos
-ansible_playbook_python: /Users/tgrimonet/.pyenv/versions/3.6.8/envs/avd-v1.2.x/bin/python
-ansible_port: 8012
-ansible_run_tags:
-- build
-ansible_skip_tags: []
-ansible_ssh_pass: interdata
-ansible_user: ansible
-ansible_verbosity: 0
-ansible_version:
-    full: 2.10.6
-    major: 2
-    minor: 10
-    revision: 6
-    string: 2.10.6
-bfd_multihop:
-    interval: 1200
-    min_rx: 1200
-    multiplier: 3
-bgp_as: 65000
-bgp_peer_groups:
-    EVPN_OVERLAY_PEERS:
-        password: q+VNViP5i4rVjW1cxFv2wA==
-    IPv4_UNDERLAY_PEERS:
-        password: AQQvKeimxJu+uGQ/yYvv9w==
-    MLAG_IPv4_UNDERLAY_PEER:
-        password: vnEaG8gMeQf3d3cN6PktXQ==
-clock: null
-cvp_ingestauth_key: ''
-cvp_instance_ips:
-- 10.83.28.164
-daemon_terminattr:
-    disable_aaa: false
-    ingestauth_key: null
-    ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
-    ingestgrpcurl:
-        ips:
-        - 10.83.28.164
-        port: 9910
-    ingestvrf: MGMT
-    smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
-dci_bgp:
-    address_family_evpn:
-        peer_groups:
-            DCI-EVPN-OVERLAY-PEERS:
-                activate: true
-    address_family_ipv4:
-        peer_groups:
-            DCI-IPv4-UNDERLAY-PEERS:
-                activate: true
-    neighbors:
-        172.255.0.0:
-            peer_group: DCI-IPv4-UNDERLAY-PEERS
-        192.168.253.7:
-            peer_group: DCI-EVPN-OVERLAY-PEERS
-    peer_groups:
-        DCI-EVPN-OVERLAY-PEERS:
-            bfd: true
-            ebgp_multihop: 3
-            maximum_routes: 0
-            remote_as: 65201
-            send_community: true
-            type: evpn
-            update_source: Loopback0
-        DCI-IPv4-UNDERLAY-PEERS:
-            maximum_routes: 12000
-            remote_as: 65201
-            send_community: true
-            type: ipv4
-dci_ethernet_interfaces:
-    Ethernet5:
-        description: P2P_LINK_TO_DC2-BL01B_Ethernet5
-        ip_address: 172.255.0.1/31
-        mtu: 1500
-        peer: DC2-BL01B
-        peer_interface: Ethernet5
-        peer_type: leaf
-        type: routed
-dns_domain: eve.emea.lab
-doc_stat_result:
-    changed: false
-    failed: false
-    stat:
-        atime: 1616171217.967026
-        birthtime: 1616171216.6472824
-        block_size: 4096
-        blocks: 24
-        checksum: 882a78d80fc4c5fc94078009f4e198a812bfa493924b5887fb71e2f5
-        ctime: 1616171216.6779041
-        dev: 16777220
-        device_type: 0
-        executable: false
-        exists: true
-        flags: 0
-        generation: 0
-        gid: 20
-        gr_name: staff
-        inode: 271645525
-        isblk: false
-        ischr: false
-        isdir: false
-        isfifo: false
-        isgid: false
-        islnk: false
-        isreg: true
-        issock: false
-        isuid: false
-        mode: '0600'
-        mtime: 1616171216.6498864
-        nlink: 1
-        path: /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/emea-cvp-dc1/documentation/fabric/DC1_FABRIC-documentation.md
-        pw_name: tgrimonet
-        readable: true
-        rgrp: false
-        roth: false
-        rusr: true
-        size: 8402
-        uid: 501
-        wgrp: false
-        woth: false
-        writeable: true
-        wusr: true
-        xgrp: false
-        xoth: false
-        xusr: false
-ethernet_interfaces:
-    Ethernet1:
-        description: P2P_LINK_TO_DC1-SPINE1_Ethernet6
-        ip_address: 172.31.255.33/31
-        isis_enable: EVPN_UNDERLAY
-        isis_metric: 50
-        isis_network_point_to_point: true
-        mtu: 1500
-        peer: DC1-SPINE1
-        peer_interface: Ethernet6
-        peer_type: spine
-        shutdown: false
-        type: routed
-    Ethernet2:
-        description: P2P_LINK_TO_DC1-SPINE2_Ethernet6
-        ip_address: 172.31.255.35/31
-        isis_enable: EVPN_UNDERLAY
-        isis_metric: 50
-        isis_network_point_to_point: true
-        mtu: 1500
-        peer: DC1-SPINE2
-        peer_interface: Ethernet6
-        peer_type: spine
-        shutdown: false
-        type: routed
-    Ethernet3:
-        channel_group:
-            id: 3
-            mode: active
-        description: MLAG_PEER_DC1-BL1B_Ethernet3
-        peer: DC1-BL1B
-        peer_interface: Ethernet3
-        peer_type: mlag_peer
-        shutdown: false
-        type: switched
-    Ethernet4:
-        channel_group:
-            id: 3
-            mode: active
-        description: MLAG_PEER_DC1-BL1B_Ethernet4
-        peer: DC1-BL1B
-        peer_interface: Ethernet4
-        peer_type: mlag_peer
-        shutdown: false
-        type: switched
-    Ethernet5:
-        description: P2P_LINK_TO_DC2-BL01B_Ethernet5
-        ip_address: 172.255.0.1/31
-        mtu: 1500
-        peer: DC2-BL01B
-        peer_interface: Ethernet5
-        peer_type: leaf
-        type: routed
-event_handlers: null
-event_monitor: null
-fabric_name: DC1_FABRIC
-group_names:
-- DC1
-- DC1_BL1
-- DC1_FABRIC
-- DC1_L3LEAFS
-- DC1_SERVERS
-- DC1_TENANTS_NETWORKS
-- EOS
-groups:
-    CVP:
-    - cv_server
-    DC1:
-    - DC1-SPINE1
-    - DC1-SPINE2
-    - DC1-L2LEAF1A
-    - DC1-L2LEAF2A
-    - DC1-LEAF1A
-    - DC1-LEAF1B
-    - DC1-LEAF2A
-    - DC1-LEAF2B
-    - DC1-LEAF3A
-    - DC1-LEAF4A
-    - DC1-BL1A
-    - DC1-BL1B
-    DC1_BL1:
-    - DC1-BL1A
-    - DC1-BL1B
-    DC1_ENHANCED_DATA: []
-    DC1_FABRIC:
-    - DC1-SPINE1
-    - DC1-SPINE2
-    - DC1-LEAF1A
-    - DC1-LEAF1B
-    - DC1-LEAF2A
-    - DC1-LEAF2B
-    - DC1-LEAF3A
-    - DC1-LEAF4A
-    - DC1-BL1A
-    - DC1-BL1B
-    - DC1-L2LEAF1A
-    - DC1-L2LEAF2A
-    DC1_L2LEAF1:
-    - DC1-L2LEAF1A
-    DC1_L2LEAF2:
-    - DC1-L2LEAF2A
-    DC1_L2LEAFS:
-    - DC1-L2LEAF1A
-    - DC1-L2LEAF2A
-    DC1_L3LEAFS:
-    - DC1-LEAF1A
-    - DC1-LEAF1B
-    - DC1-LEAF2A
-    - DC1-LEAF2B
-    - DC1-LEAF3A
-    - DC1-LEAF4A
-    - DC1-BL1A
-    - DC1-BL1B
-    DC1_LEAF1:
-    - DC1-LEAF1A
-    - DC1-LEAF1B
-    DC1_LEAF2:
-    - DC1-LEAF2A
-    - DC1-LEAF2B
-    DC1_LEAF3:
-    - DC1-LEAF3A
-    DC1_LEAF4:
-    - DC1-LEAF4A
-    DC1_SERVERS:
-    - DC1-LEAF1A
-    - DC1-LEAF1B
-    - DC1-LEAF2A
-    - DC1-LEAF2B
-    - DC1-LEAF3A
-    - DC1-LEAF4A
-    - DC1-BL1A
-    - DC1-BL1B
-    - DC1-L2LEAF1A
-    - DC1-L2LEAF2A
-    DC1_SPINES:
-    - DC1-SPINE1
-    - DC1-SPINE2
-    DC1_TENANTS_NETWORKS:
-    - DC1-LEAF1A
-    - DC1-LEAF1B
-    - DC1-LEAF2A
-    - DC1-LEAF2B
-    - DC1-LEAF3A
-    - DC1-LEAF4A
-    - DC1-BL1A
-    - DC1-BL1B
-    - DC1-L2LEAF1A
-    - DC1-L2LEAF2A
-    EOS:
-    - DC1-SPINE1
-    - DC1-SPINE2
-    - DC1-LEAF1A
-    - DC1-LEAF1B
-    - DC1-LEAF2A
-    - DC1-LEAF2B
-    - DC1-LEAF3A
-    - DC1-LEAF4A
-    - DC1-BL1A
-    - DC1-BL1B
-    - DC1-L2LEAF1A
-    - DC1-L2LEAF2A
-    ZTP:
-    - cv_ztp
-    all:
-    - cv_ztp
-    - cv_server
-    - DC1-SPINE1
-    - DC1-SPINE2
-    - DC1-LEAF1A
-    - DC1-LEAF1B
-    - DC1-LEAF2A
-    - DC1-LEAF2B
-    - DC1-LEAF3A
-    - DC1-LEAF4A
-    - DC1-BL1A
-    - DC1-BL1B
-    - DC1-L2LEAF1A
-    - DC1-L2LEAF2A
-    ungrouped: []
-hardware: null
-hardware_counters: null
-internal_vlan_order:
-    allocation: descending
-    range:
-        beginning: 4000
-        ending: 4090
-inventory_dir: /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/emea-cvp-dc1
-inventory_file: /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/emea-cvp-dc1/inventory.yml
-inventory_hostname: DC1-BL1A
-inventory_hostname_short: DC1-BL1A
-ip_extcommunity_lists:
-    ECL-EVPN-SOO:
-    -   extcommunities: soo 192.168.254.11:1
-        type: permit
-ip_igmp_snooping:
-    globally_enabled: true
-    vlans: null
-ip_routing: true
-ip_virtual_router_mac_address: 00:1c:73:00:dc:01
-isis_area_id: '49.0001'
-isis_site_id: '0001'
-l2leaf:
-    defaults:
-        mlag_interfaces:
-        - Ethernet3
-        - Ethernet4
-        parent_l3leafs:
-        - DC1-LEAF1A
-        - DC1-LEAF1B
-        platform: vEOS-LAB
-        spanning_tree_mode: mstp
-        spanning_tree_priority: 16384
-        uplink_interfaces:
-        - Ethernet1
-        - Ethernet2
-    node_groups:
-        DC1_L2LEAF1:
-            filter:
-                tags:
-                - border
-                tenants:
-                - Tenant_A
-            nodes:
-                DC1-L2LEAF1A:
-                    id: 5
-                    l3leaf_interfaces:
-                    - Ethernet5
-                    - Ethernet5
-                    mgmt_ip: 10.73.1.17/16
-            parent_l3leafs:
-            - DC1-LEAF1A
-            - DC1-LEAF1B
-        DC1_L2LEAF2:
-            nodes:
-                DC1-L2LEAF2A:
-                    id: 7
-                    l3leaf_interfaces:
-                    - Ethernet5
-                    - Ethernet5
-                    mgmt_ip: 10.73.1.18/16
-            parent_l3leafs:
-            - DC1-LEAF2A
-            - DC1-LEAF2B
-l3leaf:
-    defaults:
-        bgp_as: 65100
-        mlag_interfaces:
-        - Ethernet3
-        - Ethernet4
-        platform: vEOS-LAB
-        spanning_tree_mode: mstp
-        spanning_tree_priority: 4096
-        spines:
-        - DC1-SPINE1
-        - DC1-SPINE2
-        uplink_to_spine_interfaces:
-        - Ethernet1
-        - Ethernet2
-        virtual_router_mac_address: 00:1c:73:00:dc:01
-    node_groups:
-        DC1_BL1:
-            bgp_as: 65110
-            nodes:
-                DC1-BL1A:
-                    id: 9
-                    mgmt_ip: 10.73.1.22/16
-                    spine_interfaces:
-                    - Ethernet6
-                    - Ethernet6
-                DC1-BL1B:
-                    id: 10
-                    mgmt_ip: 10.73.1.23/16
-                    spine_interfaces:
-                    - Ethernet7
-                    - Ethernet7
-        DC1_LEAF1:
-            bgp_as: 65101
-            filter:
-                tags:
-                - opzone
-                - web
-                - app
-                tenants:
-                - Tenant_A
-            nodes:
-                DC1-LEAF1A:
-                    id: 1
-                    mgmt_ip: 10.73.1.13/16
-                    spine_interfaces:
-                    - Ethernet1
-                    - Ethernet1
-                DC1-LEAF1B:
-                    id: 2
-                    mgmt_ip: 10.73.1.14/16
-                    spine_interfaces:
-                    - Ethernet2
-                    - Ethernet2
-        DC1_LEAF2:
-            bgp_as: 65102
-            nodes:
-                DC1-LEAF2A:
-                    id: 3
-                    mgmt_ip: 10.73.1.15/16
-                    spine_interfaces:
-                    - Ethernet3
-                    - Ethernet3
-                DC1-LEAF2B:
-                    id: 4
-                    mgmt_ip: 10.73.1.16/16
-                    spine_interfaces:
-                    - Ethernet4
-                    - Ethernet4
-        DC1_LEAF3:
-            bgp_as: 65103
-            nodes:
-                DC1-LEAF3A:
-                    id: 8
-                    mgmt_ip: 10.73.1.21/16
-                    spine_interfaces:
-                    - Ethernet5
-                    - Ethernet5
-        DC1_LEAF4:
-            bgp_as: 65104
-            nodes:
-                DC1-LEAF4A:
-                    id: 11
-                    mgmt_ip: 10.73.1.24/16
-                    spine_interfaces:
-                    - Ethernet8
-                    - Ethernet8
 l3leaf_node_group: DC1_BL1
+switch_platform: vEOS-LAB
+switch_bgp_as: 65000
+leaf_id: 9
+switch_mgmt_ip: 10.73.1.22/16
+leaf_evpn_services_l2_only: false
+switch_router_id: 192.168.255.11
+switch_evpn_role: client
+switch_evpn_route_servers:
+- DC1-SPINE1
+- DC1-SPINE2
+switch_evpn_route_clients: []
+leaf_filter_tenants:
+- all
+leaf_filter_tags:
+- all
+leaf_allowed_vrfs:
+- Tenant_A_OP_Zone
 leaf_allowed_svis:
 - 110
 - 111
 - 114
+- 115
 leaf_allowed_vlans:
 - 110
 - 111
 - 114
+- 115
 - 411
 - 412
-leaf_allowed_vrfs:
-- Tenant_A_OP_Zone
-leaf_bgp_defaults:
-- no bgp default ipv4-unicast
-- distance bgp 20 200 200
-- graceful-restart restart-time 300
-- graceful-restart
-leaf_evpn_services_l2_only: false
-leaf_filter_tags:
-- all
-leaf_filter_tenants:
-- all
-leaf_id: 9
 leaf_mlag: true
 leaf_mlag_group: DC1_BL1
-leaf_mlag_ip: 16
-leaf_mlag_peer: DC1-BL1B
-leaf_mlag_peer_id: 10
-leaf_mlag_peer_ip: 17
 leaf_mlag_role: primary
-load_interval: null
-local_users:
-    admin:
-        no_password: true
-        privilege: 15
-        role: network-admin
-    ansible:
-        privilege: 15
-        role: network-admin
-        sha512_password: $6$ZMTiXhLqBo7v1si1$sytOdfL9pAFj4paRrqnQeolINyi1zTrBECVQimMvYRAR5wL8RQa02Qet9Jz7D6PXANdb.CEyeVrLbWv8INv7K0
-    cvpadmin:
-        privilege: 15
-        role: network-admin
-        sha512_password: $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
-loopback_interfaces:
-    Loopback0:
-        description: EVPN_Overlay_Peering
-        ip_address: 192.168.255.11/32
-        isis_enable: EVPN_UNDERLAY
-        isis_passive: true
-        shutdown: false
-    Loopback1:
-        description: VTEP_VXLAN_Tunnel_Source
-        ip_address: 192.168.254.11/32
-        isis_enable: EVPN_UNDERLAY
-        isis_passive: true
-        shutdown: false
-    Loopback100:
-        description: Tenant_A_OP_Zone_VTEP_DIAGNOSTICS
-        ip_address: 10.255.1.11/32
-        shutdown: false
-        vrf: Tenant_A_OP_Zone
-mac_address_table: null
-management_api_http:
-    enable_https: true
-    enable_vrfs:
-        MGMT: null
-management_interfaces:
-    Management1:
-        description: oob_management
-        gateway: 10.73.0.1
-        ip_address: 10.73.1.22/16
-        shutdown: false
-        type: oob
-        vrf: MGMT
-mgmt_gateway: 10.73.0.1
-mlag_configuration:
-    domain_id: DC1_BL1
-    local_interface: Vlan4094
-    peer_address: 10.255.252.17
-    peer_link: Port-Channel3
-    reload_delay_mlag: 300
-    reload_delay_non_mlag: 330
-mlag_ips:
-    leaf_peer_l3: 10.255.251.0/24
-    mlag_peer: 10.255.252.0/24
-name_server:
-    nodes:
-    - 1.1.1.1
-    source:
-        vrf: MGMT
-name_servers:
-- 1.1.1.1
-ntp_server:
-    local_interface:
-        interface: Management1
-        vrf: MGMT
-    nodes:
-    - fr.pool.ntp.org
-ntp_servers:
-- fr.pool.ntp.org
-omit: __omit_place_holder__497fb9cf40f765e917392767fb988e1f41b399c3
-overlay_loopback_network_summary: 192.168.255.0/24
-overlay_routing_protocol: ibgp
-p2p_uplinks_mtu: 1500
-platform: null
-playbook_dir: /Users/tgrimonet/Projects/arista-ansible/lab-validation/playbooks
-port_channel_interfaces:
-    Port-Channel3:
-        description: MLAG_PEER_DC1-BL1B_Po3
-        mode: trunk
-        shutdown: false
-        trunk_groups:
-        - LEAF_PEER_L3
-        - MLAG
-        type: switched
-        vlans: 2-4094
-port_profiles:
-    ALL:
-        mode: trunk
-        vlans: 110-114,210,211
-    DOCKER:
-        mode: access
-        vlans: '111'
-    TENANT_A:
-        mode: access
-        vlans: '110'
-    TENANT_B:
-        mode: trunk
-        vlans: 210-211
-prefix_lists: null
-queue_monitor_length: null
-queue_monitor_streaming: null
-redundancy: null
-route_maps:
-    RM-EVPN-SOO-IN:
-        sequence_numbers:
-            10:
-                match:
-                - extcommunity ECL-EVPN-SOO
-                type: deny
-            20:
-                type: permit
-    RM-EVPN-SOO-OUT:
-        sequence_numbers:
-            10:
-                set:
-                - extcommunity soo 192.168.254.11:1 additive
-                type: permit
-router_bfd:
-    multihop:
-        interval: 1200
-        min_rx: 1200
-        multiplier: 3
-router_bgp:
-    address_family_evpn:
-        peer_groups:
-            DCI-EVPN-OVERLAY-PEERS:
-                activate: true
-            EVPN-OVERLAY-PEERS:
-                activate: true
-                route_map_in: RM-EVPN-SOO-IN
-                route_map_out: RM-EVPN-SOO-OUT
-    address_family_ipv4:
-        peer_groups:
-            DCI-IPv4-UNDERLAY-PEERS:
-                activate: true
-            EVPN-OVERLAY-PEERS:
-                activate: false
-    address_family_rtc: null
-    as: 65000
-    bgp_defaults:
-    - no bgp default ipv4-unicast
-    - distance bgp 20 200 200
-    - graceful-restart restart-time 300
-    - graceful-restart
-    - maximum-paths 4 ecmp 4
-    neighbors:
-        172.255.0.0:
-            peer_group: DCI-IPv4-UNDERLAY-PEERS
-        192.168.253.7:
-            peer_group: DCI-EVPN-OVERLAY-PEERS
-        192.168.255.1:
-            description: DC1-SPINE1
-            peer_group: EVPN-OVERLAY-PEERS
-        192.168.255.2:
-            description: DC1-SPINE2
-            peer_group: EVPN-OVERLAY-PEERS
-    peer_groups:
-        DCI-EVPN-OVERLAY-PEERS:
-            bfd: true
-            ebgp_multihop: 3
-            maximum_routes: 0
-            remote_as: 65201
-            send_community: true
-            type: evpn
-            update_source: Loopback0
-        DCI-IPv4-UNDERLAY-PEERS:
-            maximum_routes: 12000
-            remote_as: 65201
-            send_community: true
-            type: ipv4
-        EVPN-OVERLAY-PEERS:
-            bfd: true
-            maximum_routes: 0
-            password: q+VNViP5i4rVjW1cxFv2wA==
-            remote_as: 65000
-            send_community: all
-            type: evpn
-            update_source: Loopback0
-    redistribute_routes: null
-    router_id: 192.168.255.11
-    vlan_aware_bundles:
-        Tenant_A_OP_Zone:
-            rd: 192.168.255.11:10
-            redistribute_routes:
-            - learned
-            route_targets:
-                both:
-                - '10:10'
-            vlan: 110-111,114
-        Tenant_D_OP_Zone_1:
-            rd: 192.168.255.11:40411
-            redistribute_routes:
-            - learned
-            route_targets:
-                both:
-                - 40411:40411
-            tenant: Tenant_D
-            vlan: 411
-        Tenant_D_OP_Zone_2:
-            rd: 192.168.255.11:40412
-            redistribute_routes:
-            - learned
-            route_targets:
-                both:
-                - 40412:40412
-            tenant: Tenant_D
-            vlan: 412
-    vlans: null
-    vrfs:
-        Tenant_A_OP_Zone:
-            neighbors:
-                10.255.251.17:
-                    peer_group: MLAG-IPv4-UNDERLAY-PEER
-            rd: 192.168.255.11:10
-            redistribute_routes:
-            - connected
-            route_targets:
-                export:
-                    evpn:
-                    - '10:10'
-                import:
-                    evpn:
-                    - '10:10'
-            router_id: 192.168.255.11
-router_isis:
-    address_family:
-    - ipv4 unicast
-    instance: EVPN_UNDERLAY
-    is_type: level-2
-    isis_af_defaults:
-    - maximum-paths 2
-    log_adjacency_changes: true
-    net: 49.0001.0001.0001.0009.00
-    no_passive_interfaces:
-    - Ethernet1
-    - Ethernet2
-    - Vlan4093
-    - Loopback1
-    router_id: 192.168.255.11
-router_ospf: null
-servers:
-    POD01-DOCKER:
-        adapters:
-        -   profile: DOCKER
-            server_ports:
-            - Eth1
-            switch_ports:
-            - Ethernet3
-            switches:
-            - DC1-L2LEAF1A
-            type: nic
-        rack: RackA
-    POD01-SRV:
-        adapters:
-        -   profile: ALL
-            server_ports:
-            - Eth1
-            switch_ports:
-            - Ethernet5
-            switches:
-            - DC1-L2LEAF1A
-            type: nic
-        rack: RackA
-    POD02-DOCKER:
-        adapters:
-        -   profile: DOCKER
-            server_ports:
-            - Eth1
-            switch_ports:
-            - Ethernet3
-            switches:
-            - DC1-L2LEAF2A
-            type: nic
-        rack: RackB
-    POD03-ESI:
-        adapters:
-        -   port_channel:
-                description: data
-                mode: active
-                short_esi: 0303:0202:0101
-                state: present
-            profile: ALL
-            server_ports:
-            - Eth0
-            - Eth1
-            switch_ports:
-            - Ethernet7
-            - Ethernet7
-            switches:
-            - DC1-LEAF3A
-            - DC1-LEAF4A
-            type: nic
-        rack: RackC
+leaf_mlag_peer: DC1-BL1B
+leaf_mlag_ip: 16
+leaf_mlag_peer_ip: 17
+leaf_mlag_peer_id: 10
 service_routing_protocols_model: multi-agent
-spanning_tree:
-    mode: mstp
-    mst_instances:
-        '0':
-            priority: 4096
-    no_spanning_tree_vlan: 4093-4094
-spine:
-    bgp_as: 65001
-    leaf_as_range: 65101-65132
-    nodes:
-        DC1-SPINE1:
-            bgp_route_reflector: true
-            id: 1
-            mgmt_ip: 10.73.1.11/16
-        DC1-SPINE2:
-            bgp_route_reflector: true
-            id: 2
-            mgmt_ip: 10.73.1.12/16
-    platform: vEOS-LAB
-spine_bgp_defaults:
-- no bgp default ipv4-unicast
-- distance bgp 20 200 200
-- graceful-restart restart-time 300
-- graceful-restart
-static_routes:
--   destination_address_prefix: 0.0.0.0/0
-    gateway: 10.73.0.1
-    vrf: MGMT
-switch_bgp_as: 65000
-switch_evpn_role: client
-switch_evpn_route_clients: []
-switch_evpn_route_servers:
-- DC1-SPINE1
-- DC1-SPINE2
-switch_mgmt_ip: 10.73.1.22/16
-switch_platform: vEOS-LAB
-switch_router_id: 192.168.255.11
-tcam_profile: null
-tenants:
-    Tenant_A:
-        mac_vrf_vni_base: 10000
-        vrfs:
-            Tenant_A_OP_Zone:
-                svis:
-                    110:
-                        enabled: true
-                        ip_address_virtual: 10.1.10.254/24
-                        name: Tenant_A_OP_Zone_1
-                        tags:
-                        - opzone
-                    111:
-                        enabled: true
-                        ip_address_virtual: 10.1.11.254/24
-                        name: Tenant_A_OP_Zone_2
-                        tags:
-                        - opzone
-                        vni_override: 50111
-                    114:
-                        enabled: true
-                        ip_address_virtual: 10.1.14.254/24
-                        name: Tenant_A_OP_Zone_3
-                        tags:
-                        - opzone
-                        vni_override: 50114
-                vrf_vni: 10
-                vtep_diagnostic:
-                    loopback: 100
-                    loopback_ip_range: 10.255.1.0/24
-    Tenant_D:
-        l2vlans:
-            411:
-                name: Tenant_D_OP_Zone_1
-                tags:
-                - opzone
-            412:
-                name: Tenant_D_OP_Zone_2
-                tags:
-                - opzone
-        mac_vrf_vni_base: 40000
-toc_result:
-    changed: false
-    checksum: 882a78d80fc4c5fc94078009f4e198a812bfa493924b5887fb71e2f5
-    failed: false
-type: l3leaf
-underlay_ospf_area: 0.0.0.0
-underlay_ospf_max_lsa: 12000
-underlay_ospf_process_id: 100
-underlay_p2p_network_summary: 172.31.255.0/24
-underlay_routing_protocol: ISIS
-validation_mode_loose: true
-virtual_source_nat_vrfs:
-    Tenant_A_OP_Zone:
-        ip_address: 10.255.1.11
-vlan_interfaces:
-    Vlan110:
-        description: Tenant_A_OP_Zone_1
-        ip_address_virtual: 10.1.10.254/24
-        shutdown: false
-        tags:
-        - opzone
-        tenant: Tenant_A
-        vrf: Tenant_A_OP_Zone
-    Vlan111:
-        description: Tenant_A_OP_Zone_2
-        ip_address_virtual: 10.1.11.254/24
-        shutdown: false
-        tags:
-        - opzone
-        tenant: Tenant_A
-        vrf: Tenant_A_OP_Zone
-    Vlan114:
-        description: Tenant_A_OP_Zone_3
-        ip_address_virtual: 10.1.14.254/24
-        shutdown: false
-        tags:
-        - opzone
-        tenant: Tenant_A
-        vrf: Tenant_A_OP_Zone
-    Vlan3009:
-        description: 'MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone'
-        ip_address: 10.255.251.16/31
-        mtu: 1500
-        shutdown: false
-        tenant: Tenant_A
-        type: underlay_peering
-        vrf: Tenant_A_OP_Zone
-    Vlan4093:
-        description: MLAG_PEER_L3_PEERING
-        ip_address: 10.255.251.16/31
-        isis_enable: EVPN_UNDERLAY
-        isis_metric: 50
-        isis_network_point_to_point: true
-        mtu: 1500
-        shutdown: false
-    Vlan4094:
-        description: MLAG_PEER
-        ip_address: 10.255.252.16/31
-        mtu: 1500
-        no_autostate: true
-        shutdown: false
+ip_routing: true
+hardware_counters: null
+hardware: null
+daemon_terminattr:
+  ingestgrpcurl:
+    ips:
+    - 10.83.28.164
+    port: 9910
+  ingestauth_key: null
+  ingestvrf: MGMT
+  smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
+  ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
+  disable_aaa: false
 vlan_internal_order:
-    allocation: descending
-    range:
-        beginning: 4000
-        ending: 4090
+  allocation: descending
+  range:
+    beginning: 4000
+    ending: 4090
+event_monitor: null
+event_handlers: null
+load_interval: null
+queue_monitor_length: null
+name_server:
+  source:
+    vrf: MGMT
+  nodes:
+  - 1.1.1.1
+ntp_server:
+  local_interface:
+    vrf: MGMT
+    interface: Management1
+  nodes:
+  - fr.pool.ntp.org
+redundancy: null
+spanning_tree:
+  mode: mstp
+  mst_instances:
+    '0':
+      priority: 4096
+  no_spanning_tree_vlan: 4093-4094
+aaa_authorization: null
+local_users:
+  admin:
+    privilege: 15
+    role: network-admin
+    no_password: true
+  ansible:
+    privilege: 15
+    role: network-admin
+    sha512_password: $6$ZMTiXhLqBo7v1si1$sytOdfL9pAFj4paRrqnQeolINyi1zTrBECVQimMvYRAR5wL8RQa02Qet9Jz7D6PXANdb.CEyeVrLbWv8INv7K0
+  cvpadmin:
+    privilege: 15
+    role: network-admin
+    sha512_password: $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
+clock: null
 vlans:
-    110:
-        name: Tenant_A_OP_Zone_1
-        tenant: Tenant_A
-    111:
-        name: Tenant_A_OP_Zone_2
-        tenant: Tenant_A
-    114:
-        name: Tenant_A_OP_Zone_3
-        tenant: Tenant_A
-    411:
-        name: Tenant_D_OP_Zone_1
-        tenant: Tenant_D
-    412:
-        name: Tenant_D_OP_Zone_2
-        tenant: Tenant_D
-    3009:
-        name: MLAG_iBGP_Tenant_A_OP_Zone
-        tenant: Tenant_A
-        trunk_groups:
-        - LEAF_PEER_L3
-    4093:
-        name: LEAF_PEER_L3
-        tenant: system
-        trunk_groups:
-        - LEAF_PEER_L3
-    4094:
-        name: MLAG_PEER
-        tenant: system
-        trunk_groups:
-        - MLAG
+  4093:
+    tenant: system
+    name: LEAF_PEER_L3
+    trunk_groups:
+    - LEAF_PEER_L3
+  4094:
+    tenant: system
+    name: MLAG_PEER
+    trunk_groups:
+    - MLAG
+  110:
+    tenant: Tenant_A
+    name: Tenant_A_OP_Zone_1
+  111:
+    tenant: Tenant_A
+    name: Tenant_A_OP_Zone_2
+  114:
+    tenant: Tenant_A
+    name: Tenant_A_OP_Zone_3
+  115:
+    tenant: Tenant_A
+    name: Tenant_A_OP_Zone_3
+  3009:
+    tenant: Tenant_A
+    name: MLAG_iBGP_Tenant_A_OP_Zone
+    trunk_groups:
+    - LEAF_PEER_L3
+  411:
+    tenant: Tenant_D
+    name: Tenant_D_OP_Zone_1
+  412:
+    tenant: Tenant_D
+    name: Tenant_D_OP_Zone_2
 vrfs:
-    MGMT:
-        ip_routing: false
-    Tenant_A_OP_Zone:
-        ip_routing: true
-        tenant: Tenant_A
-vtep_loopback_network_summary: 192.168.254.0/24
+  MGMT:
+    ip_routing: false
+  Tenant_A_OP_Zone:
+    tenant: Tenant_A
+    ip_routing: true
+port_channel_interfaces:
+  Port-Channel3:
+    description: MLAG_PEER_DC1-BL1B_Po3
+    type: switched
+    shutdown: false
+    vlans: 2-4094
+    mode: trunk
+    trunk_groups:
+    - LEAF_PEER_L3
+    - MLAG
+ethernet_interfaces:
+  Ethernet1:
+    peer: DC1-SPINE1
+    peer_interface: Ethernet6
+    peer_type: spine
+    description: P2P_LINK_TO_DC1-SPINE1_Ethernet6
+    mtu: 1500
+    type: routed
+    shutdown: false
+    ip_address: 172.31.255.33/31
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
+  Ethernet2:
+    peer: DC1-SPINE2
+    peer_interface: Ethernet6
+    peer_type: spine
+    description: P2P_LINK_TO_DC1-SPINE2_Ethernet6
+    mtu: 1500
+    type: routed
+    shutdown: false
+    ip_address: 172.31.255.35/31
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
+  Ethernet3:
+    peer: DC1-BL1B
+    peer_interface: Ethernet3
+    peer_type: mlag_peer
+    description: MLAG_PEER_DC1-BL1B_Ethernet3
+    type: switched
+    shutdown: false
+    channel_group:
+      id: 3
+      mode: active
+  Ethernet4:
+    peer: DC1-BL1B
+    peer_interface: Ethernet4
+    peer_type: mlag_peer
+    description: MLAG_PEER_DC1-BL1B_Ethernet4
+    type: switched
+    shutdown: false
+    channel_group:
+      id: 3
+      mode: active
+loopback_interfaces:
+  Loopback0:
+    description: EVPN_Overlay_Peering
+    shutdown: false
+    ip_address: 192.168.255.11/32
+    isis_enable: EVPN_UNDERLAY
+    isis_passive: true
+  Loopback1:
+    description: VTEP_VXLAN_Tunnel_Source
+    shutdown: false
+    ip_address: 192.168.254.11/32
+    isis_enable: EVPN_UNDERLAY
+    isis_passive: true
+  Loopback100:
+    description: Tenant_A_OP_Zone_VTEP_DIAGNOSTICS
+    shutdown: false
+    vrf: Tenant_A_OP_Zone
+    ip_address: 10.255.1.11/32
+management_interfaces:
+  Management1:
+    description: oob_management
+    shutdown: false
+    vrf: MGMT
+    ip_address: 10.73.1.22/16
+    gateway: 10.73.0.1
+    type: oob
+vlan_interfaces:
+  Vlan4093:
+    description: MLAG_PEER_L3_PEERING
+    shutdown: false
+    ip_address: 10.255.251.16/31
+    mtu: 1500
+    isis_enable: EVPN_UNDERLAY
+    isis_metric: 50
+    isis_network_point_to_point: true
+  Vlan4094:
+    description: MLAG_PEER
+    shutdown: false
+    ip_address: 10.255.252.16/31
+    no_autostate: true
+    mtu: 1500
+  Vlan110:
+    tenant: Tenant_A
+    tags:
+    - opzone
+    description: Tenant_A_OP_Zone_1
+    shutdown: false
+    vrf: Tenant_A_OP_Zone
+    ip_address_virtual: 10.1.10.254/24
+  Vlan111:
+    tenant: Tenant_A
+    tags:
+    - opzone
+    description: Tenant_A_OP_Zone_2
+    shutdown: false
+    vrf: Tenant_A_OP_Zone
+    ip_address_virtual: 10.1.11.254/24
+  Vlan114:
+    tenant: Tenant_A
+    tags:
+    - opzone
+    description: Tenant_A_OP_Zone_3
+    shutdown: false
+    vrf: Tenant_A_OP_Zone
+    ip_address_virtual: 10.1.14.254/24
+  Vlan115:
+    tenant: Tenant_A
+    tags:
+    - opzone
+    description: Tenant_A_OP_Zone_3
+    shutdown: false
+    vrf: Tenant_A_OP_Zone
+    ip_address_virtual: 10.1.15.254/24
+  Vlan3009:
+    tenant: Tenant_A
+    type: underlay_peering
+    shutdown: false
+    description: 'MLAG_PEER_L3_iBGP: vrf Tenant_A_OP_Zone'
+    vrf: Tenant_A_OP_Zone
+    ip_address: 10.255.251.16/31
+    mtu: 1500
 vxlan_tunnel_interface:
-    Vxlan1:
-        description: DC1-BL1A_VTEP
-        source_interface: Loopback1
-        virtual_router:
-            encapsulation_mac_address: mlag-system-id
-        vxlan_udp_port: 4789
-        vxlan_vni_mappings:
-            vlans:
-                110:
-                    vni: 10110
-                111:
-                    vni: 50111
-                114:
-                    vni: 50114
-                411:
-                    vni: 40411
-                412:
-                    vni: 40412
-            vrfs:
-                Tenant_A_OP_Zone:
-                    vni: 10
-vxlan_vlan_aware_bundles: true
+  Vxlan1:
+    description: DC1-BL1A_VTEP
+    source_interface: Loopback1
+    virtual_router:
+      encapsulation_mac_address: mlag-system-id
+    vxlan_udp_port: 4789
+    vxlan_vni_mappings:
+      vlans:
+        110:
+          vni: 10110
+        111:
+          vni: 50111
+        114:
+          vni: 50114
+        115:
+          vni: 50115
+        411:
+          vni: 40411
+        412:
+          vni: 40412
+      vrfs:
+        Tenant_A_OP_Zone:
+          vni: 10
+tcam_profile: null
+platform: null
+mac_address_table: null
+ip_virtual_router_mac_address: 00:1c:73:00:dc:01
+virtual_source_nat_vrfs:
+  Tenant_A_OP_Zone:
+    ip_address: 10.255.1.11
+ip_igmp_snooping:
+  globally_enabled: true
+  vlans: null
+static_routes:
+- vrf: MGMT
+  destination_address_prefix: 0.0.0.0/0
+  gateway: 10.73.0.1
+prefix_lists: null
+mlag_configuration:
+  domain_id: DC1_BL1
+  local_interface: Vlan4094
+  peer_address: 10.255.252.17
+  peer_link: Port-Channel3
+  reload_delay_mlag: 300
+  reload_delay_non_mlag: 330
+route_maps:
+  RM-EVPN-SOO-IN:
+    sequence_numbers:
+      10:
+        type: deny
+        match:
+        - extcommunity ECL-EVPN-SOO
+      20:
+        type: permit
+  RM-EVPN-SOO-OUT:
+    sequence_numbers:
+      10:
+        type: permit
+        set:
+        - extcommunity soo 192.168.254.11:1 additive
+router_bfd:
+  multihop:
+    interval: 1200
+    min_rx: 1200
+    multiplier: 3
+router_bgp:
+  as: 65000
+  router_id: 192.168.255.11
+  bgp_defaults:
+  - no bgp default ipv4-unicast
+  - distance bgp 20 200 200
+  - graceful-restart restart-time 300
+  - graceful-restart
+  - maximum-paths 4 ecmp 4
+  peer_groups:
+    EVPN-OVERLAY-PEERS:
+      type: evpn
+      update_source: Loopback0
+      remote_as: 65000
+      bfd: true
+      password: q+VNViP5i4rVjW1cxFv2wA==
+      send_community: all
+      maximum_routes: 0
+  neighbors:
+    192.168.255.1:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: DC1-SPINE1
+    192.168.255.2:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: DC1-SPINE2
+  redistribute_routes: null
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
+        route_map_in: RM-EVPN-SOO-IN
+        route_map_out: RM-EVPN-SOO-OUT
+  address_family_ipv4:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: false
+  address_family_rtc: null
+  vlan_aware_bundles:
+    Tenant_A_OP_Zone:
+      rd: 192.168.255.11:10
+      route_targets:
+        both:
+        - '10:10'
+      redistribute_routes:
+      - learned
+      vlan: 110-111,114-115
+    Tenant_D_OP_Zone_1:
+      tenant: Tenant_D
+      rd: 192.168.255.11:40411
+      route_targets:
+        both:
+        - 40411:40411
+      redistribute_routes:
+      - learned
+      vlan: 411
+    Tenant_D_OP_Zone_2:
+      tenant: Tenant_D
+      rd: 192.168.255.11:40412
+      route_targets:
+        both:
+        - 40412:40412
+      redistribute_routes:
+      - learned
+      vlan: 412
+  vlans: null
+  vrfs:
+    Tenant_A_OP_Zone:
+      router_id: 192.168.255.11
+      rd: 192.168.255.11:10
+      route_targets:
+        import:
+          evpn:
+          - '10:10'
+        export:
+          evpn:
+          - '10:10'
+      neighbors:
+        10.255.251.17:
+          peer_group: MLAG-IPv4-UNDERLAY-PEER
+      redistribute_routes:
+      - connected
+ip_extcommunity_lists:
+  ECL-EVPN-SOO:
+  - type: permit
+    extcommunities: soo 192.168.254.11:1
+router_ospf: null
+router_isis:
+  instance: EVPN_UNDERLAY
+  log_adjacency_changes: true
+  net: 49.0001.0001.0001.0009.00
+  router_id: 192.168.255.11
+  no_passive_interfaces:
+  - Ethernet1
+  - Ethernet2
+  - Vlan4093
+  - Loopback1
+  is_type: level-2
+  address_family:
+  - ipv4 unicast
+  isis_af_defaults:
+  - maximum-paths 2
+queue_monitor_streaming: null
+management_api_http:
+  enable_https: true
+  enable_vrfs:
+    MGMT: null
