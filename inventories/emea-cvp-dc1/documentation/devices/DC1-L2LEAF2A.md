@@ -28,6 +28,7 @@
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
+  - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
 - [Filters](#filters)
@@ -35,7 +36,6 @@
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
-- [Quality Of Service](#quality-of-service)
 
 <!-- toc -->
 # Management
@@ -355,6 +355,19 @@ no ip routing vrf MGMT
 ip route vrf MGMT 0.0.0.0/0 10.73.0.1
 ```
 
+## Router BFD
+
+### Router BFD Multihop Summary
+
+| Interval | Minimum RX | Multiplier |
+| -------- | ---------- | ---------- |
+| 1200 | 1200 | 3 |
+
+### Router BFD Multihop Device Configuration
+
+```eos
+```
+
 # Multicast
 
 ## IP IGMP Snooping
@@ -387,5 +400,3 @@ IGMP snooping is globally enabled.
 !
 vrf instance MGMT
 ```
-
-# Quality Of Service

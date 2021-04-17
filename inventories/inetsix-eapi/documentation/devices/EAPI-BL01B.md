@@ -11,6 +11,7 @@
   - [Local Users](#local-users)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
+  - [SNMP](#snmp)
 - [MLAG](#mlag)
   - [MLAG Summary](#mlag-summary)
   - [MLAG Device Configuration](#mlag-device-configuration)
@@ -35,7 +36,6 @@
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
   - [Router BGP](#router-bgp)
-- [BFD](#bfd)
   - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
@@ -46,7 +46,6 @@
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
-- [Quality Of Service](#quality-of-service)
 
 <!-- toc -->
 # Management
@@ -185,6 +184,40 @@ daemon TerminAttr
    no shutdown
 ```
 
+## SNMP
+
+### SNMP Configuration Summary
+
+| Contact | Location | SNMP Traps |
+| ------- | -------- | ---------- |
+| - | - |  Disabled  |
+
+### SNMP ACLs
+| IP | ACL | VRF |
+| -- | --- | --- |
+
+
+### SNMP Local Interfaces
+
+| Local Interface | VRF |
+| --------------- | --- |
+
+### SNMP VRF Status
+
+| VRF | Status |
+| --- | ------ |
+
+
+
+
+
+
+### SNMP Device Configuration
+
+```eos
+!
+```
+
 # MLAG
 
 ## MLAG Summary
@@ -302,8 +335,8 @@ vlan 4094
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 | P2P_LINK_TO_EAPI-SPINE1_Ethernet6 | routed | - | 172.31.255.29/31 | default | 1500 | false | - | - |
-| Ethernet2 | P2P_LINK_TO_EAPI-SPINE2_Ethernet6 | routed | - | 172.31.255.31/31 | default | 1500 | false | - | - |
+| Ethernet1 |  P2P_LINK_TO_EAPI-SPINE1_Ethernet6  |  routed  | - |  172.31.255.29/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet2 |  P2P_LINK_TO_EAPI-SPINE2_Ethernet6  |  routed  | - |  172.31.255.31/31  |  default  |  1500  |  false  |  -  |  -  |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -411,6 +444,7 @@ interface Loopback1
 | Vlan3010 |  TENANT_A_PROJECT01  |  10.255.251.13/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  10.255.251.13/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  10.255.252.13/31  |  -  |  -  |  -  |  -  |  -  |
+
 
 
 ### VLAN Interfaces Device Configuration
@@ -571,7 +605,7 @@ ip route vrf TENANT_A_PROJECT01 1.1.1.0/24 10.1.10.1
 | Settings | Value |
 | -------- | ----- |
 | Address Family | ipv4 |
-| Remote AS | 65001 |
+| Remote_as | 65001 |
 | Send community | all |
 | Maximum routes | 12000 |
 
@@ -580,7 +614,7 @@ ip route vrf TENANT_A_PROJECT01 1.1.1.0/24 10.1.10.1
 | Settings | Value |
 | -------- | ----- |
 | Address Family | ipv4 |
-| Remote AS | 65105 |
+| Remote_as | 65105 |
 | Next-hop self | True |
 | Send community | all |
 | Maximum routes | 12000 |
@@ -604,14 +638,14 @@ ip route vrf TENANT_A_PROJECT01 1.1.1.0/24 10.1.10.1
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| B-ELAN-201 | 192.168.254.9:20201 | 20201:20201 | - | - | learned | 201 |
-| TENANT_A_PROJECT01 | 192.168.254.9:11 | 11:11 | - | - | learned | 110 |
+| B-ELAN-201 | 192.168.254.9:20201 |  20201:20201  |  |  | learned | 201 |
+| TENANT_A_PROJECT01 | 192.168.254.9:11 |  11:11  |  |  | learned | 110 |
 
 #### Router BGP EVPN VRFs
 
 | VRF | Route-Distinguisher | Redistribute |
 | --- | ------------------- | ------------ |
-| TENANT_A_PROJECT01 | 192.168.254.9:11 | connected<br>static |
+| TENANT_A_PROJECT01 | 192.168.254.9:11 | connected  static |
 
 ### Router BGP Device Configuration
 
@@ -644,11 +678,8 @@ router bgp 65105
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
    neighbor 10.255.251.12 peer group MLAG-IPv4-UNDERLAY-PEER
-   neighbor 10.255.251.12 description EAPI-BL01A
    neighbor 172.31.255.28 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.28 description EAPI-SPINE1_Ethernet6
    neighbor 172.31.255.30 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.30 description EAPI-SPINE2_Ethernet6
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.1 remote-as 65001
    neighbor 192.168.255.1 description EAPI-SPINE1
@@ -686,8 +717,6 @@ router bgp 65105
       redistribute connected
       redistribute static
 ```
-
-# BFD
 
 ## Router BFD
 
@@ -788,5 +817,3 @@ vrf instance MGMT
 !
 vrf instance TENANT_A_PROJECT01
 ```
-
-# Quality Of Service

@@ -1,5 +1,4 @@
 switch_platform: vEOS-LAB
-switch_rack: null
 switch_mgmt_ip: 10.73.254.2/24
 switch_bgp_as: 65001
 switch_router_id: 192.168.255.2
@@ -51,7 +50,6 @@ ntp_server:
   - 10.73.254.253
   - 10.73.1.254
 redundancy: null
-snmp_server: null
 spanning_tree:
   mode: none
 aaa_authorization: null
@@ -217,35 +215,27 @@ router_bgp:
     172.31.255.27:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65105
-      description: EAPI-BL01A_Ethernet5
     172.31.255.31:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65105
-      description: EAPI-BL01B_Ethernet6
     172.31.255.3:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65101
-      description: EAPI-LEAF1A_Ethernet1
     172.31.255.7:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65101
-      description: EAPI-LEAF1B_Ethernet2
     172.31.255.11:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65102
-      description: EAPI-LEAF2A_Ethernet3
     172.31.255.15:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65102
-      description: EAPI-LEAF2B_Ethernet4
     172.31.255.19:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65103
-      description: EAPI-LEAF3A_Ethernet7
     172.31.255.23:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65104
-      description: EAPI-LEAF4A_Ethernet8
     192.168.255.9:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-BL01A

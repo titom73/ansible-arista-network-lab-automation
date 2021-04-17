@@ -34,13 +34,12 @@
   - [Static Routes](#static-routes)
   - [Router ISIS](#router-isis)
   - [Router BGP](#router-bgp)
-- [BFD](#bfd)
   - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
 - [Filters](#filters)
   - [Route-maps](#route-maps)
-  - [IP Extended Community Lists](#ip-extended-community-lists)
+  - [IP Extended Communities](#ip-extended-communities)
 - [ACL](#acl)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
@@ -48,7 +47,6 @@
 - [Virtual Source NAT](#virtual-source-nat)
   - [Virtual Source NAT Summary](#virtual-source-nat-summary)
   - [Virtual Source NAT Configuration](#virtual-source-nat-configuration)
-- [Quality Of Service](#quality-of-service)
 
 <!-- toc -->
 # Management
@@ -285,15 +283,15 @@ vlan 412
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 | P2P_LINK_TO_DC1-SPINE1_Ethernet5 | routed | - | 172.31.255.29/31 | default | 1500 | false | - | - |
-| Ethernet2 | P2P_LINK_TO_DC1-SPINE2_Ethernet5 | routed | - | 172.31.255.31/31 | default | 1500 | false | - | - |
+| Ethernet1 |  P2P_LINK_TO_DC1-SPINE1_Ethernet5  |  routed  | - |  172.31.255.29/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet2 |  P2P_LINK_TO_DC1-SPINE2_Ethernet5  |  routed  | - |  172.31.255.31/31  |  default  |  1500  |  false  |  -  |  -  |
 
 #### ISIS
 
 | Interface | Channel Group | ISIS Instance | ISIS Metric | Mode |
 | --------- | ------------- | ------------- | ----------- | ---- |
-| Ethernet1 | - | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet2 | - | EVPN_UNDERLAY | 50 | point-to-point |
+| Ethernet1 | - | EVPN_UNDERLAY |  50 |  point-to-point |
+| Ethernet2 | - | EVPN_UNDERLAY |  50 |  point-to-point |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -346,9 +344,9 @@ interface Port-Channel7
    switchport trunk allowed vlan 110-114,210,211
    switchport mode trunk
    !
-   evpn ethernet-segment
-      identifier 0000:0000:0303:0202:0101
-      route-target import 03:03:02:02:01:01
+    evpn ethernet-segment
+       identifier 0000:0000:0303:0202:0101
+       route-target import 03:03:02:02:01:01
    !
    lacp system-id 0303.0202.0101
 ```
@@ -424,6 +422,7 @@ interface Loopback100
 | Vlan111 |  Tenant_A_OP_Zone  |  -  |  10.1.11.254/24  |  -  |  -  |  -  |  -  |
 | Vlan114 |  Tenant_A_OP_Zone  |  -  |  10.1.14.254/24  |  -  |  -  |  -  |  -  |
 | Vlan115 |  Tenant_A_OP_Zone  |  -  |  10.1.15.254/24  |  -  |  -  |  -  |  -  |
+
 
 
 ### VLAN Interfaces Device Configuration
@@ -612,7 +611,7 @@ router isis EVPN_UNDERLAY
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
-| Remote AS | 65000 |
+| Remote_as | 65000 |
 | Source | Loopback0 |
 | Bfd | true |
 | Send community | all |
@@ -633,9 +632,9 @@ router isis EVPN_UNDERLAY
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| Tenant_A_OP_Zone | 192.168.255.10:10 | 10:10 | - | - | learned | 110-111,114-115 |
-| Tenant_D_OP_Zone_1 | 192.168.255.10:40411 | 40411:40411 | - | - | learned | 411 |
-| Tenant_D_OP_Zone_2 | 192.168.255.10:40412 | 40412:40412 | - | - | learned | 412 |
+| Tenant_A_OP_Zone | 192.168.255.10:10 |  10:10  |  |  | learned | 110-111,114-115 |
+| Tenant_D_OP_Zone_1 | 192.168.255.10:40411 |  40411:40411  |  |  | learned | 411 |
+| Tenant_D_OP_Zone_2 | 192.168.255.10:40412 |  40412:40412  |  |  | learned | 412 |
 
 #### Router BGP EVPN VRFs
 
@@ -700,8 +699,6 @@ router bgp 65000
       redistribute connected
 ```
 
-# BFD
-
 ## Router BFD
 
 ### Router BFD Multihop Summary
@@ -763,15 +760,15 @@ route-map RM-EVPN-SOO-OUT permit 10
    set extcommunity soo 192.168.254.10:1 additive
 ```
 
-## IP Extended Community Lists
+## IP Extended Communities
 
-### IP Extended Community Lists Summary
+### IP Extended Communities Summary
 
-| List Name | Type | Extended Communities |
-| --------- | ---- | -------------------- |
+| Sequence | Type | Match and/or Set |
+| -------- | ---- | ---------------- |
 | ECL-EVPN-SOO | permit | soo 192.168.254.10:1 |
 
-### IP Extended Community Lists configuration
+### IP Extended Communities configuration
 
 ```eos
 !
@@ -812,5 +809,3 @@ vrf instance Tenant_A_OP_Zone
 !
 ip address virtual source-nat vrf Tenant_A_OP_Zone address 10.255.1.10
 ```
-
-# Quality Of Service
