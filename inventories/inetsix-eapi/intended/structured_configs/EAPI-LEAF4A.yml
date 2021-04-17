@@ -1,5 +1,6 @@
 l3leaf_node_group: EAPI_LEAF_ESI
 switch_platform: vEOS-LAB
+switch_rack: null
 switch_bgp_as: 65104
 leaf_id: 6
 switch_mgmt_ip: 10.73.254.18/24
@@ -29,6 +30,7 @@ leaf_mlag: false
 service_routing_protocols_model: multi-agent
 ip_routing: true
 hardware_counters: null
+hardware: null
 daemon_terminattr:
   ingestgrpcurl:
     ips:
@@ -62,6 +64,7 @@ ntp_server:
   - 10.73.254.253
   - 10.73.1.254
 redundancy: null
+snmp_server: null
 spanning_tree:
   mode: mstp
   mst_instances:
@@ -103,10 +106,6 @@ vrfs:
   TENANT_A_PROJECT01:
     tenant: Tenant_A
     ip_routing: true
-bfd_multihop:
-  interval: 1200
-  min_rx: 1200
-  multiplier: 3
 port_channel_interfaces:
   Port-Channel5:
     description: SRV-POD03_PortChanne1
@@ -165,6 +164,7 @@ management_interfaces:
     vrf: MGMT
     ip_address: 10.73.254.18/24
     gateway: 10.73.254.253
+    type: oob
 vlan_interfaces:
   Vlan110:
     tenant: Tenant_A
@@ -226,6 +226,11 @@ route_maps:
         type: permit
         match:
         - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+router_bfd:
+  multihop:
+    interval: 1200
+    min_rx: 1200
+    multiplier: 3
 router_bgp:
   as: 65104
   router_id: 192.168.255.8
@@ -241,20 +246,23 @@ router_bgp:
       remote_as: 65001
       password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
-      send_community: true
+      send_community: all
     EVPN-OVERLAY-PEERS:
       type: evpn
       update_source: Loopback0
       bfd: true
       ebgp_multihop: '3'
       password: q+VNViP5i4rVjW1cxFv2wA==
-      send_community: true
+      send_community: all
       maximum_routes: 0
+  neighbor_interfaces: null
   neighbors:
     172.31.255.20:
       peer_group: IPv4-UNDERLAY-PEERS
+      description: EAPI-SPINE1_Ethernet8
     172.31.255.22:
       peer_group: IPv4-UNDERLAY-PEERS
+      description: EAPI-SPINE2_Ethernet8
     192.168.255.1:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-SPINE1
@@ -310,6 +318,7 @@ router_bgp:
       redistribute_routes:
       - connected
       - static
+      address_families: null
 ip_extcommunity_lists: null
 router_ospf: null
 router_isis: null

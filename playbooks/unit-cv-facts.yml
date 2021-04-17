@@ -1,6 +1,6 @@
 ---
 - name: cv_configlet unit testing
-  hosts: cv_server
+  hosts: CVP
   connection: local
   gather_facts: false
   collections:

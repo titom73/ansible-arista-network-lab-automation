@@ -1,0 +1,16 @@
+---
+- name: Build containerlab topology
+  hosts: DC1_FABRIC
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.avd
+    - arista.cvp
+    - inetsix.avd_tools
+  tasks:
+    - name: 'reset local folders for output'
+      import_role:
+        name: inetsix.avd_tools.avd_to_containerlab
+      vars:
+        mgmt_network_v4: 10.73.0.0/16
+        ceos_version: arista/ceos:4.25.2F

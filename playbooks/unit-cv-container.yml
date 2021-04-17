@@ -10,37 +10,48 @@
     run_mode: merge
     state: present
 
-    CVP_CONTAINERS:
+    CVP_CONTAINERS_V3:
       DC2:
-        parent_container: Tenant
-      Leafs:
+        parentContainerName: Tenant
+      Leafs_DC2:
+        parentContainerName: DC2
+      Spines_DC2:
+        parentContainerName: DC2
+        configlets:
+          - 'ASE_DEVICE-ALIASES'
+      POD01_DC2:
+        parentContainerName: Leafs
+
+    CVP_CONTAINERS_V1:
+      DC2:
+        parentContainerName: Tenant
+      Leafs_DC2:
         parent_container: DC2
-      Spines:
+      Spines_DC2:
         parent_container: DC2
         configlets:
           - 'ASE_DEVICE-ALIASES'
-      POD01:
-        parent_container: Leafs
 
   tasks:
-    - name: "collect CV facts on {{inventory_hostname}}"
-      tags: v1
-      arista.cvp.cv_facts:
-      register: CVP_FACTS
+    # - name: "collect CV facts on {{inventory_hostname}}"
+    #   tags: v1
+    #   arista.cvp.cv_facts:
+    #   register: CVP_FACTS
 
-    - name: 'running cv_container in {{state}} on {{inventory_hostname}}'
-      tags: v1
-      arista.cvp.cv_container:
-        cvp_facts: "{{CVP_FACTS.ansible_facts}}"
-        topology: "{{CVP_CONTAINERS}}"
-        mode: '{{run_mode}}'
-      register: result
+    # - name: 'running cv_container in {{state}} on {{inventory_hostname}}'
+    #   tags: v1
+    #   arista.cvp.cv_container:
+    #     cvp_facts: "{{CVP_FACTS.ansible_facts}}"
+    #     topology: "{{CVP_CONTAINERS_V1}}"
+    #     mode: '{{run_mode}}'
+    #   register: result
 
     - name: 'running cv_container_v3 in {{state}} on {{inventory_hostname}}'
       tags: v3
       arista.cvp.cv_container_v3:
-        topology: "{{CVP_CONTAINERS}}"
+        topology: "{{CVP_CONTAINERS_V3}}"
         state: '{{state}}'
+        apply_mode: strict
       register: result
 
     # - name: 'running cv_container_v4 in {{state}} on {{inventory_hostname}}'

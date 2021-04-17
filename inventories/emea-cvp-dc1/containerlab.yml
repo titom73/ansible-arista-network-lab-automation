@@ -1,0 +1,104 @@
+---
+name: DC1_FABRIC
+
+mgmt:
+  network: 'mgmt_DC1_FABRIC'
+  ipv4_subnet: 10.73.0.0/16
+
+topology:
+  nodes:
+  # Spines
+    DC1-SPINE1:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.73.1.11/16
+      kind: ceos
+      config: '../inventories/emea-cvp-dc1/intended/configs/DC1-SPINE1.cfg'
+    DC1-SPINE2:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.73.1.12/16
+      kind: ceos
+      config: '../inventories/emea-cvp-dc1/intended/configs/DC1-SPINE2.cfg'
+  # L3LEAFs
+    DC1-LEAF1A:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.73.1.13/16
+      kind: ceos
+      config: '../inventories/emea-cvp-dc1/intended/configs/DC1-LEAF1A.cfg'
+    DC1-LEAF1B:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.73.1.14/16
+      kind: ceos
+      config: '../inventories/emea-cvp-dc1/intended/configs/DC1-LEAF1B.cfg'
+    DC1-LEAF2A:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.73.1.15/16
+      kind: ceos
+      config: '../inventories/emea-cvp-dc1/intended/configs/DC1-LEAF2A.cfg'
+    DC1-LEAF2B:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.73.1.16/16
+      kind: ceos
+      config: '../inventories/emea-cvp-dc1/intended/configs/DC1-LEAF2B.cfg'
+    DC1-LEAF3A:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.73.1.21/16
+      kind: ceos
+      config: '../inventories/emea-cvp-dc1/intended/configs/DC1-LEAF3A.cfg'
+    DC1-LEAF4A:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.73.1.24/16
+      kind: ceos
+      config: '../inventories/emea-cvp-dc1/intended/configs/DC1-LEAF4A.cfg'
+    DC1-BL1A:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.73.1.22/16
+      kind: ceos
+      config: '../inventories/emea-cvp-dc1/intended/configs/DC1-BL1A.cfg'
+    DC1-BL1B:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.73.1.23/16
+      kind: ceos
+      config: '../inventories/emea-cvp-dc1/intended/configs/DC1-BL1B.cfg'
+  # L2LEAFs
+    DC1-L2LEAF1A:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.73.1.17/16
+      kind: ceos
+      config: '../inventories/emea-cvp-dc1/intended/configs/DC1-L2LEAF1A.cfg'
+    DC1-L2LEAF2A:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.73.1.18/16
+      kind: ceos
+      config: '../inventories/emea-cvp-dc1/intended/configs/DC1-L2LEAF2A.cfg'
+
+  links:
+    # L3LEAFs to SPINEs
+    - endpoints: ["DC1-LEAF1A:Ethernet1", "DC1-SPINE1:eth1"]
+    - endpoints: ["DC1-LEAF1A:Ethernet2", "DC1-SPINE2:eth1"]
+    - endpoints: ["DC1-LEAF1B:Ethernet1", "DC1-SPINE1:eth2"]
+    - endpoints: ["DC1-LEAF1B:Ethernet2", "DC1-SPINE2:eth2"]
+    - endpoints: ["DC1-LEAF2A:Ethernet1", "DC1-SPINE1:eth3"]
+    - endpoints: ["DC1-LEAF2A:Ethernet2", "DC1-SPINE2:eth3"]
+    - endpoints: ["DC1-LEAF2B:Ethernet1", "DC1-SPINE1:eth4"]
+    - endpoints: ["DC1-LEAF2B:Ethernet2", "DC1-SPINE2:eth4"]
+    - endpoints: ["DC1-LEAF3A:Ethernet1", "DC1-SPINE1:eth5"]
+    - endpoints: ["DC1-LEAF3A:Ethernet2", "DC1-SPINE2:eth5"]
+    - endpoints: ["DC1-LEAF4A:Ethernet1", "DC1-SPINE1:eth8"]
+    - endpoints: ["DC1-LEAF4A:Ethernet2", "DC1-SPINE2:eth8"]
+    - endpoints: ["DC1-BL1A:Ethernet1", "DC1-SPINE1:eth6"]
+    - endpoints: ["DC1-BL1A:Ethernet2", "DC1-SPINE2:eth6"]
+    - endpoints: ["DC1-BL1B:Ethernet1", "DC1-SPINE1:eth7"]
+    - endpoints: ["DC1-BL1B:Ethernet2", "DC1-SPINE2:eth7"]
+    # MLAG L3LEAFs
+    - endpoints: ["DC1-LEAF1A:eth3", "DC1-LEAF1B:eth3"]
+    - endpoints: ["DC1-LEAF1A:eth4", "DC1-LEAF1B:eth4"]
+    - endpoints: ["DC1-LEAF2A:eth3", "DC1-LEAF2B:eth3"]
+    - endpoints: ["DC1-LEAF2A:eth4", "DC1-LEAF2B:eth4"]
+    - endpoints: ["DC1-BL1A:eth3", "DC1-BL1B:eth3"]
+    - endpoints: ["DC1-BL1A:eth4", "DC1-BL1B:eth4"]
+    # L2LEAFs to L3LEAFs
+    - endpoints: ["DC1-L2LEAF1A:Ethernet1", "DC1-LEAF1A:eth5"]
+    - endpoints: ["DC1-L2LEAF1A:Ethernet2", "DC1-LEAF1B:eth5"]
+    - endpoints: ["DC1-L2LEAF2A:Ethernet1", "DC1-LEAF2A:eth5"]
+    - endpoints: ["DC1-L2LEAF2A:Ethernet2", "DC1-LEAF2B:eth5"]
+    # MLAG L2LEAFs

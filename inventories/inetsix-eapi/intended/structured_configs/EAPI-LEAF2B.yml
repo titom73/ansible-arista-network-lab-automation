@@ -1,5 +1,6 @@
 l3leaf_node_group: EAPI_LEAF2
 switch_platform: vEOS-LAB
+switch_rack: null
 switch_bgp_as: 65102
 leaf_id: 4
 switch_mgmt_ip: 10.73.254.14/24
@@ -37,6 +38,7 @@ leaf_mlag_peer_id: 3
 service_routing_protocols_model: multi-agent
 ip_routing: true
 hardware_counters: null
+hardware: null
 daemon_terminattr:
   ingestgrpcurl:
     ips:
@@ -70,6 +72,7 @@ ntp_server:
   - 10.73.254.253
   - 10.73.1.254
 redundancy: null
+snmp_server: null
 spanning_tree:
   mode: mstp
   mst_instances:
@@ -130,10 +133,6 @@ vrfs:
   TENANT_A_PROJECT01:
     tenant: Tenant_A
     ip_routing: true
-bfd_multihop:
-  interval: 1200
-  min_rx: 1200
-  multiplier: 3
 port_channel_interfaces:
   Port-Channel5:
     description: EAPI_L2LEAF2_Po1
@@ -216,6 +215,7 @@ management_interfaces:
     vrf: MGMT
     ip_address: 10.73.254.14/24
     gateway: 10.73.254.253
+    type: oob
 vlan_interfaces:
   Vlan4093:
     description: MLAG_PEER_L3_PEERING
@@ -331,6 +331,11 @@ route_maps:
         - origin incomplete
         description: Make routes learned over MLAG Peer-link less preferred on spines
           to ensure optimal routing
+router_bfd:
+  multihop:
+    interval: 1200
+    min_rx: 1200
+    multiplier: 3
 router_bgp:
   as: 65102
   router_id: 192.168.255.6
@@ -346,14 +351,14 @@ router_bgp:
       remote_as: 65001
       password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
-      send_community: true
+      send_community: all
     MLAG-IPv4-UNDERLAY-PEER:
       type: ipv4
       remote_as: 65102
       next_hop_self: true
       password: vnEaG8gMeQf3d3cN6PktXQ==
       maximum_routes: 12000
-      send_community: true
+      send_community: all
       route_map_in: RM-MLAG-PEER-IN
     EVPN-OVERLAY-PEERS:
       type: evpn
@@ -361,15 +366,19 @@ router_bgp:
       bfd: true
       ebgp_multihop: '3'
       password: q+VNViP5i4rVjW1cxFv2wA==
-      send_community: true
+      send_community: all
       maximum_routes: 0
+  neighbor_interfaces: null
   neighbors:
     172.31.255.12:
       peer_group: IPv4-UNDERLAY-PEERS
+      description: EAPI-SPINE1_Ethernet4
     172.31.255.14:
       peer_group: IPv4-UNDERLAY-PEERS
+      description: EAPI-SPINE2_Ethernet4
     10.255.251.4:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
+      description: EAPI-LEAF2A
     192.168.255.1:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-SPINE1
@@ -430,6 +439,7 @@ router_bgp:
       redistribute_routes:
       - connected
       - static
+      address_families: null
 ip_extcommunity_lists: null
 router_ospf: null
 router_isis: null

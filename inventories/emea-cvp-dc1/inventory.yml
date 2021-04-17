@@ -8,19 +8,17 @@ all:
         cv_ztp:
           ansible_host: 10.83.28.162
           ansible_user: root
-          ansible_password: interdata
     CVP:
       hosts:
         cv_server:
           ansible_host: 10.83.28.164
           ansible_user: ansible
-          ansible_password: interdata
+
     # DC1_Fabric - EVPN Fabric running in home lab
     DC1:
       vars:
         ansible_host: 10.83.28.162
         ansible_user: ansible
-        ansible_ssh_pass: interdata
         ansible_connection: httpapi
         ansible_network_os: eos
       children:

@@ -1,7 +1,10 @@
 l2leaf_node_group: EAPI_L2LEAF2
 switch_platform: vEOS-LAB
+switch_rack: null
 leaf_id: 10
 switch_mgmt_ip: 10.73.254.22/24
+switch_inband_management_ip: null
+switch_inband_management_interface: null
 leaf_filter_tenants:
 - Tenant_A
 - Tenant_B
@@ -23,6 +26,7 @@ leaf_mlag: false
 service_routing_protocols_model: multi-agent
 ip_routing: true
 hardware_counters: null
+hardware: null
 daemon_terminattr:
   ingestgrpcurl:
     ips:
@@ -56,6 +60,7 @@ ntp_server:
   - 10.73.254.253
   - 10.73.1.254
 redundancy: null
+snmp_server: null
 spanning_tree:
   mode: mstp
   mst_instances:
@@ -142,6 +147,7 @@ management_interfaces:
     vrf: MGMT
     ip_address: 10.73.254.22/24
     gateway: 10.73.254.253
+    type: oob
 vlan_interfaces: null
 tcam_profile: null
 platform: null
