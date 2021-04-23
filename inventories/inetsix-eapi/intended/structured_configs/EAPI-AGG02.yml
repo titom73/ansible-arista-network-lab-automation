@@ -1,37 +1,14 @@
-l2leaf_node_group: EAPI_L2LEAF2
-switch_platform: vEOS-LAB
-leaf_id: 10
-switch_mgmt_ip: 10.73.254.22/24
-switch_inband_management_ip: null
-switch_inband_management_interface: null
-leaf_filter_tenants:
-- Tenant_A
-- Tenant_B
-leaf_filter_tags:
-- POD02
-- DC1
-leaf_allowed_vrfs:
-- TENANT_A_PROJECT01
-leaf_allowed_svis:
-- 110
-- 111
-- 112
-leaf_allowed_vlans:
-- 110
-- 111
-- 112
-- 201
-leaf_mlag: false
+static_routes:
+- vrf: MGMT
+  destination_address_prefix: 0.0.0.0/0
+  gateway: 10.73.254.253
 service_routing_protocols_model: multi-agent
 ip_routing: true
-hardware_counters: null
-hardware: null
 daemon_terminattr:
   ingestgrpcurl:
     ips:
     - 10.73.254.1
     port: 9910
-  ingestauth_key: null
   ingestvrf: MGMT
   smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
   ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
@@ -41,10 +18,6 @@ vlan_internal_order:
   range:
     beginning: 1006
     ending: 1199
-event_monitor: null
-event_handlers: null
-load_interval: null
-queue_monitor_length: null
 name_server:
   source:
     vrf: MGMT
@@ -58,13 +31,11 @@ ntp_server:
   nodes:
   - 10.73.254.253
   - 10.73.1.254
-redundancy: null
 spanning_tree:
   mode: mstp
   mst_instances:
     '0':
       priority: 16384
-aaa_authorization: null
 local_users:
   admin:
     privilege: 15
@@ -84,29 +55,21 @@ local_users:
     sha512_password: $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 clock:
   timezone: Europe/Paris
-vlans:
-  110:
-    tenant: Tenant_A
-    name: PR01-DEMO
-  111:
-    tenant: Tenant_A
-    name: PR01-TRUST
-  112:
-    tenant: Tenant_A
-    name: PR01-TRUST
-  201:
-    tenant: Tenant_B
-    name: B-ELAN-201
 vrfs:
   MGMT:
     ip_routing: false
-port_channel_interfaces:
-  Port-Channel1:
-    description: EAPI-LEAF2A_Po5
-    type: switched
+management_interfaces:
+  Management1:
+    description: oob_management
     shutdown: false
-    vlans: 110-112,201
-    mode: trunk
+    vrf: MGMT
+    ip_address: 10.73.254.22/24
+    gateway: 10.73.254.253
+    type: oob
+management_api_http:
+  enable_vrfs:
+    MGMT: {}
+  enable_https: true
 ethernet_interfaces:
   Ethernet1:
     peer: EAPI-LEAF2A
@@ -138,18 +101,13 @@ ethernet_interfaces:
     mode: trunk
     vlans: 1-4000
     profile: ALL
-management_interfaces:
-  Management1:
-    description: oob_management
+port_channel_interfaces:
+  Port-Channel1:
+    description: EAPI-LEAF2A_Po5
+    type: switched
     shutdown: false
-    vrf: MGMT
-    ip_address: 10.73.254.22/24
-    gateway: 10.73.254.253
-    type: oob
-vlan_interfaces: null
-tcam_profile: null
-platform: null
-mac_address_table: null
+    vlans: 110-112,201
+    mode: trunk
 ip_igmp_snooping:
   globally_enabled: true
   vlans:
@@ -157,12 +115,16 @@ ip_igmp_snooping:
       enabled: false
     112:
       enabled: false
-static_routes:
-- vrf: MGMT
-  destination_address_prefix: 0.0.0.0/0
-  gateway: 10.73.254.253
-queue_monitor_streaming: null
-management_api_http:
-  enable_https: true
-  enable_vrfs:
-    MGMT: null
+vlans:
+  110:
+    tenant: Tenant_A
+    name: PR01-DEMO
+  111:
+    tenant: Tenant_A
+    name: PR01-TRUST
+  112:
+    tenant: Tenant_A
+    name: PR01-TRUST
+  201:
+    tenant: Tenant_B
+    name: B-ELAN-201

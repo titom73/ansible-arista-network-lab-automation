@@ -1,3 +1,6 @@
 {
-    "python.pythonPath": "/Users/tgrimonet/.pyenv/versions/arista-ansible-stable/bin/python"
+    "python.pythonPath": "/Users/tgrimonet/.pyenv/versions/arista-ansible-stable/bin/python",
+    "python.linting.flake8Enabled": false,
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }

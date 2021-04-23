@@ -19,3 +19,15 @@ Content-Type: application/json
 ### Get Configlets
 GET https://10.83.28.164/cvpservice/configlet/getConfiglets.do?startIndex=0&endIndex=0 HTTP/1.1
 Content-Type: application/json
+
+### Filter topology (no filter)
+GET https://10.83.28.164/cvpservice/provisioning/filterTopology.do?format=topology&startIndex=0&endIndex=0 HTTP/1.1
+Content-Type: application/json
+
+### Filter topology (container DC1_FABRIC)
+GET https://10.83.28.164/cvpservice/provisioning/filterTopology.do?nodeId=container_36185840-092d-475f-8c91-b2ae90b41445&format=topology&startIndex=0&endIndex=0 HTTP/1.1
+Content-Type: application/json
+
+### Search topology for device with sysMac:50:8d:00:91:64:59
+GET https://10.83.28.164/cvpservice/provisioning/searchTopology.do?queryParam=50%3A8d%3A00%3A91%3A64%3A59&startIndex=0&endIndex=0 HTTP/1.1
+Content-Type: application/json
