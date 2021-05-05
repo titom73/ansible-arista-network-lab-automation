@@ -15,9 +15,12 @@ Content-Type: application/json
 GET https://10.83.28.164/cvpservice/inventory/containers HTTP/1.1
 Content-Type: application/json
 
-
 ### Get Configlets
 GET https://10.83.28.164/cvpservice/configlet/getConfiglets.do?startIndex=0&endIndex=0 HTTP/1.1
+Content-Type: application/json
+
+### Get Configlets & Mappers
+GET https://10.83.28.164/cvpservice/configlet/getConfigletsAndAssociatedMappers.do HTTP/1.1
 Content-Type: application/json
 
 ### Filter topology (no filter)
@@ -28,6 +31,10 @@ Content-Type: application/json
 GET https://10.83.28.164/cvpservice/provisioning/filterTopology.do?nodeId=container_36185840-092d-475f-8c91-b2ae90b41445&format=topology&startIndex=0&endIndex=0 HTTP/1.1
 Content-Type: application/json
 
-### Search topology for device with sysMac:50:8d:00:91:64:59
+### Search topology for device with sysMac:50:8d:00:91:64:59 (undefined_container)
 GET https://10.83.28.164/cvpservice/provisioning/searchTopology.do?queryParam=50%3A8d%3A00%3A91%3A64%3A59&startIndex=0&endIndex=0 HTTP/1.1
+Content-Type: application/json
+
+### Search topology for device with sysMac:0c:1d:c0:5f:61:3b (provisioned device)
+GET https://10.83.28.164/cvpservice/provisioning/searchTopology.do?queryParam=0c%3A1d%3Ac0%3A5f%3A61%3A3b&startIndex=0&endIndex=0 HTTP/1.1
 Content-Type: application/json

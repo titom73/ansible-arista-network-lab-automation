@@ -18,6 +18,9 @@
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
   - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
   - [Internal VLAN Allocation Policy Configuration](#internal-vlan-allocation-policy-configuration)
+- [VLANs](#vlans)
+  - [VLANs Summary](#vlans-summary)
+  - [VLANs Device Configuration](#vlans-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Port-Channel Interfaces](#port-channel-interfaces)
@@ -166,7 +169,7 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 
 | CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF | AAA Disabled |
 | -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- | ------ |
-| gzip | 10.83.28.164:9910 |  | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
+| gzip | 10.83.28.164:9910 | UNSET | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
 
 ### TerminAttr Daemon Device Configuration
 
@@ -215,6 +218,34 @@ spanning-tree mst 0 priority 16384
 vlan internal order descending range 4000 4090
 ```
 
+# VLANs
+
+## VLANs Summary
+
+| VLAN ID | Name | Trunk Groups |
+| ------- | ---- | ------------ |
+| 110 | Tenant_A_OP_Zone_1 | none  |
+| 111 | Tenant_A_OP_Zone_2 | none  |
+| 114 | Tenant_A_OP_Zone_3 | none  |
+| 115 | Tenant_A_OP_Zone_3 | none  |
+
+## VLANs Device Configuration
+
+```eos
+!
+vlan 110
+   name Tenant_A_OP_Zone_1
+!
+vlan 111
+   name Tenant_A_OP_Zone_2
+!
+vlan 114
+   name Tenant_A_OP_Zone_3
+!
+vlan 115
+   name Tenant_A_OP_Zone_3
+```
+
 # Interfaces
 
 ## Ethernet Interfaces
@@ -225,8 +256,8 @@ vlan internal order descending range 4000 4090
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet1 | DC1-LEAF1A_Ethernet5 | *trunk | * | *- | *- | 1 |
-| Ethernet2 | DC1-LEAF1B_Ethernet5 | *trunk | * | *- | *- | 1 |
+| Ethernet1 | DC1-LEAF1A_Ethernet5 | *trunk | *110-111,114-115 | *- | *- | 1 |
+| Ethernet2 | DC1-LEAF1B_Ethernet5 | *trunk | *110-111,114-115 | *- | *- | 1 |
 | Ethernet3 |  POD01-DOCKER_Eth1 | access | 111 | - | - | - |
 | Ethernet5 |  POD01-SRV_Eth1 | trunk | 110-114,210,211 | - | - | - |
 
@@ -269,7 +300,7 @@ interface Ethernet5
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel1 | DC1-LEAF1A_Po5 | switched | trunk |  | - | - | - | - | - | - |
+| Port-Channel1 | DC1-LEAF1A_Po5 | switched | trunk | 110-111,114-115 | - | - | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -279,6 +310,7 @@ interface Port-Channel1
    description DC1-LEAF1A_Po5
    no shutdown
    switchport
+   switchport trunk allowed vlan 110-111,114-115
    switchport mode trunk
 ```
 

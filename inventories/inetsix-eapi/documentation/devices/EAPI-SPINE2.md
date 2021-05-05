@@ -26,6 +26,7 @@
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
   - [Router BGP](#router-bgp)
+- [BFD](#bfd)
   - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
 - [Filters](#filters)
@@ -35,6 +36,7 @@
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
+- [Quality Of Service](#quality-of-service)
 
 <!-- toc -->
 # Management
@@ -162,7 +164,7 @@ username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$
 
 | CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF | AAA Disabled |
 | -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- | ------ |
-| gzip | 10.73.254.1:9910 |  | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
+| gzip | 10.73.254.1:9910 | UNSET | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
 
 ### TerminAttr Daemon Device Configuration
 
@@ -198,6 +200,12 @@ daemon TerminAttr
 
 
 
+### SNMP Communities
+
+| Community | Access | Access List IPv4 | Access List IPv6 | View |
+| --------- | ------ | ---------------- | ---------------- | ---- |
+| inetsix-ro | rw | inetsix-snmp-acl | - | test |
+
 
 
 
@@ -205,6 +213,7 @@ daemon TerminAttr
 
 ```eos
 !
+snmp-server community inetsix-ro view test rw inetsix-snmp-acl
 ```
 
 # Spanning Tree
@@ -255,14 +264,14 @@ vlan internal order ascending range 1006 1199
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 |  P2P_LINK_TO_EAPI-LEAF1A_Ethernet2  |  routed  | - |  172.31.255.2/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet2 |  P2P_LINK_TO_EAPI-LEAF1B_Ethernet2  |  routed  | - |  172.31.255.6/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet3 |  P2P_LINK_TO_EAPI-LEAF2A_Ethernet2  |  routed  | - |  172.31.255.10/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet4 |  P2P_LINK_TO_EAPI-LEAF2B_Ethernet2  |  routed  | - |  172.31.255.14/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet5 |  P2P_LINK_TO_EAPI-BL01A_Ethernet2  |  routed  | - |  172.31.255.26/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet6 |  P2P_LINK_TO_EAPI-BL01B_Ethernet2  |  routed  | - |  172.31.255.30/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet7 |  P2P_LINK_TO_EAPI-LEAF3A_Ethernet2  |  routed  | - |  172.31.255.18/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet8 |  P2P_LINK_TO_EAPI-LEAF4A_Ethernet2  |  routed  | - |  172.31.255.22/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet1 | P2P_LINK_TO_EAPI-LEAF1A_Ethernet2 | routed | - | 172.31.255.2/31 | default | 1500 | false | - | - |
+| Ethernet2 | P2P_LINK_TO_EAPI-LEAF1B_Ethernet2 | routed | - | 172.31.255.6/31 | default | 1500 | false | - | - |
+| Ethernet3 | P2P_LINK_TO_EAPI-LEAF2A_Ethernet2 | routed | - | 172.31.255.10/31 | default | 1500 | false | - | - |
+| Ethernet4 | P2P_LINK_TO_EAPI-LEAF2B_Ethernet2 | routed | - | 172.31.255.14/31 | default | 1500 | false | - | - |
+| Ethernet5 | P2P_LINK_TO_EAPI-BL01A_Ethernet2 | routed | - | 172.31.255.26/31 | default | 1500 | false | - | - |
+| Ethernet6 | P2P_LINK_TO_EAPI-BL01B_Ethernet2 | routed | - | 172.31.255.30/31 | default | 1500 | false | - | - |
+| Ethernet7 | P2P_LINK_TO_EAPI-LEAF3A_Ethernet2 | routed | - | 172.31.255.18/31 | default | 1500 | false | - | - |
+| Ethernet8 | P2P_LINK_TO_EAPI-LEAF4A_Ethernet2 | routed | - | 172.31.255.22/31 | default | 1500 | false | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -483,20 +492,28 @@ router bgp 65001
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor 172.31.255.3 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.3 remote-as 65101
+   neighbor 172.31.255.3 description EAPI-LEAF1A_Ethernet1
    neighbor 172.31.255.7 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.7 remote-as 65101
+   neighbor 172.31.255.7 description EAPI-LEAF1B_Ethernet2
    neighbor 172.31.255.11 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.11 remote-as 65102
+   neighbor 172.31.255.11 description EAPI-LEAF2A_Ethernet3
    neighbor 172.31.255.15 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.15 remote-as 65102
+   neighbor 172.31.255.15 description EAPI-LEAF2B_Ethernet4
    neighbor 172.31.255.19 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.19 remote-as 65103
+   neighbor 172.31.255.19 description EAPI-LEAF3A_Ethernet7
    neighbor 172.31.255.23 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.23 remote-as 65104
+   neighbor 172.31.255.23 description EAPI-LEAF4A_Ethernet8
    neighbor 172.31.255.27 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.27 remote-as 65105
+   neighbor 172.31.255.27 description EAPI-BL01A_Ethernet5
    neighbor 172.31.255.31 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.31 remote-as 65105
+   neighbor 172.31.255.31 description EAPI-BL01B_Ethernet6
    neighbor 192.168.255.3 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.3 remote-as 65101
    neighbor 192.168.255.3 description EAPI-LEAF1A
@@ -531,6 +548,8 @@ router bgp 65001
       neighbor IPv4-UNDERLAY-PEERS activate
 ```
 
+# BFD
+
 ## Router BFD
 
 ### Router BFD Multihop Summary
@@ -559,14 +578,14 @@ router bfd
 
 | Sequence | Action |
 | -------- | ------ |
-| 10 | permit 192.168.255.0/24 le 32 |
+| 10 | permit 192.168.255.0/24 eq 32 |
 
 ### Prefix-lists Device Configuration
 
 ```eos
 !
 ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-   seq 10 permit 192.168.255.0/24 le 32
+   seq 10 permit 192.168.255.0/24 eq 32
 ```
 
 ## Route-maps
@@ -603,3 +622,5 @@ route-map RM-CONN-2-BGP permit 10
 !
 vrf instance MGMT
 ```
+
+# Quality Of Service

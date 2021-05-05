@@ -35,15 +35,14 @@
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
-  - [Router ISIS](#router-isis)
   - [Router BGP](#router-bgp)
 - [BFD](#bfd)
   - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
 - [Filters](#filters)
+  - [Prefix-lists](#prefix-lists)
   - [Route-maps](#route-maps)
-  - [IP Extended Community Lists](#ip-extended-community-lists)
 - [ACL](#acl)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
@@ -185,7 +184,7 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 
 | CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF | AAA Disabled |
 | -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- | ------ |
-| gzip | 10.83.28.164:9910 |  | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
+| gzip | 10.83.28.164:9910 | UNSET | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
 
 ### TerminAttr Daemon Device Configuration
 
@@ -332,13 +331,6 @@ vlan 4094
 | Ethernet1 | P2P_LINK_TO_DC1-SPINE1_Ethernet6 | routed | - | 172.31.255.33/31 | default | 1500 | false | - | - |
 | Ethernet2 | P2P_LINK_TO_DC1-SPINE2_Ethernet6 | routed | - | 172.31.255.35/31 | default | 1500 | false | - | - |
 
-#### ISIS
-
-| Interface | Channel Group | ISIS Instance | ISIS Metric | Mode |
-| --------- | ------------- | ------------- | ----------- | ---- |
-| Ethernet1 | - | EVPN_UNDERLAY | 50 | point-to-point |
-| Ethernet2 | - | EVPN_UNDERLAY | 50 | point-to-point |
-
 ### Ethernet Interfaces Device Configuration
 
 ```eos
@@ -349,9 +341,6 @@ interface Ethernet1
    mtu 1500
    no switchport
    ip address 172.31.255.33/31
-   isis enable EVPN_UNDERLAY
-   isis metric 50
-   isis network point-to-point
 !
 interface Ethernet2
    description P2P_LINK_TO_DC1-SPINE2_Ethernet6
@@ -359,9 +348,6 @@ interface Ethernet2
    mtu 1500
    no switchport
    ip address 172.31.255.35/31
-   isis enable EVPN_UNDERLAY
-   isis metric 50
-   isis network point-to-point
 !
 interface Ethernet3
    description MLAG_PEER_DC1-BL1B_Ethernet3
@@ -418,12 +404,6 @@ interface Port-Channel3
 | Loopback1 | VTEP_VXLAN_Tunnel_Source | default | - |
 | Loopback100 | Tenant_A_OP_Zone_VTEP_DIAGNOSTICS | Tenant_A_OP_Zone | - |
 
-#### ISIS
-
-| Interface | ISIS instance | ISIS metric | Interface mode |
-| -------- | -------- | -------- | -------- |
-| Loopback0 | EVPN_UNDERLAY |  - |  passive |
-| Loopback1 | EVPN_UNDERLAY |  - |  passive |
 
 ### Loopback Interfaces Device Configuration
 
@@ -433,15 +413,11 @@ interface Loopback0
    description EVPN_Overlay_Peering
    no shutdown
    ip address 192.168.255.11/32
-   isis enable EVPN_UNDERLAY
-   isis passive
 !
 interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    no shutdown
    ip address 192.168.254.11/32
-   isis enable EVPN_UNDERLAY
-   isis passive
 !
 interface Loopback100
    description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS
@@ -476,12 +452,6 @@ interface Loopback100
 | Vlan4093 |  default  |  10.255.251.16/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  10.255.252.16/31  |  -  |  -  |  -  |  -  |  -  |
 
-
-#### ISIS
-
-| Interface | ISIS Instance | ISIS Metric | Mode |
-| --------- | ------------- | ----------- | ---- |
-| Vlan4093 | EVPN_UNDERLAY |  50 |  point-to-point |
 
 ### VLAN Interfaces Device Configuration
 
@@ -523,9 +493,6 @@ interface Vlan4093
    no shutdown
    mtu 1500
    ip address 10.255.251.16/31
-   isis enable EVPN_UNDERLAY
-   isis metric 50
-   isis network point-to-point
 !
 interface Vlan4094
    description MLAG_PEER
@@ -634,50 +601,13 @@ ip routing vrf Tenant_A_OP_Zone
 ip route vrf MGMT 0.0.0.0/0 10.73.0.1
 ```
 
-## Router ISIS
-
-### Router ISIS Summary
-
-| Settings | Value |
-| -------- | ----- |
-| Instance | EVPN_UNDERLAY |
-| Net-ID | 49.0001.0001.0001.0009.00 |
-| Type | level-2 |
-| Address Family | ipv4 unicast |
-| Log Adjacency Changes | True |
-
-### ISIS Interfaces Summary
-
-| Interface | ISIS Instance | ISIS Metric | Interface Mode |
-| -------- | -------- | -------- | -------- |
-| Ethernet1 | EVPN_UNDERLAY |  50 |  point-to-point |
-| Ethernet2 | EVPN_UNDERLAY |  50 |  point-to-point |
-| Vlan4093 | EVPN_UNDERLAY |  50 |  point-to-point |
-| Loopback0 | EVPN_UNDERLAY |  - |  passive |
-| Loopback1 | EVPN_UNDERLAY |  - |  passive |
-
-### Router ISIS Device Configuration
-
-```eos
-!
-router isis EVPN_UNDERLAY
-   net 49.0001.0001.0001.0009.00
-   is-type level-2
-   router-id ipv4 192.168.255.11
-   log-adjacency-changes
-   !
-   address-family ipv4 unicast
-      maximum-paths 2
-   !
-```
-
 ## Router BGP
 
 ### Router BGP Summary
 
 | BGP AS | Router ID |
 | ------ | --------- |
-| 65000|  192.168.255.11 |
+| 65110|  192.168.255.11 |
 
 | BGP Tuning |
 | ---------- |
@@ -694,18 +624,40 @@ router isis EVPN_UNDERLAY
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
-| Remote_as | 65000 |
 | Source | Loopback0 |
 | Bfd | true |
+| Ebgp multihop | 3 |
 | Send community | all |
 | Maximum routes | 0 (no limit) |
+
+#### IPv4-UNDERLAY-PEERS
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | ipv4 |
+| Remote AS | 65001 |
+| Send community | all |
+| Maximum routes | 12000 |
+
+#### MLAG-IPv4-UNDERLAY-PEER
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | ipv4 |
+| Remote AS | 65110 |
+| Next-hop self | True |
+| Send community | all |
+| Maximum routes | 12000 |
 
 ### BGP Neighbors
 
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
-| 192.168.255.1 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
-| 192.168.255.2 | Inherited from peer group EVPN-OVERLAY-PEERS | default |
+| 10.255.251.17 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default |
+| 172.31.255.32 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
+| 172.31.255.34 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
+| 192.168.255.1 | 65001 | default |
+| 192.168.255.2 | 65001 | default |
 | 10.255.251.17 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Tenant_A_OP_Zone |
 
 ### Router BGP EVPN Address Family
@@ -730,7 +682,7 @@ router isis EVPN_UNDERLAY
 
 ```eos
 !
-router bgp 65000
+router bgp 65110
    router-id 192.168.255.11
    no bgp default ipv4-unicast
    distance bgp 20 200 200
@@ -738,16 +690,37 @@ router bgp 65000
    graceful-restart
    maximum-paths 4 ecmp 4
    neighbor EVPN-OVERLAY-PEERS peer group
-   neighbor EVPN-OVERLAY-PEERS remote-as 65000
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
+   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor IPv4-UNDERLAY-PEERS peer group
+   neighbor IPv4-UNDERLAY-PEERS remote-as 65001
+   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
+   neighbor IPv4-UNDERLAY-PEERS send-community
+   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
+   neighbor MLAG-IPv4-UNDERLAY-PEER peer group
+   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65110
+   neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
+   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==
+   neighbor MLAG-IPv4-UNDERLAY-PEER send-community
+   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
+   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
+   neighbor 10.255.251.17 peer group MLAG-IPv4-UNDERLAY-PEER
+   neighbor 10.255.251.17 description DC1-BL1B
+   neighbor 172.31.255.32 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.32 description DC1-SPINE1_Ethernet6
+   neighbor 172.31.255.34 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.34 description DC1-SPINE2_Ethernet6
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.1 remote-as 65001
    neighbor 192.168.255.1 description DC1-SPINE1
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.2 remote-as 65001
    neighbor 192.168.255.2 description DC1-SPINE2
+   redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle Tenant_A_OP_Zone
       rd 192.168.255.11:10
@@ -768,12 +741,12 @@ router bgp 65000
       vlan 412
    !
    address-family evpn
-      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-IN in
-      neighbor EVPN-OVERLAY-PEERS route-map RM-EVPN-SOO-OUT out
       neighbor EVPN-OVERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
+      neighbor IPv4-UNDERLAY-PEERS activate
+      neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    vrf Tenant_A_OP_Zone
       rd 192.168.255.11:10
@@ -818,48 +791,52 @@ IGMP snooping is globally enabled.
 
 # Filters
 
+## Prefix-lists
+
+### Prefix-lists Summary
+
+#### PL-LOOPBACKS-EVPN-OVERLAY
+
+| Sequence | Action |
+| -------- | ------ |
+| 10 | permit 192.168.255.0/24 eq 32 |
+| 20 | permit 192.168.254.0/24 eq 32 |
+
+### Prefix-lists Device Configuration
+
+```eos
+!
+ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+   seq 10 permit 192.168.255.0/24 eq 32
+   seq 20 permit 192.168.254.0/24 eq 32
+```
+
 ## Route-maps
 
 ### Route-maps Summary
 
-#### RM-EVPN-SOO-IN
+#### RM-CONN-2-BGP
 
 | Sequence | Type | Match and/or Set |
 | -------- | ---- | ---------------- |
-| 10 | deny | match extcommunity ECL-EVPN-SOO |
+| 10 | permit | match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
 
-#### RM-EVPN-SOO-OUT
+#### RM-MLAG-PEER-IN
 
 | Sequence | Type | Match and/or Set |
 | -------- | ---- | ---------------- |
-| 10 | permit | set extcommunity soo 192.168.254.11:1 additive |
+| 10 | permit | set origin incomplete |
 
 ### Route-maps Device Configuration
 
 ```eos
 !
-route-map RM-EVPN-SOO-IN deny 10
-   match extcommunity ECL-EVPN-SOO
+route-map RM-CONN-2-BGP permit 10
+   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 !
-route-map RM-EVPN-SOO-IN permit 20
-!
-route-map RM-EVPN-SOO-OUT permit 10
-   set extcommunity soo 192.168.254.11:1 additive
-```
-
-## IP Extended Community Lists
-
-### IP Extended Community Lists Summary
-
-| List Name | Type | Extended Communities |
-| --------- | ---- | -------------------- |
-| ECL-EVPN-SOO | permit | soo 192.168.254.11:1 |
-
-### IP Extended Community Lists configuration
-
-```eos
-!
-ip extcommunity-list ECL-EVPN-SOO permit soo 192.168.254.11:1
+route-map RM-MLAG-PEER-IN permit 10
+   description Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal routing
+   set origin incomplete
 ```
 
 # ACL

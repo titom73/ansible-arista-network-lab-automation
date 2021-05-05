@@ -33,6 +33,7 @@
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
   - [Router BGP](#router-bgp)
+- [BFD](#bfd)
   - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
@@ -43,6 +44,7 @@
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
+- [Quality Of Service](#quality-of-service)
 
 <!-- toc -->
 # Management
@@ -170,7 +172,7 @@ username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$
 
 | CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF | AAA Disabled |
 | -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- | ------ |
-| gzip | 10.73.254.1:9910 |  | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
+| gzip | 10.73.254.1:9910 | UNSET | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
 
 ### TerminAttr Daemon Device Configuration
 
@@ -206,6 +208,12 @@ daemon TerminAttr
 
 
 
+### SNMP Communities
+
+| Community | Access | Access List IPv4 | Access List IPv6 | View |
+| --------- | ------ | ---------------- | ---------------- | ---- |
+| inetsix-ro | rw | inetsix-snmp-acl | - | test |
+
 
 
 
@@ -213,6 +221,7 @@ daemon TerminAttr
 
 ```eos
 !
+snmp-server community inetsix-ro view test rw inetsix-snmp-acl
 ```
 
 # Spanning Tree
@@ -295,8 +304,8 @@ vlan 201
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 |  P2P_LINK_TO_EAPI-SPINE1_Ethernet7  |  routed  | - |  172.31.255.17/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet2 |  P2P_LINK_TO_EAPI-SPINE2_Ethernet7  |  routed  | - |  172.31.255.19/31  |  default  |  1500  |  false  |  -  |  -  |
+| Ethernet1 | P2P_LINK_TO_EAPI-SPINE1_Ethernet7 | routed | - | 172.31.255.17/31 | default | 1500 | false | - | - |
+| Ethernet2 | P2P_LINK_TO_EAPI-SPINE2_Ethernet7 | routed | - | 172.31.255.19/31 | default | 1500 | false | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -342,11 +351,9 @@ interface Port-Channel5
    switchport
    switchport trunk allowed vlan 1-4000
    switchport mode trunk
-   !
-    evpn ethernet-segment
-       identifier 0000:0000:0303:0202:0101
-       route-target import 03:03:02:02:01:01
-   !
+   evpn ethernet-segment
+      identifier 0000:0000:0303:0202:0101
+      route-target import 03:03:02:02:01:01
    lacp system-id 0303.0202.0101
 ```
 
@@ -399,7 +406,6 @@ interface Loopback1
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan110 |  TENANT_A_PROJECT01  |  -  |  10.1.10.254/24  |  -  |  -  |  -  |  -  |
 | Vlan113 |  TENANT_A_PROJECT01  |  -  |  10.1.13.254/24  |  -  |  -  |  -  |  -  |
-
 
 
 ### VLAN Interfaces Device Configuration
@@ -545,7 +551,7 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | Settings | Value |
 | -------- | ----- |
 | Address Family | ipv4 |
-| Remote_as | 65001 |
+| Remote AS | 65001 |
 | Send community | all |
 | Maximum routes | 12000 |
 
@@ -566,14 +572,14 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| B-ELAN-201 | 192.168.254.7:20201 |  20201:20201  |  |  | learned | 201 |
-| TENANT_A_PROJECT01 | 192.168.254.7:11 |  11:11  |  |  | learned | 110,113 |
+| B-ELAN-201 | 192.168.255.7:20201 | 20201:20201 | - | - | learned | 201 |
+| TENANT_A_PROJECT01 | 192.168.255.7:11 | 11:11 | - | - | learned | 110,113 |
 
 #### Router BGP EVPN VRFs
 
 | VRF | Route-Distinguisher | Redistribute |
 | --- | ------------------- | ------------ |
-| TENANT_A_PROJECT01 | 192.168.254.7:11 | connected  static |
+| TENANT_A_PROJECT01 | 192.168.255.7:11 | connected<br>static |
 
 ### Router BGP Device Configuration
 
@@ -599,7 +605,9 @@ router bgp 65103
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor 172.31.255.16 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.16 description EAPI-SPINE1_Ethernet7
    neighbor 172.31.255.18 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.18 description EAPI-SPINE2_Ethernet7
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.1 remote-as 65001
    neighbor 192.168.255.1 description EAPI-SPINE1
@@ -609,13 +617,13 @@ router bgp 65103
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle B-ELAN-201
-      rd 192.168.254.7:20201
+      rd 192.168.255.7:20201
       route-target both 20201:20201
       redistribute learned
       vlan 201
    !
    vlan-aware-bundle TENANT_A_PROJECT01
-      rd 192.168.254.7:11
+      rd 192.168.255.7:11
       route-target both 11:11
       redistribute learned
       vlan 110,113
@@ -628,13 +636,15 @@ router bgp 65103
       neighbor IPv4-UNDERLAY-PEERS activate
    !
    vrf TENANT_A_PROJECT01
-      rd 192.168.254.7:11
+      rd 192.168.255.7:11
       route-target import evpn 11:11
       route-target export evpn 11:11
       router-id 192.168.255.7
       redistribute connected
       redistribute static
 ```
+
+# BFD
 
 ## Router BFD
 
@@ -730,3 +740,5 @@ vrf instance MGMT
 !
 vrf instance TENANT_A_PROJECT01
 ```
+
+# Quality Of Service

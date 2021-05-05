@@ -10,15 +10,15 @@
     - name: build local folders
       tags: [build]
       import_role:
-        name: build_output_folders
+        name: arista.avd.build_output_folders
     - name: generate intented variables
       tags: [build]
       import_role:
-        name: eos_l3ls_evpn
+        name: arista.avd.eos_designs
     - name: generate device intended config and documention
       tags: [build]
       import_role:
-        name: eos_cli_config_gen
+        name: arista.avd.eos_cli_config_gen
 
 - name: Configuration deployment with CVP
   hosts: cv_server

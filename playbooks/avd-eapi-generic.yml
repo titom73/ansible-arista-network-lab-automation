@@ -4,6 +4,7 @@
   collections:
     - arista.avd
     - arista.cvp
+    - arista.eos
   tasks:
     - name: build local folders
       tags: [init, build]

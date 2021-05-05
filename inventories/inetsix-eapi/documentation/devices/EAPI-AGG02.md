@@ -28,7 +28,6 @@
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
-  - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
 - [Filters](#filters)
@@ -36,6 +35,7 @@
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
+- [Quality Of Service](#quality-of-service)
 
 <!-- toc -->
 # Management
@@ -163,7 +163,7 @@ username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$
 
 | CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF | AAA Disabled |
 | -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- | ------ |
-| gzip | 10.73.254.1:9910 |  | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
+| gzip | 10.73.254.1:9910 | UNSET | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
 
 ### TerminAttr Daemon Device Configuration
 
@@ -199,6 +199,12 @@ daemon TerminAttr
 
 
 
+### SNMP Communities
+
+| Community | Access | Access List IPv4 | Access List IPv6 | View |
+| --------- | ------ | ---------------- | ---------------- | ---- |
+| inetsix-ro | rw | inetsix-snmp-acl | - | test |
+
 
 
 
@@ -206,6 +212,7 @@ daemon TerminAttr
 
 ```eos
 !
+snmp-server community inetsix-ro view test rw inetsix-snmp-acl
 ```
 
 # Spanning Tree
@@ -375,19 +382,6 @@ no ip routing vrf MGMT
 ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 ```
 
-## Router BFD
-
-### Router BFD Multihop Summary
-
-| Interval | Minimum RX | Multiplier |
-| -------- | ---------- | ---------- |
-| 1200 | 1200 | 3 |
-
-### Router BFD Multihop Device Configuration
-
-```eos
-```
-
 # Multicast
 
 ## IP IGMP Snooping
@@ -428,3 +422,5 @@ no ip igmp snooping vlan 112
 !
 vrf instance MGMT
 ```
+
+# Quality Of Service
