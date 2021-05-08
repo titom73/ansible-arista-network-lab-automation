@@ -1,5 +1,5 @@
 router_bgp:
-  as: 65110
+  as: 65111
   router_id: 192.168.255.11
   bgp_defaults:
   - no bgp default ipv4-unicast
@@ -10,7 +10,7 @@ router_bgp:
   peer_groups:
     MLAG-IPv4-UNDERLAY-PEER:
       type: ipv4
-      remote_as: 65110
+      remote_as: 65111
       next_hop_self: true
       password: vnEaG8gMeQf3d3cN6PktXQ==
       maximum_routes: 12000
@@ -270,6 +270,13 @@ port_channel_interfaces:
     trunk_groups:
     - LEAF_PEER_L3
     - MLAG
+  Port-Channel5:
+    description: DC1_L2LEAF3_Po1
+    type: switched
+    shutdown: false
+    vlans: 110-111,114-115,411-412
+    mode: trunk
+    mlag: 5
 ethernet_interfaces:
   Ethernet3:
     peer: DC1-BL1B
@@ -309,6 +316,16 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 172.31.255.35/31
+  Ethernet5:
+    peer: DC1-L2LEAF3A
+    peer_interface: Ethernet1
+    peer_type: l2leaf
+    description: DC1-L2LEAF3A_Ethernet1
+    type: switched
+    shutdown: false
+    channel_group:
+      id: 5
+      mode: active
 mlag_configuration:
   domain_id: DC1_BL1
   local_interface: Vlan4094

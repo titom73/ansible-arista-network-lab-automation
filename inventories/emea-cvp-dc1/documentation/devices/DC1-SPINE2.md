@@ -414,16 +414,16 @@ ip route vrf MGMT 0.0.0.0/0 10.73.0.1
 | 172.31.255.11 | 65102 | default |
 | 172.31.255.15 | 65102 | default |
 | 172.31.255.31 | 65103 | default |
-| 172.31.255.35 | 65110 | default |
-| 172.31.255.39 | 65110 | default |
+| 172.31.255.35 | 65111 | default |
+| 172.31.255.39 | 65112 | default |
 | 172.31.255.43 | 65104 | default |
 | 192.168.255.3 | 65101 | default |
 | 192.168.255.4 | 65101 | default |
 | 192.168.255.5 | 65102 | default |
 | 192.168.255.6 | 65102 | default |
 | 192.168.255.10 | 65103 | default |
-| 192.168.255.11 | 65110 | default |
-| 192.168.255.12 | 65110 | default |
+| 192.168.255.11 | 65111 | default |
+| 192.168.255.12 | 65112 | default |
 | 192.168.255.13 | 65104 | default |
 
 ### Router BGP EVPN Address Family
@@ -471,10 +471,10 @@ router bgp 65001
    neighbor 172.31.255.31 remote-as 65103
    neighbor 172.31.255.31 description DC1-LEAF3A_Ethernet5
    neighbor 172.31.255.35 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.35 remote-as 65110
+   neighbor 172.31.255.35 remote-as 65111
    neighbor 172.31.255.35 description DC1-BL1A_Ethernet6
    neighbor 172.31.255.39 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.39 remote-as 65110
+   neighbor 172.31.255.39 remote-as 65112
    neighbor 172.31.255.39 description DC1-BL1B_Ethernet7
    neighbor 172.31.255.43 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.43 remote-as 65104
@@ -495,10 +495,10 @@ router bgp 65001
    neighbor 192.168.255.10 remote-as 65103
    neighbor 192.168.255.10 description DC1-LEAF3A
    neighbor 192.168.255.11 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.11 remote-as 65110
+   neighbor 192.168.255.11 remote-as 65111
    neighbor 192.168.255.11 description DC1-BL1A
    neighbor 192.168.255.12 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.12 remote-as 65110
+   neighbor 192.168.255.12 remote-as 65112
    neighbor 192.168.255.12 description DC1-BL1B
    neighbor 192.168.255.13 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.13 remote-as 65104

@@ -34,11 +34,11 @@ router_bgp:
   neighbors:
     172.31.255.33:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65110
+      remote_as: 65111
       description: DC1-BL1A_Ethernet6
     172.31.255.37:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65110
+      remote_as: 65112
       description: DC1-BL1B_Ethernet7
     172.31.255.1:
       peer_group: IPv4-UNDERLAY-PEERS
@@ -67,11 +67,11 @@ router_bgp:
     192.168.255.11:
       peer_group: EVPN-OVERLAY-PEERS
       description: DC1-BL1A
-      remote_as: 65110
+      remote_as: 65111
     192.168.255.12:
       peer_group: EVPN-OVERLAY-PEERS
       description: DC1-BL1B
-      remote_as: 65110
+      remote_as: 65112
     192.168.255.3:
       peer_group: EVPN-OVERLAY-PEERS
       description: DC1-LEAF1A
