@@ -4,7 +4,6 @@
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
-  - [DNS Domain](#dns-domain)
   - [Name Servers](#name-servers)
   - [NTP](#ntp)
   - [Management API HTTP](#management-api-http)
@@ -66,18 +65,6 @@ interface Management1
    no shutdown
    vrf MGMT
    ip address 10.73.1.12/16
-```
-
-## DNS Domain
-
-### DNS domain: eve.emea.lab
-
-### DNS Domain Device Configuration
-
-```eos
-!
-dns domain eve.emea.lab
-!
 ```
 
 ## Name Servers
@@ -457,28 +444,28 @@ router bgp 65001
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor 172.31.255.3 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.3 remote-as 65101
-   neighbor 172.31.255.3 description DC1-LEAF1A_Ethernet1
+   neighbor 172.31.255.3 description DC1-LEAF1A_Ethernet2
    neighbor 172.31.255.7 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.7 remote-as 65101
    neighbor 172.31.255.7 description DC1-LEAF1B_Ethernet2
    neighbor 172.31.255.11 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.11 remote-as 65102
-   neighbor 172.31.255.11 description DC1-LEAF2A_Ethernet3
+   neighbor 172.31.255.11 description DC1-LEAF2A_Ethernet2
    neighbor 172.31.255.15 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.15 remote-as 65102
-   neighbor 172.31.255.15 description DC1-LEAF2B_Ethernet4
+   neighbor 172.31.255.15 description DC1-LEAF2B_Ethernet2
    neighbor 172.31.255.31 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.31 remote-as 65103
-   neighbor 172.31.255.31 description DC1-LEAF3A_Ethernet5
+   neighbor 172.31.255.31 description DC1-LEAF3A_Ethernet2
    neighbor 172.31.255.35 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.35 remote-as 65111
-   neighbor 172.31.255.35 description DC1-BL1A_Ethernet6
+   neighbor 172.31.255.35 description DC1-BL1A_Ethernet2
    neighbor 172.31.255.39 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.39 remote-as 65112
-   neighbor 172.31.255.39 description DC1-BL1B_Ethernet7
+   neighbor 172.31.255.39 description DC1-BL1B_Ethernet2
    neighbor 172.31.255.43 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.43 remote-as 65104
-   neighbor 172.31.255.43 description DC1-LEAF4A_Ethernet8
+   neighbor 172.31.255.43 description DC1-LEAF4A_Ethernet2
    neighbor 192.168.255.3 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.3 remote-as 65101
    neighbor 192.168.255.3 description DC1-LEAF1A

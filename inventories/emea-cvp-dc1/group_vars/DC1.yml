@@ -45,7 +45,7 @@ ntp_servers:
 
 
 # Required for EOS State Validation
-dns_domain: eve.emea.lab
+# dns_domain: eve.emea.lab
 validation_mode_loose: true
 
 ### Connection information

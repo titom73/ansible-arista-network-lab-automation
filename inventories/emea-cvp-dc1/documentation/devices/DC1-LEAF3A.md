@@ -4,7 +4,6 @@
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
-  - [DNS Domain](#dns-domain)
   - [Name Servers](#name-servers)
   - [NTP](#ntp)
   - [Management API HTTP](#management-api-http)
@@ -77,18 +76,6 @@ interface Management1
    no shutdown
    vrf MGMT
    ip address 10.73.1.21/16
-```
-
-## DNS Domain
-
-### DNS domain: eve.emea.lab
-
-### DNS Domain Device Configuration
-
-```eos
-!
-dns domain eve.emea.lab
-!
 ```
 
 ## Name Servers

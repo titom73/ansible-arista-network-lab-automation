@@ -173,17 +173,17 @@ l2leaf:
           id: 7
           mgmt_ip: 10.73.1.18/16
           l3leaf_interfaces: [ Ethernet5, Ethernet5 ]
-    DC1_L2LEAF3:
-      parent_l3leafs: [ DC1-BL1A, DC1-BL1B ]
-      short_esi: 0909:0808:0707
-      # filter:
-      #   tenants: [ Tenant_A ]
-      #   tags: [ opzone, web, app ]
-      nodes:
-        DC1-L2LEAF3A:
-          id: 7
-          mgmt_ip: 10.73.1.18/16
-          l3leaf_interfaces: [ Ethernet5, Ethernet5 ]
+    # DC1_L2LEAF3:
+    #   parent_l3leafs: [ DC1-BL1A, DC1-BL1B ]
+    #   short_esi: 0909:0808:0707
+    #   # filter:
+    #   #   tenants: [ Tenant_A ]
+    #   #   tags: [ opzone, web, app ]
+    #   nodes:
+    #     DC1-L2LEAF3A:
+    #       id: 7
+    #       mgmt_ip: 10.73.1.18/16
+    #       l3leaf_interfaces: [ Ethernet5, Ethernet5 ]
 
 #### Override for vEOS Lab Caveats ####
 
