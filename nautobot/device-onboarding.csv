@@ -1,0 +1,11 @@
+site,ip_address,port,platform,role,username,password,device_type
+avd-eapi-lab,10.73.254.11,443,eos,l3leaf,ansible,ansible,veos
+avd-eapi-lab,10.73.254.12,443,eos,l3leaf,ansible,ansible,veos
+avd-eapi-lab,10.73.254.13,443,eos,l3leaf,ansible,ansible,veos
+avd-eapi-lab,10.73.254.14,443,eos,l3leaf,ansible,ansible,veos
+avd-eapi-lab,10.73.254.15,443,eos,l3leaf,ansible,ansible,veos
+avd-eapi-lab,10.73.254.16,443,eos,l3leaf,ansible,ansible,veos
+avd-eapi-lab,10.73.254.17,443,eos,l3leaf,ansible,ansible,veos
+avd-eapi-lab,10.73.254.18,443,eos,l3leaf,ansible,ansible,veos
+avd-eapi-lab,10.73.254.1,443,eos,spine,ansible,ansible,veos
+avd-eapi-lab,10.73.254.2,443,eos,spine,ansible,ansible,veos
