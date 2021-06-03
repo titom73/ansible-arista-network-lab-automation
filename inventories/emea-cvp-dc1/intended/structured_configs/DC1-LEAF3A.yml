@@ -115,6 +115,7 @@ name_server:
     vrf: MGMT
   nodes:
   - 1.1.1.1
+  - 4.4.4.4
 ntp_server:
   local_interface:
     vrf: MGMT

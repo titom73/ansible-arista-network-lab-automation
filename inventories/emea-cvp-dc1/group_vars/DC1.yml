@@ -38,6 +38,7 @@ mgmt_gateway: 10.73.0.1
 # dns servers.
 name_servers:
   - 1.1.1.1
+  - 4.4.4.4
 
 # NTP Servers IP or DNS name, first NTP server will be prefered, and sourced from Managment VRF
 ntp_servers:

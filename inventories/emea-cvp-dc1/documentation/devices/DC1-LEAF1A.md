@@ -88,11 +88,13 @@ interface Management1
 | Name Server | Source VRF |
 | ----------- | ---------- |
 | 1.1.1.1 | MGMT |
+| 4.4.4.4 | MGMT |
 
 ### Name Servers Device Configuration
 
 ```eos
 ip name-server vrf MGMT 1.1.1.1
+ip name-server vrf MGMT 4.4.4.4
 ```
 
 ## NTP
