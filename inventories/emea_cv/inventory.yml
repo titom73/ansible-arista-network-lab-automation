@@ -1,0 +1,15 @@
+---
+all:
+  children:
+    ZTP:
+      hosts:
+        cv_ztp:
+          ansible_host: 10.83.28.162
+          ansible_password: interdata
+          ansible_user: root
+    CVP:
+      hosts:
+        cv_server:
+          ansible_host: 10.83.28.164
+          ansible_password: interdata
+          ansible_user: ansible
