@@ -9,7 +9,7 @@
   vars:
     CVP_CONFIGLETS:
       01TRAINING-alias: "alias a101 show version"
-      01TRAINING-01: "alias a102 show version"
+      01DEMO-alias: "alias a111 show version"
     CVP_CONFIGLETS_2:
       01TRAINING-alias: "alias a103 show version"
       01TRAINING-01: "alias a102 show version"
@@ -24,7 +24,7 @@
     #   arista.cvp.cv_configlet:
     #     cvp_facts: "{{CVP_FACTS.ansible_facts}}"
     #     configlets: "{{CVP_CONFIGLETS}}"
-    #     configlet_filter: ["TRAINING"]
+    #     configlet_filter: ["01DEMO-alias"]
     #     state: present
     #   register: CVP_CONFIGLET_RESULT
 
@@ -32,38 +32,36 @@
     #   debug:
     #     msg: "{{ CVP_CONFIGLET_RESULT }}"
 
-
     - name: "Configure configlet on {{inventory_hostname}}"
       tags: create
       arista.cvp.cv_configlet_v3:
         configlets: "{{CVP_CONFIGLETS}}"
         state: present
+        configlets_notes: "TEST ANSIBLE NOTES - 371"
       register: CVP_CONFIGLET_RESULT
     - name: "Print logs"
       tags: create
       debug:
         msg: "{{ CVP_CONFIGLET_RESULT }}"
 
+    # - name: "Configure configlet on {{inventory_hostname}}"
+    #   tags: update
+    #   arista.cvp.cv_configlet_v3:
+    #     configlets: "{{CVP_CONFIGLETS_2}}"
+    #     state: present
+    #   register: CVP_CONFIGLET_RESULT_2
+    # - name: "Print logs"
+    #   tags: update
+    #   debug:
+    #     msg: "{{ CVP_CONFIGLET_RESULT_2 }}"
 
-    - name: "Configure configlet on {{inventory_hostname}}"
-      tags: update
-      arista.cvp.cv_configlet_v3:
-        configlets: "{{CVP_CONFIGLETS_2}}"
-        state: present
-      register: CVP_CONFIGLET_RESULT_2
-    - name: "Print logs"
-      tags: update
-      debug:
-        msg: "{{ CVP_CONFIGLET_RESULT_2 }}"
-
-
-    - name: "Configure configlet on {{inventory_hostname}}"
-      tags: delete
-      arista.cvp.cv_configlet_v3:
-        configlets: "{{CVP_CONFIGLETS_2}}"
-        state: absent
-      register: CVP_CONFIGLET_RESULT_2
-    - name: "Print logs"
-      tags: delete
-      debug:
-        msg: "{{ CVP_CONFIGLET_RESULT_2 }}"
+    # - name: "Configure configlet on {{inventory_hostname}}"
+    #   tags: delete
+    #   arista.cvp.cv_configlet_v3:
+    #     configlets: "{{CVP_CONFIGLETS_2}}"
+    #     state: absent
+    #   register: CVP_CONFIGLET_RESULT_2
+    # - name: "Print logs"
+    #   tags: delete
+    #   debug:
+    #     msg: "{{ CVP_CONFIGLET_RESULT_2 }}"

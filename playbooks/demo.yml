@@ -1,0 +1,42 @@
+- name: Cloudvision v3 test playbook
+  hosts: cv_server
+  connection: local
+  gather_facts: false
+  collections:
+    - arista.avd
+    - arista.cvp
+  vars:
+    CVP_DEVICES:
+      'CV-ANSIBLE-EOS01':
+        name: CV-ANSIBLE-EOS01
+        parent_container : ANSIBLE
+        parentContainerName : ANSIBLE
+        configlets:
+          - CV-EOS-ANSIBLE01
+          # - 01TRAINING-01
+        imageBundle: [] # Not yet supported
+
+  tasks:
+    - name: "Gather CVP facts from {{inventory_hostname}}"
+      arista.cvp.cv_facts:
+      register: CVP_FACTS
+
+    - name: "Configure devices on {{inventory_hostname}}"
+      arista.cvp.cv_device:
+        devices: "{{CVP_DEVICES}}"
+        cvp_facts: '{{CVP_FACTS.ansible_facts}}'
+        state: present
+      register: CVP_DEVICES_RESULTS
+
+    - name: "Gather CVP facts from {{inventory_hostname}}"
+      arista.cvp.cv_facts:
+      register: CVP_FACTS
+
+    - name: 'Display pending tasks from {{inventory_hostname}}'
+      debug:
+        msg: '{{CVP_DEVICES_RESULTS.data.tasks}}'
+
+    - name: 'Execute all pending tasks and wait for completion for 120 seconds'
+      arista.cvp.cv_task:
+        tasks: "{{CVP_DEVICES_RESULTS.data.tasks}}"
+        wait: 240
