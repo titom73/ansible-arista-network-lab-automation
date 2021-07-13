@@ -31,6 +31,7 @@
   - [VLAN Interfaces](#vlan-interfaces)
   - [VXLAN Interface](#vxlan-interface)
 - [Routing](#routing)
+  - [Service Routing Protocols Model](#service-routing-protocols-model)
   - [Virtual Router MAC Address](#virtual-router-mac-address)
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
@@ -399,7 +400,7 @@ interface Ethernet5
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel3 | MLAG_PEER_EAPI-LEAF2A_Po3 | switched | trunk | 2-4094 | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
-| Port-Channel5 | EAPI_L2LEAF2_Po1 | switched | trunk | 110-112,201 | - | - | - | - | 5 | - |
+| Port-Channel5 | EAPI-AGG02_Po1 | switched | trunk | 110-112,201 | - | - | - | - | 5 | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -415,7 +416,7 @@ interface Port-Channel3
    switchport trunk group MLAG
 !
 interface Port-Channel5
-   description EAPI_L2LEAF2_Po1
+   description EAPI-AGG02_Po1
    no shutdown
    switchport
    switchport trunk allowed vlan 110-112,201
@@ -565,6 +566,14 @@ interface Vxlan1
 ```
 
 # Routing
+## Service Routing Protocols Model
+
+Multi agent routing protocol model enabled
+
+```eos
+!
+service routing protocols model multi-agent
+```
 
 ## Virtual Router MAC Address
 

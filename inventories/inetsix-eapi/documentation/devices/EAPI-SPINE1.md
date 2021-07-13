@@ -22,6 +22,7 @@
   - [Ethernet Interfaces](#ethernet-interfaces)
   - [Loopback Interfaces](#loopback-interfaces)
 - [Routing](#routing)
+  - [Service Routing Protocols Model](#service-routing-protocols-model)
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
@@ -362,6 +363,14 @@ interface Loopback0
 ```
 
 # Routing
+## Service Routing Protocols Model
+
+Multi agent routing protocol model enabled
+
+```eos
+!
+service routing protocols model multi-agent
+```
 
 ## IP Routing
 
@@ -495,25 +504,25 @@ router bgp 65001
    neighbor 172.31.255.1 description EAPI-LEAF1A_Ethernet1
    neighbor 172.31.255.5 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.5 remote-as 65101
-   neighbor 172.31.255.5 description EAPI-LEAF1B_Ethernet2
+   neighbor 172.31.255.5 description EAPI-LEAF1B_Ethernet1
    neighbor 172.31.255.9 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.9 remote-as 65102
-   neighbor 172.31.255.9 description EAPI-LEAF2A_Ethernet3
+   neighbor 172.31.255.9 description EAPI-LEAF2A_Ethernet1
    neighbor 172.31.255.13 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.13 remote-as 65102
-   neighbor 172.31.255.13 description EAPI-LEAF2B_Ethernet4
+   neighbor 172.31.255.13 description EAPI-LEAF2B_Ethernet1
    neighbor 172.31.255.17 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.17 remote-as 65103
-   neighbor 172.31.255.17 description EAPI-LEAF3A_Ethernet7
+   neighbor 172.31.255.17 description EAPI-LEAF3A_Ethernet1
    neighbor 172.31.255.21 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.21 remote-as 65104
-   neighbor 172.31.255.21 description EAPI-LEAF4A_Ethernet8
+   neighbor 172.31.255.21 description EAPI-LEAF4A_Ethernet1
    neighbor 172.31.255.25 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.25 remote-as 65105
-   neighbor 172.31.255.25 description EAPI-BL01A_Ethernet5
+   neighbor 172.31.255.25 description EAPI-BL01A_Ethernet1
    neighbor 172.31.255.29 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.29 remote-as 65105
-   neighbor 172.31.255.29 description EAPI-BL01B_Ethernet6
+   neighbor 172.31.255.29 description EAPI-BL01B_Ethernet1
    neighbor 192.168.255.3 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.3 remote-as 65101
    neighbor 192.168.255.3 description EAPI-LEAF1A
