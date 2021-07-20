@@ -1,0 +1,133 @@
+---
+# MLAG subnet IPs
+mlag_ips:
+  leaf_peer_l3: 12.253.250.0/24
+  mlag_peer: 12.253.249.0/24
+
+# Enable vlan aware bundles
+vxlan_vlan_aware_bundles: true
+
+# IP Address used as Virtual VTEP. Will be configured as secondary IP on loopback1 | Optional
+# This is only needed for centralized routing designs
+vtep_vvtep_ip: 10.88.255.255/32
+
+# Defined in FABRIC.yml
+ner:
+  defaults:
+    # Arista platform family | Required.
+    platform: VEOS-LAB
+    # rack: < rack_name >
+    loopback_ipv4_pool: 10.88.254.0/24
+    loopback_ipv4_offset: 1
+    # IPv4 subnet for VTEP/Loopback1 allocation.
+    vtep_loopback_ipv4_pool: 10.88.255.0/24
+    # Enable PTP on uplink links | Optional
+    uplink_ptp:
+      enable: False
+    # node BGP AS | Required.
+    bgp_as: 8800
+    # List of EOS command to apply to BGP daemon | Optional
+    bgp_defaults:
+      - no bgp default ipv4-unicast
+      - distance bgp 20 200 200
+      - graceful-restart restart-time 300
+      - graceful-restart
+    evpn_role: server
+  nodes:
+    tls-m88-dist01:
+      id: 1
+      mgmt_ip: 10.126.51.101/24
+    tls-m88-dist02:
+      id: 2
+      mgmt_ip: 10.126.51.102/24
+
+ner_access:
+  defaults:
+    platform: VEOS-LAB
+    loopback_ipv4_pool: 10.88.254.0/24
+    loopback_ipv4_offset: 1
+    vtep_loopback_ipv4_pool: 10.88.255.0/24
+    uplink_ipv4_pool: 10.88.1.0/24
+    uplink_interfaces: [ 'Ethernet1', 'Ethernet2' ]
+    uplink_switches: [ 'tls-m88-dist01', 'tls-m88-dist02' ]
+    max_uplink_switches: 2
+    uplink_ptp:
+      enable: False
+    bgp_as: 8801
+    bgp_defaults:
+      - no bgp default ipv4-unicast
+      - distance bgp 20 200 200
+      - graceful-restart restart-time 300
+      - graceful-restart
+    evpn_role: client
+    evpn_route_servers: [ 'tls-m88-dist01', 'tls-m88-dist02' ]
+    evpn_services_l2_only: False
+    filter:
+      tenants: [ 'all' ]
+      tags: [ 'TOULOUSE' ]
+    mlag: True
+    virtual_router_mac_address: 00:1c:73:00:dc:01
+    mlag_dual_primary_detection: false
+    mlag_interfaces: [ 'Ethernet7', 'Ethernet8' ]
+    mlag_peer_l3_vlan: 4093
+    mlag_peer_vlan: 4094
+    spanning_tree_mode: mstp
+    igmp_snooping_enabled: True
+
+  node_groups:
+    M88_NER_01:
+      bgp_as: 8801
+      nodes:
+        tls-m88-ner01a:
+          id: 11
+          mgmt_ip: 10.126.51.111/24
+          uplink_switch_interfaces: [ 'Ethernet1', 'Ethernet1' ]
+        tls-m88-ner01b:
+          id: 12
+          mgmt_ip: 10.126.51.112/24
+          uplink_switch_interfaces: [ 'Ethernet2', 'Ethernet2' ]
+
+nap:
+  defaults:
+    platform: VEOS-LAB
+    # rack: < rack_name >
+    loopback_ipv4_pool: 10.88.254.0/24
+    loopback_ipv4_offset: 1
+    vtep_loopback_ipv4_pool: 10.88.255.0/24
+    uplink_ipv4_pool: 10.88.1.0/24
+    uplink_interfaces: [ 'Ethernet1', 'Ethernet2' ]
+    uplink_switches: [ 'tls-m88-dist01', 'tls-m88-dist02' ]
+    max_uplink_switches: 2
+    uplink_ptp:
+      enable: False
+    bgp_as: 8801
+    bgp_defaults:
+      - no bgp default ipv4-unicast
+      - distance bgp 20 200 200
+      - graceful-restart restart-time 300
+      - graceful-restart
+    evpn_role: client
+    evpn_route_servers: [ 'tls-m88-dist01', 'tls-m88-dist02' ]
+    evpn_services_l2_only: False
+    filter:
+      tenants: [ 'all' ]
+      tags: [ 'TOULOUSE_NAP' ]
+    mlag: True
+    virtual_router_mac_address: 00:1c:73:00:dc:01
+    mlag_dual_primary_detection: false
+    mlag_interfaces: [ 'Ethernet7', 'Ethernet8' ]
+    mlag_peer_l3_vlan: 4093
+    mlag_peer_vlan: 4094
+    spanning_tree_mode: mstp
+  node_groups:
+    M88_NAP:
+      bgp_as: 8802
+      nodes:
+        tls-m88-nap01a:
+          id: 13
+          mgmt_ip: 10.126.51.113/24
+          uplink_switch_interfaces: [ 'Ethernet3', 'Ethernet3' ]
+        tls-m88-nap01b:
+          id: 14
+          mgmt_ip: 10.126.51.114/24
+          uplink_switch_interfaces: [ 'Ethernet4', 'Ethernet4' ]

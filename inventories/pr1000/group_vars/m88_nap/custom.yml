@@ -1,0 +1,13 @@
+router_ospf:
+  process_ids:
+    199:
+      vrf: GRT
+      passive_interface_default: true
+      log_adjacency_changes_detail: true
+      no_passive_interfaces:
+        - vlan199
+      default_information_originate:
+        always: true
+      redistribute:
+        static:
+        connected:

@@ -1,0 +1,71 @@
+---
+fabric_name: TLS_M88
+
+# Validation lab
+# local users
+local_users:
+  admin:
+    privilege: 15
+    role: network-admin
+    no_password: true
+  cvpadmin:
+    privilege: 15
+    role: network-admin
+    sha512_password: "$6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj."
+  ansible:
+    privilege: 15
+    role: network-admin
+    sha512_password: "$6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/"
+
+# Cloud Vision server information
+# cvp_instance_ips:
+#   - 10.126.52.20
+# cvp_ingestauth_key: telarista
+
+# OOB Management network default gateway.
+mgmt_gateway: 10.126.51.1
+mgmt_destination_networks:
+  - 0.0.0.0/0
+
+# dns servers.
+name_servers:
+  - 10.73.254.253
+  - 10.73.1.254
+
+# NTP Servers IP or DNS name, first NTP server will be prefered, and sourced from Managment VRF
+ntp_servers:
+  - 10.73.254.253
+  - 10.73.1.254
+
+# Clock timezone | Optional
+timezone: Europe/Paris
+
+# Generic BGP Settings
+evpn_ebgp_multihop: 10
+evpn_overlay_bgp_rtc: false
+
+bgp_peer_groups:
+  IPv4_UNDERLAY_PEERS:
+    password: "AQQvKeimxJu+uGQ/yYvv9w=="
+  EVPN_OVERLAY_PEERS:
+      password: "q+VNViP5i4rVjW1cxFv2wA=="
+  MLAG_IPv4_UNDERLAY_PEER:
+      password: "vnEaG8gMeQf3d3cN6PktXQ=="
+
+# Define custom field to apply eos_cli_config_gen
+custom_structured_configuration_prefix: [ 'airbus_custom_' ]
+
+# Only for state validation rendering
+validate_state_markdown_flavor: github
+
+platform_settings:
+  - platforms: [default]
+    reload_delay:
+      mlag: 300
+      non_mlag: 330
+  - platforms: [7800R3, 7500R3, 7500R, 7280R3, 7280R2, 7280R]
+    tcam_profile: vxlan-routing
+    lag_hardware_only: false
+    reload_delay:
+      mlag: 780
+      non_mlag: 1020

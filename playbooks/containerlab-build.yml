@@ -1,6 +1,6 @@
 ---
 - name: Build containerlab topology
-  hosts: DC1_FABRIC
+  hosts: TLS_M88
   connection: local
   gather_facts: false
   collections:

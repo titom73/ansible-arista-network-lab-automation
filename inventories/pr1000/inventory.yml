@@ -1,0 +1,47 @@
+---
+DC:
+  children:
+    # MAIN SITE 1 - TOULOUSE (TLS)
+    TLS:
+      children:
+        TLS_CORE:
+          vars:
+            type: dcdi
+          hosts:
+            tls-dcdi01:
+              ansible_port: 8001
+            tls-dcdi02:
+              ansible_port: 8002
+        TLS_M88:
+          children:
+            M88_NAP:
+              vars:
+                type: nap
+              hosts:
+                tls-m88-nap01a:
+                  ansible_port: 8003
+                tls-m88-nap01b:
+                  ansible_port: 8004
+            M88_DIST:
+              vars:
+                type: ner
+              hosts:
+                tls-m88-dist01:
+                  ansible_port: 8005
+                tls-m88-dist02:
+                  ansible_port: 8006
+            M88_NER:
+              vars:
+                type: ner_access
+              children:
+                M88_NER_01:
+                  hosts:
+                    tls-m88-ner01a:
+                      ansible_port: 8007
+                    tls-m88-ner01b:
+                      ansible_port: 8008
+    SERVICES:
+      children:
+        TLS_CORE:
+        M88_NAP:
+        M88_NER:

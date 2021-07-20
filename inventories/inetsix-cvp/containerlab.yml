@@ -1,0 +1,9 @@
+---
+name: DC1_FABRIC
+
+mgmt:
+  network: 'mgmt_DC1_FABRIC'
+  ipv4_subnet: 10.73.0.0/16
+
+topology:
+  nodes:

@@ -1,0 +1,53 @@
+---
+name: TLS_M88
+
+mgmt:
+  network: 'mgmt_TLS_M88'
+  ipv4_subnet: 10.73.0.0/16
+
+topology:
+  nodes:
+    tls-m88-nap01a:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.126.51.113/24
+      kind: ceos
+      config: '/Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/pr1000/intended/configs/tls-m88-nap01a.cfg'
+    tls-m88-nap01b:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.126.51.114/24
+      kind: ceos
+      config: '/Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/pr1000/intended/configs/tls-m88-nap01b.cfg'
+    tls-m88-dist01:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.126.51.101/24
+      kind: ceos
+      config: '/Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/pr1000/intended/configs/tls-m88-dist01.cfg'
+    tls-m88-dist02:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.126.51.102/24
+      kind: ceos
+      config: '/Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/pr1000/intended/configs/tls-m88-dist02.cfg'
+    tls-m88-ner01a:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.126.51.111/24
+      kind: ceos
+      config: '/Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/pr1000/intended/configs/tls-m88-ner01a.cfg'
+    tls-m88-ner01b:
+      image: arista/ceos:4.25.2F
+      mgmt_ipv4: 10.126.51.112/24
+      kind: ceos
+      config: '/Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/pr1000/intended/configs/tls-m88-ner01b.cfg'
+
+  links:
+    - endpoints: ["tls-m88-nap01a:Ethernet1", "tls-m88-dist01:eth3"]
+    - endpoints: ["tls-m88-nap01a:Ethernet2", "tls-m88-dist02:eth3"]
+    - endpoints: ["tls-m88-nap01a:eth7", "tls-m88-nap01b:eth7"]
+    - endpoints: ["tls-m88-nap01a:eth8", "tls-m88-nap01b:eth8"]
+    - endpoints: ["tls-m88-nap01b:Ethernet1", "tls-m88-dist01:eth4"]
+    - endpoints: ["tls-m88-nap01b:Ethernet2", "tls-m88-dist02:eth4"]
+    - endpoints: ["tls-m88-ner01a:Ethernet1", "tls-m88-dist01:eth1"]
+    - endpoints: ["tls-m88-ner01a:Ethernet2", "tls-m88-dist02:eth1"]
+    - endpoints: ["tls-m88-ner01a:eth7", "tls-m88-ner01b:eth7"]
+    - endpoints: ["tls-m88-ner01a:eth8", "tls-m88-ner01b:eth8"]
+    - endpoints: ["tls-m88-ner01b:Ethernet1", "tls-m88-dist01:eth2"]
+    - endpoints: ["tls-m88-ner01b:Ethernet2", "tls-m88-dist02:eth2"]

@@ -1,0 +1,43 @@
+---
+# DC1 Tenatls Networks
+# Documentation of Tenant specific information - Vlans/VRFs
+tenants:
+  # AIRBUS Specific Information - VRFs / VLANs
+  AIRBUS:
+    mac_vrf_vni_base: 10000
+    enable_mlag_ibgp_peering_vrfs: false
+    vrfs:
+      GRT:
+        vtep_diagnostic:
+          loopback: 100
+          loopback_ip_range: 32.255.1.0/24
+        vrf_vni: 10001
+        svis:
+          100:
+            tags: [TOULOUSE, TOULOUSE_NAP]
+            name: vl100_tls
+            enabled: true
+            ip_address_virtual: 12.1.0.1/24
+          199:
+            tags: [TOULOUSE_NAP]
+            name: ospf_c6500_2-6-3-2-1
+            enabled: true
+            # ip_address_virtual: 12.1.99.254/24
+            nodes:
+              tls-m88-nap01a:
+                ip_address: 12.1.99.1/24
+              tls-m88-nap01b:
+                ip_address: 12.1.99.2/24
+            structured_config:
+              ospf_area: 0.0.0.0
+              ospf_cost: 100
+
+      SECURITY:
+        vrf_vni: 10002
+        svis:
+          2014:
+            tags: [TOULOUSE]
+            vni_override: 1114
+            name: vl2014_sec_tls
+            enabled: true
+            ip_address_virtual: 22.0.2.1/24

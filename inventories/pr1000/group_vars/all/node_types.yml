@@ -1,0 +1,30 @@
+node_type_keys:
+  dcdi:
+    type: dcdi
+    default_evpn_role: server
+    connected_endpoints: true
+    network_services:
+      l2: true
+      l3: true
+    vtep: true
+  ner:
+    type: ner
+    default_evpn_role: server
+  nap:
+    type: nap
+    connected_endpoints: true
+    default_evpn_role: client
+    mlag_support: true
+    network_services:
+      l2: true
+      l3: true
+    vtep: true
+  ner_access:
+    type: ner_access
+    connected_endpoints: true
+    default_evpn_role: client
+    mlag_support: true
+    network_services:
+      l2: true
+      l3: true
+    vtep: true
