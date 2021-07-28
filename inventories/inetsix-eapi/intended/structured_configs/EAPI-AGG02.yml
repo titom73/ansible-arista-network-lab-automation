@@ -31,11 +31,6 @@ ntp_server:
   nodes:
   - 10.73.254.253
   - 10.73.1.254
-spanning_tree:
-  mode: mstp
-  mst_instances:
-    '0':
-      priority: 16384
 local_users:
   admin:
     privilege: 15

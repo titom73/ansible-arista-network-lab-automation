@@ -12,9 +12,6 @@
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
   - [SNMP](#snmp)
-- [Spanning Tree](#spanning-tree)
-  - [Spanning Tree Summary](#spanning-tree-summary)
-  - [Spanning Tree Device Configuration](#spanning-tree-device-configuration)
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
   - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
   - [Internal VLAN Allocation Policy Configuration](#internal-vlan-allocation-policy-configuration)
@@ -23,7 +20,6 @@
   - [VLANs Device Configuration](#vlans-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
-  - [Port-Channel Interfaces](#port-channel-interfaces)
 - [Routing](#routing)
   - [Service Routing Protocols Model](#service-routing-protocols-model)
   - [IP Routing](#ip-routing)
@@ -216,29 +212,6 @@ daemon TerminAttr
 snmp-server community inetsix-ro view test rw inetsix-snmp-acl
 ```
 
-# Spanning Tree
-
-## Spanning Tree Summary
-
-STP mode: **mstp**
-
-### MSTP Instance and Priority
-
-| Instance(s) | Priority |
-| -------- | -------- |
-| 0 | 16384 |
-
-### Global Spanning-Tree Settings
-
-
-## Spanning Tree Device Configuration
-
-```eos
-!
-spanning-tree mode mstp
-spanning-tree mst 0 priority 16384
-```
-
 # Internal VLAN Allocation Policy
 
 ## Internal VLAN Allocation Policy Summary
@@ -260,10 +233,10 @@ vlan internal order ascending range 1006 1199
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
-| 110 | PR01-DEMO | none  |
-| 111 | PR01-TRUST | none  |
-| 112 | PR01-TRUST | none  |
-| 201 | B-ELAN-201 | none  |
+| 110 | PR01-DEMO | - |
+| 111 | PR01-TRUST | - |
+| 112 | PR01-TRUST | - |
+| 201 | B-ELAN-201 | - |
 
 ## VLANs Device Configuration
 
@@ -292,8 +265,6 @@ vlan 201
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet1 | EAPI-LEAF2A_Ethernet5 | *trunk | *110-112,201 | *- | *- | 1 |
-| Ethernet2 | EAPI-LEAF2B_Ethernet5 | *trunk | *110-112,201 | *- | *- | 1 |
 | Ethernet3 |  SRV-POD02_Eth1 | trunk | 1-4000 | - | - | - |
 
 *Inherited from Port-Channel Interface
@@ -302,43 +273,11 @@ vlan 201
 
 ```eos
 !
-interface Ethernet1
-   description EAPI-LEAF2A_Ethernet5
-   no shutdown
-   channel-group 1 mode active
-!
-interface Ethernet2
-   description EAPI-LEAF2B_Ethernet5
-   no shutdown
-   channel-group 1 mode active
-!
 interface Ethernet3
    description SRV-POD02_Eth1
    no shutdown
    switchport
    switchport trunk allowed vlan 1-4000
-   switchport mode trunk
-```
-
-## Port-Channel Interfaces
-
-### Port-Channel Interfaces Summary
-
-#### L2
-
-| Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
-| --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel1 | EAPI_LEAF2_Po5 | switched | trunk | 110-112,201 | - | - | - | - | - | - |
-
-### Port-Channel Interfaces Device Configuration
-
-```eos
-!
-interface Port-Channel1
-   description EAPI_LEAF2_Po5
-   no shutdown
-   switchport
-   switchport trunk allowed vlan 110-112,201
    switchport mode trunk
 ```
 

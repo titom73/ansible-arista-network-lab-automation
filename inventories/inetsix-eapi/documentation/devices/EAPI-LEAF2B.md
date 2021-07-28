@@ -297,13 +297,13 @@ vlan internal order ascending range 1006 1199
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
-| 110 | PR01-DEMO | none  |
-| 111 | PR01-TRUST | none  |
-| 112 | PR01-TRUST | none  |
-| 201 | B-ELAN-201 | none  |
-| 3010 | MLAG_iBGP_TENANT_A_PROJECT01 | LEAF_PEER_L3  |
-| 4093 | LEAF_PEER_L3 | LEAF_PEER_L3  |
-| 4094 | MLAG_PEER | MLAG  |
+| 110 | PR01-DEMO | - |
+| 111 | PR01-TRUST | - |
+| 112 | PR01-TRUST | - |
+| 201 | B-ELAN-201 | - |
+| 3010 | MLAG_iBGP_TENANT_A_PROJECT01 | LEAF_PEER_L3 |
+| 4093 | LEAF_PEER_L3 | LEAF_PEER_L3 |
+| 4094 | MLAG_PEER | MLAG |
 
 ## VLANs Device Configuration
 
@@ -346,7 +346,6 @@ vlan 4094
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet3 | MLAG_PEER_EAPI-LEAF2A_Ethernet3 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
 | Ethernet4 | MLAG_PEER_EAPI-LEAF2A_Ethernet4 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
-| Ethernet5 | EAPI-AGG02_Ethernet2 | *trunk | *110-112,201 | *- | *- | 5 |
 
 *Inherited from Port-Channel Interface
 
@@ -384,11 +383,6 @@ interface Ethernet4
    description MLAG_PEER_EAPI-LEAF2A_Ethernet4
    no shutdown
    channel-group 3 mode active
-!
-interface Ethernet5
-   description EAPI-AGG02_Ethernet2
-   no shutdown
-   channel-group 5 mode active
 ```
 
 ## Port-Channel Interfaces
@@ -400,7 +394,6 @@ interface Ethernet5
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel3 | MLAG_PEER_EAPI-LEAF2A_Po3 | switched | trunk | 2-4094 | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
-| Port-Channel5 | EAPI-AGG02_Po1 | switched | trunk | 110-112,201 | - | - | - | - | 5 | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -414,14 +407,6 @@ interface Port-Channel3
    switchport mode trunk
    switchport trunk group LEAF_PEER_L3
    switchport trunk group MLAG
-!
-interface Port-Channel5
-   description EAPI-AGG02_Po1
-   no shutdown
-   switchport
-   switchport trunk allowed vlan 110-112,201
-   switchport mode trunk
-   mlag 5
 ```
 
 ## Loopback Interfaces
@@ -664,7 +649,6 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | Settings | Value |
 | -------- | ----- |
 | Address Family | ipv4 |
-| Remote AS | 65001 |
 | Send community | all |
 | Maximum routes | 12000 |
 
@@ -683,8 +667,8 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
 | 10.255.251.4 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default |
-| 172.31.255.12 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
-| 172.31.255.14 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
+| 172.31.255.12 | 65001 | default |
+| 172.31.255.14 | 65001 | default |
 | 192.168.255.1 | 65001 | default |
 | 192.168.255.2 | 65001 | default |
 | 10.255.251.4 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 |
@@ -725,7 +709,6 @@ router bgp 65102
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS remote-as 65001
    neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
@@ -739,8 +722,10 @@ router bgp 65102
    neighbor 10.255.251.4 peer group MLAG-IPv4-UNDERLAY-PEER
    neighbor 10.255.251.4 description EAPI-LEAF2A
    neighbor 172.31.255.12 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.12 remote-as 65001
    neighbor 172.31.255.12 description EAPI-SPINE1_Ethernet4
    neighbor 172.31.255.14 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.14 remote-as 65001
    neighbor 172.31.255.14 description EAPI-SPINE2_Ethernet4
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.1 remote-as 65001

@@ -1,0 +1,25 @@
+Node Type,Node,Node Interface,Peer Type,Peer,Peer Interface
+ner,tls-m88-dist01,Ethernet1,ner_access,tls-m88-ner01a,Ethernet1
+ner,tls-m88-dist01,Ethernet2,ner_access,tls-m88-ner01b,Ethernet1
+ner,tls-m88-dist01,Ethernet3,nap,tls-m88-nap01a,Ethernet1
+ner,tls-m88-dist01,Ethernet4,nap,tls-m88-nap01b,Ethernet1
+ner,tls-m88-dist02,Ethernet1,ner_access,tls-m88-ner01a,Ethernet2
+ner,tls-m88-dist02,Ethernet2,ner_access,tls-m88-ner01b,Ethernet2
+ner,tls-m88-dist02,Ethernet3,nap,tls-m88-nap01a,Ethernet2
+ner,tls-m88-dist02,Ethernet4,nap,tls-m88-nap01b,Ethernet2
+nap,tls-m88-nap01a,Ethernet1,ner,tls-m88-dist01,Ethernet3
+nap,tls-m88-nap01a,Ethernet2,ner,tls-m88-dist02,Ethernet3
+nap,tls-m88-nap01a,Ethernet7,mlag_peer,tls-m88-nap01b,Ethernet7
+nap,tls-m88-nap01a,Ethernet8,mlag_peer,tls-m88-nap01b,Ethernet8
+nap,tls-m88-nap01b,Ethernet1,ner,tls-m88-dist01,Ethernet4
+nap,tls-m88-nap01b,Ethernet2,ner,tls-m88-dist02,Ethernet4
+nap,tls-m88-nap01b,Ethernet7,mlag_peer,tls-m88-nap01a,Ethernet7
+nap,tls-m88-nap01b,Ethernet8,mlag_peer,tls-m88-nap01a,Ethernet8
+ner_access,tls-m88-ner01a,Ethernet1,ner,tls-m88-dist01,Ethernet1
+ner_access,tls-m88-ner01a,Ethernet2,ner,tls-m88-dist02,Ethernet1
+ner_access,tls-m88-ner01a,Ethernet7,mlag_peer,tls-m88-ner01b,Ethernet7
+ner_access,tls-m88-ner01a,Ethernet8,mlag_peer,tls-m88-ner01b,Ethernet8
+ner_access,tls-m88-ner01b,Ethernet1,ner,tls-m88-dist01,Ethernet2
+ner_access,tls-m88-ner01b,Ethernet2,ner,tls-m88-dist02,Ethernet2
+ner_access,tls-m88-ner01b,Ethernet7,mlag_peer,tls-m88-ner01a,Ethernet7
+ner_access,tls-m88-ner01b,Ethernet8,mlag_peer,tls-m88-ner01a,Ethernet8

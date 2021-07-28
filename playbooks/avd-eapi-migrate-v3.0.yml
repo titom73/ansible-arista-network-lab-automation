@@ -1,0 +1,11 @@
+---
+- name: Build Switch configuration
+  hosts: [EAPI_FABRIC, DC1]
+  collections:
+    - arista.avd
+    - arista.cvp
+    - arista.eos
+  tasks:
+    - name: convert data model from 2.x to 3.0
+      import_role:
+        name: arista.avd.upgrade_tools

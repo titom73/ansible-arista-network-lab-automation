@@ -1,6 +1,6 @@
 ---
 - name: Build containerlab topology
-  hosts: TLS_M88
+  hosts: [TLS_M88, EAPI]
   connection: local
   gather_facts: false
   collections:

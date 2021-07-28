@@ -1,0 +1,193 @@
+router_bgp:
+  as: 8800
+  router_id: 10.88.254.3
+  bgp_defaults:
+  - no bgp default ipv4-unicast
+  - distance bgp 20 200 200
+  - graceful-restart restart-time 300
+  - graceful-restart
+  - maximum-paths 4 ecmp 4
+  peer_groups:
+    IPv4-UNDERLAY-PEERS:
+      type: ipv4
+      password: AQQvKeimxJu+uGQ/yYvv9w==
+      maximum_routes: 12000
+      send_community: all
+    EVPN-OVERLAY-PEERS:
+      type: evpn
+      update_source: Loopback0
+      bfd: true
+      ebgp_multihop: '10'
+      password: q+VNViP5i4rVjW1cxFv2wA==
+      send_community: all
+      maximum_routes: 0
+      next_hop_unchanged: true
+  address_family_ipv4:
+    peer_groups:
+      IPv4-UNDERLAY-PEERS:
+        activate: true
+      EVPN-OVERLAY-PEERS:
+        activate: false
+  redistribute_routes:
+    connected:
+      route_map: RM-CONN-2-BGP
+  neighbors:
+    10.88.1.43:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 8801
+      description: tls-m88-ner01a_Ethernet2
+    10.88.1.47:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 8801
+      description: tls-m88-ner01b_Ethernet2
+    10.88.1.51:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 8802
+      description: tls-m88-nap01a_Ethernet2
+    10.88.1.55:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 8802
+      description: tls-m88-nap01b_Ethernet2
+    10.88.254.14:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: tls-m88-nap01a
+      remote_as: 8802
+    10.88.254.15:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: tls-m88-nap01b
+      remote_as: 8802
+    10.88.254.12:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: tls-m88-ner01a
+      remote_as: 8801
+    10.88.254.13:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: tls-m88-ner01b
+      remote_as: 8801
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
+static_routes:
+- vrf: MGMT
+  destination_address_prefix: 0.0.0.0/0
+  gateway: 10.126.51.1
+service_routing_protocols_model: multi-agent
+ip_routing: true
+vlan_internal_order:
+  allocation: ascending
+  range:
+    beginning: 1006
+    ending: 1199
+name_server:
+  source:
+    vrf: MGMT
+  nodes:
+  - 10.73.254.253
+  - 10.73.1.254
+ntp_server:
+  local_interface:
+    vrf: MGMT
+    interface: Management1
+  nodes:
+  - 10.73.254.253
+  - 10.73.1.254
+spanning_tree:
+  mode: none
+local_users:
+  admin:
+    privilege: 15
+    role: network-admin
+    no_password: true
+  ansible:
+    privilege: 15
+    role: network-admin
+    sha512_password: $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
+  cvpadmin:
+    privilege: 15
+    role: network-admin
+    sha512_password: $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
+clock:
+  timezone: Europe/Paris
+vrfs:
+  MGMT:
+    ip_routing: false
+management_interfaces:
+  Management1:
+    description: oob_management
+    shutdown: false
+    vrf: MGMT
+    ip_address: 10.126.51.102/24
+    gateway: 10.126.51.1
+    type: oob
+management_api_http:
+  enable_vrfs:
+    MGMT: {}
+  enable_https: true
+ethernet_interfaces:
+  Ethernet1:
+    peer: tls-m88-ner01a
+    peer_interface: Ethernet2
+    peer_type: ner_access
+    description: P2P_LINK_TO_TLS-M88-NER01A_Ethernet2
+    mtu: 9000
+    ptp:
+      enable: false
+    type: routed
+    shutdown: false
+    ip_address: 10.88.1.42/31
+  Ethernet2:
+    peer: tls-m88-ner01b
+    peer_interface: Ethernet2
+    peer_type: ner_access
+    description: P2P_LINK_TO_TLS-M88-NER01B_Ethernet2
+    mtu: 9000
+    ptp:
+      enable: false
+    type: routed
+    shutdown: false
+    ip_address: 10.88.1.46/31
+  Ethernet3:
+    peer: tls-m88-nap01a
+    peer_interface: Ethernet2
+    peer_type: nap
+    description: P2P_LINK_TO_TLS-M88-NAP01A_Ethernet2
+    mtu: 9000
+    ptp:
+      enable: false
+    type: routed
+    shutdown: false
+    ip_address: 10.88.1.50/31
+  Ethernet4:
+    peer: tls-m88-nap01b
+    peer_interface: Ethernet2
+    peer_type: nap
+    description: P2P_LINK_TO_TLS-M88-NAP01B_Ethernet2
+    mtu: 9000
+    ptp:
+      enable: false
+    type: routed
+    shutdown: false
+    ip_address: 10.88.1.54/31
+loopback_interfaces:
+  Loopback0:
+    description: EVPN_Overlay_Peering
+    shutdown: false
+    ip_address: 10.88.254.3/32
+prefix_lists:
+  PL-LOOPBACKS-EVPN-OVERLAY:
+    sequence_numbers:
+      10:
+        action: permit 10.88.254.0/24 eq 32
+route_maps:
+  RM-CONN-2-BGP:
+    sequence_numbers:
+      10:
+        type: permit
+        match:
+        - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+router_bfd:
+  multihop:
+    interval: 300
+    min_rx: 300
+    multiplier: 3

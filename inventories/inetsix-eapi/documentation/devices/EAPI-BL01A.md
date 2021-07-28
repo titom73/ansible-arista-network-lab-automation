@@ -297,11 +297,11 @@ vlan internal order ascending range 1006 1199
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
-| 110 | PR01-DEMO | none  |
-| 201 | B-ELAN-201 | none  |
-| 3010 | MLAG_iBGP_TENANT_A_PROJECT01 | LEAF_PEER_L3  |
-| 4093 | LEAF_PEER_L3 | LEAF_PEER_L3  |
-| 4094 | MLAG_PEER | MLAG  |
+| 110 | PR01-DEMO | - |
+| 201 | B-ELAN-201 | - |
+| 3010 | MLAG_iBGP_TENANT_A_PROJECT01 | LEAF_PEER_L3 |
+| 4093 | LEAF_PEER_L3 | LEAF_PEER_L3 |
+| 4094 | MLAG_PEER | MLAG |
 
 ## VLANs Device Configuration
 
@@ -622,7 +622,6 @@ ip route vrf TENANT_A_PROJECT01 1.1.1.0/24 10.1.10.1
 | Settings | Value |
 | -------- | ----- |
 | Address Family | ipv4 |
-| Remote AS | 65001 |
 | Send community | all |
 | Maximum routes | 12000 |
 
@@ -641,8 +640,8 @@ ip route vrf TENANT_A_PROJECT01 1.1.1.0/24 10.1.10.1
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
 | 10.255.251.13 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default |
-| 172.31.255.24 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
-| 172.31.255.26 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
+| 172.31.255.24 | 65001 | default |
+| 172.31.255.26 | 65001 | default |
 | 192.168.255.1 | 65001 | default |
 | 192.168.255.2 | 65001 | default |
 | 10.255.251.13 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 |
@@ -683,7 +682,6 @@ router bgp 65105
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS remote-as 65001
    neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
@@ -697,8 +695,10 @@ router bgp 65105
    neighbor 10.255.251.13 peer group MLAG-IPv4-UNDERLAY-PEER
    neighbor 10.255.251.13 description EAPI-BL01B
    neighbor 172.31.255.24 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.24 remote-as 65001
    neighbor 172.31.255.24 description EAPI-SPINE1_Ethernet5
    neighbor 172.31.255.26 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.26 remote-as 65001
    neighbor 172.31.255.26 description EAPI-SPINE2_Ethernet5
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.1 remote-as 65001

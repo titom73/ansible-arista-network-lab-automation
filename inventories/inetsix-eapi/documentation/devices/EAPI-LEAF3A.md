@@ -269,9 +269,9 @@ vlan internal order ascending range 1006 1199
 
 | VLAN ID | Name | Trunk Groups |
 | ------- | ---- | ------------ |
-| 110 | PR01-DEMO | none  |
-| 113 | PR01-DMZ | none  |
-| 201 | B-ELAN-201 | none  |
+| 110 | PR01-DEMO | - |
+| 113 | PR01-DMZ | - |
+| 201 | B-ELAN-201 | - |
 
 ## VLANs Device Configuration
 
@@ -560,7 +560,6 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | Settings | Value |
 | -------- | ----- |
 | Address Family | ipv4 |
-| Remote AS | 65001 |
 | Send community | all |
 | Maximum routes | 12000 |
 
@@ -568,8 +567,8 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
-| 172.31.255.16 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
-| 172.31.255.18 | Inherited from peer group IPv4-UNDERLAY-PEERS | default |
+| 172.31.255.16 | 65001 | default |
+| 172.31.255.18 | 65001 | default |
 | 192.168.255.1 | 65001 | default |
 | 192.168.255.2 | 65001 | default |
 
@@ -609,13 +608,14 @@ router bgp 65103
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS remote-as 65001
    neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor 172.31.255.16 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.16 remote-as 65001
    neighbor 172.31.255.16 description EAPI-SPINE1_Ethernet7
    neighbor 172.31.255.18 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.18 remote-as 65001
    neighbor 172.31.255.18 description EAPI-SPINE2_Ethernet7
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.1 remote-as 65001

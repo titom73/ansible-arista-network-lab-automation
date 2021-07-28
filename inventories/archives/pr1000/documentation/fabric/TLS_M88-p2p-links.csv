@@ -1,0 +1,9 @@
+type, Node,Node Interface,Leaf IP Address,Peer Node,Peer Interface,Peer IP Address
+ner,tls-m88-dist01,Ethernet1,10.88.1.40/31,ner_access,tls-m88-ner01a,Ethernet1,10.88.1.41/31
+ner,tls-m88-dist01,Ethernet2,10.88.1.44/31,ner_access,tls-m88-ner01b,Ethernet1,10.88.1.45/31
+ner,tls-m88-dist01,Ethernet3,10.88.1.48/31,nap,tls-m88-nap01a,Ethernet1,10.88.1.49/31
+ner,tls-m88-dist01,Ethernet4,10.88.1.52/31,nap,tls-m88-nap01b,Ethernet1,10.88.1.53/31
+ner,tls-m88-dist02,Ethernet1,10.88.1.42/31,ner_access,tls-m88-ner01a,Ethernet2,10.88.1.43/31
+ner,tls-m88-dist02,Ethernet2,10.88.1.46/31,ner_access,tls-m88-ner01b,Ethernet2,10.88.1.47/31
+ner,tls-m88-dist02,Ethernet3,10.88.1.50/31,nap,tls-m88-nap01a,Ethernet2,10.88.1.51/31
+ner,tls-m88-dist02,Ethernet4,10.88.1.54/31,nap,tls-m88-nap01b,Ethernet2,10.88.1.55/31
