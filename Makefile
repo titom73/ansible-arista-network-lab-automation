@@ -32,6 +32,10 @@ facts: ## Get facts from CVP and save locally
 # AVD Commands for DC1 & Cloudvision
 ################################################################################
 
+.PHONY: avd-migrate
+avd-migrate: ## Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
+	ansible-playbook playbooks/avd-upgrade-dataset.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
 .PHONY: avd-build-generic
 avd-build-generic: ## Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
 	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
