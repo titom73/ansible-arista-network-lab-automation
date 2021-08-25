@@ -101,10 +101,6 @@ eapi-build: ## Run ansible playbook to build EVPN Fabric configuration for gener
 eapi-deploy: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
 	ansible-playbook playbooks/avd-eapi-generic.yml --tags "build, deploy" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
-.PHONY: eapi-check
-eapi-check: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
-	ansible-playbook playbooks/avd-eapi-generic.yml --tags "build, deploy" -i $(INVENTORY)/$(INVENTORY_FILE) --check --diff
-
 .PHONY: eapi-states-validation
 eapi-states-validation: ## eapi-states-validation description
 	ansible-playbook playbooks/avd-eapi-states-validation.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
@@ -134,21 +130,16 @@ cli-config-gen: ## Run ansible playbook to build EVPN Fabric configuration for g
 	ansible-playbook playbooks/avd-eos-cli-config-gen.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 ################################################################################
-# AVD Commands for l3ls_evpn role
-################################################################################
-
-.PHONY: l3ls-evpn
-l3ls-evpn: ## Run ansible playbook to run only L3LS role
-	ansible-playbook playbooks/avd-l3ls-development.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
-
-
-################################################################################
 # AVD Commands for Generic Inventory and NO CV instance
 ################################################################################
 
 .PHONY: eos-backup
 eos-backup: ## Backup current running configuration
 	ansible-playbook playbooks/eos-configuration-backup.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
+.PHONY: snapshot
+snapshot: ## Extract commands outputs
+	ansible-playbook playbooks/eos-snapshot.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 ################################################################################
 # Configlet Management

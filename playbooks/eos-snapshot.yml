@@ -1,0 +1,11 @@
+---
+- name: validate states on EOS devices
+  hosts: [all]
+  connection: httpapi
+  gather_facts: false
+  collections:
+    - arista.avd
+  tasks:
+    - name: validate states on EOS devices
+      import_role:
+         name: arista.avd.eos_snapshot

@@ -1,0 +1,8 @@
+Vxlan Mac Address Table
+----------------------------------------------------------------------
+
+VLAN  Mac Address     Type     Prt  VTEP             Moves   Last Move
+----  -----------     ----     ---  ----             -----   ---------
+ 112  5001.0002.f6c5  EVPN     Vx1  192.168.254.5    1       0:21:27 ago
+1199  0c1d.c0e4.777b  EVPN     Vx1  192.168.254.7    1       0:11:05 ago
+Total Remote Mac Addresses for this criterion: 2
