@@ -38,7 +38,7 @@ router_bgp:
       EVPN-OVERLAY-PEERS:
         activate: false
   neighbors:
-    10.255.251.5:
+    172.31.253.7:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
       description: EAPI-LEAF2B
     172.31.255.8:
@@ -49,11 +49,11 @@ router_bgp:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65001
       description: EAPI-SPINE2_Ethernet3
-    192.168.255.1:
+    192.168.1.1:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-SPINE1
       remote_as: 65001
-    192.168.255.2:
+    192.168.1.2:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-SPINE2
       remote_as: 65001
@@ -76,7 +76,7 @@ router_bgp:
           evpn:
           - '11:11'
       neighbors:
-        10.255.251.5:
+        172.31.253.7:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
@@ -207,12 +207,12 @@ vlan_interfaces:
   Vlan4093:
     description: MLAG_PEER_L3_PEERING
     shutdown: false
-    ip_address: 10.255.251.4/31
+    ip_address: 172.31.253.6/31
     mtu: 1500
   Vlan4094:
     description: MLAG_PEER
     shutdown: false
-    ip_address: 10.255.252.4/31
+    ip_address: 172.31.253.4/31
     no_autostate: true
     mtu: 1500
   Vlan110:
@@ -251,7 +251,7 @@ vlan_interfaces:
     shutdown: false
     description: 'MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01'
     vrf: TENANT_A_PROJECT01
-    ip_address: 10.255.251.4/31
+    ip_address: 172.31.253.6/31
     mtu: 1500
 port_channel_interfaces:
   Port-Channel3:
@@ -312,7 +312,7 @@ ethernet_interfaces:
   Ethernet5:
     peer: EAPI-AGG02
     peer_interface: Ethernet1
-    peer_type: l2leaf
+    peer_type: edge
     description: EAPI-AGG02_Ethernet1
     type: switched
     shutdown: false
@@ -322,7 +322,7 @@ ethernet_interfaces:
 mlag_configuration:
   domain_id: EAPI_LEAF2
   local_interface: Vlan4094
-  peer_address: 10.255.252.5
+  peer_address: 172.31.253.5
   peer_link: Port-Channel3
   reload_delay_mlag: 300
   reload_delay_non_mlag: 330

@@ -78,6 +78,10 @@ management_ssh:
 management_console:
   idle_timeout: 0
 
+aaa_authorization:
+  exec:
+    default: local
+
 ip_igmp_snooping:
   globally_enabled: true
 

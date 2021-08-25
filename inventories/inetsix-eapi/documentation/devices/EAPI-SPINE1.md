@@ -325,6 +325,10 @@ vlan internal order ascending range 1006 1199
 | Ethernet6 | P2P_LINK_TO_EAPI-BL01B_Ethernet1 | routed | - | 172.31.255.28/31 | default | 1500 | false | - | - |
 | Ethernet7 | P2P_LINK_TO_EAPI-LEAF3A_Ethernet1 | routed | - | 172.31.255.16/31 | default | 1500 | false | - | - |
 | Ethernet8 | P2P_LINK_TO_EAPI-LEAF4A_Ethernet1 | routed | - | 172.31.255.20/31 | default | 1500 | false | - | - |
+| Ethernet9 | P2P_LINK_TO_EAPI-CL01A_Ethernet1 | routed | - | 172.31.255.32/31 | default | 1500 | false | - | - |
+| Ethernet10 | P2P_LINK_TO_EAPI-CL01B_Ethernet1 | routed | - | 172.31.255.36/31 | default | 1500 | false | - | - |
+| Ethernet11 | P2P_LINK_TO_EAPI-L2LEAF01_Ethernet1 | routed | - | 172.31.251.0/31 | default | 1500 | false | - | - |
+| Ethernet12 | P2P_LINK_TO_EAPI-L2LEAF02_Ethernet1 | routed | - | 172.31.251.4/31 | default | 1500 | false | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -385,6 +389,34 @@ interface Ethernet8
    mtu 1500
    no switchport
    ip address 172.31.255.20/31
+!
+interface Ethernet9
+   description P2P_LINK_TO_EAPI-CL01A_Ethernet1
+   no shutdown
+   mtu 1500
+   no switchport
+   ip address 172.31.255.32/31
+!
+interface Ethernet10
+   description P2P_LINK_TO_EAPI-CL01B_Ethernet1
+   no shutdown
+   mtu 1500
+   no switchport
+   ip address 172.31.255.36/31
+!
+interface Ethernet11
+   description P2P_LINK_TO_EAPI-L2LEAF01_Ethernet1
+   no shutdown
+   mtu 1500
+   no switchport
+   ip address 172.31.251.0/31
+!
+interface Ethernet12
+   description P2P_LINK_TO_EAPI-L2LEAF02_Ethernet1
+   no shutdown
+   mtu 1500
+   no switchport
+   ip address 172.31.251.4/31
 ```
 
 ## Loopback Interfaces
@@ -395,7 +427,7 @@ interface Ethernet8
 
 | Interface | Description | VRF | IP Address |
 | --------- | ----------- | --- | ---------- |
-| Loopback0 | EVPN_Overlay_Peering | default | 192.168.255.1/32 |
+| Loopback0 | EVPN_Overlay_Peering | default | 192.168.1.1/32 |
 
 #### IPv6
 
@@ -411,7 +443,7 @@ interface Ethernet8
 interface Loopback0
    description EVPN_Overlay_Peering
    no shutdown
-   ip address 192.168.255.1/32
+   ip address 192.168.1.1/32
 ```
 
 # Routing
@@ -469,7 +501,7 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 | BGP AS | Router ID |
 | ------ | --------- |
-| 65001|  192.168.255.1 |
+| 65001|  192.168.1.1 |
 
 | BGP Tuning |
 | ---------- |
@@ -505,6 +537,8 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
+| 172.31.251.1 | 65107 | default |
+| 172.31.251.5 | 65108 | default |
 | 172.31.255.1 | 65101 | default |
 | 172.31.255.5 | 65101 | default |
 | 172.31.255.9 | 65102 | default |
@@ -513,6 +547,10 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | 172.31.255.21 | 65104 | default |
 | 172.31.255.25 | 65105 | default |
 | 172.31.255.29 | 65105 | default |
+| 172.31.255.33 | 65106 | default |
+| 172.31.255.37 | 65106 | default |
+| 192.168.253.2 | 65107 | default |
+| 192.168.253.3 | 65108 | default |
 | 192.168.255.3 | 65101 | default |
 | 192.168.255.4 | 65101 | default |
 | 192.168.255.5 | 65102 | default |
@@ -521,6 +559,8 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | 192.168.255.8 | 65104 | default |
 | 192.168.255.9 | 65105 | default |
 | 192.168.255.10 | 65105 | default |
+| 192.168.255.11 | 65106 | default |
+| 192.168.255.12 | 65106 | default |
 
 ### Router BGP EVPN Address Family
 
@@ -533,7 +573,7 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 ```eos
 !
 router bgp 65001
-   router-id 192.168.255.1
+   router-id 192.168.1.1
    no bgp default ipv4-unicast
    distance bgp 20 200 200
    graceful-restart restart-time 300
@@ -551,6 +591,12 @@ router bgp 65001
    neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
+   neighbor 172.31.251.1 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.251.1 remote-as 65107
+   neighbor 172.31.251.1 description EAPI-L2LEAF01_Ethernet1
+   neighbor 172.31.251.5 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.251.5 remote-as 65108
+   neighbor 172.31.251.5 description EAPI-L2LEAF02_Ethernet1
    neighbor 172.31.255.1 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.1 remote-as 65101
    neighbor 172.31.255.1 description EAPI-LEAF1A_Ethernet1
@@ -575,6 +621,18 @@ router bgp 65001
    neighbor 172.31.255.29 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.29 remote-as 65105
    neighbor 172.31.255.29 description EAPI-BL01B_Ethernet1
+   neighbor 172.31.255.33 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.33 remote-as 65106
+   neighbor 172.31.255.33 description EAPI-CL01A_Ethernet1
+   neighbor 172.31.255.37 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.37 remote-as 65106
+   neighbor 172.31.255.37 description EAPI-CL01B_Ethernet1
+   neighbor 192.168.253.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.253.2 remote-as 65107
+   neighbor 192.168.253.2 description EAPI-L2LEAF01
+   neighbor 192.168.253.3 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.253.3 remote-as 65108
+   neighbor 192.168.253.3 description EAPI-L2LEAF02
    neighbor 192.168.255.3 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.3 remote-as 65101
    neighbor 192.168.255.3 description EAPI-LEAF1A
@@ -599,6 +657,12 @@ router bgp 65001
    neighbor 192.168.255.10 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.10 remote-as 65105
    neighbor 192.168.255.10 description EAPI-BL01B
+   neighbor 192.168.255.11 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.11 remote-as 65106
+   neighbor 192.168.255.11 description EAPI-CL01A
+   neighbor 192.168.255.12 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.12 remote-as 65106
+   neighbor 192.168.255.12 description EAPI-CL01B
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
@@ -639,14 +703,14 @@ router bfd
 
 | Sequence | Action |
 | -------- | ------ |
-| 10 | permit 192.168.255.0/24 eq 32 |
+| 10 | permit 192.168.1.0/24 eq 32 |
 
 ### Prefix-lists Device Configuration
 
 ```eos
 !
 ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-   seq 10 permit 192.168.255.0/24 eq 32
+   seq 10 permit 192.168.1.0/24 eq 32
 ```
 
 ## Route-maps

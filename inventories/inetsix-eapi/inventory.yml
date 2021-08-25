@@ -18,8 +18,12 @@ ENDPOINTS:
       ansible_port: 8024
     SRV-POD03:
       ansible_port: 8025
-    DCI-RTR:
-      ansible_port: 8026
+    # DCI-RTR:
+    #   ansible_port: 8026
+    SRV-POD05-23:
+      ansible_port: 8031
+    SRV-POD05-24:
+      ansible_port: 8032
 
 EAPI:
   children:
@@ -61,15 +65,33 @@ EAPI:
                   ansible_port: 8015
                 EAPI-BL01B:
                   ansible_port: 8016
+            # Nodes for central routing (L3 nodes)
+            EAPI_CL02:
+              hosts:
+                EAPI-CL01A:
+                  ansible_port: 8027
+                EAPI-CL01B:
+                  ansible_port: 8028
+        # Nodes for central routing (L2 nodes)
         EAPI_L2LEAFS:
           vars:
             type: l2leaf
           children:
             EAPI_L2LEAF1:
               hosts:
+                EAPI-L2LEAF01:
+                  ansible_port: 8029
+                EAPI-L2LEAF02:
+                  ansible_port: 8030
+        EAPI_EDGE:
+          vars:
+            type: edge
+          children:
+            EAPI_EDGE_LEAF1:
+              hosts:
                 EAPI-AGG01:
                   ansible_port: 8021
-            EAPI_L2LEAF2:
+            EAPI_EDGE_LEAF2:
               hosts:
                 EAPI-AGG02:
                   ansible_port: 8022
@@ -77,10 +99,12 @@ EAPI:
       children:
         EAPI_L3LEAFS:
         EAPI_L2LEAFS:
+        EAPI_EDGE:
     EAPI_SERVERS:
       children:
         EAPI_L3LEAFS:
         EAPI_L2LEAFS:
+        EAPI_EDGE:
 
 # Group to run arista.avd.eos_validate_state
 EOS:

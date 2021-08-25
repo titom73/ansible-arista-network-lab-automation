@@ -11,3 +11,9 @@ vlans:
   201:
     tenant: Tenant_B
     name: B-ELAN-201
+  301:
+    tenant: CENTRAL_ROUTING_LAB
+    name: CENTRAL_LAN_01
+  302:
+    tenant: CENTRAL_ROUTING_LAB
+    name: CENTRAL_LAN_02

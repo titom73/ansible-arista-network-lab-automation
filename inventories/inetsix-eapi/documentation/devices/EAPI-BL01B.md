@@ -286,7 +286,7 @@ snmp-server community inetsix-ro view test rw inetsix-snmp-acl
 
 | Domain-id | Local-interface | Peer-address | Peer-link |
 | --------- | --------------- | ------------ | --------- |
-| EAPI_BL01 | Vlan4094 | 10.255.252.12 | Port-Channel3 |
+| EAPI_BL01 | Vlan4094 | 172.31.253.12 | Port-Channel3 |
 
 Dual primary detection is disabled.
 
@@ -297,7 +297,7 @@ Dual primary detection is disabled.
 mlag configuration
    domain-id EAPI_BL01
    local-interface Vlan4094
-   peer-address 10.255.252.12
+   peer-address 172.31.253.12
    peer-link Port-Channel3
    reload-delay mlag 300
    reload-delay non-mlag 330
@@ -503,9 +503,9 @@ interface Loopback1
 | Interface | VRF | IP Address | IP Address Virtual | IP Router Virtual Address | VRRP | ACL In | ACL Out |
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan110 |  TENANT_A_PROJECT01  |  -  |  10.1.10.254/24  |  -  |  -  |  -  |  -  |
-| Vlan3010 |  TENANT_A_PROJECT01  |  10.255.251.13/31  |  -  |  -  |  -  |  -  |  -  |
-| Vlan4093 |  default  |  10.255.251.13/31  |  -  |  -  |  -  |  -  |  -  |
-| Vlan4094 |  default  |  10.255.252.13/31  |  -  |  -  |  -  |  -  |  -  |
+| Vlan3010 |  TENANT_A_PROJECT01  |  172.31.253.15/31  |  -  |  -  |  -  |  -  |  -  |
+| Vlan4093 |  default  |  172.31.253.15/31  |  -  |  -  |  -  |  -  |  -  |
+| Vlan4094 |  default  |  172.31.253.13/31  |  -  |  -  |  -  |  -  |  -  |
 
 
 ### VLAN Interfaces Device Configuration
@@ -523,20 +523,20 @@ interface Vlan3010
    no shutdown
    mtu 1500
    vrf TENANT_A_PROJECT01
-   ip address 10.255.251.13/31
+   ip address 172.31.253.15/31
 !
 interface Vlan4093
    description MLAG_PEER_L3_PEERING
    no shutdown
    mtu 1500
-   ip address 10.255.251.13/31
+   ip address 172.31.253.15/31
 !
 interface Vlan4094
    description MLAG_PEER
    no shutdown
    mtu 1500
    no autostate
-   ip address 10.255.252.13/31
+   ip address 172.31.253.13/31
 ```
 
 ## VXLAN Interface
@@ -691,12 +691,12 @@ ip route vrf TENANT_A_PROJECT01 1.1.1.0/24 10.1.10.1
 
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
-| 10.255.251.12 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default |
+| 172.31.253.14 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default |
 | 172.31.255.28 | 65001 | default |
 | 172.31.255.30 | 65001 | default |
-| 192.168.255.1 | 65001 | default |
-| 192.168.255.2 | 65001 | default |
-| 10.255.251.12 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 |
+| 192.168.1.1 | 65001 | default |
+| 192.168.1.2 | 65001 | default |
+| 172.31.253.14 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 |
 
 ### Router BGP EVPN Address Family
 
@@ -744,20 +744,20 @@ router bgp 65105
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
-   neighbor 10.255.251.12 peer group MLAG-IPv4-UNDERLAY-PEER
-   neighbor 10.255.251.12 description EAPI-BL01A
+   neighbor 172.31.253.14 peer group MLAG-IPv4-UNDERLAY-PEER
+   neighbor 172.31.253.14 description EAPI-BL01A
    neighbor 172.31.255.28 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.28 remote-as 65001
    neighbor 172.31.255.28 description EAPI-SPINE1_Ethernet6
    neighbor 172.31.255.30 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.30 remote-as 65001
    neighbor 172.31.255.30 description EAPI-SPINE2_Ethernet6
-   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.1 remote-as 65001
-   neighbor 192.168.255.1 description EAPI-SPINE1
-   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.2 remote-as 65001
-   neighbor 192.168.255.2 description EAPI-SPINE2
+   neighbor 192.168.1.1 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.1.1 remote-as 65001
+   neighbor 192.168.1.1 description EAPI-SPINE1
+   neighbor 192.168.1.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.1.2 remote-as 65001
+   neighbor 192.168.1.2 description EAPI-SPINE2
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle B-ELAN-201
@@ -785,7 +785,7 @@ router bgp 65105
       route-target import evpn 11:11
       route-target export evpn 11:11
       router-id 192.168.255.10
-      neighbor 10.255.251.12 peer group MLAG-IPv4-UNDERLAY-PEER
+      neighbor 172.31.253.14 peer group MLAG-IPv4-UNDERLAY-PEER
       redistribute connected
       redistribute static
 ```

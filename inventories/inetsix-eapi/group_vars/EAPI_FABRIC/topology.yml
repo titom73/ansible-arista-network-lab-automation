@@ -14,6 +14,7 @@ bfd_multihop:
   multiplier: 3
 
 # underlay_routing_protocol: isis
+# underlay_routing_protocol: ospf
 # overlay_routing_protocol: ibgp
 
 # AS Number to use when overlay_routing_protocol=ibgp
@@ -43,27 +44,19 @@ bgp_peer_groups:
 # Spine Switches
 spine:
   defaults:
-    # Change from spine.platform to spine.defaults.platform
     platform: vEOS-LAB
-    # Change from spine.bgp_as to spine.defaults.bgp_as
     bgp_as: 65001
-    # Change from overlay_loopback_network_summary to spine.defaults.loopback_ipv4_pool
-    loopback_ipv4_pool: 192.168.255.0/24
-    # Change from spine_bgp_defaults to spine.defaults.bgp_defaults
+    loopback_ipv4_pool: 192.168.1.0/24
     bgp_defaults: '{{veos_bgp_defaults}}'
-    # Change from mlag_ips.mlag_peer to spine.defaults.mlag_peer_ipv4_pool
-    mlag_peer_ipv4_pool: 10.255.252.0/24
-    # Change from mlag_ips.mlag_peer_l3_ipv4_pool to spine.defaults.mlag_peer_l3_ipv4_pool
-    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
+    mlag_peer_ipv4_pool: 172.31.253.0/31
+    mlag_peer_l3_ipv4_pool: 172.31.253.2/31
   nodes:
     EAPI-SPINE1:
       id: 1
-      evpn_role: server
       mgmt_ip: 10.73.254.1/24
       mac_address: '0c:1d:c0:1d:62:01'
     EAPI-SPINE2:
       id: 2
-      evpn_role: server
       mgmt_ip: 10.73.254.2/24
       mac_address: '0c:1d:c0:1d:62:02'
 
@@ -74,25 +67,16 @@ spine:
 
 l3leaf:
   defaults:
-    # Change from overlay_loopback_network_summary to l3leaf.defaults.loopback_ipv4_pool
     loopback_ipv4_pool: 192.168.255.0/24
-    # New loopback_network_offset variable based on max_spines or length of spine.nodes
     loopback_ipv4_offset: 2
-    # Change from vtep_loopback_network_summary to l3leaf.defaults.vtep_loopback_ipv4_pool
     vtep_loopback_ipv4_pool: 192.168.254.0/24
-    # Change from l3leaf.defaults.uplink_to_uplink_switch_interfaces to l3leaf.defaults.uplink_interfaces
     uplink_interfaces: ['Ethernet1', 'Ethernet2']
-    # Change from l3leaf.defaults.spines to l3leaf.defaults.uplink_switches
     uplink_switches: ['EAPI-SPINE1', 'EAPI-SPINE2']
-    # Change from underlay_p2p_network_summary to l3leaf.defaults.uplink_ipv4_pool
     uplink_ipv4_pool: 172.31.255.0/24
-    # Change from mlag_ips.mlag_peer to spine.defaults.mlag_peer_ipv4_pool
-    mlag_peer_ipv4_pool: 10.255.252.0/24
-    # Change from mlag_ips.mlag_peer_l3_ipv4_pool to spine.defaults.mlag_peer_l3_ipv4_pool
-    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
+    mlag_peer_ipv4_pool: 172.31.253.0/31
+    mlag_peer_l3_ipv4_pool: 172.31.253.2/31
     mlag_interfaces: [Ethernet3, Ethernet4]
     virtual_router_mac_address: 00:1c:73:00:dc:01
-    # Change from leaf_bgp_defaults to l3leaf.defaults.bgp_defaults
     bgp_defaults: '{{veos_bgp_defaults}}'
     spanning_tree_priority: 4096
     spanning_tree_mode: mstp
@@ -118,7 +102,6 @@ l3leaf:
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
         tags: [ 'POD02', 'DC1' ]
-        # tags: [ border ]
       nodes:
         EAPI-LEAF2A:
           id: 3
@@ -135,7 +118,6 @@ l3leaf:
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
         tags: [ 'POD03', 'DC1' ]
-        # tags: [ border ]
       nodes:
         EAPI-LEAF3A:
           id: 5
@@ -165,30 +147,80 @@ l3leaf:
           mgmt_ip: 10.73.254.16/24
           mac_address: '0c:1d:c0:1d:62:01'
           uplink_switch_interfaces: [Ethernet6, Ethernet6]
+    EAPI_CL01:
+      bgp_as: 65106
+      filter:
+        tenants: [ 'Tenant_A', 'Tenant_B', 'CENTRAL_ROUTING_LAB' ]
+        tags: [ 'POD05_NODE01', 'POD05_NODE02', 'DC1' ]
+      nodes:
+        EAPI-CL01A:
+          id: 9
+          mgmt_ip: 10.73.254.19/24
+          mac_address: '0c:1d:c0:1d:62:01'
+          uplink_switch_interfaces: [Ethernet9, Ethernet9]
+        EAPI-CL01B:
+          id: 10
+          mgmt_ip: 10.73.254.20/24
+          mac_address: '0c:1d:c0:1d:62:01'
+          uplink_switch_interfaces: [Ethernet10, Ethernet10]
 
 l2leaf:
   defaults:
-    # Change from l2leaf.defaults.uplink_switches to l2leaf.defaults.uplink_switches
-    uplink_switches: ['EAPI-LEAF1A', 'EAPI-LEAF1B']
+    loopback_ipv4_pool: 192.168.253.0/24
+    loopback_ipv4_offset: 1
+    vtep_loopback_ipv4_pool: 192.168.252.0/24
     uplink_interfaces: ['Ethernet1', 'Ethernet2']
-    # Change from mlag_ips.mlag_peer to spine.defaults.mlag_peer_ipv4_pool
-    mlag_peer_ipv4_pool: 10.255.252.0/24
-    # Change from mlag_ips.mlag_peer_l3_ipv4_pool to spine.defaults.mlag_peer_l3_ipv4_pool
-    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
+    uplink_switches: ['EAPI-SPINE1', 'EAPI-SPINE2']
+    uplink_ipv4_pool: 172.31.251.0/24
+    mlag_peer_ipv4_pool: 172.31.253.0/31
+    mlag_peer_l3_ipv4_pool: 172.31.253.2/31
+    mlag_interfaces: [Ethernet3, Ethernet4]
+    virtual_router_mac_address: 00:1c:73:00:dc:01
+    bgp_defaults: '{{veos_bgp_defaults}}'
+    spanning_tree_priority: 4096
+    spanning_tree_mode: mstp
   node_groups:
     EAPI_L2LEAF1:
+      mlag: false
+      nodes:
+        EAPI-L2LEAF01:
+          id: 1
+          bgp_as: 65107
+          mgmt_ip: 10.73.254.31/24
+          uplink_switch_interfaces: [Ethernet11, Ethernet11]
+          filter:
+            tenants: [ 'Tenant_A', 'Tenant_B', 'CENTRAL_ROUTING_LAB' ]
+            tags: [ 'POD05_NODE01' ]
+          # mac_address: '0c:1d:c0:1d:62:01'
+        EAPI-L2LEAF02:
+          id: 2
+          bgp_as: 65108
+          mgmt_ip: 10.73.254.32/24
+          uplink_switch_interfaces: [Ethernet12, Ethernet12]
+          filter:
+            tenants: [ 'Tenant_A', 'Tenant_B', 'CENTRAL_ROUTING_LAB' ]
+            tags: [ 'POD05_NODE02' ]
+          # mac_address: '0c:1d:c0:1d:62:01'
+
+edge:
+  defaults:
+    uplink_switches: ['EAPI-LEAF1A', 'EAPI-LEAF1B']
+    uplink_interfaces: ['Ethernet1', 'Ethernet2']
+    mlag_peer_ipv4_pool: 172.31.253.0/31
+    mlag_peer_l3_ipv4_pool: 172.31.253.2/31
+  node_groups:
+    EAPI_EDGE_LEAF1:
       uplink_switches: [ EAPI-LEAF1A, EAPI-LEAF1B ]
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]
         tags: [ 'POD01', 'DC1' ]
-        # tags: [ border ]
       nodes:
         EAPI-AGG01:
           id: 9
           mgmt_ip: 10.73.254.21/24
           mac_address: '0c:1d:c0:1d:62:01'
           uplink_switch_interfaces: [ Ethernet5, Ethernet5 ]
-    EAPI_L2LEAF2:
+    EAPI_EDGE_LEAF2:
       uplink_switches: [ EAPI-LEAF2A, EAPI-LEAF2B ]
       filter:
         tenants: [ 'Tenant_A', 'Tenant_B' ]

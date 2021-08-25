@@ -39,13 +39,20 @@ iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8015 -j DNAT --to-destinati
 iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8016 -j DNAT --to-destination 10.73.254.16:${_EAPI_PORT}
 iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8017 -j DNAT --to-destination 10.73.254.17:${_EAPI_PORT}
 iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8018 -j DNAT --to-destination 10.73.254.18:${_EAPI_PORT}
+iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8027 -j DNAT --to-destination 10.73.254.19:${_EAPI_PORT}
+iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8028 -j DNAT --to-destination 10.73.254.20:${_EAPI_PORT}
 iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8021 -j DNAT --to-destination 10.73.254.21:${_EAPI_PORT}
 iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8022 -j DNAT --to-destination 10.73.254.22:${_EAPI_PORT}
+iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8029 -j DNAT --to-destination 10.73.254.31:${_EAPI_PORT}
+iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8030 -j DNAT --to-destination 10.73.254.32:${_EAPI_PORT}
 
 # Enpoint NODES
-iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8023 -j DNAT --to-destination 10.73.254.31:${_EAPI_PORT}
-iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8024 -j DNAT --to-destination 10.73.254.32:${_EAPI_PORT}
-iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8025 -j DNAT --to-destination 10.73.254.33:${_EAPI_PORT}
+iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8023 -j DNAT --to-destination 10.73.254.41:${_EAPI_PORT}
+iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8024 -j DNAT --to-destination 10.73.254.42:${_EAPI_PORT}
+iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8025 -j DNAT --to-destination 10.73.254.43:${_EAPI_PORT}
+#iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8025 -j DNAT --to-destination 10.73.254.44:${_EAPI_PORT}
+iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8031 -j DNAT --to-destination 10.73.254.45:${_EAPI_PORT}
+iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8032 -j DNAT --to-destination 10.73.254.46:${_EAPI_PORT}
 
 iptables -A FORWARD -p tcp -d 10.73.254.0/24 --dport ${_EAPI_PORT} -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 

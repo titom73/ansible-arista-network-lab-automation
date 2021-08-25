@@ -10,6 +10,7 @@
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
   - [Local Users](#local-users)
+  - [AAA Authorization](#aaa-authorization)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
@@ -46,7 +47,7 @@
 
 | Management Interface | description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management1 | oob_management | oob | MGMT | 10.73.254.32/24 | 10.73.254.253 |
+| Management1 | oob_management | oob | MGMT | 10.73.254.42/24 | 10.73.254.253 |
 
 #### IPv6
 
@@ -62,7 +63,7 @@ interface Management1
    description oob_management
    no shutdown
    vrf MGMT
-   ip address 10.73.254.32/24
+   ip address 10.73.254.42/24
 ```
 
 ## Name Servers
@@ -184,6 +185,24 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 ```
 
+## AAA Authorization
+
+### AAA Authorization Summary
+
+| Type | User Stores |
+| ---- | ----------- |
+| Exec | local |
+
+Authorization for configuration commands is disabled.
+
+### AAA Authorization Device Configuration
+
+```eos
+!
+aaa authorization exec default local
+!
+```
+
 # Monitoring
 
 ## TerminAttr Daemon
@@ -228,6 +247,8 @@ vlan internal order ascending range 1006 1199
 | 111 | PR01-TRUST | - |
 | 112 | PR01-TRUST | - |
 | 201 | B-ELAN-201 | - |
+| 301 | CENTRAL_LAN_01 | - |
+| 302 | CENTRAL_LAN_02 | - |
 
 ## VLANs Device Configuration
 
@@ -244,6 +265,12 @@ vlan 112
 !
 vlan 201
    name B-ELAN-201
+!
+vlan 301
+   name CENTRAL_LAN_01
+!
+vlan 302
+   name CENTRAL_LAN_02
 ```
 
 # Interfaces

@@ -621,8 +621,8 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | -------- | --------- | --- |
 | 172.31.255.16 | 65001 | default |
 | 172.31.255.18 | 65001 | default |
-| 192.168.255.1 | 65001 | default |
-| 192.168.255.2 | 65001 | default |
+| 192.168.1.1 | 65001 | default |
+| 192.168.1.2 | 65001 | default |
 
 ### Router BGP EVPN Address Family
 
@@ -669,12 +669,12 @@ router bgp 65103
    neighbor 172.31.255.18 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.18 remote-as 65001
    neighbor 172.31.255.18 description EAPI-SPINE2_Ethernet7
-   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.1 remote-as 65001
-   neighbor 192.168.255.1 description EAPI-SPINE1
-   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.2 remote-as 65001
-   neighbor 192.168.255.2 description EAPI-SPINE2
+   neighbor 192.168.1.1 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.1.1 remote-as 65001
+   neighbor 192.168.1.1 description EAPI-SPINE1
+   neighbor 192.168.1.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.1.2 remote-as 65001
+   neighbor 192.168.1.2 description EAPI-SPINE2
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle B-ELAN-201

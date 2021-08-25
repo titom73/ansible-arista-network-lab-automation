@@ -57,6 +57,36 @@ inetsix_management_ssh:
 inetsix_aaa_authorization:
   exec:
     default: local
+node_type_keys:
+  spine:
+    type: spine
+    default_evpn_role: server
+  l3leaf:
+    type: l3leaf
+    connected_endpoints: true
+    default_evpn_role: client
+    mlag_support: true
+    network_services:
+      l2: true
+      l3: true
+    vtep: true
+  l2leaf:
+    type: l2leaf
+    connected_endpoints: true
+    default_evpn_role: client
+    mlag_support: true
+    network_services:
+      l2: true
+      l3: false
+    vtep: true
+  edge:
+    type: edge
+    connected_endpoints: true
+    mlag_support: true
+    network_services:
+      l2: true
+    underlay_router: false
+    uplink_type: port-channel
 output_format:
 - text
 - markdown
@@ -102,23 +132,21 @@ spine:
   defaults:
     platform: vEOS-LAB
     bgp_as: 65001
-    loopback_ipv4_pool: 192.168.255.0/24
+    loopback_ipv4_pool: 192.168.1.0/24
     bgp_defaults:
     - no bgp default ipv4-unicast
     - distance bgp 20 200 200
     - graceful-restart restart-time 300
     - graceful-restart
-    mlag_peer_ipv4_pool: 10.255.252.0/24
-    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
+    mlag_peer_ipv4_pool: 172.31.253.0/31
+    mlag_peer_l3_ipv4_pool: 172.31.253.2/31
   nodes:
     EAPI-SPINE1:
       id: 1
-      evpn_role: server
       mgmt_ip: 10.73.254.1/24
       mac_address: 0c:1d:c0:1d:62:01
     EAPI-SPINE2:
       id: 2
-      evpn_role: server
       mgmt_ip: 10.73.254.2/24
       mac_address: 0c:1d:c0:1d:62:02
 l3leaf:
@@ -133,8 +161,8 @@ l3leaf:
     - EAPI-SPINE1
     - EAPI-SPINE2
     uplink_ipv4_pool: 172.31.255.0/24
-    mlag_peer_ipv4_pool: 10.255.252.0/24
-    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
+    mlag_peer_ipv4_pool: 172.31.253.0/31
+    mlag_peer_l3_ipv4_pool: 172.31.253.2/31
     mlag_interfaces:
     - Ethernet3
     - Ethernet4
@@ -245,7 +273,90 @@ l3leaf:
           uplink_switch_interfaces:
           - Ethernet6
           - Ethernet6
+    EAPI_CL01:
+      bgp_as: 65106
+      filter:
+        tenants:
+        - Tenant_A
+        - Tenant_B
+        - CENTRAL_ROUTING_LAB
+        tags:
+        - POD05_NODE01
+        - POD05_NODE02
+        - DC1
+      nodes:
+        EAPI-CL01A:
+          id: 9
+          mgmt_ip: 10.73.254.19/24
+          mac_address: 0c:1d:c0:1d:62:01
+          uplink_switch_interfaces:
+          - Ethernet9
+          - Ethernet9
+        EAPI-CL01B:
+          id: 10
+          mgmt_ip: 10.73.254.20/24
+          mac_address: 0c:1d:c0:1d:62:01
+          uplink_switch_interfaces:
+          - Ethernet10
+          - Ethernet10
 l2leaf:
+  defaults:
+    loopback_ipv4_pool: 192.168.253.0/24
+    loopback_ipv4_offset: 1
+    vtep_loopback_ipv4_pool: 192.168.252.0/24
+    uplink_interfaces:
+    - Ethernet1
+    - Ethernet2
+    uplink_switches:
+    - EAPI-SPINE1
+    - EAPI-SPINE2
+    uplink_ipv4_pool: 172.31.251.0/24
+    mlag_peer_ipv4_pool: 172.31.253.0/31
+    mlag_peer_l3_ipv4_pool: 172.31.253.2/31
+    mlag_interfaces:
+    - Ethernet3
+    - Ethernet4
+    virtual_router_mac_address: 00:1c:73:00:dc:01
+    bgp_defaults:
+    - no bgp default ipv4-unicast
+    - distance bgp 20 200 200
+    - graceful-restart restart-time 300
+    - graceful-restart
+    spanning_tree_priority: 4096
+    spanning_tree_mode: mstp
+  node_groups:
+    EAPI_L2LEAF1:
+      mlag: false
+      nodes:
+        EAPI-L2LEAF01:
+          id: 1
+          bgp_as: 65107
+          mgmt_ip: 10.73.254.31/24
+          uplink_switch_interfaces:
+          - Ethernet11
+          - Ethernet11
+          filter:
+            tenants:
+            - Tenant_A
+            - Tenant_B
+            - CENTRAL_ROUTING_LAB
+            tags:
+            - POD05_NODE01
+        EAPI-L2LEAF02:
+          id: 2
+          bgp_as: 65108
+          mgmt_ip: 10.73.254.32/24
+          uplink_switch_interfaces:
+          - Ethernet12
+          - Ethernet12
+          filter:
+            tenants:
+            - Tenant_A
+            - Tenant_B
+            - CENTRAL_ROUTING_LAB
+            tags:
+            - POD05_NODE02
+edge:
   defaults:
     uplink_switches:
     - EAPI-LEAF1A
@@ -253,10 +364,10 @@ l2leaf:
     uplink_interfaces:
     - Ethernet1
     - Ethernet2
-    mlag_peer_ipv4_pool: 10.255.252.0/24
-    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
+    mlag_peer_ipv4_pool: 172.31.253.0/31
+    mlag_peer_l3_ipv4_pool: 172.31.253.2/31
   node_groups:
-    EAPI_L2LEAF1:
+    EAPI_EDGE_LEAF1:
       uplink_switches:
       - EAPI-LEAF1A
       - EAPI-LEAF1B
@@ -275,7 +386,7 @@ l2leaf:
           uplink_switch_interfaces:
           - Ethernet5
           - Ethernet5
-    EAPI_L2LEAF2:
+    EAPI_EDGE_LEAF2:
       uplink_switches:
       - EAPI-LEAF2A
       - EAPI-LEAF2B
@@ -355,9 +466,9 @@ ansible_facts:
     spanning_tree_mode: none
     max_uplink_switches: 0
     max_parallel_uplinks: 1
-    loopback_ipv4_pool: 192.168.255.0/24
+    loopback_ipv4_pool: 192.168.1.0/24
     loopback_ipv4_offset: 0
-    router_id: 192.168.255.2
+    router_id: 192.168.1.2
     bgp_as: 65001
     bgp_defaults:
     - no bgp default ipv4-unicast
@@ -406,9 +517,9 @@ switch:
   spanning_tree_mode: none
   max_uplink_switches: 0
   max_parallel_uplinks: 1
-  loopback_ipv4_pool: 192.168.255.0/24
+  loopback_ipv4_pool: 192.168.1.0/24
   loopback_ipv4_offset: 0
-  router_id: 192.168.255.2
+  router_id: 192.168.1.2
   bgp_as: 65001
   bgp_defaults:
   - no bgp default ipv4-unicast
@@ -429,11 +540,10 @@ groups:
   - SRV-POD01
   - SRV-POD02
   - SRV-POD03
-  - DCI-RTR
+  - SRV-POD05-23
+  - SRV-POD05-24
   - EAPI-SPINE1
   - EAPI-SPINE2
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -442,6 +552,12 @@ groups:
   - EAPI-LEAF4A
   - EAPI-BL01A
   - EAPI-BL01B
+  - EAPI-CL01A
+  - EAPI-CL01B
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   ungrouped: []
   TOOLS:
   - DHCP_SERVER
@@ -449,10 +565,13 @@ groups:
   - SRV-POD01
   - SRV-POD02
   - SRV-POD03
-  - DCI-RTR
+  - SRV-POD05-23
+  - SRV-POD05-24
   EAPI:
   - EAPI-SPINE1
   - EAPI-SPINE2
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -461,8 +580,10 @@ groups:
   - EAPI-LEAF4A
   - EAPI-BL01A
   - EAPI-BL01B
-  - EAPI-AGG01
-  - EAPI-AGG02
+  - EAPI-CL01A
+  - EAPI-CL01B
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
   EAPI_FABRIC:
   - EAPI-SPINE1
   - EAPI-SPINE2
@@ -476,6 +597,10 @@ groups:
   - EAPI-LEAF4A
   - EAPI-BL01A
   - EAPI-BL01B
+  - EAPI-CL01A
+  - EAPI-CL01B
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
   EAPI_SPINES:
   - EAPI-SPINE1
   - EAPI-SPINE2
@@ -488,6 +613,8 @@ groups:
   - EAPI-LEAF4A
   - EAPI-BL01A
   - EAPI-BL01B
+  - EAPI-CL01A
+  - EAPI-CL01B
   EAPI_LEAF1:
   - EAPI-LEAF1A
   - EAPI-LEAF1B
@@ -500,16 +627,23 @@ groups:
   EAPI_BL01:
   - EAPI-BL01A
   - EAPI-BL01B
+  EAPI_CL02:
+  - EAPI-CL01A
+  - EAPI-CL01B
   EAPI_L2LEAFS:
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
+  EAPI_L2LEAF1:
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
+  EAPI_EDGE:
   - EAPI-AGG01
   - EAPI-AGG02
-  EAPI_L2LEAF1:
+  EAPI_EDGE_LEAF1:
   - EAPI-AGG01
-  EAPI_L2LEAF2:
+  EAPI_EDGE_LEAF2:
   - EAPI-AGG02
   EAPI_TENANTS_NETWORKS:
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -518,9 +652,13 @@ groups:
   - EAPI-LEAF4A
   - EAPI-BL01A
   - EAPI-BL01B
+  - EAPI-CL01A
+  - EAPI-CL01B
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   EAPI_SERVERS:
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -529,6 +667,12 @@ groups:
   - EAPI-LEAF4A
   - EAPI-BL01A
   - EAPI-BL01B
+  - EAPI-CL01A
+  - EAPI-CL01B
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   EOS:
   - EAPI-SPINE1
   - EAPI-SPINE2
@@ -542,7 +686,11 @@ groups:
   - EAPI-LEAF4A
   - EAPI-BL01A
   - EAPI-BL01B
-omit: __omit_place_holder__2e6058284be1d7266669042b233f852ed32deaee
+  - EAPI-CL01A
+  - EAPI-CL01B
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
+omit: __omit_place_holder__56323a43ca80af51a4e174f1c31c6719fdfcfcc0
 ansible_version:
   string: 2.10.10
   full: 2.10.10
@@ -557,6 +705,6 @@ ansible_inventory_sources:
 ansible_skip_tags: []
 ansible_limit: EAPI
 ansible_run_tags:
-- build
 - deploy
+- build
 ansible_verbosity: 0
