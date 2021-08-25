@@ -2,10 +2,7 @@
 *.log
 playbooks/intended/*
 playbooks/documentation/*
-inventories/*/config_backup/*/*
-inventories/*/intended/*/*
-inventories/*/documentation/*/*
-inventories/*/documentation/*
+
 
 *.json
 *.log.*

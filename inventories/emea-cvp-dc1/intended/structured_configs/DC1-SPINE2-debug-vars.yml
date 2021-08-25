@@ -1,0 +1,441 @@
+ansible_host: 10.83.28.162
+ansible_user: ansible
+ansible_connection: httpapi
+ansible_network_os: eos
+ansible_password: interdata
+cv_collection: v3
+custom_structured_configuration_daemon_terminattr:
+  ingestvrf: default
+local_users:
+  admin:
+    privilege: 15
+    role: network-admin
+    no_password: true
+  cvpadmin:
+    privilege: 15
+    role: network-admin
+    sha512_password: $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
+  ansible:
+    privilege: 15
+    role: network-admin
+    sha512_password: $6$ZMTiXhLqBo7v1si1$sytOdfL9pAFj4paRrqnQeolINyi1zTrBECVQimMvYRAR5wL8RQa02Qet9Jz7D6PXANdb.CEyeVrLbWv8INv7K0
+cvp_instance_ips:
+- 10.83.28.164
+cvp_ingestauth_key: ''
+mgmt_gateway: 10.73.0.1
+name_servers:
+- 1.1.1.1
+- 4.4.4.4
+ntp_servers:
+- fr.pool.ntp.org
+validation_mode_loose: true
+ansible_become: true
+ansible_become_method: enable
+ansible_httpapi_port: 8002
+ansible_httpapi_host: 10.83.28.162
+ansible_httpapi_use_ssl: true
+ansible_httpapi_validate_certs: false
+fabric_name: DC1_FABRIC
+isis_area_id: '49.0001'
+isis_site_id: '0001'
+underlay_ospf_process_id: 100
+underlay_ospf_area: 0.0.0.0
+underlay_ospf_max_lsa: 12000
+underlay_p2p_network_summary: 172.31.255.0/24
+overlay_loopback_network_summary: 192.168.255.0/24
+vtep_loopback_network_summary: 192.168.254.0/24
+mlag_ips:
+  leaf_peer_l3: 10.255.251.0/24
+  mlag_peer: 10.255.252.0/24
+vxlan_vlan_aware_bundles: true
+internal_vlan_order:
+  allocation: descending
+  range:
+    beginning: 4000
+    ending: 4090
+bgp_peer_groups:
+  IPv4_UNDERLAY_PEERS:
+    password: AQQvKeimxJu+uGQ/yYvv9w==
+  EVPN_OVERLAY_PEERS:
+    password: q+VNViP5i4rVjW1cxFv2wA==
+  MLAG_IPv4_UNDERLAY_PEER:
+    password: vnEaG8gMeQf3d3cN6PktXQ==
+spine:
+  platform: vEOS-LAB
+  bgp_as: 65001
+  nodes:
+    DC1-SPINE1:
+      id: 1
+      mgmt_ip: 10.73.1.11/16
+      bgp_route_reflector: true
+    DC1-SPINE2:
+      id: 2
+      mgmt_ip: 10.73.1.12/16
+      bgp_route_reflector: true
+l3leaf:
+  defaults:
+    virtual_router_mac_address: 00:1c:73:00:dc:01
+    platform: vEOS-LAB
+    bgp_as: 65100
+    spines:
+    - DC1-SPINE1
+    - DC1-SPINE2
+    uplink_to_spine_interfaces:
+    - Ethernet1
+    - Ethernet2
+    mlag_interfaces:
+    - Ethernet3
+    - Ethernet4
+    spanning_tree_priority: 4096
+    spanning_tree_mode: mstp
+  node_groups:
+    DC1_LEAF1:
+      bgp_as: 65101
+      filter:
+        tenants:
+        - Tenant_A
+        tags:
+        - opzone
+        - web
+        - app
+      nodes:
+        DC1-LEAF1A:
+          id: 1
+          mgmt_ip: 10.73.1.13/16
+          spine_interfaces:
+          - Ethernet1
+          - Ethernet1
+        DC1-LEAF1B:
+          id: 2
+          mgmt_ip: 10.73.1.14/16
+          spine_interfaces:
+          - Ethernet2
+          - Ethernet2
+    DC1_LEAF2:
+      bgp_as: 65102
+      nodes:
+        DC1-LEAF2A:
+          id: 3
+          mgmt_ip: 10.73.1.15/16
+          spine_interfaces:
+          - Ethernet3
+          - Ethernet3
+        DC1-LEAF2B:
+          id: 4
+          mgmt_ip: 10.73.1.16/16
+          spine_interfaces:
+          - Ethernet4
+          - Ethernet4
+    DC1_LEAF3:
+      bgp_as: 65103
+      nodes:
+        DC1-LEAF3A:
+          id: 8
+          mgmt_ip: 10.73.1.21/16
+          spine_interfaces:
+          - Ethernet5
+          - Ethernet5
+    DC1_LEAF4:
+      bgp_as: 65104
+      nodes:
+        DC1-LEAF4A:
+          id: 11
+          mgmt_ip: 10.73.1.24/16
+          spine_interfaces:
+          - Ethernet8
+          - Ethernet8
+    DC1_BL1:
+      mlag: true
+      nodes:
+        DC1-BL1A:
+          id: 9
+          mgmt_ip: 10.73.1.22/16
+          spine_interfaces:
+          - Ethernet6
+          - Ethernet6
+          bgp_as: 65111
+        DC1-BL1B:
+          id: 10
+          mgmt_ip: 10.73.1.23/16
+          spine_interfaces:
+          - Ethernet7
+          - Ethernet7
+          bgp_as: 65112
+l2leaf:
+  defaults:
+    platform: vEOS-LAB
+    parent_l3leafs:
+    - DC1-LEAF1A
+    - DC1-LEAF1B
+    uplink_interfaces:
+    - Ethernet1
+    - Ethernet2
+    mlag_interfaces:
+    - Ethernet3
+    - Ethernet4
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 16384
+  node_groups:
+    DC1_L2LEAF1:
+      parent_l3leafs:
+      - DC1-LEAF1A
+      - DC1-LEAF1B
+      filter:
+        tenants:
+        - Tenant_A
+        tags:
+        - opzone
+        - web
+        - app
+      nodes:
+        DC1-L2LEAF1A:
+          id: 5
+          mgmt_ip: 10.73.1.17/16
+          l3leaf_interfaces:
+          - Ethernet5
+          - Ethernet5
+    DC1_L2LEAF2:
+      parent_l3leafs:
+      - DC1-LEAF2A
+      - DC1-LEAF2B
+      nodes:
+        DC1-L2LEAF2A:
+          id: 7
+          mgmt_ip: 10.73.1.18/16
+          l3leaf_interfaces:
+          - Ethernet5
+          - Ethernet5
+spine_bgp_defaults:
+- no bgp default ipv4-unicast
+- distance bgp 20 200 200
+- graceful-restart restart-time 300
+- graceful-restart
+leaf_bgp_defaults:
+- no bgp default ipv4-unicast
+- distance bgp 20 200 200
+- graceful-restart restart-time 300
+- graceful-restart
+p2p_uplinks_mtu: 1500
+bfd_multihop:
+  interval: 1200
+  min_rx: 1200
+  multiplier: 3
+type: spine
+event_handler:
+  evpn-blacklist-recovery:
+    action_type: bash
+    action: FastCli -p 15 -c “clear bgp evpn host-flap”
+    delay: 300
+    trigger: on-logging
+    regex: EVPN-3-BLACKLISTED_DUPLICATE_MAC
+    asynchronous: true
+inventory_file: /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/emea-cvp-dc1/inventory.yml
+inventory_dir: /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/emea-cvp-dc1
+ansible_port: 8002
+inventory_hostname: DC1-SPINE2
+inventory_hostname_short: DC1-SPINE2
+group_names:
+- DC1
+- DC1_FABRIC
+- DC1_SPINES
+- EOS
+ansible_facts:
+  switch:
+    underlay_routing_protocol: ebgp
+    overlay_routing_protocol: ebgp
+    id: 2
+    mgmt_ip: 10.73.1.12/16
+    spanning_tree_mode: none
+    bgp_defaults:
+    - no bgp default ipv4-unicast
+    - distance bgp 20 200 200
+    - graceful-restart restart-time 300
+    - graceful-restart
+    max_spines: 2
+    platform: vEOS-LAB
+    platform_settings:
+      platforms:
+      - default
+      reload_delay:
+        mlag: 300
+        non_mlag: 330
+      feature_support:
+        queue_monitor_length_notify: false
+    router_id: 192.168.255.2
+    loopback_network_summary: 192.168.255.0/24
+    bgp_as: 65001
+    uplink_interfaces: []
+    uplink_switches: []
+    uplink_switch_interfaces: []
+    isis_net: 49.0001.0001.0000.0002.00
+    evpn_role: server
+    evpn_route_servers: []
+  topology:
+    peers: []
+switch:
+  underlay_routing_protocol: ebgp
+  overlay_routing_protocol: ebgp
+  id: 2
+  mgmt_ip: 10.73.1.12/16
+  spanning_tree_mode: none
+  bgp_defaults:
+  - no bgp default ipv4-unicast
+  - distance bgp 20 200 200
+  - graceful-restart restart-time 300
+  - graceful-restart
+  max_spines: 2
+  platform: vEOS-LAB
+  platform_settings:
+    platforms:
+    - default
+    reload_delay:
+      mlag: 300
+      non_mlag: 330
+    feature_support:
+      queue_monitor_length_notify: false
+  router_id: 192.168.255.2
+  loopback_network_summary: 192.168.255.0/24
+  bgp_as: 65001
+  uplink_interfaces: []
+  uplink_switches: []
+  uplink_switch_interfaces: []
+  isis_net: 49.0001.0001.0000.0002.00
+  evpn_role: server
+  evpn_route_servers: []
+topology:
+  peers: []
+playbook_dir: /Users/tgrimonet/Projects/arista-ansible/lab-validation/playbooks
+ansible_playbook_python: /Users/tgrimonet/.pyenv/versions/3.6.8/envs/avd-v3/bin/python
+ansible_config_file: /Users/tgrimonet/Projects/arista-ansible/lab-validation/ansible.cfg
+groups:
+  all:
+  - cv_ztp
+  - cv_server
+  - DC1-SPINE1
+  - DC1-SPINE2
+  - DC1-L2LEAF1A
+  - DC1-L2LEAF2A
+  - DC1-LEAF1A
+  - DC1-LEAF1B
+  - DC1-LEAF2A
+  - DC1-LEAF2B
+  - DC1-LEAF3A
+  - DC1-LEAF4A
+  - DC1-BL1A
+  - DC1-BL1B
+  ungrouped: []
+  DC1_ENHANCED_DATA: []
+  ZTP:
+  - cv_ztp
+  CVP:
+  - cv_server
+  DC1:
+  - DC1-SPINE1
+  - DC1-SPINE2
+  - DC1-L2LEAF1A
+  - DC1-L2LEAF2A
+  - DC1-LEAF1A
+  - DC1-LEAF1B
+  - DC1-LEAF2A
+  - DC1-LEAF2B
+  - DC1-LEAF3A
+  - DC1-LEAF4A
+  - DC1-BL1A
+  - DC1-BL1B
+  DC1_FABRIC:
+  - DC1-SPINE1
+  - DC1-SPINE2
+  - DC1-L2LEAF1A
+  - DC1-L2LEAF2A
+  - DC1-LEAF1A
+  - DC1-LEAF1B
+  - DC1-LEAF2A
+  - DC1-LEAF2B
+  - DC1-LEAF3A
+  - DC1-LEAF4A
+  - DC1-BL1A
+  - DC1-BL1B
+  DC1_SPINES:
+  - DC1-SPINE1
+  - DC1-SPINE2
+  DC1_L3LEAFS:
+  - DC1-LEAF1A
+  - DC1-LEAF1B
+  - DC1-LEAF2A
+  - DC1-LEAF2B
+  - DC1-LEAF3A
+  - DC1-LEAF4A
+  - DC1-BL1A
+  - DC1-BL1B
+  DC1_LEAF1:
+  - DC1-LEAF1A
+  - DC1-LEAF1B
+  DC1_LEAF2:
+  - DC1-LEAF2A
+  - DC1-LEAF2B
+  DC1_LEAF3:
+  - DC1-LEAF3A
+  DC1_LEAF4:
+  - DC1-LEAF4A
+  DC1_BL1:
+  - DC1-BL1A
+  - DC1-BL1B
+  DC1_L2LEAFS:
+  - DC1-L2LEAF1A
+  - DC1-L2LEAF2A
+  DC1_L2LEAF1:
+  - DC1-L2LEAF1A
+  DC1_L2LEAF2:
+  - DC1-L2LEAF2A
+  DC1_TENANTS_NETWORKS:
+  - DC1-L2LEAF1A
+  - DC1-L2LEAF2A
+  - DC1-LEAF1A
+  - DC1-LEAF1B
+  - DC1-LEAF2A
+  - DC1-LEAF2B
+  - DC1-LEAF3A
+  - DC1-LEAF4A
+  - DC1-BL1A
+  - DC1-BL1B
+  DC1_SERVERS:
+  - DC1-L2LEAF1A
+  - DC1-L2LEAF2A
+  - DC1-LEAF1A
+  - DC1-LEAF1B
+  - DC1-LEAF2A
+  - DC1-LEAF2B
+  - DC1-LEAF3A
+  - DC1-LEAF4A
+  - DC1-BL1A
+  - DC1-BL1B
+  EOS:
+  - DC1-SPINE1
+  - DC1-SPINE2
+  - DC1-L2LEAF1A
+  - DC1-L2LEAF2A
+  - DC1-LEAF1A
+  - DC1-LEAF1B
+  - DC1-LEAF2A
+  - DC1-LEAF2B
+  - DC1-LEAF3A
+  - DC1-LEAF4A
+  - DC1-BL1A
+  - DC1-BL1B
+omit: __omit_place_holder__20725b321fd8bf3e03f7329f8c2976fc7f83d301
+ansible_version:
+  string: 2.10.10
+  full: 2.10.10
+  major: 2
+  minor: 10
+  revision: 10
+ansible_check_mode: false
+ansible_diff_mode: false
+ansible_forks: 15
+ansible_inventory_sources:
+- /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/emea-cvp-dc1/inventory.yml
+ansible_skip_tags: []
+ansible_run_tags:
+- create_dir
+- build
+ansible_verbosity: 0

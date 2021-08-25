@@ -26,13 +26,12 @@
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
+  - [Router OSPF](#router-ospf)
   - [Router BGP](#router-bgp)
 - [BFD](#bfd)
   - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
 - [Filters](#filters)
-  - [Prefix-lists](#prefix-lists)
-  - [Route-maps](#route-maps)
 - [ACL](#acl)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
@@ -284,6 +283,8 @@ interface Ethernet1
    mtu 1500
    no switchport
    ip address 172.31.255.2/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet2
    description P2P_LINK_TO_EAPI-LEAF1B_Ethernet2
@@ -291,6 +292,8 @@ interface Ethernet2
    mtu 1500
    no switchport
    ip address 172.31.255.6/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet3
    description P2P_LINK_TO_EAPI-LEAF2A_Ethernet2
@@ -298,6 +301,8 @@ interface Ethernet3
    mtu 1500
    no switchport
    ip address 172.31.255.10/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet4
    description P2P_LINK_TO_EAPI-LEAF2B_Ethernet2
@@ -305,6 +310,8 @@ interface Ethernet4
    mtu 1500
    no switchport
    ip address 172.31.255.14/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet5
    description P2P_LINK_TO_EAPI-BL01A_Ethernet2
@@ -312,6 +319,8 @@ interface Ethernet5
    mtu 1500
    no switchport
    ip address 172.31.255.26/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet6
    description P2P_LINK_TO_EAPI-BL01B_Ethernet2
@@ -319,6 +328,8 @@ interface Ethernet6
    mtu 1500
    no switchport
    ip address 172.31.255.30/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet7
    description P2P_LINK_TO_EAPI-LEAF3A_Ethernet2
@@ -326,6 +337,8 @@ interface Ethernet7
    mtu 1500
    no switchport
    ip address 172.31.255.18/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 !
 interface Ethernet8
    description P2P_LINK_TO_EAPI-LEAF4A_Ethernet2
@@ -333,6 +346,8 @@ interface Ethernet8
    mtu 1500
    no switchport
    ip address 172.31.255.22/31
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
 ```
 
 ## Loopback Interfaces
@@ -360,6 +375,7 @@ interface Loopback0
    description EVPN_Overlay_Peering
    no shutdown
    ip address 192.168.255.2/32
+   ip ospf area 0.0.0.0
 ```
 
 # Routing
@@ -411,6 +427,46 @@ no ip routing vrf MGMT
 ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 ```
 
+## Router OSPF
+
+### Router OSPF Summary
+
+| Process ID | Router ID | Default Passive Interface | No Passive Interface | BFD | Max LSA | Default Information Originate | Log Adjacency Changes Detail | Auto Cost Reference Bandwidth | Maximum Paths | MPLS LDP Sync Default |
+| ---------- | --------- | ------------------------- | -------------------- | --- | ------- | ----------------------------- | ---------------------------- | ----------------------------- | ------------- | --------------------- |
+| 100 | 192.168.255.2 | enabled | Ethernet1 <br> Ethernet2 <br> Ethernet3 <br> Ethernet4 <br> Ethernet5 <br> Ethernet6 <br> Ethernet7 <br> Ethernet8 <br> | disabled | 12000 | disabled | disabled | - | - | - |
+
+### OSPF Interfaces
+
+| Interface | Area | Cost | Point To Point |
+| -------- | -------- | -------- | -------- |
+| Ethernet1 | 0.0.0.0 | - | True |
+| Ethernet2 | 0.0.0.0 | - | True |
+| Ethernet3 | 0.0.0.0 | - | True |
+| Ethernet4 | 0.0.0.0 | - | True |
+| Ethernet5 | 0.0.0.0 | - | True |
+| Ethernet6 | 0.0.0.0 | - | True |
+| Ethernet7 | 0.0.0.0 | - | True |
+| Ethernet8 | 0.0.0.0 | - | True |
+| Loopback0 | 0.0.0.0 | - | - |
+
+### Router OSPF Device Configuration
+
+```eos
+!
+router ospf 100
+   router-id 192.168.255.2
+   passive-interface default
+   no passive-interface Ethernet1
+   no passive-interface Ethernet2
+   no passive-interface Ethernet3
+   no passive-interface Ethernet4
+   no passive-interface Ethernet5
+   no passive-interface Ethernet6
+   no passive-interface Ethernet7
+   no passive-interface Ethernet8
+   max-lsa 12000
+```
+
 ## Router BGP
 
 ### Router BGP Summary
@@ -441,26 +497,10 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
-#### IPv4-UNDERLAY-PEERS
-
-| Settings | Value |
-| -------- | ----- |
-| Address Family | ipv4 |
-| Send community | all |
-| Maximum routes | 12000 |
-
 ### BGP Neighbors
 
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
-| 172.31.255.3 | 65101 | default |
-| 172.31.255.7 | 65101 | default |
-| 172.31.255.11 | 65102 | default |
-| 172.31.255.15 | 65102 | default |
-| 172.31.255.19 | 65103 | default |
-| 172.31.255.23 | 65104 | default |
-| 172.31.255.27 | 65105 | default |
-| 172.31.255.31 | 65105 | default |
 | 192.168.255.3 | 65101 | default |
 | 192.168.255.4 | 65101 | default |
 | 192.168.255.5 | 65102 | default |
@@ -495,34 +535,6 @@ router bgp 65001
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
-   neighbor IPv4-UNDERLAY-PEERS peer group
-   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
-   neighbor IPv4-UNDERLAY-PEERS send-community
-   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 172.31.255.3 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.3 remote-as 65101
-   neighbor 172.31.255.3 description EAPI-LEAF1A_Ethernet2
-   neighbor 172.31.255.7 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.7 remote-as 65101
-   neighbor 172.31.255.7 description EAPI-LEAF1B_Ethernet2
-   neighbor 172.31.255.11 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.11 remote-as 65102
-   neighbor 172.31.255.11 description EAPI-LEAF2A_Ethernet2
-   neighbor 172.31.255.15 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.15 remote-as 65102
-   neighbor 172.31.255.15 description EAPI-LEAF2B_Ethernet2
-   neighbor 172.31.255.19 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.19 remote-as 65103
-   neighbor 172.31.255.19 description EAPI-LEAF3A_Ethernet2
-   neighbor 172.31.255.23 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.23 remote-as 65104
-   neighbor 172.31.255.23 description EAPI-LEAF4A_Ethernet2
-   neighbor 172.31.255.27 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.27 remote-as 65105
-   neighbor 172.31.255.27 description EAPI-BL01A_Ethernet2
-   neighbor 172.31.255.31 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.31 remote-as 65105
-   neighbor 172.31.255.31 description EAPI-BL01B_Ethernet2
    neighbor 192.168.255.3 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.3 remote-as 65101
    neighbor 192.168.255.3 description EAPI-LEAF1A
@@ -547,14 +559,12 @@ router bgp 65001
    neighbor 192.168.255.10 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.10 remote-as 65105
    neighbor 192.168.255.10 description EAPI-BL01B
-   redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
-      neighbor IPv4-UNDERLAY-PEERS activate
 ```
 
 # BFD
@@ -578,42 +588,6 @@ router bfd
 # Multicast
 
 # Filters
-
-## Prefix-lists
-
-### Prefix-lists Summary
-
-#### PL-LOOPBACKS-EVPN-OVERLAY
-
-| Sequence | Action |
-| -------- | ------ |
-| 10 | permit 192.168.255.0/24 eq 32 |
-
-### Prefix-lists Device Configuration
-
-```eos
-!
-ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-   seq 10 permit 192.168.255.0/24 eq 32
-```
-
-## Route-maps
-
-### Route-maps Summary
-
-#### RM-CONN-2-BGP
-
-| Sequence | Type | Match and/or Set |
-| -------- | ---- | ---------------- |
-| 10 | permit | match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
-
-### Route-maps Device Configuration
-
-```eos
-!
-route-map RM-CONN-2-BGP permit 10
-   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-```
 
 # ACL
 
