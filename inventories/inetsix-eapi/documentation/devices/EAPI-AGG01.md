@@ -6,9 +6,11 @@
   - [Management Interfaces](#management-interfaces)
   - [Name Servers](#name-servers)
   - [NTP](#ntp)
+  - [Management SSH](#management-ssh)
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
   - [Local Users](#local-users)
+  - [AAA Authorization](#aaa-authorization)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
   - [SNMP](#snmp)
@@ -103,6 +105,38 @@ ntp server vrf MGMT 10.73.254.253 prefer
 ntp server vrf MGMT 10.73.1.254
 ```
 
+## Management SSH
+
+
+ ### SSH timeout and management
+
+| Idle Timeout | SSH Management |
+| ------------ | -------------- |
+| 0 |  Enabled  |
+
+### Ciphers and algorithms
+
+| Ciphers | Key-exchange methods | MAC algorithms | Hostkey server algorithms |
+|---------|----------------------|----------------|---------------------------|
+| default | default | default | default |
+
+### VRFs
+
+| VRF | Status |
+| --- | ------ |
+| MGT |  Enabled  |
+
+### Management SSH Configuration
+
+```eos
+!
+management ssh
+   idle-timeout 0
+   no shutdown
+   vrf MGT
+      no shutdown
+```
+
 ## Management API HTTP
 
 ### Management API HTTP Summary
@@ -151,6 +185,24 @@ username admin privilege 15 role network-admin nopassword
 username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
 username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
+```
+
+## AAA Authorization
+
+### AAA Authorization Summary
+
+| Type | User Stores |
+| ---- | ----------- |
+| Exec | local |
+
+Authorization for configuration commands is disabled.
+
+### AAA Authorization Device Configuration
+
+```eos
+!
+aaa authorization exec default local
+!
 ```
 
 # Monitoring

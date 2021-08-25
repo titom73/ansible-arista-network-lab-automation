@@ -46,6 +46,17 @@ snmp_server:
         name: inetsix-snmp-acl
       view: test
 validate_state_markdown_flavor: github
+custom_structured_configuration_prefix:
+- inetsix_
+inetsix_management_ssh:
+  idle_timeout: 0
+  enable: true
+  vrfs:
+    MGT:
+      enable: true
+inetsix_aaa_authorization:
+  exec:
+    default: local
 output_format:
 - text
 - markdown
@@ -474,7 +485,7 @@ ansible_facts:
       p2p_uplinks_peer_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-peer-ip.j2
       vtep_ip_mlag: designs/l3ls-evpn/ip-addressing/vtep-ip-mlag.j2
       vtep_ip: designs/l3ls-evpn/ip-addressing/vtep-ip.j2
-    underlay_routing_protocol: ospf
+    underlay_routing_protocol: ebgp
     overlay_routing_protocol: ebgp
     group: EAPI_BL01
     id: 8
@@ -602,7 +613,7 @@ switch:
     p2p_uplinks_peer_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-peer-ip.j2
     vtep_ip_mlag: designs/l3ls-evpn/ip-addressing/vtep-ip-mlag.j2
     vtep_ip: designs/l3ls-evpn/ip-addressing/vtep-ip.j2
-  underlay_routing_protocol: ospf
+  underlay_routing_protocol: ebgp
   overlay_routing_protocol: ebgp
   group: EAPI_BL01
   id: 8
@@ -709,7 +720,6 @@ topology:
   vlans:
   - 110
   - 201
-underlay_routing_protocol: OSPF
 playbook_dir: /Users/tgrimonet/Projects/arista-ansible/lab-validation/playbooks
 ansible_playbook_python: /Users/tgrimonet/.pyenv/versions/3.6.8/envs/avd-v3.6/bin/python
 ansible_config_file: /Users/tgrimonet/Projects/arista-ansible/lab-validation/ansible.cfg
@@ -722,6 +732,8 @@ groups:
   - DCI-RTR
   - EAPI-SPINE1
   - EAPI-SPINE2
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -730,8 +742,6 @@ groups:
   - EAPI-LEAF4A
   - EAPI-BL01A
   - EAPI-BL01B
-  - EAPI-AGG01
-  - EAPI-AGG02
   ungrouped: []
   TOOLS:
   - DHCP_SERVER
@@ -743,8 +753,6 @@ groups:
   EAPI:
   - EAPI-SPINE1
   - EAPI-SPINE2
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -753,9 +761,13 @@ groups:
   - EAPI-LEAF4A
   - EAPI-BL01A
   - EAPI-BL01B
+  - EAPI-AGG01
+  - EAPI-AGG02
   EAPI_FABRIC:
   - EAPI-SPINE1
   - EAPI-SPINE2
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -764,8 +776,6 @@ groups:
   - EAPI-LEAF4A
   - EAPI-BL01A
   - EAPI-BL01B
-  - EAPI-AGG01
-  - EAPI-AGG02
   EAPI_SPINES:
   - EAPI-SPINE1
   - EAPI-SPINE2
@@ -798,6 +808,8 @@ groups:
   EAPI_L2LEAF2:
   - EAPI-AGG02
   EAPI_TENANTS_NETWORKS:
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -806,9 +818,9 @@ groups:
   - EAPI-LEAF4A
   - EAPI-BL01A
   - EAPI-BL01B
-  - EAPI-AGG01
-  - EAPI-AGG02
   EAPI_SERVERS:
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -817,11 +829,11 @@ groups:
   - EAPI-LEAF4A
   - EAPI-BL01A
   - EAPI-BL01B
-  - EAPI-AGG01
-  - EAPI-AGG02
   EOS:
   - EAPI-SPINE1
   - EAPI-SPINE2
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -830,9 +842,7 @@ groups:
   - EAPI-LEAF4A
   - EAPI-BL01A
   - EAPI-BL01B
-  - EAPI-AGG01
-  - EAPI-AGG02
-omit: __omit_place_holder__c8772dd35d3e18028667328b441c8db9e3bede35
+omit: __omit_place_holder__2e6058284be1d7266669042b233f852ed32deaee
 ansible_version:
   string: 2.10.10
   full: 2.10.10
@@ -847,6 +857,6 @@ ansible_inventory_sources:
 ansible_skip_tags: []
 ansible_limit: EAPI
 ansible_run_tags:
-- deploy
 - build
+- deploy
 ansible_verbosity: 0

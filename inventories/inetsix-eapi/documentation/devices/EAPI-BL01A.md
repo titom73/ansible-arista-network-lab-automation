@@ -6,9 +6,11 @@
   - [Management Interfaces](#management-interfaces)
   - [Name Servers](#name-servers)
   - [NTP](#ntp)
+  - [Management SSH](#management-ssh)
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
   - [Local Users](#local-users)
+  - [AAA Authorization](#aaa-authorization)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
   - [SNMP](#snmp)
@@ -36,13 +38,14 @@
   - [IP Routing](#ip-routing)
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
-  - [Router OSPF](#router-ospf)
   - [Router BGP](#router-bgp)
 - [BFD](#bfd)
   - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
   - [IP IGMP Snooping](#ip-igmp-snooping)
 - [Filters](#filters)
+  - [Prefix-lists](#prefix-lists)
+  - [Route-maps](#route-maps)
 - [ACL](#acl)
 - [VRF Instances](#vrf-instances)
   - [VRF Instances Summary](#vrf-instances-summary)
@@ -117,6 +120,38 @@ ntp server vrf MGMT 10.73.254.253 prefer
 ntp server vrf MGMT 10.73.1.254
 ```
 
+## Management SSH
+
+
+ ### SSH timeout and management
+
+| Idle Timeout | SSH Management |
+| ------------ | -------------- |
+| 0 |  Enabled  |
+
+### Ciphers and algorithms
+
+| Ciphers | Key-exchange methods | MAC algorithms | Hostkey server algorithms |
+|---------|----------------------|----------------|---------------------------|
+| default | default | default | default |
+
+### VRFs
+
+| VRF | Status |
+| --- | ------ |
+| MGT |  Enabled  |
+
+### Management SSH Configuration
+
+```eos
+!
+management ssh
+   idle-timeout 0
+   no shutdown
+   vrf MGT
+      no shutdown
+```
+
 ## Management API HTTP
 
 ### Management API HTTP Summary
@@ -165,6 +200,24 @@ username admin privilege 15 role network-admin nopassword
 username ansible privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj.
 username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
+```
+
+## AAA Authorization
+
+### AAA Authorization Summary
+
+| Type | User Stores |
+| ---- | ----------- |
+| Exec | local |
+
+Authorization for configuration commands is disabled.
+
+### AAA Authorization Device Configuration
+
+```eos
+!
+aaa authorization exec default local
+!
 ```
 
 # Monitoring
@@ -357,8 +410,6 @@ interface Ethernet1
    mtu 1500
    no switchport
    ip address 172.31.255.25/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
 !
 interface Ethernet2
    description P2P_LINK_TO_EAPI-SPINE2_Ethernet5
@@ -366,8 +417,6 @@ interface Ethernet2
    mtu 1500
    no switchport
    ip address 172.31.255.27/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
 !
 interface Ethernet3
    description MLAG_PEER_EAPI-BL01B_Ethernet3
@@ -431,13 +480,11 @@ interface Loopback0
    description EVPN_Overlay_Peering
    no shutdown
    ip address 192.168.255.9/32
-   ip ospf area 0.0.0.0
 !
 interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    no shutdown
    ip address 192.168.254.9/32
-   ip ospf area 0.0.0.0
 ```
 
 ## VLAN Interfaces
@@ -483,8 +530,6 @@ interface Vlan4093
    no shutdown
    mtu 1500
    ip address 10.255.251.12/31
-   ip ospf network point-to-point
-   ip ospf area 0.0.0.0
 !
 interface Vlan4094
    description MLAG_PEER
@@ -595,37 +640,6 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 ip route vrf TENANT_A_PROJECT01 1.1.1.0/24 10.1.10.1
 ```
 
-## Router OSPF
-
-### Router OSPF Summary
-
-| Process ID | Router ID | Default Passive Interface | No Passive Interface | BFD | Max LSA | Default Information Originate | Log Adjacency Changes Detail | Auto Cost Reference Bandwidth | Maximum Paths | MPLS LDP Sync Default |
-| ---------- | --------- | ------------------------- | -------------------- | --- | ------- | ----------------------------- | ---------------------------- | ----------------------------- | ------------- | --------------------- |
-| 100 | 192.168.255.9 | enabled | Ethernet1 <br> Ethernet2 <br> Vlan4093 <br> | disabled | 12000 | disabled | disabled | - | - | - |
-
-### OSPF Interfaces
-
-| Interface | Area | Cost | Point To Point |
-| -------- | -------- | -------- | -------- |
-| Ethernet1 | 0.0.0.0 | - | True |
-| Ethernet2 | 0.0.0.0 | - | True |
-| Vlan4093 | 0.0.0.0 | - | True |
-| Loopback0 | 0.0.0.0 | - | - |
-| Loopback1 | 0.0.0.0 | - | - |
-
-### Router OSPF Device Configuration
-
-```eos
-!
-router ospf 100
-   router-id 192.168.255.9
-   passive-interface default
-   no passive-interface Ethernet1
-   no passive-interface Ethernet2
-   no passive-interface Vlan4093
-   max-lsa 12000
-```
-
 ## Router BGP
 
 ### Router BGP Summary
@@ -655,10 +669,31 @@ router ospf 100
 | Send community | all |
 | Maximum routes | 0 (no limit) |
 
+#### IPv4-UNDERLAY-PEERS
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | ipv4 |
+| Send community | all |
+| Maximum routes | 12000 |
+
+#### MLAG-IPv4-UNDERLAY-PEER
+
+| Settings | Value |
+| -------- | ----- |
+| Address Family | ipv4 |
+| Remote AS | 65105 |
+| Next-hop self | True |
+| Send community | all |
+| Maximum routes | 12000 |
+
 ### BGP Neighbors
 
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
+| 10.255.251.13 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default |
+| 172.31.255.24 | 65001 | default |
+| 172.31.255.26 | 65001 | default |
 | 192.168.255.1 | 65001 | default |
 | 192.168.255.2 | 65001 | default |
 | 10.255.251.13 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 |
@@ -698,12 +733,32 @@ router bgp 65105
    neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
+   neighbor IPv4-UNDERLAY-PEERS peer group
+   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
+   neighbor IPv4-UNDERLAY-PEERS send-community
+   neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
+   neighbor MLAG-IPv4-UNDERLAY-PEER peer group
+   neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65105
+   neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
+   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==
+   neighbor MLAG-IPv4-UNDERLAY-PEER send-community
+   neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
+   neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
+   neighbor 10.255.251.13 peer group MLAG-IPv4-UNDERLAY-PEER
+   neighbor 10.255.251.13 description EAPI-BL01B
+   neighbor 172.31.255.24 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.24 remote-as 65001
+   neighbor 172.31.255.24 description EAPI-SPINE1_Ethernet5
+   neighbor 172.31.255.26 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.26 remote-as 65001
+   neighbor 172.31.255.26 description EAPI-SPINE2_Ethernet5
    neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.1 remote-as 65001
    neighbor 192.168.255.1 description EAPI-SPINE1
    neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
    neighbor 192.168.255.2 remote-as 65001
    neighbor 192.168.255.2 description EAPI-SPINE2
+   redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle B-ELAN-201
       rd 192.168.255.9:20201
@@ -722,6 +777,8 @@ router bgp 65105
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
+      neighbor IPv4-UNDERLAY-PEERS activate
+      neighbor MLAG-IPv4-UNDERLAY-PEER activate
    !
    vrf TENANT_A_PROJECT01
       rd 192.168.255.9:11
@@ -766,6 +823,54 @@ IGMP snooping is globally enabled.
 ```
 
 # Filters
+
+## Prefix-lists
+
+### Prefix-lists Summary
+
+#### PL-LOOPBACKS-EVPN-OVERLAY
+
+| Sequence | Action |
+| -------- | ------ |
+| 10 | permit 192.168.255.0/24 eq 32 |
+| 20 | permit 192.168.254.0/24 eq 32 |
+
+### Prefix-lists Device Configuration
+
+```eos
+!
+ip prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+   seq 10 permit 192.168.255.0/24 eq 32
+   seq 20 permit 192.168.254.0/24 eq 32
+```
+
+## Route-maps
+
+### Route-maps Summary
+
+#### RM-CONN-2-BGP
+
+| Sequence | Type | Match and/or Set |
+| -------- | ---- | ---------------- |
+| 10 | permit | match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY |
+
+#### RM-MLAG-PEER-IN
+
+| Sequence | Type | Match and/or Set |
+| -------- | ---- | ---------------- |
+| 10 | permit | set origin incomplete |
+
+### Route-maps Device Configuration
+
+```eos
+!
+route-map RM-CONN-2-BGP permit 10
+   match ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+!
+route-map RM-MLAG-PEER-IN permit 10
+   description Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal routing
+   set origin incomplete
+```
 
 # ACL
 

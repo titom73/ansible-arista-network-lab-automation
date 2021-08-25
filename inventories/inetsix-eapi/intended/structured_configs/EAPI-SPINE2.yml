@@ -8,6 +8,11 @@ router_bgp:
   - graceful-restart
   - maximum-paths 4 ecmp 4
   peer_groups:
+    IPv4-UNDERLAY-PEERS:
+      type: ipv4
+      password: AQQvKeimxJu+uGQ/yYvv9w==
+      maximum_routes: 12000
+      send_community: all
     EVPN-OVERLAY-PEERS:
       type: evpn
       update_source: Loopback0
@@ -19,13 +24,46 @@ router_bgp:
       next_hop_unchanged: true
   address_family_ipv4:
     peer_groups:
+      IPv4-UNDERLAY-PEERS:
+        activate: true
       EVPN-OVERLAY-PEERS:
         activate: false
-  address_family_evpn:
-    peer_groups:
-      EVPN-OVERLAY-PEERS:
-        activate: true
+  redistribute_routes:
+    connected:
+      route_map: RM-CONN-2-BGP
   neighbors:
+    172.31.255.3:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 65101
+      description: EAPI-LEAF1A_Ethernet2
+    172.31.255.7:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 65101
+      description: EAPI-LEAF1B_Ethernet2
+    172.31.255.11:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 65102
+      description: EAPI-LEAF2A_Ethernet2
+    172.31.255.15:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 65102
+      description: EAPI-LEAF2B_Ethernet2
+    172.31.255.27:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 65105
+      description: EAPI-BL01A_Ethernet2
+    172.31.255.31:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 65105
+      description: EAPI-BL01B_Ethernet2
+    172.31.255.19:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 65103
+      description: EAPI-LEAF3A_Ethernet2
+    172.31.255.23:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 65104
+      description: EAPI-LEAF4A_Ethernet2
     192.168.255.9:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-BL01A
@@ -58,6 +96,10 @@ router_bgp:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-LEAF4A
       remote_as: 65104
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
@@ -137,8 +179,6 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 172.31.255.2/31
-    ospf_network_point_to_point: true
-    ospf_area: 0.0.0.0
   Ethernet2:
     peer: EAPI-LEAF1B
     peer_interface: Ethernet2
@@ -148,8 +188,6 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 172.31.255.6/31
-    ospf_network_point_to_point: true
-    ospf_area: 0.0.0.0
   Ethernet3:
     peer: EAPI-LEAF2A
     peer_interface: Ethernet2
@@ -159,8 +197,6 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 172.31.255.10/31
-    ospf_network_point_to_point: true
-    ospf_area: 0.0.0.0
   Ethernet4:
     peer: EAPI-LEAF2B
     peer_interface: Ethernet2
@@ -170,8 +206,6 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 172.31.255.14/31
-    ospf_network_point_to_point: true
-    ospf_area: 0.0.0.0
   Ethernet5:
     peer: EAPI-BL01A
     peer_interface: Ethernet2
@@ -181,8 +215,6 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 172.31.255.26/31
-    ospf_network_point_to_point: true
-    ospf_area: 0.0.0.0
   Ethernet6:
     peer: EAPI-BL01B
     peer_interface: Ethernet2
@@ -192,8 +224,6 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 172.31.255.30/31
-    ospf_network_point_to_point: true
-    ospf_area: 0.0.0.0
   Ethernet7:
     peer: EAPI-LEAF3A
     peer_interface: Ethernet2
@@ -203,8 +233,6 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 172.31.255.18/31
-    ospf_network_point_to_point: true
-    ospf_area: 0.0.0.0
   Ethernet8:
     peer: EAPI-LEAF4A
     peer_interface: Ethernet2
@@ -214,31 +242,34 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 172.31.255.22/31
-    ospf_network_point_to_point: true
-    ospf_area: 0.0.0.0
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
     shutdown: false
     ip_address: 192.168.255.2/32
-    ospf_area: 0.0.0.0
-router_ospf:
-  process_ids:
-    100:
-      passive_interface_default: true
-      router_id: 192.168.255.2
-      no_passive_interfaces:
-      - Ethernet1
-      - Ethernet2
-      - Ethernet3
-      - Ethernet4
-      - Ethernet5
-      - Ethernet6
-      - Ethernet7
-      - Ethernet8
-      max_lsa: 12000
+prefix_lists:
+  PL-LOOPBACKS-EVPN-OVERLAY:
+    sequence_numbers:
+      10:
+        action: permit 192.168.255.0/24 eq 32
+route_maps:
+  RM-CONN-2-BGP:
+    sequence_numbers:
+      10:
+        type: permit
+        match:
+        - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
 router_bfd:
   multihop:
     interval: 1200
     min_rx: 1200
     multiplier: 3
+management_ssh:
+  idle_timeout: 0
+  enable: true
+  vrfs:
+    MGT:
+      enable: true
+aaa_authorization:
+  exec:
+    default: local

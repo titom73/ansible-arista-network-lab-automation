@@ -122,3 +122,12 @@ ip_igmp_snooping:
       enabled: false
     112:
       enabled: false
+management_ssh:
+  idle_timeout: 0
+  enable: true
+  vrfs:
+    MGT:
+      enable: true
+aaa_authorization:
+  exec:
+    default: local
