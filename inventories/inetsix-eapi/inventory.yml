@@ -9,6 +9,18 @@ TOOLS:
       fabric_group: 'EAPI'
       ztp_mac_source: system
       ztp_mode: offline
+
+ENDPOINTS:
+  hosts:
+    SRV-POD01:
+      ansible_port: 8023
+    SRV-POD02:
+      ansible_port: 8024
+    SRV-POD03:
+      ansible_port: 8025
+    DCI-RTR:
+      ansible_port: 8026
+
 EAPI:
   children:
     EAPI_FABRIC:

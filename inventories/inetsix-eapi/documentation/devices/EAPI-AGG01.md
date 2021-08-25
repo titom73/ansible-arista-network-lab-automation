@@ -20,6 +20,7 @@
   - [VLANs Device Configuration](#vlans-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
+  - [Port-Channel Interfaces](#port-channel-interfaces)
 - [Routing](#routing)
   - [Service Routing Protocols Model](#service-routing-protocols-model)
   - [IP Routing](#ip-routing)
@@ -265,6 +266,8 @@ vlan 201
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
+| Ethernet1 | EAPI-LEAF1A_Ethernet5 | *trunk | *110-112,201 | *- | *- | 1 |
+| Ethernet2 | EAPI-LEAF1B_Ethernet5 | *trunk | *110-112,201 | *- | *- | 1 |
 | Ethernet3 |  SRV-POD01_Eth1 | trunk | 1-4000 | - | - | - |
 
 *Inherited from Port-Channel Interface
@@ -273,11 +276,43 @@ vlan 201
 
 ```eos
 !
+interface Ethernet1
+   description EAPI-LEAF1A_Ethernet5
+   no shutdown
+   channel-group 1 mode active
+!
+interface Ethernet2
+   description EAPI-LEAF1B_Ethernet5
+   no shutdown
+   channel-group 1 mode active
+!
 interface Ethernet3
    description SRV-POD01_Eth1
    no shutdown
    switchport
    switchport trunk allowed vlan 1-4000
+   switchport mode trunk
+```
+
+## Port-Channel Interfaces
+
+### Port-Channel Interfaces Summary
+
+#### L2
+
+| Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
+| --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
+| Port-Channel1 | EAPI_LEAF1_Po5 | switched | trunk | 110-112,201 | - | - | - | - | - | - |
+
+### Port-Channel Interfaces Device Configuration
+
+```eos
+!
+interface Port-Channel1
+   description EAPI_LEAF1_Po5
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 110-112,201
    switchport mode trunk
 ```
 
