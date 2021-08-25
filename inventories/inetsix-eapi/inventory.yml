@@ -14,12 +14,16 @@ EAPI:
     EAPI_FABRIC:
       children:
         EAPI_SPINES:
+          vars:
+            type: spine
           hosts:
             EAPI-SPINE1:
               ansible_port: 8001
             EAPI-SPINE2:
               ansible_port: 8002
         EAPI_L3LEAFS:
+          vars:
+            type: l3leaf
           children:
             EAPI_LEAF1:
               hosts:
@@ -46,6 +50,8 @@ EAPI:
                 EAPI-BL01B:
                   ansible_port: 8016
         EAPI_L2LEAFS:
+          vars:
+            type: l2leaf
           children:
             EAPI_L2LEAF1:
               hosts:
