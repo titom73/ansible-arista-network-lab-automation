@@ -41,7 +41,6 @@ bgp_peer_groups:
   MLAG_IPv4_UNDERLAY_PEER:
     password: "vnEaG8gMeQf3d3cN6PktXQ=="
 
-# Spine Switches
 spine:
   defaults:
     platform: vEOS-LAB
@@ -59,11 +58,6 @@ spine:
       id: 2
       mgmt_ip: 10.73.254.2/24
       mac_address: '0c:1d:c0:1d:62:02'
-
-
-# Leaf switch groups
-# A maximum of two nodes can form a leaf group
-# When two nodes are in a leaf group this will automatically form mlag pair
 
 l3leaf:
   defaults:
