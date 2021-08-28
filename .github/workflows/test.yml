@@ -1,9 +1,11 @@
 ---
-name: webhook-trigger
+name: "webhook-trigger"
+
 on:
   push:
     branches:
       - maser
+  workflow_dispatch:
   repository_dispatch:
     types:
       - test
