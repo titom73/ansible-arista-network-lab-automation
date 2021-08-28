@@ -1,0 +1,15 @@
+---
+name: webhook-trigger
+on:
+  repository_dispatch:
+    types:
+      - test
+
+jobs:
+  validate-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Execute one-liner installation
+        run: |
+          echo "Current date: $(date )"
