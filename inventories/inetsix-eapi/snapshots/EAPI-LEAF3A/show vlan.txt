@@ -4,6 +4,7 @@ VLAN  Name                             Status    Ports
 110   PR01-DEMO                        active    Cpu, Po5, Vx1
 113   PR01-DMZ                         active    Cpu, Po5, Vx1
 201   B-ELAN-201                       active    Po5, Vx1
+1196* VLAN1196                         active    Cpu, Vx1
 1199* VLAN1199                         active    Cpu, Vx1
 
 * indicates a Dynamic VLAN

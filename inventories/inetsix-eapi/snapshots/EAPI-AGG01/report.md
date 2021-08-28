@@ -112,31 +112,33 @@ Gateway of last resort:
 ## show lldp neighbors
 
 ```
-Last table change time   : 0:10:38 ago
-Number of table inserts  : 21
-Number of table deletes  : 4
+Last table change time   : 2:38:05 ago
+Number of table inserts  : 36
+Number of table deletes  : 17
 Number of table drops    : 0
-Number of table age-outs : 3
+Number of table age-outs : 16
 
 Port          Neighbor Device ID       Neighbor Port ID    TTL 
 ---------- ------------------------ ---------------------- --- 
 Et1           EAPI-LEAF1A              Ethernet5           120 
 Et2           EAPI-LEAF1B              Ethernet5           120 
 Et3           SRV-POD01                Ethernet1           120 
-Ma1           SRV-POD01                Management1         120 
 Ma1           EAPI-LEAF4A              Management1         120 
-Ma1           SRV-POD02                Management1         120 
 Ma1           EAPI-AGG02               Management1         120 
 Ma1           EAPI-BL01B               Management1         120 
 Ma1           EAPI-BL01A               Management1         120 
-Ma1           EAPI-SPINE2              Management1         120 
 Ma1           EAPI-LEAF1B              Management1         120 
-Ma1           EAPI-SPINE1              Management1         120 
 Ma1           EAPI-LEAF1A              Management1         120 
 Ma1           EAPI-LEAF2B              Management1         120 
 Ma1           EAPI-LEAF2A              Management1         120 
-Ma1           SRV-POD03                Management1         120 
-Ma1           EAPI-LEAF3A              Management1         120
+Ma1           EAPI-LEAF3A              Management1         120 
+Ma1           EAPI-SPINE2              Management1         120 
+Ma1           EAPI-SPINE1              Management1         120 
+Ma1           EAPI-CL01A               Management1         120 
+Ma1           EAPI-L2LEAF02            Management1         120 
+Ma1           EAPI-L2LEAF01            Management1         120 
+Ma1           EAPI-CL01B               Management1         120 
+Ma1           SRV-POD05-24             Management1         120
 ```
 ## show mac address-table
 
@@ -146,11 +148,10 @@ Mac Address Table
 
 Vlan    Mac Address       Type        Ports      Moves   Last Move
 ----    -----------       ----        -----      -----   ---------
- 110    001c.7300.dc01    DYNAMIC     Po1        1       0:01:08 ago
- 110    5001.0056.2a6e    DYNAMIC     Et3        1       0:01:08 ago
- 112    5001.0002.f6c5    DYNAMIC     Po1        1       0:21:40 ago
- 112    5001.0056.2a6e    DYNAMIC     Et3        1       0:21:41 ago
-Total Mac Addresses for this criterion: 4
+ 110    0c1d.c0f4.7b39    DYNAMIC     Po1        1       1:59:13 ago
+ 110    5001.0002.f6c5    DYNAMIC     Po1        1       1:59:16 ago
+ 110    5001.0056.2a6e    DYNAMIC     Et3        1       2:04:22 ago
+Total Mac Addresses for this criterion: 3
 
           Multicast Mac Address Table
 ------------------------------------------------------------------
@@ -240,9 +241,9 @@ Architecture:           i686
 Internal build version: 4.24.0F-16270098.4240F
 Internal build ID:      da8d6269-c25f-4a12-930b-c3c42c12c38a
 
-Uptime:                 0 weeks, 0 days, 2 hours and 4 minutes
+Uptime:                 0 weeks, 2 days, 18 hours and 32 minutes
 Total memory:           2014424 kB
-Free memory:            1140804 kB
+Free memory:            1124868 kB
 ```
 ## show vlan
 

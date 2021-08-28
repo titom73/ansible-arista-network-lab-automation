@@ -12,10 +12,22 @@ Codes: C - connected, S - static, K - kernel,
 
 Gateway of last resort is not set
 
- C        10.255.251.4/31 is directly connected, Vlan4093
- C        10.255.252.4/31 is directly connected, Vlan4094
+ C        172.31.253.4/31 is directly connected, Vlan4094
+ C        172.31.253.6/31 is directly connected, Vlan4093
  C        172.31.255.12/31 is directly connected, Ethernet1
  C        172.31.255.14/31 is directly connected, Ethernet2
+ B E      192.168.0.2/32 [20/0] via 172.31.255.12, Ethernet1
+ B E      192.168.0.3/32 [20/0] via 172.31.255.14, Ethernet2
+ B E      192.168.1.1/32 [20/0] via 172.31.255.12, Ethernet1
+ B E      192.168.1.2/32 [20/0] via 172.31.255.14, Ethernet2
+ B E      192.168.252.2/32 [20/0] via 172.31.255.12, Ethernet1
+                                  via 172.31.255.14, Ethernet2
+ B E      192.168.252.3/32 [20/0] via 172.31.255.12, Ethernet1
+                                  via 172.31.255.14, Ethernet2
+ B E      192.168.253.2/32 [20/0] via 172.31.255.12, Ethernet1
+                                  via 172.31.255.14, Ethernet2
+ B E      192.168.253.3/32 [20/0] via 172.31.255.12, Ethernet1
+                                  via 172.31.255.14, Ethernet2
  B E      192.168.254.3/32 [20/0] via 172.31.255.12, Ethernet1
                                   via 172.31.255.14, Ethernet2
  C        192.168.254.5/32 is directly connected, Loopback1
@@ -25,13 +37,13 @@ Gateway of last resort is not set
                                   via 172.31.255.14, Ethernet2
  B E      192.168.254.9/32 [20/0] via 172.31.255.12, Ethernet1
                                   via 172.31.255.14, Ethernet2
- B E      192.168.255.1/32 [20/0] via 172.31.255.12, Ethernet1
- B E      192.168.255.2/32 [20/0] via 172.31.255.14, Ethernet2
+ B E      192.168.254.11/32 [20/0] via 172.31.255.12, Ethernet1
+                                   via 172.31.255.14, Ethernet2
  B E      192.168.255.3/32 [20/0] via 172.31.255.12, Ethernet1
                                   via 172.31.255.14, Ethernet2
  B E      192.168.255.4/32 [20/0] via 172.31.255.12, Ethernet1
                                   via 172.31.255.14, Ethernet2
- B I      192.168.255.5/32 [200/0] via 10.255.251.4, Vlan4093
+ B I      192.168.255.5/32 [200/0] via 172.31.253.6, Vlan4093
  C        192.168.255.6/32 is directly connected, Loopback0
  B E      192.168.255.7/32 [20/0] via 172.31.255.12, Ethernet1
                                   via 172.31.255.14, Ethernet2
@@ -40,6 +52,10 @@ Gateway of last resort is not set
  B E      192.168.255.9/32 [20/0] via 172.31.255.12, Ethernet1
                                   via 172.31.255.14, Ethernet2
  B E      192.168.255.10/32 [20/0] via 172.31.255.12, Ethernet1
+                                   via 172.31.255.14, Ethernet2
+ B E      192.168.255.11/32 [20/0] via 172.31.255.12, Ethernet1
+                                   via 172.31.255.14, Ethernet2
+ B E      192.168.255.12/32 [20/0] via 172.31.255.12, Ethernet1
                                    via 172.31.255.14, Ethernet2
 
 
@@ -80,8 +96,10 @@ Gateway of last resort is not set
  B E      10.1.10.1/32 [20/0] via VTEP 192.168.254.3 VNI 11 router-mac 0e:1d:c0:f0:bd:d1
  C        10.1.10.0/24 is directly connected, Vlan110
  C        10.1.11.0/24 is directly connected, Vlan111
+ C        10.1.12.0/24 is directly connected, Vlan112
  B E      10.1.13.0/24 [20/0] via VTEP 192.168.254.8 VNI 11 router-mac 0c:1d:c0:d2:9e:98
                               via VTEP 192.168.254.7 VNI 11 router-mac 0c:1d:c0:e4:77:7b
- B E      10.255.251.0/31 [20/0] via VTEP 192.168.254.3 VNI 11 router-mac 0e:1d:c0:f0:bd:d1
- C        10.255.251.4/31 is directly connected, Vlan3010
- B E      10.255.251.12/31 [20/0] via VTEP 192.168.254.9 VNI 11 router-mac 0e:1d:c0:25:65:41
+ B E      172.31.253.2/31 [20/0] via VTEP 192.168.254.3 VNI 11 router-mac 0e:1d:c0:f0:bd:d1
+ C        172.31.253.6/31 is directly connected, Vlan3010
+ B E      172.31.253.14/31 [20/0] via VTEP 192.168.254.9 VNI 11 router-mac 0e:1d:c0:25:65:41
+ B E      172.31.253.18/31 [20/0] via VTEP 192.168.254.11 VNI 11 router-mac 52:01:00:68:b4:46

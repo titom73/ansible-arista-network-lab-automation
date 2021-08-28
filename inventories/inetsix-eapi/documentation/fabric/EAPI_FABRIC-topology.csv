@@ -53,6 +53,8 @@ l3leaf,EAPI-LEAF3A,Ethernet5,server,SRV-POD03,Eth1
 l3leaf,EAPI-LEAF4A,Ethernet1,spine,EAPI-SPINE1,Ethernet8
 l3leaf,EAPI-LEAF4A,Ethernet2,spine,EAPI-SPINE2,Ethernet8
 l3leaf,EAPI-LEAF4A,Ethernet5,server,SRV-POD03,Eth2
+route_server,EAPI-RS01,Ethernet1,spine,EAPI-SPINE1,Ethernet13
+route_server,EAPI-RS02,Ethernet1,spine,EAPI-SPINE2,Ethernet13
 spine,EAPI-SPINE1,Ethernet1,l3leaf,EAPI-LEAF1A,Ethernet1
 spine,EAPI-SPINE1,Ethernet2,l3leaf,EAPI-LEAF1B,Ethernet1
 spine,EAPI-SPINE1,Ethernet3,l3leaf,EAPI-LEAF2A,Ethernet1
@@ -65,6 +67,7 @@ spine,EAPI-SPINE1,Ethernet9,l3leaf,EAPI-CL01A,Ethernet1
 spine,EAPI-SPINE1,Ethernet10,l3leaf,EAPI-CL01B,Ethernet1
 spine,EAPI-SPINE1,Ethernet11,l2leaf,EAPI-L2LEAF01,Ethernet1
 spine,EAPI-SPINE1,Ethernet12,l2leaf,EAPI-L2LEAF02,Ethernet1
+spine,EAPI-SPINE1,Ethernet13,route_server,EAPI-RS01,Ethernet1
 spine,EAPI-SPINE2,Ethernet1,l3leaf,EAPI-LEAF1A,Ethernet2
 spine,EAPI-SPINE2,Ethernet2,l3leaf,EAPI-LEAF1B,Ethernet2
 spine,EAPI-SPINE2,Ethernet3,l3leaf,EAPI-LEAF2A,Ethernet2
@@ -77,3 +80,4 @@ spine,EAPI-SPINE2,Ethernet9,l3leaf,EAPI-CL01A,Ethernet2
 spine,EAPI-SPINE2,Ethernet10,l3leaf,EAPI-CL01B,Ethernet2
 spine,EAPI-SPINE2,Ethernet11,l2leaf,EAPI-L2LEAF01,Ethernet2
 spine,EAPI-SPINE2,Ethernet12,l2leaf,EAPI-L2LEAF02,Ethernet2
+spine,EAPI-SPINE2,Ethernet13,route_server,EAPI-RS02,Ethernet1

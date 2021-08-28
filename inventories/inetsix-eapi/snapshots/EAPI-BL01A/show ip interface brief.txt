@@ -7,7 +7,8 @@ Loopback0       192.168.255.9/32     up         up             65535
 Loopback1       192.168.254.9/32     up         up             65535            
 Management1     10.73.254.15/24      up         up              1500            
 Vlan110         10.1.10.254/24       up         up              1500            
+Vlan1196        unassigned           up         up              9164            
 Vlan1199        unassigned           up         up              9164            
-Vlan3010        10.255.251.12/31     up         up              1500            
-Vlan4093        10.255.251.12/31     up         up              1500            
-Vlan4094        10.255.252.12/31     up         up              1500
+Vlan3010        172.31.253.14/31     up         up              1500            
+Vlan4093        172.31.253.14/31     up         up              1500            
+Vlan4094        172.31.253.12/31     up         up              1500

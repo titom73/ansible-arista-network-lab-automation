@@ -67,6 +67,7 @@ l3leaf:
     uplink_interfaces: ['Ethernet1', 'Ethernet2']
     uplink_switches: ['EAPI-SPINE1', 'EAPI-SPINE2']
     uplink_ipv4_pool: 172.31.255.0/24
+    evpn_route_servers: ['EAPI-RS01', 'EAPI-RS02']
     mlag_peer_ipv4_pool: 172.31.253.0/31
     mlag_peer_l3_ipv4_pool: 172.31.253.2/31
     mlag_interfaces: [Ethernet3, Ethernet4]
@@ -166,6 +167,7 @@ l2leaf:
     uplink_interfaces: ['Ethernet1', 'Ethernet2']
     uplink_switches: ['EAPI-SPINE1', 'EAPI-SPINE2']
     uplink_ipv4_pool: 172.31.251.0/24
+    evpn_route_servers: ['EAPI-RS01', 'EAPI-RS02']
     mlag_peer_ipv4_pool: 172.31.253.0/31
     mlag_peer_l3_ipv4_pool: 172.31.253.2/31
     mlag_interfaces: [Ethernet3, Ethernet4]
@@ -225,3 +227,23 @@ edge:
           mgmt_ip: 10.73.254.22/24
           mac_address: '0c:1d:c0:1d:62:01'
           uplink_switch_interfaces: [ Ethernet5, Ethernet5 ]
+
+route_server:
+  defaults:
+    loopback_ipv4_pool: 192.168.0.0/24
+    loopback_ipv4_offset: 1
+    uplink_interfaces: ['Ethernet1']
+    uplink_switch_interfaces: [Ethernet13]
+    uplink_ipv4_pool: 172.31.250.0/24
+    mlag: false
+    bgp_defaults: '{{veos_bgp_defaults}}'
+    bgp_as: 65000
+  nodes:
+    EAPI-RS01:
+      id: 1
+      mgmt_ip: 10.73.254.51/24
+      uplink_switches: ['EAPI-SPINE1']
+    EAPI-RS02:
+      id: 2
+      mgmt_ip: 10.73.254.52/24
+      uplink_switches: ['EAPI-SPINE2']

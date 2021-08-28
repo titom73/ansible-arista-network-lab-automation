@@ -46,6 +46,11 @@ iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8022 -j DNAT --to-destinati
 iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8029 -j DNAT --to-destination 10.73.254.31:${_EAPI_PORT}
 iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8030 -j DNAT --to-destination 10.73.254.32:${_EAPI_PORT}
 
+# Route Servers
+iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8033 -j DNAT --to-destination 10.73.254.51:${_EAPI_PORT}
+iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8034 -j DNAT --to-destination 10.73.254.52:${_EAPI_PORT}
+
+
 # Enpoint NODES
 iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8023 -j DNAT --to-destination 10.73.254.41:${_EAPI_PORT}
 iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 8024 -j DNAT --to-destination 10.73.254.42:${_EAPI_PORT}

@@ -2,7 +2,7 @@
 node_type_keys:
   spine:
     type: spine
-    default_evpn_role: server
+    default_evpn_role: none
   l3leaf:
     type: l3leaf
     connected_endpoints: true
@@ -29,8 +29,6 @@ node_type_keys:
       l2: true
     underlay_router: false
     uplink_type: port-channel
-  # super_spine:
-  #   type: super-spine
-  # overlay_controller:
-  #   type: overlay-controller
-  #   default_evpn_role: server
+  route_server:
+    type: route_server
+    default_evpn_role: server

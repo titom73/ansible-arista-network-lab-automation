@@ -585,14 +585,16 @@ interface Vlan4094
 
 #### UDP port: 4789
 
-#### VLAN to VNI Mappings
+#### EVPN MLAG Shared Router MAC : mlag-system-id
 
-| VLAN | VNI |
-| ---- | --- |
-| 110 | 10110 |
-| 201 | 20201 |
-| 301 | 30301 |
-| 302 | 30302 |
+#### VLAN to VNI and Flood List Mappings
+
+| VLAN | VNI | Flood List |
+| ---- | --- | ---------- |
+| 110 | 10110 | - |
+| 201 | 20201 | - |
+| 301 | 30301 | - |
+| 302 | 30302 | - |
 
 #### VRF to VNI Mappings
 
@@ -606,6 +608,7 @@ interface Vlan4094
 ```eos
 !
 interface Vxlan1
+   description EAPI-CL01A_VTEP
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
@@ -739,8 +742,8 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | 172.31.253.19 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default |
 | 172.31.255.32 | 65001 | default |
 | 172.31.255.34 | 65001 | default |
-| 192.168.1.1 | 65001 | default |
-| 192.168.1.2 | 65001 | default |
+| 192.168.0.2 | 65000 | default |
+| 192.168.0.3 | 65000 | default |
 | 172.31.253.19 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | CENTRAL_ROUTING |
 | 172.31.253.19 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 |
 
@@ -800,12 +803,12 @@ router bgp 65106
    neighbor 172.31.255.34 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.34 remote-as 65001
    neighbor 172.31.255.34 description EAPI-SPINE2_Ethernet9
-   neighbor 192.168.1.1 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.1.1 remote-as 65001
-   neighbor 192.168.1.1 description EAPI-SPINE1
-   neighbor 192.168.1.2 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.1.2 remote-as 65001
-   neighbor 192.168.1.2 description EAPI-SPINE2
+   neighbor 192.168.0.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.0.2 remote-as 65000
+   neighbor 192.168.0.2 description EAPI-RS01
+   neighbor 192.168.0.3 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.0.3 remote-as 65000
+   neighbor 192.168.0.3 description EAPI-RS02
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle B-ELAN-201

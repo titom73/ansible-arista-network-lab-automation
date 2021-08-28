@@ -13,21 +13,10 @@ router_bgp:
       password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
       send_community: all
-    EVPN-OVERLAY-PEERS:
-      type: evpn
-      update_source: Loopback0
-      bfd: true
-      ebgp_multihop: '3'
-      password: q+VNViP5i4rVjW1cxFv2wA==
-      send_community: all
-      maximum_routes: 0
-      next_hop_unchanged: true
   address_family_ipv4:
     peer_groups:
       IPv4-UNDERLAY-PEERS:
         activate: true
-      EVPN-OVERLAY-PEERS:
-        activate: false
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
@@ -80,58 +69,10 @@ router_bgp:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: 65108
       description: EAPI-L2LEAF02_Ethernet1
-    192.168.255.9:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-BL01A
-      remote_as: 65105
-    192.168.255.10:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-BL01B
-      remote_as: 65105
-    192.168.255.11:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-CL01A
-      remote_as: 65106
-    192.168.255.12:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-CL01B
-      remote_as: 65106
-    192.168.253.2:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-L2LEAF01
-      remote_as: 65107
-    192.168.253.3:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-L2LEAF02
-      remote_as: 65108
-    192.168.255.3:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-LEAF1A
-      remote_as: 65101
-    192.168.255.4:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-LEAF1B
-      remote_as: 65101
-    192.168.255.5:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-LEAF2A
-      remote_as: 65102
-    192.168.255.6:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-LEAF2B
-      remote_as: 65102
-    192.168.255.7:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-LEAF3A
-      remote_as: 65103
-    192.168.255.8:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-LEAF4A
-      remote_as: 65104
-  address_family_evpn:
-    peer_groups:
-      EVPN-OVERLAY-PEERS:
-        activate: true
+    172.31.250.1:
+      peer_group: IPv4-UNDERLAY-PEERS
+      remote_as: 65000
+      description: EAPI-RS01_Ethernet1
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
@@ -310,6 +251,15 @@ ethernet_interfaces:
     type: routed
     shutdown: false
     ip_address: 172.31.251.4/31
+  Ethernet13:
+    peer: EAPI-RS01
+    peer_interface: Ethernet1
+    peer_type: route_server
+    description: P2P_LINK_TO_EAPI-RS01_Ethernet1
+    mtu: 1500
+    type: routed
+    shutdown: false
+    ip_address: 172.31.250.0/31
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
@@ -327,11 +277,6 @@ route_maps:
         type: permit
         match:
         - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-router_bfd:
-  multihop:
-    interval: 1200
-    min_rx: 1200
-    multiplier: 3
 management_ssh:
   idle_timeout: 0
   enable: true

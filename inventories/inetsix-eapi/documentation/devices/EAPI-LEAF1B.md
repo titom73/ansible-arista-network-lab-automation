@@ -518,7 +518,7 @@ interface Loopback1
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan110 |  PR01-DEMO  |  TENANT_A_PROJECT01  |  -  |  false  |
 | Vlan111 |  PR01-TRUST  |  TENANT_A_PROJECT01  |  -  |  false  |
-| Vlan112 |  PR01-TRUST  |  TENANT_A_PROJECT01  |  -  |  true  |
+| Vlan112 |  PR01-TRUST  |  TENANT_A_PROJECT01  |  -  |  false  |
 | Vlan3010 |  MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01  |  TENANT_A_PROJECT01  |  1500  |  false  |
 | Vlan4093 |  MLAG_PEER_L3_PEERING  |  default  |  1500  |  false  |
 | Vlan4094 |  MLAG_PEER  |  default  |  1500  |  false  |
@@ -554,7 +554,7 @@ interface Vlan111
 !
 interface Vlan112
    description PR01-TRUST
-   shutdown
+   no shutdown
    vrf TENANT_A_PROJECT01
    ip address virtual 10.1.12.254/24
 !
@@ -587,14 +587,16 @@ interface Vlan4094
 
 #### UDP port: 4789
 
-#### VLAN to VNI Mappings
+#### EVPN MLAG Shared Router MAC : mlag-system-id
 
-| VLAN | VNI |
-| ---- | --- |
-| 110 | 10110 |
-| 111 | 10111 |
-| 112 | 10112 |
-| 201 | 20201 |
+#### VLAN to VNI and Flood List Mappings
+
+| VLAN | VNI | Flood List |
+| ---- | --- | ---------- |
+| 110 | 10110 | - |
+| 111 | 10111 | - |
+| 112 | 10112 | - |
+| 201 | 20201 | - |
 
 #### VRF to VNI Mappings
 
@@ -607,6 +609,7 @@ interface Vlan4094
 ```eos
 !
 interface Vxlan1
+   description EAPI-LEAF1B_VTEP
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789
@@ -736,8 +739,8 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | 172.31.253.2 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default |
 | 172.31.255.4 | 65001 | default |
 | 172.31.255.6 | 65001 | default |
-| 192.168.1.1 | 65001 | default |
-| 192.168.1.2 | 65001 | default |
+| 192.168.0.2 | 65000 | default |
+| 192.168.0.3 | 65000 | default |
 | 172.31.253.2 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 |
 
 ### Router BGP EVPN Address Family
@@ -794,12 +797,12 @@ router bgp 65101
    neighbor 172.31.255.6 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.6 remote-as 65001
    neighbor 172.31.255.6 description EAPI-SPINE2_Ethernet2
-   neighbor 192.168.1.1 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.1.1 remote-as 65001
-   neighbor 192.168.1.1 description EAPI-SPINE1
-   neighbor 192.168.1.2 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.1.2 remote-as 65001
-   neighbor 192.168.1.2 description EAPI-SPINE2
+   neighbor 192.168.0.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.0.2 remote-as 65000
+   neighbor 192.168.0.2 description EAPI-RS01
+   neighbor 192.168.0.3 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.0.3 remote-as 65000
+   neighbor 192.168.0.3 description EAPI-RS02
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle B-ELAN-201

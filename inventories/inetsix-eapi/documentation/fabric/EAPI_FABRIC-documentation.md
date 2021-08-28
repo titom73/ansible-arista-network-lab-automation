@@ -33,6 +33,8 @@
 | EAPI_FABRIC | l3leaf | EAPI-LEAF2B | 10.73.254.14/24 | - | Provisioned |
 | EAPI_FABRIC | l3leaf | EAPI-LEAF3A | 10.73.254.17/24 | - | Provisioned |
 | EAPI_FABRIC | l3leaf | EAPI-LEAF4A | 10.73.254.18/24 | - | Provisioned |
+| EAPI_FABRIC | route_server | EAPI-RS01 | 10.73.254.51/24 | - | Provisioned |
+| EAPI_FABRIC | route_server | EAPI-RS02 | 10.73.254.52/24 | - | Provisioned |
 | EAPI_FABRIC | spine | EAPI-SPINE1 | 10.73.254.1/24 | vEOS-LAB | Provisioned |
 | EAPI_FABRIC | spine | EAPI-SPINE2 | 10.73.254.2/24 | vEOS-LAB | Provisioned |
 
@@ -82,6 +84,8 @@
 | l3leaf | EAPI-LEAF3A | Ethernet2 | spine | EAPI-SPINE2 | Ethernet7 |
 | l3leaf | EAPI-LEAF4A | Ethernet1 | spine | EAPI-SPINE1 | Ethernet8 |
 | l3leaf | EAPI-LEAF4A | Ethernet2 | spine | EAPI-SPINE2 | Ethernet8 |
+| route_server | EAPI-RS01 | Ethernet1 | spine | EAPI-SPINE1 | Ethernet13 |
+| route_server | EAPI-RS02 | Ethernet1 | spine | EAPI-SPINE2 | Ethernet13 |
 
 # Fabric IP Allocation
 
@@ -89,6 +93,7 @@
 
 | Uplink IPv4 Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ---------------- | ------------------- | ------------------ | ------------------ |
+| 172.31.250.0/24 | 256 | 4 | 1.57 % |
 | 172.31.251.0/24 | 256 | 8 | 3.13 % |
 | 172.31.255.0/24 | 256 | 40 | 15.63 % |
 
@@ -120,11 +125,14 @@
 | EAPI-LEAF3A | Ethernet2 | 172.31.255.19/31 | EAPI-SPINE2 | Ethernet7 | 172.31.255.18/31 |
 | EAPI-LEAF4A | Ethernet1 | 172.31.255.21/31 | EAPI-SPINE1 | Ethernet8 | 172.31.255.20/31 |
 | EAPI-LEAF4A | Ethernet2 | 172.31.255.23/31 | EAPI-SPINE2 | Ethernet8 | 172.31.255.22/31 |
+| EAPI-RS01 | Ethernet1 | 172.31.250.1/31 | EAPI-SPINE1 | Ethernet13 | 172.31.250.0/31 |
+| EAPI-RS02 | Ethernet1 | 172.31.250.3/31 | EAPI-SPINE2 | Ethernet13 | 172.31.250.2/31 |
 
 ## Loopback Interfaces (BGP EVPN Peering)
 
 | Loopback Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ------------- | ------------------- | ------------------ | ------------------ |
+| 192.168.0.0/24 | 256 | 2 | 0.79 % |
 | 192.168.1.0/24 | 256 | 2 | 0.79 % |
 | 192.168.253.0/24 | 256 | 2 | 0.79 % |
 | 192.168.255.0/24 | 256 | 10 | 3.91 % |
@@ -145,6 +153,8 @@
 | EAPI_FABRIC | EAPI-LEAF2B | 192.168.255.6/32 |
 | EAPI_FABRIC | EAPI-LEAF3A | 192.168.255.7/32 |
 | EAPI_FABRIC | EAPI-LEAF4A | 192.168.255.8/32 |
+| EAPI_FABRIC | EAPI-RS01 | 192.168.0.2/32 |
+| EAPI_FABRIC | EAPI-RS02 | 192.168.0.3/32 |
 | EAPI_FABRIC | EAPI-SPINE1 | 192.168.1.1/32 |
 | EAPI_FABRIC | EAPI-SPINE2 | 192.168.1.2/32 |
 

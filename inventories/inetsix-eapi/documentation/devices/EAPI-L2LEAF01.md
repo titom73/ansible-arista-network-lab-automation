@@ -421,12 +421,12 @@ interface Loopback1
 
 #### UDP port: 4789
 
-#### VLAN to VNI Mappings
+#### VLAN to VNI and Flood List Mappings
 
-| VLAN | VNI |
-| ---- | --- |
-| 301 | 30301 |
-| 302 | 30302 |
+| VLAN | VNI | Flood List |
+| ---- | --- | ---------- |
+| 301 | 30301 | - |
+| 302 | 30302 | - |
 
 #### VRF to VNI Mappings
 
@@ -439,6 +439,7 @@ interface Loopback1
 ```eos
 !
 interface Vxlan1
+   description EAPI-L2LEAF01_VTEP
    vxlan source-interface Loopback1
    vxlan udp-port 4789
    vxlan vlan 301 vni 30301
@@ -538,8 +539,8 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | -------- | --------- | --- |
 | 172.31.251.0 | 65001 | default |
 | 172.31.251.2 | 65001 | default |
-| 192.168.1.1 | 65001 | default |
-| 192.168.1.2 | 65001 | default |
+| 192.168.0.2 | 65000 | default |
+| 192.168.0.3 | 65000 | default |
 
 ### Router BGP EVPN Address Family
 
@@ -585,12 +586,12 @@ router bgp 65107
    neighbor 172.31.251.2 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.251.2 remote-as 65001
    neighbor 172.31.251.2 description EAPI-SPINE2_Ethernet11
-   neighbor 192.168.1.1 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.1.1 remote-as 65001
-   neighbor 192.168.1.1 description EAPI-SPINE1
-   neighbor 192.168.1.2 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.1.2 remote-as 65001
-   neighbor 192.168.1.2 description EAPI-SPINE2
+   neighbor 192.168.0.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.0.2 remote-as 65000
+   neighbor 192.168.0.2 description EAPI-RS01
+   neighbor 192.168.0.3 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.0.3 remote-as 65000
+   neighbor 192.168.0.3 description EAPI-RS02
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle CENTRAL_ROUTING

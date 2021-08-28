@@ -29,6 +29,14 @@ EAPI:
   children:
     EAPI_FABRIC:
       children:
+        EAPI_ROUTE_SERVERS:
+          vars:
+            type: route_server
+          hosts:
+            EAPI-RS01:
+              ansible_port: 8033
+            EAPI-RS02:
+              ansible_port: 8034
         EAPI_SPINES:
           vars:
             type: spine

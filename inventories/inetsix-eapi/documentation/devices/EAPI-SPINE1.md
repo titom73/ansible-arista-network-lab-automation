@@ -29,8 +29,6 @@
   - [IPv6 Routing](#ipv6-routing)
   - [Static Routes](#static-routes)
   - [Router BGP](#router-bgp)
-- [BFD](#bfd)
-  - [Router BFD](#router-bfd)
 - [Multicast](#multicast)
 - [Filters](#filters)
   - [Prefix-lists](#prefix-lists)
@@ -329,6 +327,7 @@ vlan internal order ascending range 1006 1199
 | Ethernet10 | P2P_LINK_TO_EAPI-CL01B_Ethernet1 | routed | - | 172.31.255.36/31 | default | 1500 | false | - | - |
 | Ethernet11 | P2P_LINK_TO_EAPI-L2LEAF01_Ethernet1 | routed | - | 172.31.251.0/31 | default | 1500 | false | - | - |
 | Ethernet12 | P2P_LINK_TO_EAPI-L2LEAF02_Ethernet1 | routed | - | 172.31.251.4/31 | default | 1500 | false | - | - |
+| Ethernet13 | P2P_LINK_TO_EAPI-RS01_Ethernet1 | routed | - | 172.31.250.0/31 | default | 1500 | false | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -417,6 +416,13 @@ interface Ethernet12
    mtu 1500
    no switchport
    ip address 172.31.251.4/31
+!
+interface Ethernet13
+   description P2P_LINK_TO_EAPI-RS01_Ethernet1
+   no shutdown
+   mtu 1500
+   no switchport
+   ip address 172.31.250.0/31
 ```
 
 ## Loopback Interfaces
@@ -513,18 +519,6 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 ### Router BGP Peer Groups
 
-#### EVPN-OVERLAY-PEERS
-
-| Settings | Value |
-| -------- | ----- |
-| Address Family | evpn |
-| Next-hop unchanged | True |
-| Source | Loopback0 |
-| Bfd | true |
-| Ebgp multihop | 3 |
-| Send community | all |
-| Maximum routes | 0 (no limit) |
-
 #### IPv4-UNDERLAY-PEERS
 
 | Settings | Value |
@@ -537,6 +531,7 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 | Neighbor | Remote AS | VRF |
 | -------- | --------- | --- |
+| 172.31.250.1 | 65000 | default |
 | 172.31.251.1 | 65107 | default |
 | 172.31.251.5 | 65108 | default |
 | 172.31.255.1 | 65101 | default |
@@ -549,18 +544,6 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | 172.31.255.29 | 65105 | default |
 | 172.31.255.33 | 65106 | default |
 | 172.31.255.37 | 65106 | default |
-| 192.168.253.2 | 65107 | default |
-| 192.168.253.3 | 65108 | default |
-| 192.168.255.3 | 65101 | default |
-| 192.168.255.4 | 65101 | default |
-| 192.168.255.5 | 65102 | default |
-| 192.168.255.6 | 65102 | default |
-| 192.168.255.7 | 65103 | default |
-| 192.168.255.8 | 65104 | default |
-| 192.168.255.9 | 65105 | default |
-| 192.168.255.10 | 65105 | default |
-| 192.168.255.11 | 65106 | default |
-| 192.168.255.12 | 65106 | default |
 
 ### Router BGP EVPN Address Family
 
@@ -579,18 +562,13 @@ router bgp 65001
    graceful-restart restart-time 300
    graceful-restart
    maximum-paths 4 ecmp 4
-   neighbor EVPN-OVERLAY-PEERS peer group
-   neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
-   neighbor EVPN-OVERLAY-PEERS update-source Loopback0
-   neighbor EVPN-OVERLAY-PEERS bfd
-   neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
-   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
-   neighbor EVPN-OVERLAY-PEERS send-community
-   neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
    neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
+   neighbor 172.31.250.1 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.250.1 remote-as 65000
+   neighbor 172.31.250.1 description EAPI-RS01_Ethernet1
    neighbor 172.31.251.1 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.251.1 remote-as 65107
    neighbor 172.31.251.1 description EAPI-L2LEAF01_Ethernet1
@@ -627,68 +605,10 @@ router bgp 65001
    neighbor 172.31.255.37 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.37 remote-as 65106
    neighbor 172.31.255.37 description EAPI-CL01B_Ethernet1
-   neighbor 192.168.253.2 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.253.2 remote-as 65107
-   neighbor 192.168.253.2 description EAPI-L2LEAF01
-   neighbor 192.168.253.3 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.253.3 remote-as 65108
-   neighbor 192.168.253.3 description EAPI-L2LEAF02
-   neighbor 192.168.255.3 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.3 remote-as 65101
-   neighbor 192.168.255.3 description EAPI-LEAF1A
-   neighbor 192.168.255.4 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.4 remote-as 65101
-   neighbor 192.168.255.4 description EAPI-LEAF1B
-   neighbor 192.168.255.5 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.5 remote-as 65102
-   neighbor 192.168.255.5 description EAPI-LEAF2A
-   neighbor 192.168.255.6 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.6 remote-as 65102
-   neighbor 192.168.255.6 description EAPI-LEAF2B
-   neighbor 192.168.255.7 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.7 remote-as 65103
-   neighbor 192.168.255.7 description EAPI-LEAF3A
-   neighbor 192.168.255.8 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.8 remote-as 65104
-   neighbor 192.168.255.8 description EAPI-LEAF4A
-   neighbor 192.168.255.9 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.9 remote-as 65105
-   neighbor 192.168.255.9 description EAPI-BL01A
-   neighbor 192.168.255.10 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.10 remote-as 65105
-   neighbor 192.168.255.10 description EAPI-BL01B
-   neighbor 192.168.255.11 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.11 remote-as 65106
-   neighbor 192.168.255.11 description EAPI-CL01A
-   neighbor 192.168.255.12 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.255.12 remote-as 65106
-   neighbor 192.168.255.12 description EAPI-CL01B
    redistribute connected route-map RM-CONN-2-BGP
    !
-   address-family evpn
-      neighbor EVPN-OVERLAY-PEERS activate
-   !
    address-family ipv4
-      no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
-```
-
-# BFD
-
-## Router BFD
-
-### Router BFD Multihop Summary
-
-| Interval | Minimum RX | Multiplier |
-| -------- | ---------- | ---------- |
-| 1200 | 1200 | 3 |
-
-### Router BFD Multihop Device Configuration
-
-```eos
-!
-router bfd
-   multihop interval 1200 min-rx 1200 multiplier 3
 ```
 
 # Multicast

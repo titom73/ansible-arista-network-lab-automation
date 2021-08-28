@@ -12,8 +12,9 @@ Lo1                            up             up                 VTEP_VXLAN_Tunn
 Ma1                            up             up                 oob_management
 Po3                            up             up                 MLAG_PEER_EAPI-BL01A_Po3
 Vl110                          up             up                 PR01-DEMO
+Vl1196                         up             up                 
 Vl1199                         up             up                 
 Vl3010                         up             up                 MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01
 Vl4093                         up             up                 MLAG_PEER_L3_PEERING
 Vl4094                         up             up                 MLAG_PEER
-Vx1                            up             up
+Vx1                            up             up                 EAPI-BL01B_VTEP

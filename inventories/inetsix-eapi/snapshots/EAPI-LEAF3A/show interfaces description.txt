@@ -13,5 +13,6 @@ Ma1                            up             up                 oob_management
 Po5                            up             up                 SRV-POD03_PortChanne1
 Vl110                          up             up                 PR01-DEMO
 Vl113                          up             up                 PR01-DMZ
+Vl1196                         up             up                 
 Vl1199                         up             up                 
-Vx1                            up             up
+Vx1                            up             up                 EAPI-LEAF3A_VTEP

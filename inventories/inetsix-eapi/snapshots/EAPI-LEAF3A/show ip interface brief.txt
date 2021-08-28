@@ -8,4 +8,5 @@ Loopback1       192.168.254.7/32     up         up             65535
 Management1     10.73.254.17/24      up         up              1500            
 Vlan110         10.1.10.254/24       up         up              1500            
 Vlan113         10.1.13.254/24       up         up              1500            
+Vlan1196        unassigned           up         up              9164            
 Vlan1199        unassigned           up         up              9164
