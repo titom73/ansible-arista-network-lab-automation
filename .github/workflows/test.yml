@@ -1,6 +1,9 @@
 ---
 name: webhook-trigger
 on:
+  push:
+    branches:
+      - maser
   repository_dispatch:
     types:
       - test
