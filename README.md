@@ -10,6 +10,11 @@
   - [Enable debugging](#enable-debugging)
     - [Cloudvision collection](#cloudvision-collection)
   - [AVD Commands and Playbooks for CVP deployment](#avd-commands-and-playbooks-for-cvp-deployment)
+  - [Make commands](#make-commands)
+    - [AVD with Cloudvision deployment](#avd-with-cloudvision-deployment)
+    - [AVD with EAPI deployment](#avd-with-eapi-deployment)
+    - [AVD Tools](#avd-tools)
+    - [Misc](#misc)
 
 ## Topology
 
@@ -28,7 +33,7 @@
 
 Inventory can be changed with following command:
 
-```bash 
+```bash
 $ make <command> INVENTORY=<your inventory>
 ```
 
@@ -96,6 +101,8 @@ __Available options:__
 
 [Makefile](./Makefile) provides some shortcuts:
 
+### AVD with Cloudvision deployment
+
 - `avd-build-all`:                  Run AVD Build for all ISIS, OSPF and BGP Underlay
 - `avd-build-generic`:              Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
 - `avd-build-isis`:                 Run ansible playbook to build EVPN Fabric configuration with ISIS as underlay with DC1 and CV
@@ -111,6 +118,24 @@ __Available options:__
 - `avd-reset`:                      Run ansible playbook to reset all devices.
 - `avd-vars-devices`:               Run ansible playbook to extract Devices variables.
 - `avd-vars-input`:                 Run ansible playbook to extract EVPN Fabric variables.
+
+### AVD with EAPI deployment
+
+- `eapi-build-isis`:                Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with ISIS underlay
+- `eapi-build-ospf`:                Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with OSPF underlay
+- `eapi-build`:                     Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
+- `eapi-deploy-isis`:               Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with ISIS underlay
+- `eapi-deploy-ospf`:               Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with OSPF underlay
+- `eapi-deploy`:                    Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
+- `eapi-states-validation`:         eapi-states-validation description
+
+### AVD Tools
+
+- `eos-backup`:                     Backup current running configuration
+- `snapshot`:                       Extract commands outputs
+
+### Misc
+
 - `centos-bootstrap`:               Initial Centos 7 Configuration
 - `cli-config-gen`:                 Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with OSPF underlay
 - `configlet-delete`:               Delete Configlets (GLOBAL-ALIASES*) from CVP
@@ -121,21 +146,12 @@ __Available options:__
 - `dhcp-bootstrap`:                 Configure DHCP service
 - `docker-run`:                     Connect to docker container
 - `dump-vars`:                      Dump all ansible variables into $(INVENTORY)/dump.json
-- `eapi-build-isis`:                Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with ISIS underlay
-- `eapi-build-ospf`:                Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with OSPF underlay
-- `eapi-build`:                     Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
-- `eapi-deploy-isis`:               Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with ISIS underlay
-- `eapi-deploy-ospf`:               Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with OSPF underlay
-- `eapi-deploy`:                    Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
-- `eapi-states-validation`:         eapi-states-validation description
-- `eos-backup`:                     Backup current running configuration
 - `facts`:                          Get facts from CVP and save locally
 - `help`:                           Display help message (*: main entry points / []: part of an entry point)
 - `install`:                        Install arista collections
 - `log-clean`:                      log-clean description
 - `repo-clean`:                     Delete previously generated outputs
 - `repo-rebuild`:                   Delete previously generated outputs
-- `snapshot`:                       Extract commands outputs
 - `uninstall`:                      Remove arista collections
 - `unit-configlet`:                 Unit test for cv_configlet
 - `unit-container-v1`:              Unit test for cv_container
