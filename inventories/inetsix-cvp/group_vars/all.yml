@@ -6,3 +6,5 @@ ansible_become: true
 ansible_become_method: enable
 ansible_become_pass: ansible
 ansible_httpapi_validate_certs: false
+
+cv_collection: v3

@@ -103,12 +103,12 @@ EAPI:
               hosts:
                 EAPI-AGG02:
                   ansible_port: 8022
-    EAPI_TENANTS_NETWORKS:
+    EAPI_SERVICES:
       children:
         EAPI_L3LEAFS:
         EAPI_L2LEAFS:
         EAPI_EDGE:
-    EAPI_SERVERS:
+    EAPI_PORTS:
       children:
         EAPI_L3LEAFS:
         EAPI_L2LEAFS:

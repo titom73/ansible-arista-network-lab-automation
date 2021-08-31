@@ -42,6 +42,8 @@ all:
         DC1_FABRIC:
           children:
             DC1_SPINES:
+              vars:
+                type: spine
               hosts:
                 DC1-SPINE1:
                   ansible_ssh_port: 8101
@@ -50,6 +52,8 @@ all:
                   ansible_ssh_port: 8102
                   ansible_port: 8002
             DC1_L3LEAFS:
+              vars:
+                type: l3leaf
               children:
                 DC1_LEAF1:
                   hosts:
@@ -85,26 +89,28 @@ all:
                     DC1-BL01B:
                       ansible_ssh_port: 8116
                       ansible_port: 8016
-            DC1_L2LEAFS:
+            DC1_EDGES:
+              vars:
+                type: edge
               children:
-                DC1_L2LEAF1:
+                DC1_EDGE1:
                   hosts:
                     DC1-AGG01:
                       ansible_ssh_port: 8121
                       ansible_port: 8021
-                DC1_L2LEAF2:
+                DC1_EDGE2:
                   hosts:
                     DC1-AGG02:
                       ansible_ssh_port: 8122
                       ansible_port: 8022
-        DC1_TENANTS_NETWORKS:
+        SERVICES:
           children:
             DC1_L3LEAFS:
-            DC1_L2LEAFS:
-        DC1_SERVERS:
+            DC1_EDGES:
+        ENDPOINTS:
           children:
             DC1_L3LEAFS:
-            DC1_L2LEAFS:
+            DC1_EDGES:
 
 # Group to run arista.avd.eos_validate_state
 EOS:

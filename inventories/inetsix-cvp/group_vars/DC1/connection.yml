@@ -1,0 +1,15 @@
+### Connection information
+ansible_connection: httpapi
+ansible_network_os: eos
+ansible_httpapi_port: '{{ansible_port}}'
+ansible_httpapi_host: '{{ ansible_host }}'
+ansible_user: ansible
+ansible_ssh_pass: ansible
+
+#### Enable mode
+ansible_become: yes
+ansible_become_password: ansible
+ansible_become_method: enable
+#### HTTPAPI options
+ansible_httpapi_use_ssl: true
+ansible_httpapi_validate_certs: false

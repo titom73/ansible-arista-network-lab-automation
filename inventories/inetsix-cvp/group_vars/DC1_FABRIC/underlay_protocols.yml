@@ -1,0 +1,26 @@
+
+underlay_routing_protocol: BGP
+overlay_routing_protocol: ebgp
+bgp_as: 65000
+
+# ISIS Parameters when underlay_routing_protocol=ISIS
+isis_area_id: "49.0001"
+isis_site_id: "0001"
+
+# OSPF Parameters when underlay_routing_protocol=OSPF
+underlay_ospf_process_id: 100
+underlay_ospf_area: 0.0.0.0
+underlay_ospf_max_lsa: 12000
+underlay_ospf_bfd_enable: true
+
+# Enable vlan aware bundles
+vxlan_vlan_aware_bundles: true
+
+# bgp peer groups passwords
+bgp_peer_groups:
+  IPv4_UNDERLAY_PEERS:
+    password: "AQQvKeimxJu+uGQ/yYvv9w=="
+  EVPN_OVERLAY_PEERS:
+    password: "q+VNViP5i4rVjW1cxFv2wA=="
+  MLAG_IPv4_UNDERLAY_PEER:
+    password: "vnEaG8gMeQf3d3cN6PktXQ=="

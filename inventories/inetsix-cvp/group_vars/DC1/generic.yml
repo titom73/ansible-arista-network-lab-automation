@@ -42,19 +42,27 @@ ntp_servers:
   - 37.59.63.125
   - 188.165.240.21
 
+#### Override for vEOS Lab Caveats ####
 
-### Connection information
-ansible_connection: httpapi
-ansible_network_os: eos
-ansible_httpapi_port: '{{ansible_port}}'
-ansible_httpapi_host: '{{ ansible_host }}'
-ansible_user: ansible
-ansible_ssh_pass: ansible
+# Disable update wait-for-convergence and update wait-for-install,
+# which is not supported in vEOS-LAB.
+# Refer to design guide
 
-#### Enable mode
-ansible_become: yes
-ansible_become_password: ansible
-ansible_become_method: enable
-#### HTTPAPI options
-ansible_httpapi_use_ssl: true
-ansible_httpapi_validate_certs: false
+# Update p2p mtu 9000 -> 1500
+p2p_uplinks_mtu: 1500
+
+# Adjust default bfd values
+bfd_multihop:
+  interval: 1200
+  min_rx: 1200
+  multiplier: 3
+
+# List of additional CVP configlets to bind to devices and containers
+# Configlets MUST be configured on CVP before running AVD playbooks.
+# cv_configlets:
+#   containers:
+#     DC1_L3LEAFS:
+#       - ASE_GLOBAL-ALIASES
+#   devices:
+#     DC1-LEAF1A:
+#        - ASE_DEVICE-ALIASES

@@ -1,0 +1,19 @@
+port_profiles:
+  ALL:
+    mode: trunk
+    vlans: "110-111,210-211"
+  A-PR01-DMZ:
+    mode: access
+    vlans: "110"
+  A-PR01-TRUST:
+    mode: access
+    vlans: "111"
+  B-ELAN-201:
+    mode: access
+    vlans: "201"
+  DOCKER_111:
+    mode: access
+    vlans: "111"
+  DOCKER_110:
+    mode: access
+    vlans: "110"

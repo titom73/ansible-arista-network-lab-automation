@@ -35,15 +35,15 @@ tenants:
             tags: [POD01]
             enabled: true
             ip_address_virtual: 10.1.13.254/24
-          311:
-            name: 'PR01-TRUST-DHCP'
-            tags: [DC1]
-            enabled: true
-            ip_address_virtual: 10.1.31.254/24
-            igmp_snooping_enabled: false
-            ip_helpers:
-              1.1.1.1:
-                source_interface: lo100
+          # 311:
+          #   name: 'PR01-TRUST-DHCP'
+          #   tags: [POD01]
+          #   enabled: true
+          #   ip_address_virtual: 10.1.31.254/24
+          #   igmp_snooping_enabled: false
+          #   ip_helpers:
+          #     1.1.1.1:
+          #       source_interface: lo100
       TENANT_A_PROJECT02:
         ip_helpers:
           1.1.1.1:

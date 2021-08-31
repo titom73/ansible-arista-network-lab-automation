@@ -1,0 +1,160 @@
+---
+# L3LS Fabric Values - update these values with caution,
+# SOME CHANGES COULD BE DISRUPTIVE.
+
+fabric_name: DC1_FABRIC
+
+# Spine Switches
+spine:
+  defaults:
+    platform: vEOS-LAB
+    bgp_as: 65001
+    bgp_defaults: ['no bgp default ipv4-unicast', 'distance bgp 20 200 200', 'graceful-restart restart-time 300', 'graceful-restart']
+    loopback_ipv4_pool: 192.168.255.0/24
+    mlag_peer_ipv4_pool: 10.255.252.0/24
+    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
+  nodes:
+    DC1-SPINE1:
+      id: 1
+      mgmt_ip: 10.73.255.101/24
+      mac_address: '0c:1d:c0:1d:62:01'
+    DC1-SPINE2:
+      id: 2
+      mgmt_ip: 10.73.255.102/24
+      mac_address: '0c:1d:c0:1d:62:01'
+
+# Leaf switch groups
+# A maximum of two nodes can form a leaf group
+# When two nodes are in a leaf group this will automatically form mlag pair
+
+l3leaf:
+  defaults:
+    # Generic knobs
+    virtual_router_mac_address: 00:1c:73:00:dc:01
+    platform: vEOS-LAB
+    # Uplink management
+    uplink_interfaces: ['Ethernet1', 'Ethernet2']
+    uplink_switches: ['DC1-SPINE1', 'DC1-SPINE2']
+    uplink_ipv4_pool: 172.31.255.0/24
+    # VTEP section
+    loopback_ipv4_pool: 192.168.255.0/24
+    loopback_ipv4_offset: 2
+    vtep_loopback_ipv4_pool: 192.168.254.0/24
+    # MLAG Section
+    mlag_peer_ipv4_pool: 10.255.252.0/24
+    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
+    spanning_tree_priority: 4096
+    spanning_tree_mode: mstp
+    # BGP Section
+    bgp_as: 65100
+    bgp_defaults: ['no bgp default ipv4-unicast', 'distance bgp 20 200 200', 'graceful-restart restart-time 300', 'graceful-restart']
+    mlag_interfaces: [Ethernet3, Ethernet4]
+  node_groups:
+    DC1_LEAF1:
+      bgp_as: 65101
+      filter:
+        tenants: [ 'Tenant_A', 'Tenant_B' ]
+        tags: [ 'POD01', 'DC1' ]
+      igmp_snooping_enabled: false
+      nodes:
+        DC1-LEAF1A:
+          id: 1
+          mgmt_ip: 10.73.255.111/24
+          uplink_switch_interfaces: [Ethernet1, Ethernet1]
+          mac_address: '0c:1d:c0:1d:62:01'
+        DC1-LEAF1B:
+          id: 2
+          mgmt_ip: 10.73.255.112/24
+          uplink_switch_interfaces: [Ethernet2, Ethernet2]
+          mac_address: '0c:1d:c0:1d:62:01'
+    DC1_LEAF2:
+      bgp_as: 65102
+      filter:
+        tenants: [ 'Tenant_A', 'Tenant_B' ]
+        tags: [ 'POD02', 'DC1' ]
+      nodes:
+        DC1-LEAF2A:
+          id: 3
+          mgmt_ip: 10.73.255.113/24
+          uplink_switch_interfaces: [Ethernet3, Ethernet3]
+        DC1-LEAF2B:
+          id: 4
+          mgmt_ip: 10.73.255.114/24
+          uplink_switch_interfaces: [Ethernet4, Ethernet4]
+          mac_address: '0c:1d:c0:1d:62:01'
+    DC1_LEAF3:
+      bgp_as: 65103
+      filter:
+        tenants: [ 'Tenant_A', 'Tenant_B' ]
+        tags: [ 'POD02', 'DC1' ]
+      nodes:
+        DC1-LEAF3A:
+          id: 5
+          mgmt_ip: 10.73.255.117/24
+          uplink_switch_interfaces: [Ethernet7, Ethernet7]
+          mac_address: '0c:1d:c0:1d:62:01'
+    DC1_LEAF4:
+      bgp_as: 65104
+      filter:
+        tenants: [ 'Tenant_A', 'Tenant_B' ]
+        tags: [ 'POD02', 'DC1' ]
+      nodes:
+        DC1-LEAF4A:
+          id: 6
+          mgmt_ip: 10.73.255.118/24
+          uplink_switch_interfaces: [Ethernet8, Ethernet8]
+          mac_address: '0c:1d:c0:1d:62:01'
+    DC1_BL01:
+      bgp_as: 65105
+      filter:
+        tenants: [ 'Tenant_A', 'Tenant_B' ]
+        tags: [ 'BORDER' ]
+      nodes:
+        DC1-BL01A:
+          id: 7
+          mgmt_ip: 10.73.255.115/24
+          uplink_switch_interfaces: [Ethernet5, Ethernet5]
+          mac_address: '0c:1d:c0:1d:62:01'
+        DC1-BL01B:
+          id: 8
+          mgmt_ip: 10.73.255.116/24
+          uplink_switch_interfaces: [Ethernet6, Ethernet6]
+          mac_address: '0c:1d:c0:1d:62:01'
+
+edge:
+  defaults:
+    platform: vEOS-LAB
+    uplink_switches: ['DC1-LEAF1A', 'DC1-LEAF1B']
+    uplink_interfaces: ['Ethernet1', 'Ethernet2']
+    uplink_switch_interfaces: ['Ethernet5', 'Ethernet5']
+    mlag_peer_ipv4_pool: 10.255.252.0/24
+    mlag_peer_l3_ipv4_pool: 10.255.251.0/24
+    spanning_tree_mode: mstp
+    spanning_tree_priority: 16384
+  node_groups:
+    DC1_EDGE1:
+      uplink_switches: [ DC1-LEAF1A, DC1-LEAF1B ]
+      filter:
+        tenants: [ 'Tenant_A', 'Tenant_B' ]
+        tags: [ 'DC1' ]
+      nodes:
+        DC1-AGG01:
+          id: 9
+          mgmt_ip: 10.73.255.121/24
+          uplink_switches: ['DC1-LEAF1A', 'DC1-LEAF1B']
+          uplink_switch_interfaces: [ Ethernet5, Ethernet5 ]
+          mac_address: '0c:1d:c0:1d:62:01'
+    DC1_EDGE2:
+      uplink_switches: [ DC1-LEAF2A, DC1-LEAF2B ]
+      filter:
+        tenants: [ 'Tenant_A', 'Tenant_B' ]
+        tags: [ 'DC1' ]
+      nodes:
+        DC1-AGG02:
+          id: 10
+          mgmt_ip: 10.73.255.122/24
+          uplink_switches: ['DC1-LEAF2A', 'DC1-LEAF2B']
+          uplink_switch_interfaces: [ Ethernet5, Ethernet5 ]
+          mac_address: '0c:1d:c0:1d:62:01'
+
+

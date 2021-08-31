@@ -7,10 +7,10 @@
     - arista.avd
     - arista.cvp
   tasks:
-    - name: build local folders
-      tags: [build]
-      import_role:
-        name: arista.avd.build_output_folders
+    # - name: build local folders
+    #   tags: [build]
+    #   import_role:
+    #     name: arista.avd.build_output_folders
     - name: generate intented variables
       tags: [build]
       import_role:
