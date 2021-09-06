@@ -650,8 +650,8 @@ group_names:
 - EAPI_EDGE
 - EAPI_EDGE_LEAF2
 - EAPI_FABRIC
-- EAPI_SERVERS
-- EAPI_TENANTS_NETWORKS
+- EAPI_PORTS
+- EAPI_SERVICES
 - EOS
 ansible_facts:
   switch:
@@ -989,11 +989,11 @@ groups:
   - EAPI-AGG01
   EAPI_EDGE_LEAF2:
   - EAPI-AGG02
-  EAPI_TENANTS_NETWORKS:
-  - EAPI-AGG01
-  - EAPI-AGG02
+  EAPI_SERVICES:
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -1004,11 +1004,11 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-  EAPI_SERVERS:
-  - EAPI-AGG01
-  - EAPI-AGG02
+  EAPI_PORTS:
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -1038,7 +1038,7 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-omit: __omit_place_holder__1c93aeea3ab7b07bb98cbe6db0848c9bc612fb79
+omit: __omit_place_holder__d6274968f295c16606b1b438de6f0dfcba3dc418
 ansible_version:
   string: 2.10.10
   full: 2.10.10
@@ -1046,13 +1046,12 @@ ansible_version:
   minor: 10
   revision: 10
 ansible_check_mode: false
-ansible_diff_mode: false
+ansible_diff_mode: true
 ansible_forks: 15
 ansible_inventory_sources:
 - /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/inetsix-eapi/inventory.yml
 ansible_skip_tags: []
-ansible_limit: EAPI
 ansible_run_tags:
-- build
 - deploy
+- build
 ansible_verbosity: 0

@@ -41,6 +41,9 @@ bgp_peer_groups:
   MLAG_IPv4_UNDERLAY_PEER:
     password: "vnEaG8gMeQf3d3cN6PktXQ=="
 
+# Enable Route Target Membership Constraint
+# evpn_overlay_bgp_rtc: true
+
 spine:
   defaults:
     platform: vEOS-LAB

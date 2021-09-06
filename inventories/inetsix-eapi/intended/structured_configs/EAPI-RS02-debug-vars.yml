@@ -1,6 +1,6 @@
 type: route_server
 ansible_connection: httpapi
-ansible_httpapi_port: 8032
+ansible_httpapi_port: 8034
 ansible_httpapi_host: 10.73.1.241
 ansible_httpapi_use_ssl: true
 ansible_httpapi_validate_certs: false
@@ -448,7 +448,7 @@ veos_bgp_defaults:
 - graceful-restart
 inventory_file: /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/inetsix-eapi/inventory.yml
 inventory_dir: /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/inetsix-eapi
-ansible_port: 8032
+ansible_port: 8034
 inventory_hostname: EAPI-RS02
 inventory_hostname_short: EAPI-RS02
 group_names:
@@ -712,11 +712,11 @@ groups:
   - EAPI-AGG01
   EAPI_EDGE_LEAF2:
   - EAPI-AGG02
-  EAPI_TENANTS_NETWORKS:
-  - EAPI-AGG01
-  - EAPI-AGG02
+  EAPI_SERVICES:
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -727,11 +727,11 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-  EAPI_SERVERS:
-  - EAPI-AGG01
-  - EAPI-AGG02
+  EAPI_PORTS:
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -761,7 +761,7 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-omit: __omit_place_holder__1c93aeea3ab7b07bb98cbe6db0848c9bc612fb79
+omit: __omit_place_holder__d6274968f295c16606b1b438de6f0dfcba3dc418
 ansible_version:
   string: 2.10.10
   full: 2.10.10
@@ -769,13 +769,12 @@ ansible_version:
   minor: 10
   revision: 10
 ansible_check_mode: false
-ansible_diff_mode: false
+ansible_diff_mode: true
 ansible_forks: 15
 ansible_inventory_sources:
 - /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/inetsix-eapi/inventory.yml
 ansible_skip_tags: []
-ansible_limit: EAPI
 ansible_run_tags:
-- build
 - deploy
+- build
 ansible_verbosity: 0
