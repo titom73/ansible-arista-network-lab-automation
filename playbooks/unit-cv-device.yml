@@ -1,5 +1,5 @@
 - name: Cloudvision v3 test playbook
-  hosts: cv_server
+  hosts: all
   connection: local
   gather_facts: false
   collections:
@@ -7,105 +7,26 @@
     - arista.cvp
   vars:
     CVP_DEVICES:
-      - fqdn: CV-ANSIBLE-EOS010
-        # systemMacAddress: '50:8d:00:e3:78:aa'
-        # serialNumber: 79AEA53101E7340AEC9AA4819D5E1F5B
-        parentContainerName: 'ANSIBLE'
+      - fqdn: tg-cvaas-aawg-ci-cv-unit
+        systemMacAddress: '50:01:00:e5:e3:6a'
+        serialNumber: 64793E1D3DE2240F547E5964354214A4
+        parentContainerName: 'tg-lab'
         configlets:
-            - 'CV-EOS-ANSIBLE01'
-            - '01DEMO-alias'
-            - '01TRAINING-alias'
-      # - serialNumber: "79AEA53101E7340AEC9AA4819D5E1F5B"
-      #   parentContainerName: 'ANSIBLE2'
-      #   configlets:
-      #       - 'CV-EOS-ANSIBLE01'
-      #       - '01DEMO-alias'
-
-
-    # CVP_CONTAINERS:
-    #   DC2:
-    #     parent_container: Tenant
-    #   Leafs:
-    #     parent_container: DC2
-    #   Spines:
-    #     parent_container: DC2
-    #     configlets:
-    #       - '< SET A CONFIGLET HERE >'
-    #   POD01:
-    #     parent_container: Leafs
-
-    # CVP_CONFIGLETS:
-    #   01TRAINING-alias: "alias a101 show version"
-    #   01TRAINING-01: "alias a102 show version"
-
-    # CVP_CONFIGLETS_2:
-    #   01TRAINING-alias: "alias a103 show version"
-    #   01TRAINING-01: "alias a102 show version"
+            - 'tg-generic-aliases'
+            - 'tg-cvaas-aawg-ci-cv-unit'
 
   tasks:
-    # # --------------------
-    # # CONFIGLETS
-    # # --------------------
-    # - name: "Configure configlet on {{inventory_hostname}}"
-    #   tags: [full, configlet, configlet_create]
-    #   arista.cvp.cv_configlet_v3:
-    #     configlets: "{{CVP_CONFIGLETS}}"
-    #     state: present
-    #   register: CVP_CONFIGLET_RESULT
-    # - name: "Print logs"
-    #   tags: [full, configlet, configlet_create]
-    #   debug:
-    #     msg: "{{ CVP_CONFIGLET_RESULT }}"
-
-    # - name: "Configure configlet on {{inventory_hostname}}"
-    #   tags: [full, configlet, configlet_update]
-    #   arista.cvp.cv_configlet_v3:
-    #     configlets: "{{CVP_CONFIGLETS_2}}"
-    #     state: present
-    #   register: CVP_CONFIGLET_RESULT_2
-    # - name: "Print logs"
-    #   tags: [full, configlet, configlet_update]
-    #   debug:
-    #     msg: "{{ CVP_CONFIGLET_RESULT_2 }}"
-
-    # - name: "Configure configlet on {{inventory_hostname}}"
-    #   tags: [full, cconfiglet, onfiglet_delete]
-    #   arista.cvp.cv_configlet_v3:
-    #     configlets: "{{CVP_CONFIGLETS_2}}"
-    #     state: absent
-    #   register: CVP_CONFIGLET_RESULT_2
-    # - name: "Print logs"
-    #   tags: [full, configlet, configlet_delete]
-    #   debug:
-    #     msg: "{{ CVP_CONFIGLET_RESULT_2 }}"
-
-    # # --------------------
-    # # CONTAINERS
-    # # --------------------
-    # - name: 'running cv_container_v3 in {{state}} on {{inventory_hostname}}'
-    #   tags: [full, container_add]
-    #   arista.cvp.cv_container_v3:
-    #     topology: "{{CVP_CONTAINERS}}"
-    #     state: '{{state}}'
-    #   register: result
-    # - name: Display result
-    #   tags: [full, container_add]
-    #   debug:
-    #     msg: '{{result}}'
-
     # --------------------
     # DEVICES
     # --------------------
     - name: "Configure devices on {{inventory_hostname}}"
-      tags: [full, device]
       arista.cvp.cv_device_v3:
         devices: "{{CVP_DEVICES}}"
         state: present
         apply_mode: strict
-        search_key: hostname
+        search_key: serialNumber
       register: CVP_DEVICES_RESULTS
 
     - name: 'Display debug'
-      tags: [full, device]
       debug:
         msg: '{{CVP_DEVICES_RESULTS}}'

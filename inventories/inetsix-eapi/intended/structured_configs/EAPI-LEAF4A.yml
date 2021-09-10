@@ -51,6 +51,10 @@ router_bgp:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
+    route:
+      import:
+        match_failure:
+          action: discard
   vrfs:
     TENANT_A_PROJECT01:
       router_id: 192.168.255.8

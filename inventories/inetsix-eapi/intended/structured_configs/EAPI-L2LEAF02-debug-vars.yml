@@ -124,6 +124,8 @@ underlay_ospf_process_id: 100
 underlay_ospf_area: 0.0.0.0
 underlay_ospf_max_lsa: 12000
 vxlan_vlan_aware_bundles: true
+evpn_import_prunning: true
+evpn_overlay_bgp_rtc: false
 bgp_peer_groups:
   IPv4_UNDERLAY_PEERS:
     password: AQQvKeimxJu+uGQ/yYvv9w==
@@ -907,10 +909,6 @@ groups:
   - EAPI-RS02
   - EAPI-SPINE1
   - EAPI-SPINE2
-  - EAPI-AGG01
-  - EAPI-AGG02
-  - EAPI-L2LEAF01
-  - EAPI-L2LEAF02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -921,6 +919,10 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
+  - EAPI-AGG01
+  - EAPI-AGG02
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
   EAPI_FABRIC:
   - EAPI-RS01
   - EAPI-RS02
@@ -1034,7 +1036,7 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-omit: __omit_place_holder__d6274968f295c16606b1b438de6f0dfcba3dc418
+omit: __omit_place_holder__7a463ced7cb1867af5f11382511e1dd5ca756a27
 ansible_version:
   string: 2.10.10
   full: 2.10.10

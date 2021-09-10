@@ -7,7 +7,7 @@ all:
           # ansible_host: 'www.cv-staging.corp.arista.io'
           ansible_host: 'www.cv-staging.corp.arista.io'
           ansible_user: cvaas
-          ansible_ssh_pass: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOjc4OTYsImRzbiI6ImFyaXN0YS10YWMiLCJkc3QiOiJhY2NvdW50Iiwic2lkIjoiNmMwN2U5ODI2NjI0MDQwZjJjYmZlYzRlZTE5M2QwNGUxZTBjZWE0ZDM3YjRlYWQzMjJkNjE3YjFhOWYyOTU1Zi1rUDAxNzQ0S2FxVzFrYkdLcE1XY1BJbE1zV1EyWDZsaU5mQXVUREQ4In0.uUE-WBRDU6bLArZrqQP8rr1wwHMOxStBc-5s2dF_0F3rYxcDPf7NfI6u6hNMfi-AeBq93BcG8ut2GzOH8dqQHA
+          ansible_ssh_pass: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOjEwMjMwMCwiZHNuIjoidGctYXBpLWFjY2VzcyIsImRzdCI6ImFjY291bnQiLCJleHAiOjE2MzU2ODE0MTMsImlhdCI6MTYzMTI3MTgwNiwic2lkIjoiM2FjNzViMTA4MWIwN2M0MmZiMmY4ODNmNzcyNzNjYjc0ODVmOGQ4YTAxOWVkMWViMWUwYmY0ZmIwMTY3MzllMC00RXUyZkdjU21ia3h6YThxWGNhbkhMcjhFYW1oTmw5LVo3WUhIanFIIn0.7yFxTqUz1khTekjsrQm9yoie3QctAprGV4_LTLOQw-uhvgSdp1lurWZMNKio22fEHjYn4PEEWcfWd1jhYqUszA
           ansible_become: true
           ansible_become_method: enable
           ansible_connection: httpapi

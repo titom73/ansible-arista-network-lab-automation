@@ -51,6 +51,10 @@ router_bgp:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
+    route:
+      import:
+        match_failure:
+          action: discard
   vrfs:
     CENTRAL_ROUTING:
       router_id: 192.168.253.2

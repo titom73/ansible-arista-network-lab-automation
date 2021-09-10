@@ -32,6 +32,13 @@ underlay_ospf_max_lsa: 12000
 # Enable vlan aware bundles
 vxlan_vlan_aware_bundles: true
 
+# VPN import prunning
+evpn_import_prunning: true
+
+# Enable Route Target Membership Constraint Address Family on EVPN overlay BGP peerings (Min. EOS 4.25.1F)
+# Requires use eBGP as overlay protocol.
+evpn_overlay_bgp_rtc: false
+
 # bgp peer groups passwords
 bgp_peer_groups:
   IPv4_UNDERLAY_PEERS:

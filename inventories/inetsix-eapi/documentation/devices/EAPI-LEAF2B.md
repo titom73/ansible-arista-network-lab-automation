@@ -819,6 +819,7 @@ router bgp 65102
    !
    address-family evpn
       neighbor EVPN-OVERLAY-PEERS activate
+      route import match-failure action discard
    !
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
