@@ -642,8 +642,8 @@ tenants:
             - POD05_NODE01
             enabled: true
             ip_address_virtual: 10.3.2.254/24
-inventory_file: /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/inetsix-eapi/inventory.yml
-inventory_dir: /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/inetsix-eapi
+inventory_file: /Users/tgrimonet/avd-stack/avd-lab-validation/inventories/inetsix-eapi/inventory.yml
+inventory_dir: /Users/tgrimonet/avd-stack/avd-lab-validation/inventories/inetsix-eapi
 ansible_port: 8030
 inventory_hostname: EAPI-L2LEAF02
 inventory_hostname_short: EAPI-L2LEAF02
@@ -866,9 +866,9 @@ topology:
   - EAPI-SPINE2
   vlans:
   - 302
-playbook_dir: /Users/tgrimonet/Projects/arista-ansible/lab-validation/playbooks
-ansible_playbook_python: /Users/tgrimonet/.pyenv/versions/3.6.8/envs/avd-v3.6/bin/python
-ansible_config_file: /Users/tgrimonet/Projects/arista-ansible/lab-validation/ansible.cfg
+playbook_dir: /Users/tgrimonet/avd-stack/avd-lab-validation/playbooks
+ansible_playbook_python: /Users/tgrimonet/.pyenv/versions/3.9.7/envs/arista-avd/bin/python3.9
+ansible_config_file: /Users/tgrimonet/avd-stack/avd-lab-validation/ansible.cfg
 groups:
   all:
   - DHCP_SERVER
@@ -881,10 +881,10 @@ groups:
   - EAPI-RS02
   - EAPI-SPINE1
   - EAPI-SPINE2
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -909,6 +909,10 @@ groups:
   - EAPI-RS02
   - EAPI-SPINE1
   - EAPI-SPINE2
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -919,19 +923,15 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-  - EAPI-AGG01
-  - EAPI-AGG02
-  - EAPI-L2LEAF01
-  - EAPI-L2LEAF02
   EAPI_FABRIC:
   - EAPI-RS01
   - EAPI-RS02
   - EAPI-SPINE1
   - EAPI-SPINE2
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -990,8 +990,6 @@ groups:
   EAPI_SERVICES:
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -1002,11 +1000,11 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
+  - EAPI-AGG01
+  - EAPI-AGG02
   EAPI_PORTS:
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -1017,15 +1015,17 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
+  - EAPI-AGG01
+  - EAPI-AGG02
   EOS:
   - EAPI-RS01
   - EAPI-RS02
   - EAPI-SPINE1
   - EAPI-SPINE2
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -1036,18 +1036,18 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-omit: __omit_place_holder__7a463ced7cb1867af5f11382511e1dd5ca756a27
+omit: __omit_place_holder__078fb98a8d9d34dde8edf11f026beea66dacdb88
 ansible_version:
-  string: 2.10.10
-  full: 2.10.10
+  string: 2.10.14
+  full: 2.10.14
   major: 2
   minor: 10
-  revision: 10
+  revision: 14
 ansible_check_mode: false
 ansible_diff_mode: true
 ansible_forks: 15
 ansible_inventory_sources:
-- /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/inetsix-eapi/inventory.yml
+- /Users/tgrimonet/avd-stack/avd-lab-validation/inventories/inetsix-eapi/inventory.yml
 ansible_skip_tags: []
 ansible_run_tags:
 - deploy

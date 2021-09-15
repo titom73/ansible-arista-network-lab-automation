@@ -64,10 +64,6 @@ router_bgp:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
-    route:
-      import:
-        match_failure:
-          action: discard
   vrfs:
     CENTRAL_ROUTING:
       router_id: 192.168.255.11
@@ -133,11 +129,11 @@ static_routes:
 service_routing_protocols_model: multi-agent
 ip_routing: true
 daemon_terminattr:
-  ingestgrpcurl:
-    ips:
-    - 10.73.254.1
-    port: 9910
-  ingestvrf: MGMT
+  cvaddrs:
+  - 10.73.254.1:9910
+  cvauth:
+    method: key
+  cvvrf: MGMT
   smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
   ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
   disable_aaa: false

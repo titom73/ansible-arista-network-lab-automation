@@ -1,6 +1,6 @@
 ---
 - name: Build Switch configuration
-  hosts: [EAPI_FABRIC, DC1]
+  hosts: [EAPI_FABRIC]
   collections:
     - arista.avd
     - arista.cvp
@@ -12,7 +12,7 @@
     #     name: build_output_folders
       # vars:
       #   fabric_dir_name: '{{fabric_name}}'
-    - name: generate intented variables
+    - name: generate intended variables
       tags: [build]
       import_role:
         name: eos_designs
@@ -28,19 +28,19 @@
         name: arista.avd.eos_config_deploy_eapi
 
 
-- name: Build Endpoints configuration
-  hosts: ['ENDPOINTS']
-  collections:
-    - arista.avd
-    - arista.cvp
-    - arista.eos
-  tasks:
-    - name: generate device intended config and documentation
-      tags: [build]
-      import_role:
-        name: eos_cli_config_gen
+# - name: Build Endpoints configuration
+#   hosts: ['ENDPOINTS']
+#   collections:
+#     - arista.avd
+#     - arista.cvp
+#     - arista.eos
+#   tasks:
+#     - name: generate device intended config and documentation
+#       tags: [build]
+#       import_role:
+#         name: eos_cli_config_gen
 
-    - name: deploy configuration to device
-      tags: [deploy, never]
-      import_role:
-        name: arista.avd.eos_config_deploy_eapi
+#     - name: deploy configuration to device
+#       tags: [deploy, never]
+#       import_role:
+#         name: arista.avd.eos_config_deploy_eapi

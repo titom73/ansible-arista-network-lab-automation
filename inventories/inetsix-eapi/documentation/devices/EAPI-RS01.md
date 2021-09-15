@@ -215,16 +215,16 @@ aaa authorization exec default local
 
 ### TerminAttr Daemon Summary
 
-| CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF | AAA Disabled |
-| -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- | ------ |
-| gzip | 10.73.254.1:9910 | UNSET | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
+| CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
+| -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
+| gzip | 10.73.254.1:9910 | MGMT | - | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | False |
 
 ### TerminAttr Daemon Device Configuration
 
 ```eos
 !
 daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=10.73.254.1:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
+   exec /usr/bin/TerminAttr -cvaddr=10.73.254.1:9910 -cvvrf=MGMT -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
    no shutdown
 ```
 
@@ -234,33 +234,13 @@ daemon TerminAttr
 
 | Contact | Location | SNMP Traps |
 | ------- | -------- | ---------- |
-| - | - |  Disabled  |
-
-### SNMP ACLs
-| IP | ACL | VRF |
-| -- | --- | --- |
-
-
-### SNMP Local Interfaces
-
-| Local Interface | VRF |
-| --------------- | --- |
-
-### SNMP VRF Status
-
-| VRF | Status |
-| --- | ------ |
-
-
+| - | - | Disabled |
 
 ### SNMP Communities
 
 | Community | Access | Access List IPv4 | Access List IPv6 | View |
 | --------- | ------ | ---------------- | ---------------- | ---- |
 | inetsix-ro | rw | inetsix-snmp-acl | - | test |
-
-
-
 
 ### SNMP Device Configuration
 
