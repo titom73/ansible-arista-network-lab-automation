@@ -1,5 +1,5 @@
 router_bgp:
-  as: 65000
+  as: '65000'
   router_id: 192.168.0.2
   bgp_defaults:
   - no bgp default ipv4-unicast
@@ -10,7 +10,6 @@ router_bgp:
   peer_groups:
     IPv4-UNDERLAY-PEERS:
       type: ipv4
-      password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
       send_community: all
     EVPN-OVERLAY-PEERS:
@@ -18,7 +17,6 @@ router_bgp:
       update_source: Loopback0
       bfd: true
       ebgp_multihop: '3'
-      password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: all
       maximum_routes: 0
       next_hop_unchanged: true
@@ -34,56 +32,56 @@ router_bgp:
   neighbors:
     172.31.250.0:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65001
+      remote_as: '65001'
       description: EAPI-SPINE1_Ethernet13
     192.168.255.9:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-BL01A
-      remote_as: 65105
+      remote_as: '65105'
     192.168.255.10:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-BL01B
-      remote_as: 65105
+      remote_as: '65105'
     192.168.255.11:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-CL01A
-      remote_as: 65106
+      remote_as: '65106'
     192.168.255.12:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-CL01B
-      remote_as: 65106
+      remote_as: '65106'
     192.168.253.2:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-L2LEAF01
-      remote_as: 65107
+      remote_as: '65107'
     192.168.253.3:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-L2LEAF02
-      remote_as: 65108
+      remote_as: '65108'
     192.168.255.3:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-LEAF1A
-      remote_as: 65101
+      remote_as: '65101'
     192.168.255.4:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-LEAF1B
-      remote_as: 65101
+      remote_as: '65101'
     192.168.255.5:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-LEAF2A
-      remote_as: 65102
+      remote_as: '65102'
     192.168.255.6:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-LEAF2B
-      remote_as: 65102
+      remote_as: '65102'
     192.168.255.7:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-LEAF3A
-      remote_as: 65103
+      remote_as: '65103'
     192.168.255.8:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-LEAF4A
-      remote_as: 65104
+      remote_as: '65104'
   address_family_evpn:
     peer_groups:
       EVPN-OVERLAY-PEERS:
@@ -111,13 +109,6 @@ vlan_internal_order:
 name_server:
   source:
     vrf: MGMT
-  nodes:
-  - 10.73.254.253
-  - 10.73.1.254
-ntp_server:
-  local_interface:
-    vrf: MGMT
-    interface: Management1
   nodes:
   - 10.73.254.253
   - 10.73.1.254

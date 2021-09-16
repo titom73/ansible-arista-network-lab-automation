@@ -126,13 +126,6 @@ underlay_ospf_max_lsa: 12000
 vxlan_vlan_aware_bundles: true
 evpn_import_prunning: true
 evpn_overlay_bgp_rtc: false
-bgp_peer_groups:
-  IPv4_UNDERLAY_PEERS:
-    password: AQQvKeimxJu+uGQ/yYvv9w==
-  EVPN_OVERLAY_PEERS:
-    password: q+VNViP5i4rVjW1cxFv2wA==
-  MLAG_IPv4_UNDERLAY_PEER:
-    password: vnEaG8gMeQf3d3cN6PktXQ==
 spine:
   defaults:
     platform: vEOS-LAB
@@ -642,8 +635,8 @@ tenants:
             - POD05_NODE01
             enabled: true
             ip_address_virtual: 10.3.2.254/24
-inventory_file: /Users/tgrimonet/avd-stack/avd-lab-validation/inventories/inetsix-eapi/inventory.yml
-inventory_dir: /Users/tgrimonet/avd-stack/avd-lab-validation/inventories/inetsix-eapi
+inventory_file: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/inventory.yml
+inventory_dir: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi
 ansible_port: 8022
 inventory_hostname: EAPI-AGG02
 inventory_hostname_short: EAPI-AGG02
@@ -677,6 +670,13 @@ ansible_facts:
       p2p_uplinks_peer_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-peer-ip.j2
       vtep_ip_mlag: designs/l3ls-evpn/ip-addressing/vtep-ip-mlag.j2
       vtep_ip: designs/l3ls-evpn/ip-addressing/vtep-ip.j2
+    interface_descriptions:
+      underlay_ethernet_interfaces: designs/l3ls-evpn/interface-descriptions/underlay/ethernet-interfaces.j2
+      underlay_port_channel_interfaces: designs/l3ls-evpn/interface-descriptions/underlay/port-channel-interfaces.j2
+      connected_endpoints_ethernet_interfaces: designs/l3ls-evpn/interface-descriptions/connected-endpoints/ethernet-interfaces.j2
+      connected_endpoints_port_channel_interfaces: designs/l3ls-evpn/interface-descriptions/connected-endpoints/port-channel-interfaces.j2
+      overlay_loopback_interface: designs/l3ls-evpn/interface-descriptions/loopback-interfaces/overlay-loopback.j2
+      vtep_loopback_interface: designs/l3ls-evpn/interface-descriptions/loopback-interfaces/vtep-loopback.j2
     underlay_routing_protocol: ebgp
     overlay_routing_protocol: ebgp
     group: EAPI_EDGE_LEAF2
@@ -784,6 +784,13 @@ switch:
     p2p_uplinks_peer_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-peer-ip.j2
     vtep_ip_mlag: designs/l3ls-evpn/ip-addressing/vtep-ip-mlag.j2
     vtep_ip: designs/l3ls-evpn/ip-addressing/vtep-ip.j2
+  interface_descriptions:
+    underlay_ethernet_interfaces: designs/l3ls-evpn/interface-descriptions/underlay/ethernet-interfaces.j2
+    underlay_port_channel_interfaces: designs/l3ls-evpn/interface-descriptions/underlay/port-channel-interfaces.j2
+    connected_endpoints_ethernet_interfaces: designs/l3ls-evpn/interface-descriptions/connected-endpoints/ethernet-interfaces.j2
+    connected_endpoints_port_channel_interfaces: designs/l3ls-evpn/interface-descriptions/connected-endpoints/port-channel-interfaces.j2
+    overlay_loopback_interface: designs/l3ls-evpn/interface-descriptions/loopback-interfaces/overlay-loopback.j2
+    vtep_loopback_interface: designs/l3ls-evpn/interface-descriptions/loopback-interfaces/vtep-loopback.j2
   underlay_routing_protocol: ebgp
   overlay_routing_protocol: ebgp
   group: EAPI_EDGE_LEAF2
@@ -870,9 +877,9 @@ topology:
   - 111
   - 112
   - 201
-playbook_dir: /Users/tgrimonet/avd-stack/avd-lab-validation/playbooks
+playbook_dir: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/playbooks
 ansible_playbook_python: /Users/tgrimonet/.pyenv/versions/3.9.7/envs/arista-avd/bin/python3.9
-ansible_config_file: /Users/tgrimonet/avd-stack/avd-lab-validation/ansible.cfg
+ansible_config_file: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/ansible.cfg
 groups:
   all:
   - DHCP_SERVER
@@ -885,10 +892,6 @@ groups:
   - EAPI-RS02
   - EAPI-SPINE1
   - EAPI-SPINE2
-  - EAPI-L2LEAF01
-  - EAPI-L2LEAF02
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -899,6 +902,10 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
+  - EAPI-AGG01
+  - EAPI-AGG02
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
   ungrouped: []
   TOOLS:
   - DHCP_SERVER
@@ -913,10 +920,6 @@ groups:
   - EAPI-RS02
   - EAPI-SPINE1
   - EAPI-SPINE2
-  - EAPI-L2LEAF01
-  - EAPI-L2LEAF02
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -927,15 +930,15 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
+  - EAPI-AGG01
+  - EAPI-AGG02
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
   EAPI_FABRIC:
   - EAPI-RS01
   - EAPI-RS02
   - EAPI-SPINE1
   - EAPI-SPINE2
-  - EAPI-L2LEAF01
-  - EAPI-L2LEAF02
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -946,6 +949,10 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
+  - EAPI-AGG01
+  - EAPI-AGG02
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
   EAPI_ROUTE_SERVERS:
   - EAPI-RS01
   - EAPI-RS02
@@ -994,6 +1001,8 @@ groups:
   EAPI_SERVICES:
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -1004,11 +1013,11 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-  - EAPI-AGG01
-  - EAPI-AGG02
   EAPI_PORTS:
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -1019,17 +1028,11 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-  - EAPI-AGG01
-  - EAPI-AGG02
   EOS:
   - EAPI-RS01
   - EAPI-RS02
   - EAPI-SPINE1
   - EAPI-SPINE2
-  - EAPI-L2LEAF01
-  - EAPI-L2LEAF02
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -1040,7 +1043,11 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-omit: __omit_place_holder__078fb98a8d9d34dde8edf11f026beea66dacdb88
+  - EAPI-AGG01
+  - EAPI-AGG02
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
+omit: __omit_place_holder__6381e2d89af465259187a9df8b2bbee1ce5a8cbf
 ansible_version:
   string: 2.10.14
   full: 2.10.14
@@ -1051,9 +1058,8 @@ ansible_check_mode: false
 ansible_diff_mode: true
 ansible_forks: 15
 ansible_inventory_sources:
-- /Users/tgrimonet/avd-stack/avd-lab-validation/inventories/inetsix-eapi/inventory.yml
+- /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/inventory.yml
 ansible_skip_tags: []
 ansible_run_tags:
-- deploy
 - build
 ansible_verbosity: 0

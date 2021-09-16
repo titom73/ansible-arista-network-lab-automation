@@ -1,5 +1,5 @@
 router_bgp:
-  as: 65106
+  as: '65106'
   router_id: 192.168.255.12
   bgp_defaults:
   - no bgp default ipv4-unicast
@@ -10,15 +10,13 @@ router_bgp:
   peer_groups:
     MLAG-IPv4-UNDERLAY-PEER:
       type: ipv4
-      remote_as: 65106
+      remote_as: '65106'
       next_hop_self: true
-      password: vnEaG8gMeQf3d3cN6PktXQ==
       maximum_routes: 12000
       send_community: all
       route_map_in: RM-MLAG-PEER-IN
     IPv4-UNDERLAY-PEERS:
       type: ipv4
-      password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
       send_community: all
     EVPN-OVERLAY-PEERS:
@@ -26,7 +24,6 @@ router_bgp:
       update_source: Loopback0
       bfd: true
       ebgp_multihop: '3'
-      password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: all
       maximum_routes: 0
   address_family_ipv4:
@@ -43,20 +40,20 @@ router_bgp:
       description: EAPI-CL01A
     172.31.255.36:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65001
+      remote_as: '65001'
       description: EAPI-SPINE1_Ethernet10
     172.31.255.38:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65001
+      remote_as: '65001'
       description: EAPI-SPINE2_Ethernet10
     192.168.0.2:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-RS01
-      remote_as: 65000
+      remote_as: '65000'
     192.168.0.3:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-RS02
-      remote_as: 65000
+      remote_as: '65000'
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
@@ -145,13 +142,6 @@ vlan_internal_order:
 name_server:
   source:
     vrf: MGMT
-  nodes:
-  - 10.73.254.253
-  - 10.73.1.254
-ntp_server:
-  local_interface:
-    vrf: MGMT
-    interface: Management1
   nodes:
   - 10.73.254.253
   - 10.73.1.254

@@ -1,5 +1,5 @@
 router_bgp:
-  as: 65001
+  as: '65001'
   router_id: 192.168.1.2
   bgp_defaults:
   - no bgp default ipv4-unicast
@@ -10,7 +10,6 @@ router_bgp:
   peer_groups:
     IPv4-UNDERLAY-PEERS:
       type: ipv4
-      password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
       send_community: all
   address_family_ipv4:
@@ -23,55 +22,55 @@ router_bgp:
   neighbors:
     172.31.255.3:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65101
+      remote_as: '65101'
       description: EAPI-LEAF1A_Ethernet2
     172.31.255.7:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65101
+      remote_as: '65101'
       description: EAPI-LEAF1B_Ethernet2
     172.31.255.11:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65102
+      remote_as: '65102'
       description: EAPI-LEAF2A_Ethernet2
     172.31.255.15:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65102
+      remote_as: '65102'
       description: EAPI-LEAF2B_Ethernet2
     172.31.255.27:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65105
+      remote_as: '65105'
       description: EAPI-BL01A_Ethernet2
     172.31.255.31:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65105
+      remote_as: '65105'
       description: EAPI-BL01B_Ethernet2
     172.31.255.19:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65103
+      remote_as: '65103'
       description: EAPI-LEAF3A_Ethernet2
     172.31.255.23:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65104
+      remote_as: '65104'
       description: EAPI-LEAF4A_Ethernet2
     172.31.255.35:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65106
+      remote_as: '65106'
       description: EAPI-CL01A_Ethernet2
     172.31.255.39:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65106
+      remote_as: '65106'
       description: EAPI-CL01B_Ethernet2
     172.31.251.3:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65107
+      remote_as: '65107'
       description: EAPI-L2LEAF01_Ethernet2
     172.31.251.7:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65108
+      remote_as: '65108'
       description: EAPI-L2LEAF02_Ethernet2
     172.31.250.3:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65000
+      remote_as: '65000'
       description: EAPI-RS02_Ethernet1
 static_routes:
 - vrf: MGMT
@@ -96,13 +95,6 @@ vlan_internal_order:
 name_server:
   source:
     vrf: MGMT
-  nodes:
-  - 10.73.254.253
-  - 10.73.1.254
-ntp_server:
-  local_interface:
-    vrf: MGMT
-    interface: Management1
   nodes:
   - 10.73.254.253
   - 10.73.1.254
