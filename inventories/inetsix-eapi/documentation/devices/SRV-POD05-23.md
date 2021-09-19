@@ -12,7 +12,6 @@
   - [Local Users](#local-users)
   - [AAA Authorization](#aaa-authorization)
 - [Monitoring](#monitoring)
-  - [TerminAttr Daemon](#terminattr-daemon)
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
   - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
   - [Internal VLAN Allocation Policy Configuration](#internal-vlan-allocation-policy-configuration)
@@ -205,23 +204,6 @@ aaa authorization exec default local
 
 # Monitoring
 
-## TerminAttr Daemon
-
-### TerminAttr Daemon Summary
-
-| CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF | AAA Disabled |
-| -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- | ------ |
-| gzip | 10.73.254.1:9910 | UNSET | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
-
-### TerminAttr Daemon Device Configuration
-
-```eos
-!
-daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=10.73.254.1:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
-   no shutdown
-```
-
 # Internal VLAN Allocation Policy
 
 ## Internal VLAN Allocation Policy Summary
@@ -246,6 +228,8 @@ vlan internal order ascending range 1006 1199
 | 110 | PR01-DEMO | - |
 | 111 | PR01-TRUST | - |
 | 112 | PR01-TRUST | - |
+| 131 | PURE_TYPE05_VL01 | - |
+| 132 | PURE_TYPE05_VL02 | - |
 | 201 | B-ELAN-201 | - |
 | 301 | CENTRAL_LAN_01 | - |
 | 302 | CENTRAL_LAN_02 | - |
@@ -262,6 +246,12 @@ vlan 111
 !
 vlan 112
    name PR01-TRUST
+!
+vlan 131
+   name PURE_TYPE05_VL01
+!
+vlan 132
+   name PURE_TYPE05_VL02
 !
 vlan 201
    name B-ELAN-201

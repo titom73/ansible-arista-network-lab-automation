@@ -24,6 +24,13 @@ name_server:
   nodes:
   - 10.73.254.253
   - 10.73.1.254
+ntp_server:
+  local_interface:
+    vrf: MGMT
+    interface: Management1
+  nodes:
+  - 10.73.254.253
+  - 10.73.1.254
 local_users:
   admin:
     privilege: 15
@@ -93,9 +100,12 @@ port_channel_interfaces:
     description: EAPI_LEAF2_Po5
     type: switched
     shutdown: false
-    vlans: 110-112,201
+    vlans: 110-112,132,201
     mode: trunk
 vlans:
+  132:
+    tenant: Tenant_A
+    name: vl132_no_vni
   110:
     tenant: Tenant_A
     name: PR01-DEMO

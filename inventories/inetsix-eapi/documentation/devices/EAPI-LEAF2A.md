@@ -5,6 +5,7 @@
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
   - [Name Servers](#name-servers)
+  - [NTP](#ntp)
   - [Management SSH](#management-ssh)
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
@@ -95,6 +96,28 @@ interface Management1
 ```eos
 ip name-server vrf MGMT 10.73.1.254
 ip name-server vrf MGMT 10.73.254.253
+```
+
+## NTP
+
+### NTP Summary
+
+- Local Interface: Management1
+
+- VRF: MGMT
+
+| Node | Primary |
+| ---- | ------- |
+| 10.73.254.253 | true |
+| 10.73.1.254 | - |
+
+### NTP Device Configuration
+
+```eos
+!
+ntp local-interface vrf MGMT Management1
+ntp server vrf MGMT 10.73.254.253 prefer
+ntp server vrf MGMT 10.73.1.254
 ```
 
 ## Management SSH
@@ -309,8 +332,10 @@ vlan internal order ascending range 1006 1199
 | 110 | PR01-DEMO | - |
 | 111 | PR01-TRUST | - |
 | 112 | PR01-TRUST | - |
+| 132 | vl132_no_vni | - |
 | 201 | B-ELAN-201 | - |
 | 3010 | MLAG_iBGP_TENANT_A_PROJECT01 | LEAF_PEER_L3 |
+| 3012 | MLAG_iBGP_PURE_TYPE5 | LEAF_PEER_L3 |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3 |
 | 4094 | MLAG_PEER | MLAG |
 
@@ -327,11 +352,18 @@ vlan 111
 vlan 112
    name PR01-TRUST
 !
+vlan 132
+   name vl132_no_vni
+!
 vlan 201
    name B-ELAN-201
 !
 vlan 3010
    name MLAG_iBGP_TENANT_A_PROJECT01
+   trunk group LEAF_PEER_L3
+!
+vlan 3012
+   name MLAG_iBGP_PURE_TYPE5
    trunk group LEAF_PEER_L3
 !
 vlan 4093
@@ -355,7 +387,7 @@ vlan 4094
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet3 | MLAG_PEER_EAPI-LEAF2B_Ethernet3 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
 | Ethernet4 | MLAG_PEER_EAPI-LEAF2B_Ethernet4 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 3 |
-| Ethernet5 | EAPI-AGG02_Ethernet1 | *trunk | *110-112,201 | *- | *- | 5 |
+| Ethernet5 | EAPI-AGG02_Ethernet1 | *trunk | *110-112,132,201 | *- | *- | 5 |
 
 *Inherited from Port-Channel Interface
 
@@ -409,7 +441,7 @@ interface Ethernet5
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel3 | MLAG_PEER_EAPI-LEAF2B_Po3 | switched | trunk | 2-4094 | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
-| Port-Channel5 | EAPI-AGG02_Po1 | switched | trunk | 110-112,201 | - | - | - | - | 5 | - |
+| Port-Channel5 | EAPI-AGG02_Po1 | switched | trunk | 110-112,132,201 | - | - | - | - | 5 | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -428,7 +460,7 @@ interface Port-Channel5
    description EAPI-AGG02_Po1
    no shutdown
    switchport
-   switchport trunk allowed vlan 110-112,201
+   switchport trunk allowed vlan 110-112,132,201
    switchport mode trunk
    mlag 5
 ```
@@ -476,7 +508,9 @@ interface Loopback1
 | Vlan110 |  PR01-DEMO  |  TENANT_A_PROJECT01  |  -  |  false  |
 | Vlan111 |  PR01-TRUST  |  TENANT_A_PROJECT01  |  -  |  false  |
 | Vlan112 |  PR01-TRUST  |  TENANT_A_PROJECT01  |  -  |  false  |
+| Vlan132 |  vl132_no_vni  |  PURE_TYPE5  |  -  |  false  |
 | Vlan3010 |  MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01  |  TENANT_A_PROJECT01  |  1500  |  false  |
+| Vlan3012 |  MLAG_PEER_L3_iBGP: vrf PURE_TYPE5  |  PURE_TYPE5  |  1500  |  false  |
 | Vlan4093 |  MLAG_PEER_L3_PEERING  |  default  |  1500  |  false  |
 | Vlan4094 |  MLAG_PEER  |  default  |  1500  |  false  |
 
@@ -487,7 +521,9 @@ interface Loopback1
 | Vlan110 |  TENANT_A_PROJECT01  |  -  |  10.1.10.254/24  |  -  |  -  |  -  |  -  |
 | Vlan111 |  TENANT_A_PROJECT01  |  -  |  10.1.11.254/24  |  -  |  -  |  -  |  -  |
 | Vlan112 |  TENANT_A_PROJECT01  |  -  |  10.1.12.254/24  |  -  |  -  |  -  |  -  |
+| Vlan132 |  PURE_TYPE5  |  -  |  10.1.32.254/24  |  -  |  -  |  -  |  -  |
 | Vlan3010 |  TENANT_A_PROJECT01  |  172.31.253.6/31  |  -  |  -  |  -  |  -  |  -  |
+| Vlan3012 |  PURE_TYPE5  |  172.31.253.6/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  172.31.253.6/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  172.31.253.4/31  |  -  |  -  |  -  |  -  |  -  |
 
@@ -515,11 +551,24 @@ interface Vlan112
    vrf TENANT_A_PROJECT01
    ip address virtual 10.1.12.254/24
 !
+interface Vlan132
+   description vl132_no_vni
+   no shutdown
+   vrf PURE_TYPE5
+   ip address virtual 10.1.32.254/24
+!
 interface Vlan3010
    description MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01
    no shutdown
    mtu 1500
    vrf TENANT_A_PROJECT01
+   ip address 172.31.253.6/31
+!
+interface Vlan3012
+   description MLAG_PEER_L3_iBGP: vrf PURE_TYPE5
+   no shutdown
+   mtu 1500
+   vrf PURE_TYPE5
    ip address 172.31.253.6/31
 !
 interface Vlan4093
@@ -559,6 +608,7 @@ interface Vlan4094
 
 | VLAN | VNI |
 | ---- | --- |
+| PURE_TYPE5 | 13 |
 | TENANT_A_PROJECT01 | 11 |
 
 ### VXLAN Interface Device Configuration
@@ -574,6 +624,7 @@ interface Vxlan1
    vxlan vlan 111 vni 10111
    vxlan vlan 112 vni 10112
    vxlan vlan 201 vni 20201
+   vxlan vrf PURE_TYPE5 vni 13
    vxlan vrf TENANT_A_PROJECT01 vni 11
 ```
 
@@ -607,6 +658,7 @@ ip virtual-router mac-address 00:1c:73:00:dc:01
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | true|| MGMT | false |
+| PURE_TYPE5 | true |
 | TENANT_A_PROJECT01 | true |
 
 ### IP Routing Device Configuration
@@ -615,6 +667,7 @@ ip virtual-router mac-address 00:1c:73:00:dc:01
 !
 ip routing
 no ip routing vrf MGMT
+ip routing vrf PURE_TYPE5
 ip routing vrf TENANT_A_PROJECT01
 ```
 ## IPv6 Routing
@@ -624,6 +677,7 @@ ip routing vrf TENANT_A_PROJECT01
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | false || MGMT | false |
+| PURE_TYPE5 | false |
 | TENANT_A_PROJECT01 | false |
 
 
@@ -698,6 +752,7 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | 172.31.255.10 | 65001 | default |
 | 192.168.0.2 | 65000 | default |
 | 192.168.0.3 | 65000 | default |
+| 172.31.253.7 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | PURE_TYPE5 |
 | 172.31.253.7 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 |
 
 ### Router BGP EVPN Address Family
@@ -715,6 +770,7 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 | VRF | Route-Distinguisher | Redistribute |
 | --- | ------------------- | ------------ |
+| PURE_TYPE5 | 192.168.255.5:13 | connected |
 | TENANT_A_PROJECT01 | 192.168.255.5:11 | connected<br>static |
 
 ### Router BGP Device Configuration
@@ -732,14 +788,17 @@ router bgp 65102
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
    neighbor EVPN-OVERLAY-PEERS bfd
    neighbor EVPN-OVERLAY-PEERS ebgp-multihop 3
+   neighbor EVPN-OVERLAY-PEERS password 7 q+VNViP5i4rVjW1cxFv2wA==
    neighbor EVPN-OVERLAY-PEERS send-community
    neighbor EVPN-OVERLAY-PEERS maximum-routes 0
    neighbor IPv4-UNDERLAY-PEERS peer group
+   neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER peer group
    neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65102
    neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
+   neighbor MLAG-IPv4-UNDERLAY-PEER password 7 vnEaG8gMeQf3d3cN6PktXQ==
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
@@ -778,6 +837,14 @@ router bgp 65102
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
       neighbor MLAG-IPv4-UNDERLAY-PEER activate
+   !
+   vrf PURE_TYPE5
+      rd 192.168.255.5:13
+      route-target import evpn 13:13
+      route-target export evpn 13:13
+      router-id 192.168.255.5
+      neighbor 172.31.253.7 peer group MLAG-IPv4-UNDERLAY-PEER
+      redistribute connected
    !
    vrf TENANT_A_PROJECT01
       rd 192.168.255.5:11
@@ -888,6 +955,7 @@ route-map RM-MLAG-PEER-IN permit 10
 | VRF Name | IP Routing |
 | -------- | ---------- |
 | MGMT | disabled |
+| PURE_TYPE5 | enabled |
 | TENANT_A_PROJECT01 | enabled |
 
 ## VRF Instances Device Configuration
@@ -895,6 +963,8 @@ route-map RM-MLAG-PEER-IN permit 10
 ```eos
 !
 vrf instance MGMT
+!
+vrf instance PURE_TYPE5
 !
 vrf instance TENANT_A_PROJECT01
 ```

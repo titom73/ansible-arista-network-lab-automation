@@ -12,7 +12,6 @@
   - [Local Users](#local-users)
   - [AAA Authorization](#aaa-authorization)
 - [Monitoring](#monitoring)
-  - [TerminAttr Daemon](#terminattr-daemon)
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
   - [Internal VLAN Allocation Policy Summary](#internal-vlan-allocation-policy-summary)
   - [Internal VLAN Allocation Policy Configuration](#internal-vlan-allocation-policy-configuration)
@@ -205,23 +204,6 @@ aaa authorization exec default local
 
 # Monitoring
 
-## TerminAttr Daemon
-
-### TerminAttr Daemon Summary
-
-| CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF | AAA Disabled |
-| -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- | ------ |
-| gzip | 10.73.254.1:9910 | UNSET | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
-
-### TerminAttr Daemon Device Configuration
-
-```eos
-!
-daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=10.73.254.1:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
-   no shutdown
-```
-
 # Internal VLAN Allocation Policy
 
 ## Internal VLAN Allocation Policy Summary
@@ -246,6 +228,8 @@ vlan internal order ascending range 1006 1199
 | 110 | PR01-DEMO | - |
 | 111 | PR01-TRUST | - |
 | 112 | PR01-TRUST | - |
+| 131 | PURE_TYPE05_VL01 | - |
+| 132 | PURE_TYPE05_VL02 | - |
 | 201 | B-ELAN-201 | - |
 | 301 | CENTRAL_LAN_01 | - |
 | 302 | CENTRAL_LAN_02 | - |
@@ -262,6 +246,12 @@ vlan 111
 !
 vlan 112
    name PR01-TRUST
+!
+vlan 131
+   name PURE_TYPE05_VL01
+!
+vlan 132
+   name PURE_TYPE05_VL02
 !
 vlan 201
    name B-ELAN-201
@@ -309,6 +299,7 @@ interface Ethernet1
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan110 |  SVI for Tenant A vlan 110  |  tenant_a_110  |  -  |  false  |
 | Vlan112 |  SVI for Tenant A vlan 112  |  tenant_a_112  |  -  |  false  |
+| Vlan132 |  SVI for Pure Type 05 vlan 132  |  pure_type5  |  -  |  false  |
 | Vlan201 |  SVI for Tenant B vlan 201  |  tenant_b_201  |  -  |  false  |
 
 #### IPv4
@@ -317,6 +308,7 @@ interface Ethernet1
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan110 |  tenant_a_110  |  10.1.10.2/24  |  -  |  -  |  -  |  -  |  -  |
 | Vlan112 |  tenant_a_112  |  10.1.12.2/24  |  -  |  -  |  -  |  -  |  -  |
+| Vlan132 |  pure_type5  |  10.1.32.2/24  |  -  |  -  |  -  |  -  |  -  |
 | Vlan201 |  tenant_b_201  |  10.2.1.2/24  |  -  |  -  |  -  |  -  |  -  |
 
 
@@ -335,6 +327,12 @@ interface Vlan112
    no shutdown
    vrf tenant_a_112
    ip address 10.1.12.2/24
+!
+interface Vlan132
+   description SVI for Pure Type 05 vlan 132
+   no shutdown
+   vrf pure_type5
+   ip address 10.1.32.2/24
 !
 interface Vlan201
    description SVI for Tenant B vlan 201
@@ -360,6 +358,7 @@ service routing protocols model multi-agent
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | true|| MGMT | false |
+| pure_type5 | true |
 | tenant_a_110 | true |
 | tenant_a_112 | true |
 | tenant_b_201 | true |
@@ -370,6 +369,7 @@ service routing protocols model multi-agent
 !
 ip routing
 no ip routing vrf MGMT
+ip routing vrf pure_type5
 ip routing vrf tenant_a_110
 ip routing vrf tenant_a_112
 ip routing vrf tenant_b_201
@@ -381,6 +381,7 @@ ip routing vrf tenant_b_201
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | false || MGMT | false |
+| pure_type5 | false |
 | tenant_a_110 | false |
 | tenant_a_112 | false |
 | tenant_b_201 | false |
@@ -394,6 +395,7 @@ ip routing vrf tenant_b_201
 | --- | ------------------ | ----------------------- | ------------------- | ----------------------------- | ----------------- | ----------------------------- | -------------- |
 | tenant_a_110  | 0.0.0.0/0 |  10.1.10.254  |  -  |  1  |  -  |  -  |  - |
 | tenant_a_112  | 0.0.0.0/0 |  10.1.12.254  |  -  |  1  |  -  |  -  |  - |
+| pure_type5  | 0.0.0.0/0 |  10.1.32.254  |  -  |  1  |  -  |  -  |  - |
 
 ### Static Routes Device Configuration
 
@@ -401,6 +403,7 @@ ip routing vrf tenant_b_201
 !
 ip route vrf tenant_a_110 0.0.0.0/0 10.1.10.254
 ip route vrf tenant_a_112 0.0.0.0/0 10.1.12.254
+ip route vrf pure_type5 0.0.0.0/0 10.1.32.254
 ```
 
 # Multicast
@@ -428,6 +431,7 @@ IGMP snooping is globally enabled.
 | VRF Name | IP Routing |
 | -------- | ---------- |
 | MGMT | disabled |
+| pure_type5 | enabled |
 | tenant_a_110 | enabled |
 | tenant_a_112 | enabled |
 | tenant_b_201 | enabled |
@@ -437,6 +441,8 @@ IGMP snooping is globally enabled.
 ```eos
 !
 vrf instance MGMT
+!
+vrf instance pure_type5
 !
 vrf instance tenant_a_110
 !

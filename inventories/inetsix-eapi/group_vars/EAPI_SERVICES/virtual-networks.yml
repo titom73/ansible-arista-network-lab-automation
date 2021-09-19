@@ -27,6 +27,11 @@ tenants:
             tags: ['DC1']
             enabled: true
             ip_address_virtual: 10.1.10.254/24
+            structured_config:
+              ipv6_enable: < true | false >
+              ipv6_address: < IPv6_address/Mask >
+              ipv6_virtual_router_address: < IPv6_address/Mask >
+
             # igmp_snooping: false
           111:
             name: 'PR01-TRUST'
@@ -69,6 +74,21 @@ tenants:
       #       enabled: true
       #       ip_address_virtual: 10.2.12.254/24
       #       igmp_snooping: true
+      PURE_TYPE5:
+        vrf_vni: 13
+        svis:
+          131:
+            name: vl131_no_vni
+            tags: ['POD01']
+            enabled: true
+            ip_address_virtual: 10.1.31.254/24
+            vxlan: false
+          132:
+            name: vl132_no_vni
+            tags: ['POD02']
+            enabled: true
+            ip_address_virtual: 10.1.32.254/24
+            vxlan: false
 
 # Tenant D Specific Information - Pure L2 tenant
   Tenant_B:

@@ -12,11 +12,13 @@ router_bgp:
       type: ipv4
       remote_as: '65101'
       next_hop_self: true
+      password: vnEaG8gMeQf3d3cN6PktXQ==
       maximum_routes: 12000
       send_community: all
       route_map_in: RM-MLAG-PEER-IN
     IPv4-UNDERLAY-PEERS:
       type: ipv4
+      password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
       send_community: all
     EVPN-OVERLAY-PEERS:
@@ -24,6 +26,7 @@ router_bgp:
       update_source: Loopback0
       bfd: true
       ebgp_multihop: '3'
+      password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: all
       maximum_routes: 0
   address_family_ipv4:
@@ -62,6 +65,21 @@ router_bgp:
       EVPN-OVERLAY-PEERS:
         activate: true
   vrfs:
+    PURE_TYPE5:
+      router_id: 192.168.255.4
+      rd: 192.168.255.4:13
+      route_targets:
+        import:
+          evpn:
+          - '13:13'
+        export:
+          evpn:
+          - '13:13'
+      neighbors:
+        172.31.253.2:
+          peer_group: MLAG-IPv4-UNDERLAY-PEER
+      redistribute_routes:
+      - connected
     TENANT_A_PROJECT01:
       router_id: 192.168.255.4
       rd: 192.168.255.4:11
@@ -122,6 +140,13 @@ name_server:
   nodes:
   - 10.73.254.253
   - 10.73.1.254
+ntp_server:
+  local_interface:
+    vrf: MGMT
+    interface: Management1
+  nodes:
+  - 10.73.254.253
+  - 10.73.1.254
 spanning_tree:
   mode: mstp
   mst_instances:
@@ -150,6 +175,9 @@ clock:
 vrfs:
   MGMT:
     ip_routing: false
+  PURE_TYPE5:
+    tenant: Tenant_A
+    ip_routing: true
   TENANT_A_PROJECT01:
     tenant: Tenant_A
     ip_routing: true
@@ -176,6 +204,14 @@ vlans:
     name: MLAG_PEER
     trunk_groups:
     - MLAG
+  131:
+    tenant: Tenant_A
+    name: vl131_no_vni
+  3012:
+    tenant: Tenant_A
+    name: MLAG_iBGP_PURE_TYPE5
+    trunk_groups:
+    - LEAF_PEER_L3
   110:
     tenant: Tenant_A
     name: PR01-DEMO
@@ -204,6 +240,22 @@ vlan_interfaces:
     shutdown: false
     ip_address: 172.31.253.1/31
     no_autostate: true
+    mtu: 1500
+  Vlan131:
+    tenant: Tenant_A
+    tags:
+    - POD01
+    description: vl131_no_vni
+    shutdown: false
+    vrf: PURE_TYPE5
+    ip_address_virtual: 10.1.31.254/24
+  Vlan3012:
+    tenant: Tenant_A
+    type: underlay_peering
+    shutdown: false
+    description: 'MLAG_PEER_L3_iBGP: vrf PURE_TYPE5'
+    vrf: PURE_TYPE5
+    ip_address: 172.31.253.3/31
     mtu: 1500
   Vlan110:
     tenant: Tenant_A
@@ -257,7 +309,7 @@ port_channel_interfaces:
     description: EAPI-AGG01_Po1
     type: switched
     shutdown: false
-    vlans: 110-112,201
+    vlans: 110-112,131,201
     mode: trunk
     mlag: 5
 ethernet_interfaces:
@@ -376,6 +428,8 @@ vxlan_interface:
         201:
           vni: 20201
       vrfs:
+        PURE_TYPE5:
+          vni: 13
         TENANT_A_PROJECT01:
           vni: 11
 ip_virtual_router_mac_address: 00:1c:73:00:dc:01
