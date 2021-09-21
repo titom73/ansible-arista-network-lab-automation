@@ -81,14 +81,14 @@ all:
                     DC1-LEAF4A:
                       ansible_ssh_port: 8118
                       ansible_port: 8018
-                DC1_BL01:
-                  hosts:
-                    DC1-BL01A:
-                      ansible_ssh_port: 8115
-                      ansible_port: 8015
-                    DC1-BL01B:
-                      ansible_ssh_port: 8116
-                      ansible_port: 8016
+                # DC1_BL01:
+                #   hosts:
+                #     DC1-BL01A:
+                #       ansible_ssh_port: 8115
+                #       ansible_port: 8015
+                #     DC1-BL01B:
+                #       ansible_ssh_port: 8116
+                #       ansible_port: 8016
             DC1_EDGES:
               vars:
                 type: edge

@@ -100,23 +100,27 @@ ip name-server vrf MGMT 10.73.255.2
 
 ### NTP Summary
 
-- Local Interface: Management1
+#### NTP Local Interface
 
-- VRF: MGMT
+| Interface | VRF |
+| --------- | --- |
+| Management1 | MGMT |
 
-| Node | Primary |
-| ---- | ------- |
-| 91.224.149.41 | true |
-| 37.59.63.125 | - |
-| 188.165.240.21 | - |
+#### NTP Servers
+
+| Server | VRF | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Key |
+| ------ | --- | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | --- |
+| 37.59.63.125 | MGMT | - | - | - | - | - | - | - | - |
+| 91.224.149.41 | MGMT | - | - | - | - | - | - | - | - |
+| 188.165.240.21 | MGMT | - | - | - | - | - | - | - | - |
 
 ### NTP Device Configuration
 
 ```eos
 !
 ntp local-interface vrf MGMT Management1
-ntp server vrf MGMT 91.224.149.41 prefer
 ntp server vrf MGMT 37.59.63.125
+ntp server vrf MGMT 91.224.149.41
 ntp server vrf MGMT 188.165.240.21
 ```
 
@@ -176,16 +180,16 @@ username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$
 
 ### TerminAttr Daemon Summary
 
-| CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF | AAA Disabled |
-| -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- | ------ |
-| gzip | 10.73.255.1:9910 | UNSET | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
+| CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
+| -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
+| gzip | 10.73.255.1:9910 | MGMT | key,telarista | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | False |
 
 ### TerminAttr Daemon Device Configuration
 
 ```eos
 !
 daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=10.73.255.1:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
+   exec /usr/bin/TerminAttr -cvaddr=10.73.255.1:9910 -cvauth=key,telarista -cvvrf=MGMT -cvgnmi -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
    no shutdown
 ```
 
@@ -504,7 +508,7 @@ interface Vlan114
    no shutdown
    vrf TENANT_A_PROJECT02
    ip address virtual 10.1.14.254/24
-   ip helper-address 1.1.1.1 vrf TENANT_A_PROJECT02 source-interface lo100
+   ip helper-address 1.1.1.1 source-interface lo100
 !
 interface Vlan3010
    description MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01
@@ -542,16 +546,18 @@ interface Vlan4094
 
 #### UDP port: 4789
 
-#### VLAN to VNI Mappings
+#### EVPN MLAG Shared Router MAC : mlag-system-id
 
-| VLAN | VNI |
-| ---- | --- |
-| 110 | 10110 |
-| 111 | 10111 |
-| 112 | 10112 |
-| 113 | 10113 |
-| 114 | 10114 |
-| 201 | 20201 |
+#### VLAN to VNI and Flood List Mappings
+
+| VLAN | VNI | Flood List |
+| ---- | --- | ---------- |
+| 110 | 10110 | - |
+| 111 | 10111 | - |
+| 112 | 10112 | - |
+| 113 | 10113 | - |
+| 114 | 10114 | - |
+| 201 | 20201 | - |
 
 #### VRF to VNI Mappings
 
@@ -565,6 +571,7 @@ interface Vlan4094
 ```eos
 !
 interface Vxlan1
+   description DC1-LEAF1A_VTEP
    vxlan source-interface Loopback1
    vxlan virtual-router encapsulation mac-address mlag-system-id
    vxlan udp-port 4789

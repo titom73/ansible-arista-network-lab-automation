@@ -30,8 +30,16 @@ local_users:
     privilege: 15
     role: network-admin
     sha512_password: $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
-cvp_instance_ip: 10.73.255.1
-cvp_ingestauth_key: ''
+cvp_instance_ips:
+- 10.73.255.1
+cvp_ingestauth_key: telarista
+daemon_terminattr:
+  cvaddrs:
+  - 10.73.255.1
+  cvvrf: MGMT
+  cvgnmi: true
+  smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
+  ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
 mgmt_gateway: 10.73.255.2
 name_servers:
 - 10.73.255.2
@@ -44,6 +52,8 @@ bfd_multihop:
   interval: 1200
   min_rx: 1200
   multiplier: 3
+custom_structured_configuration_prefix:
+- custom_cli_
 node_type_keys:
   spine:
     type: spine
@@ -197,29 +207,6 @@ l3leaf:
           - Ethernet8
           - Ethernet8
           mac_address: 0c:1d:c0:1d:62:01
-    DC1_BL01:
-      bgp_as: 65105
-      filter:
-        tenants:
-        - Tenant_A
-        - Tenant_B
-        tags:
-        - BORDER
-      nodes:
-        DC1-BL01A:
-          id: 7
-          mgmt_ip: 10.73.255.115/24
-          uplink_switch_interfaces:
-          - Ethernet5
-          - Ethernet5
-          mac_address: 0c:1d:c0:1d:62:01
-        DC1-BL01B:
-          id: 8
-          mgmt_ip: 10.73.255.116/24
-          uplink_switch_interfaces:
-          - Ethernet6
-          - Ethernet6
-          mac_address: 0c:1d:c0:1d:62:01
 edge:
   defaults:
     platform: vEOS-LAB
@@ -296,8 +283,8 @@ bgp_peer_groups:
     password: q+VNViP5i4rVjW1cxFv2wA==
   MLAG_IPv4_UNDERLAY_PEER:
     password: vnEaG8gMeQf3d3cN6PktXQ==
-inventory_file: /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/inetsix-cvp/inventory.yml
-inventory_dir: /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/inetsix-cvp
+inventory_file: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/inventories/inetsix-cvp/inventory.yml
+inventory_dir: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/inventories/inetsix-cvp
 ansible_ssh_port: 8102
 ansible_port: 8002
 inventory_hostname: DC1-SPINE2
@@ -329,6 +316,13 @@ ansible_facts:
       p2p_uplinks_peer_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-peer-ip.j2
       vtep_ip_mlag: designs/l3ls-evpn/ip-addressing/vtep-ip-mlag.j2
       vtep_ip: designs/l3ls-evpn/ip-addressing/vtep-ip.j2
+    interface_descriptions:
+      underlay_ethernet_interfaces: designs/l3ls-evpn/interface-descriptions/underlay/ethernet-interfaces.j2
+      underlay_port_channel_interfaces: designs/l3ls-evpn/interface-descriptions/underlay/port-channel-interfaces.j2
+      connected_endpoints_ethernet_interfaces: designs/l3ls-evpn/interface-descriptions/connected-endpoints/ethernet-interfaces.j2
+      connected_endpoints_port_channel_interfaces: designs/l3ls-evpn/interface-descriptions/connected-endpoints/port-channel-interfaces.j2
+      overlay_loopback_interface: designs/l3ls-evpn/interface-descriptions/loopback-interfaces/overlay-loopback.j2
+      vtep_loopback_interface: designs/l3ls-evpn/interface-descriptions/loopback-interfaces/vtep-loopback.j2
     underlay_routing_protocol: ebgp
     overlay_routing_protocol: ebgp
     id: 2
@@ -348,7 +342,7 @@ ansible_facts:
     loopback_ipv4_pool: 192.168.255.0/24
     loopback_ipv4_offset: 0
     router_id: 192.168.255.2
-    bgp_as: 65001
+    bgp_as: '65001'
     bgp_defaults:
     - no bgp default ipv4-unicast
     - distance bgp 20 200 200
@@ -356,8 +350,6 @@ ansible_facts:
     - graceful-restart
     evpn_role: none
     mlag: false
-    tenants: {}
-    vlans: []
   topology:
     peers: []
     vlans: []
@@ -382,6 +374,13 @@ switch:
     p2p_uplinks_peer_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-peer-ip.j2
     vtep_ip_mlag: designs/l3ls-evpn/ip-addressing/vtep-ip-mlag.j2
     vtep_ip: designs/l3ls-evpn/ip-addressing/vtep-ip.j2
+  interface_descriptions:
+    underlay_ethernet_interfaces: designs/l3ls-evpn/interface-descriptions/underlay/ethernet-interfaces.j2
+    underlay_port_channel_interfaces: designs/l3ls-evpn/interface-descriptions/underlay/port-channel-interfaces.j2
+    connected_endpoints_ethernet_interfaces: designs/l3ls-evpn/interface-descriptions/connected-endpoints/ethernet-interfaces.j2
+    connected_endpoints_port_channel_interfaces: designs/l3ls-evpn/interface-descriptions/connected-endpoints/port-channel-interfaces.j2
+    overlay_loopback_interface: designs/l3ls-evpn/interface-descriptions/loopback-interfaces/overlay-loopback.j2
+    vtep_loopback_interface: designs/l3ls-evpn/interface-descriptions/loopback-interfaces/vtep-loopback.j2
   underlay_routing_protocol: ebgp
   overlay_routing_protocol: ebgp
   id: 2
@@ -401,7 +400,7 @@ switch:
   loopback_ipv4_pool: 192.168.255.0/24
   loopback_ipv4_offset: 0
   router_id: 192.168.255.2
-  bgp_as: 65001
+  bgp_as: '65001'
   bgp_defaults:
   - no bgp default ipv4-unicast
   - distance bgp 20 200 200
@@ -409,14 +408,12 @@ switch:
   - graceful-restart
   evpn_role: none
   mlag: false
-  tenants: {}
-  vlans: []
 topology:
   peers: []
   vlans: []
-playbook_dir: /Users/tgrimonet/Projects/arista-ansible/lab-validation/playbooks
-ansible_playbook_python: /Users/tgrimonet/.pyenv/versions/3.6.8/envs/avd-v3.6/bin/python
-ansible_config_file: /Users/tgrimonet/Projects/arista-ansible/lab-validation/ansible.cfg
+playbook_dir: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/playbooks
+ansible_playbook_python: /Users/tgrimonet/.pyenv/versions/3.9.7/envs/arista-avd/bin/python3.9
+ansible_config_file: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/ansible.cfg
 groups:
   all:
   - cv_server1
@@ -426,16 +423,14 @@ groups:
   - DHCP_SERVER
   - DC1-SPINE1
   - DC1-SPINE2
-  - DC1-AGG01
-  - DC1-AGG02
   - DC1-LEAF1A
   - DC1-LEAF1B
   - DC1-LEAF2A
   - DC1-LEAF2B
   - DC1-LEAF3A
   - DC1-LEAF4A
-  - DC1-BL01A
-  - DC1-BL01B
+  - DC1-AGG01
+  - DC1-AGG02
   ungrouped: []
   cvp_sync:
   - cv_server1
@@ -457,21 +452,17 @@ groups:
   - DC1-LEAF2B
   - DC1-LEAF3A
   - DC1-LEAF4A
-  - DC1-BL01A
-  - DC1-BL01B
   DC1_FABRIC:
   - DC1-SPINE1
   - DC1-SPINE2
-  - DC1-AGG01
-  - DC1-AGG02
   - DC1-LEAF1A
   - DC1-LEAF1B
   - DC1-LEAF2A
   - DC1-LEAF2B
   - DC1-LEAF3A
   - DC1-LEAF4A
-  - DC1-BL01A
-  - DC1-BL01B
+  - DC1-AGG01
+  - DC1-AGG02
   DC1_SPINES:
   - DC1-SPINE1
   - DC1-SPINE2
@@ -482,8 +473,6 @@ groups:
   - DC1-LEAF2B
   - DC1-LEAF3A
   - DC1-LEAF4A
-  - DC1-BL01A
-  - DC1-BL01B
   DC1_LEAF1:
   - DC1-LEAF1A
   - DC1-LEAF1B
@@ -494,9 +483,6 @@ groups:
   - DC1-LEAF3A
   DC1_LEAF4:
   - DC1-LEAF4A
-  DC1_BL01:
-  - DC1-BL01A
-  - DC1-BL01B
   DC1_EDGES:
   - DC1-AGG01
   - DC1-AGG02
@@ -511,8 +497,6 @@ groups:
   - DC1-LEAF2B
   - DC1-LEAF3A
   - DC1-LEAF4A
-  - DC1-BL01A
-  - DC1-BL01B
   - DC1-AGG01
   - DC1-AGG02
   ENDPOINTS:
@@ -522,8 +506,6 @@ groups:
   - DC1-LEAF2B
   - DC1-LEAF3A
   - DC1-LEAF4A
-  - DC1-BL01A
-  - DC1-BL01B
   - DC1-AGG01
   - DC1-AGG02
   EOS:
@@ -535,22 +517,20 @@ groups:
   - DC1-LEAF2B
   - DC1-LEAF3A
   - DC1-LEAF4A
-  - DC1-BL01A
-  - DC1-BL01B
   - DC1-AGG01
   - DC1-AGG02
-omit: __omit_place_holder__58528954a0853f96542defd11d69a5bb2b5e31b9
+omit: __omit_place_holder__90f888a93bfec52e3de7039164e83ced7b780da9
 ansible_version:
-  string: 2.10.10
-  full: 2.10.10
+  string: 2.10.14
+  full: 2.10.14
   major: 2
   minor: 10
-  revision: 10
+  revision: 14
 ansible_check_mode: false
 ansible_diff_mode: true
 ansible_forks: 15
 ansible_inventory_sources:
-- /Users/tgrimonet/Projects/arista-ansible/lab-validation/inventories/inetsix-cvp/inventory.yml
+- /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/inventories/inetsix-cvp/inventory.yml
 ansible_skip_tags: []
 ansible_run_tags:
 - build

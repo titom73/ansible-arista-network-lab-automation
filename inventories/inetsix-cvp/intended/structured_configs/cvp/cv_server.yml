@@ -8,14 +8,6 @@ CVP_DEVICES:
     parentContainerName: DC1_EDGE2
     configlets:
       - AVD_DC1-AGG02
-  - fqdn: DC1-BL01A
-    parentContainerName: DC1_BL01
-    configlets:
-      - AVD_DC1-BL01A
-  - fqdn: DC1-BL01B
-    parentContainerName: DC1_BL01
-    configlets:
-      - AVD_DC1-BL01B
   - fqdn: DC1-LEAF1A
     parentContainerName: DC1_LEAF1
     configlets:
@@ -49,8 +41,6 @@ CVP_DEVICES:
     configlets:
       - AVD_DC1-SPINE2
 CVP_CONTAINERS:
-  DC1_BL01:
-    parentContainerName: DC1_L3LEAFS
   DC1_EDGE1:
     parentContainerName: DC1_EDGES
   DC1_EDGE2:

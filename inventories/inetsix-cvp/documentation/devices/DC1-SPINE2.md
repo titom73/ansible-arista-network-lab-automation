@@ -84,23 +84,27 @@ ip name-server vrf MGMT 10.73.255.2
 
 ### NTP Summary
 
-- Local Interface: Management1
+#### NTP Local Interface
 
-- VRF: MGMT
+| Interface | VRF |
+| --------- | --- |
+| Management1 | MGMT |
 
-| Node | Primary |
-| ---- | ------- |
-| 91.224.149.41 | true |
-| 37.59.63.125 | - |
-| 188.165.240.21 | - |
+#### NTP Servers
+
+| Server | VRF | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Key |
+| ------ | --- | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | --- |
+| 37.59.63.125 | MGMT | - | - | - | - | - | - | - | - |
+| 91.224.149.41 | MGMT | - | - | - | - | - | - | - | - |
+| 188.165.240.21 | MGMT | - | - | - | - | - | - | - | - |
 
 ### NTP Device Configuration
 
 ```eos
 !
 ntp local-interface vrf MGMT Management1
-ntp server vrf MGMT 91.224.149.41 prefer
 ntp server vrf MGMT 37.59.63.125
+ntp server vrf MGMT 91.224.149.41
 ntp server vrf MGMT 188.165.240.21
 ```
 
@@ -160,16 +164,16 @@ username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$
 
 ### TerminAttr Daemon Summary
 
-| CV Compression | Ingest gRPC URL | Ingest Authentication Key | Smash Excludes | Ingest Exclude | Ingest VRF |  NTP VRF | AAA Disabled |
-| -------------- | --------------- | ------------------------- | -------------- | -------------- | ---------- | -------- | ------ |
-| gzip | 10.73.255.1:9910 | UNSET | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | MGMT | MGMT | False |
+| CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
+| -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
+| gzip | 10.73.255.1:9910 | MGMT | key,telarista | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | False |
 
 ### TerminAttr Daemon Device Configuration
 
 ```eos
 !
 daemon TerminAttr
-   exec /usr/bin/TerminAttr -ingestgrpcurl=10.73.255.1:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=MGMT -taillogs
+   exec /usr/bin/TerminAttr -cvaddr=10.73.255.1:9910 -cvauth=key,telarista -cvvrf=MGMT -cvgnmi -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
    no shutdown
 ```
 
@@ -225,8 +229,6 @@ vlan internal order ascending range 1006 1199
 | Ethernet2 | P2P_LINK_TO_DC1-LEAF1B_Ethernet2 | routed | - | 172.31.255.6/31 | default | 1500 | false | - | - |
 | Ethernet3 | P2P_LINK_TO_DC1-LEAF2A_Ethernet2 | routed | - | 172.31.255.10/31 | default | 1500 | false | - | - |
 | Ethernet4 | P2P_LINK_TO_DC1-LEAF2B_Ethernet2 | routed | - | 172.31.255.14/31 | default | 1500 | false | - | - |
-| Ethernet5 | P2P_LINK_TO_DC1-BL01A_Ethernet2 | routed | - | 172.31.255.26/31 | default | 1500 | false | - | - |
-| Ethernet6 | P2P_LINK_TO_DC1-BL01B_Ethernet2 | routed | - | 172.31.255.30/31 | default | 1500 | false | - | - |
 | Ethernet7 | P2P_LINK_TO_DC1-LEAF3A_Ethernet2 | routed | - | 172.31.255.18/31 | default | 1500 | false | - | - |
 | Ethernet8 | P2P_LINK_TO_DC1-LEAF4A_Ethernet2 | routed | - | 172.31.255.22/31 | default | 1500 | false | - | - |
 
@@ -261,20 +263,6 @@ interface Ethernet4
    mtu 1500
    no switchport
    ip address 172.31.255.14/31
-!
-interface Ethernet5
-   description P2P_LINK_TO_DC1-BL01A_Ethernet2
-   no shutdown
-   mtu 1500
-   no switchport
-   ip address 172.31.255.26/31
-!
-interface Ethernet6
-   description P2P_LINK_TO_DC1-BL01B_Ethernet2
-   no shutdown
-   mtu 1500
-   no switchport
-   ip address 172.31.255.30/31
 !
 interface Ethernet7
    description P2P_LINK_TO_DC1-LEAF3A_Ethernet2
@@ -403,8 +391,6 @@ ip route vrf MGMT 0.0.0.0/0 10.73.255.2
 | 172.31.255.15 | 65102 | default |
 | 172.31.255.19 | 65103 | default |
 | 172.31.255.23 | 65104 | default |
-| 172.31.255.27 | 65105 | default |
-| 172.31.255.31 | 65105 | default |
 
 ### Router BGP EVPN Address Family
 
@@ -445,12 +431,6 @@ router bgp 65001
    neighbor 172.31.255.23 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.23 remote-as 65104
    neighbor 172.31.255.23 description DC1-LEAF4A_Ethernet2
-   neighbor 172.31.255.27 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.27 remote-as 65105
-   neighbor 172.31.255.27 description DC1-BL01A_Ethernet2
-   neighbor 172.31.255.31 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.31 remote-as 65105
-   neighbor 172.31.255.31 description DC1-BL01B_Ethernet2
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family ipv4

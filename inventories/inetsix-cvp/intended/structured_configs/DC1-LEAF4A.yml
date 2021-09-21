@@ -1,5 +1,5 @@
 router_bgp:
-  as: 65104
+  as: '65104'
   router_id: 192.168.255.8
   bgp_defaults:
   - no bgp default ipv4-unicast
@@ -33,11 +33,11 @@ router_bgp:
   neighbors:
     172.31.255.20:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65001
+      remote_as: '65001'
       description: DC1-SPINE1_Ethernet8
     172.31.255.22:
       peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65001
+      remote_as: '65001'
       description: DC1-SPINE2_Ethernet8
   address_family_evpn:
     peer_groups:
@@ -81,14 +81,16 @@ static_routes:
 service_routing_protocols_model: multi-agent
 ip_routing: true
 daemon_terminattr:
-  ingestgrpcurl:
-    ips:
-    - 10.73.255.1
-    port: 9910
-  ingestvrf: MGMT
+  cvaddrs:
+  - 10.73.255.1:9910
+  cvauth:
+    method: key
+    key: telarista
+  cvvrf: MGMT
   smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
   ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
   disable_aaa: false
+  cvgnmi: true
 vlan_internal_order:
   allocation: ascending
   range:
@@ -99,14 +101,6 @@ name_server:
     vrf: MGMT
   nodes:
   - 10.73.255.2
-ntp_server:
-  local_interface:
-    vrf: MGMT
-    interface: Management1
-  nodes:
-  - 91.224.149.41
-  - 37.59.63.125
-  - 188.165.240.21
 spanning_tree:
   mode: mstp
   mst_instances:
@@ -218,12 +212,12 @@ vlans:
     name: B-ELAN-201
 ip_igmp_snooping:
   globally_enabled: true
-vxlan_tunnel_interface:
+vxlan_interface:
   Vxlan1:
     description: DC1-LEAF4A_VTEP
-    source_interface: Loopback1
-    vxlan_udp_port: 4789
-    vxlan_vni_mappings:
+    vxlan:
+      source_interface: Loopback1
+      udp_port: 4789
       vlans:
         110:
           vni: 10110

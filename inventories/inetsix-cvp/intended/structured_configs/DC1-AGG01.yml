@@ -5,14 +5,16 @@ static_routes:
 service_routing_protocols_model: multi-agent
 ip_routing: true
 daemon_terminattr:
-  ingestgrpcurl:
-    ips:
-    - 10.73.255.1
-    port: 9910
-  ingestvrf: MGMT
+  cvaddrs:
+  - 10.73.255.1:9910
+  cvauth:
+    method: key
+    key: telarista
+  cvvrf: MGMT
   smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
   ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
   disable_aaa: false
+  cvgnmi: true
 vlan_internal_order:
   allocation: ascending
   range:
@@ -23,14 +25,6 @@ name_server:
     vrf: MGMT
   nodes:
   - 10.73.255.2
-ntp_server:
-  local_interface:
-    vrf: MGMT
-    interface: Management1
-  nodes:
-  - 91.224.149.41
-  - 37.59.63.125
-  - 188.165.240.21
 spanning_tree:
   mode: mstp
   mst_instances:
