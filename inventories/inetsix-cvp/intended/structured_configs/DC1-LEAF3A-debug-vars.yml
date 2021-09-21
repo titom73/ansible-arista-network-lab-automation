@@ -33,20 +33,24 @@ local_users:
 cvp_instance_ips:
 - 10.73.255.1
 cvp_ingestauth_key: telarista
-daemon_terminattr:
-  cvaddrs:
-  - 10.73.255.1
-  cvvrf: MGMT
+custom_cli_daemon_terminattr:
   cvgnmi: true
   smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
   ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
 mgmt_gateway: 10.73.255.2
 name_servers:
 - 10.73.255.2
-ntp_servers:
-- 91.224.149.41
-- 37.59.63.125
-- 188.165.240.21
+ntp:
+  local_interface:
+    name: Management1
+    vrf: MGMT
+  servers:
+  - name: 91.224.149.41
+    vrf: MGMT
+  - name: 37.59.63.125
+    vrf: MGMT
+  - name: 188.165.240.21
+    vrf: MGMT
 p2p_uplinks_mtu: 1500
 bfd_multihop:
   interval: 1200
@@ -695,6 +699,7 @@ topology:
   - 110
   - 111
   - 201
+execute_tasks: 'true'
 playbook_dir: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/playbooks
 ansible_playbook_python: /Users/tgrimonet/.pyenv/versions/3.9.7/envs/arista-avd/bin/python3.9
 ansible_config_file: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/ansible.cfg
@@ -803,7 +808,7 @@ groups:
   - DC1-LEAF4A
   - DC1-AGG01
   - DC1-AGG02
-omit: __omit_place_holder__90f888a93bfec52e3de7039164e83ced7b780da9
+omit: __omit_place_holder__c9201fbb5988a7d99f14c46685cd2faec3f0bb08
 ansible_version:
   string: 2.10.14
   full: 2.10.14
@@ -817,5 +822,7 @@ ansible_inventory_sources:
 - /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/inventories/inetsix-cvp/inventory.yml
 ansible_skip_tags: []
 ansible_run_tags:
+- apply
 - build
+- provision
 ansible_verbosity: 0
