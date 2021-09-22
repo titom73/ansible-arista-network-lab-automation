@@ -30,7 +30,7 @@ all:
           ztp_pool_start: 10.73.255.200
           ztp_pool_end: 10.73.255.210
           ztp_lease_time: 300
-          fabric_group: 'DC1'
+          fabric_group: 'DC1_FABRIC'
           ztp_mac_source: system
           ztp_mode: offline
     # DC1_Fabric - EVPN Fabric running in home lab
