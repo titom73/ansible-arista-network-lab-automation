@@ -1,0 +1,13 @@
+---
+avd:
+  prs:
+    - name: 'Feat(eos_config_deploy_cvp): Add support for apply_mode for devices and containers'
+      local_branch: issues/deploy-cv-update
+      url:  https://github.com/titom73/ansible-avd/pull/new/issues/deploy-cv-update
+
+
+
+
+
+cvp:
+  prs:
