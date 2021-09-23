@@ -1,7 +1,7 @@
 ---
 - name: Configure DHCP Service on {{ inventory_hostname }} for ZTP
   hosts: TOOLS
-  gather_facts: false
+  gather_facts: true
   tasks:
     - name: 'Execute DHCP configuration role'
       import_role:

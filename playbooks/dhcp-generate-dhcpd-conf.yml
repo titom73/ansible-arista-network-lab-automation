@@ -7,5 +7,4 @@
       import_role:
         name: arista.avd.dhcp_provisioner
       vars:
-        # ztp_mode: offline
         output_dirs: '{{ inventory_dir }}'

@@ -2,13 +2,9 @@
 TOOLS:
   hosts:
     DHCP_SERVER:
-      ztp_network_summary: 10.73.254.0/24
-      ztp_pool_start: 10.73.254.200
-      ztp_pool_end: 10.73.254.210
-      ztp_lease_time: 300
-      fabric_group: 'EAPI'
-      ztp_mac_source: system
-      ztp_mode: offline
+      ansible_host: 10.73.1.241
+      ansible_user: tom
+      ansible_password: interdata
 
 ENDPOINTS:
   hosts:
