@@ -4,7 +4,7 @@ TOOLS:
     DHCP_SERVER:
       ansible_host: 10.73.1.241
       ansible_user: tom
-      ansible_password: interdata
+      ansible_password: ansible
 
 ENDPOINTS:
   hosts:
