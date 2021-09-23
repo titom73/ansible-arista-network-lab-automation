@@ -13,10 +13,21 @@ router_bgp:
       password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
       send_community: all
+    EVPN-OVERLAY-PEERS:
+      type: evpn
+      update_source: Loopback0
+      bfd: true
+      ebgp_multihop: '3'
+      password: q+VNViP5i4rVjW1cxFv2wA==
+      send_community: all
+      maximum_routes: 0
+      next_hop_unchanged: true
   address_family_ipv4:
     peer_groups:
       IPv4-UNDERLAY-PEERS:
         activate: true
+      EVPN-OVERLAY-PEERS:
+        activate: false
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
@@ -45,6 +56,34 @@ router_bgp:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65104'
       description: DC1-LEAF4A_Ethernet1
+    192.168.255.3:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: DC1-LEAF1A
+      remote_as: '65101'
+    192.168.255.4:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: DC1-LEAF1B
+      remote_as: '65101'
+    192.168.255.5:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: DC1-LEAF2A
+      remote_as: '65102'
+    192.168.255.6:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: DC1-LEAF2B
+      remote_as: '65102'
+    192.168.255.7:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: DC1-LEAF3A
+      remote_as: '65103'
+    192.168.255.8:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: DC1-LEAF4A
+      remote_as: '65104'
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
@@ -178,3 +217,8 @@ route_maps:
         type: permit
         match:
         - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+router_bfd:
+  multihop:
+    interval: 1200
+    min_rx: 1200
+    multiplier: 3

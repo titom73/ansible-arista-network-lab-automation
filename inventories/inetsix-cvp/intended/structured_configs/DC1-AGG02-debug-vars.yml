@@ -61,7 +61,7 @@ custom_structured_configuration_prefix:
 node_type_keys:
   spine:
     type: spine
-    default_evpn_role: none
+    default_evpn_role: server
   l3leaf:
     type: l3leaf
     connected_endpoints: true
@@ -128,6 +128,9 @@ l3leaf:
     mlag_interfaces:
     - Ethernet3
     - Ethernet4
+    evpn_route_servers:
+    - DC1-SPINE1
+    - DC1-SPINE2
   node_groups:
     DC1_LEAF1:
       bgp_as: 65101
@@ -782,7 +785,7 @@ groups:
   - DC1-LEAF2B
   - DC1-LEAF3A
   - DC1-LEAF4A
-omit: __omit_place_holder__c2e57ed3df87aca338428b701dc745ca7b51cb4d
+omit: __omit_place_holder__11fe456cbd1f16fe5384fa169a513e79dea6beba
 ansible_version:
   string: 2.10.14
   full: 2.10.14

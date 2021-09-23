@@ -707,6 +707,8 @@ ip route vrf MGMT 0.0.0.0/0 10.73.255.2
 | 10.255.251.1 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default |
 | 172.31.255.0 | 65001 | default |
 | 172.31.255.2 | 65001 | default |
+| 192.168.255.1 | 65001 | default |
+| 192.168.255.2 | 65001 | default |
 | 10.255.251.1 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 |
 | 10.255.251.1 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT02 |
 
@@ -766,6 +768,12 @@ router bgp 65101
    neighbor 172.31.255.2 peer group IPv4-UNDERLAY-PEERS
    neighbor 172.31.255.2 remote-as 65001
    neighbor 172.31.255.2 description DC1-SPINE2_Ethernet1
+   neighbor 192.168.255.1 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.1 remote-as 65001
+   neighbor 192.168.255.1 description DC1-SPINE1
+   neighbor 192.168.255.2 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.255.2 remote-as 65001
+   neighbor 192.168.255.2 description DC1-SPINE2
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle B-ELAN-201

@@ -1,7 +1,7 @@
 node_type_keys:
   spine:
     type: spine
-    default_evpn_role: none
+    default_evpn_role: server
   l3leaf:
     type: l3leaf
     connected_endpoints: true
