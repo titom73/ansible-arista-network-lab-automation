@@ -7,13 +7,12 @@
     - arista.cvp
   vars:
     CVP_DEVICES:
-      - fqdn: tg-cvaas-aawg-ci-cv-unit
+      - fqdn: cv-dev-unit-01
         systemMacAddress: '50:01:00:e5:e3:6a'
         serialNumber: 64793E1D3DE2240F547E5964354214A4
-        parentContainerName: 'tg-lab'
+        parentContainerName: 'cv-development'
         configlets:
-            - 'tg-generic-aliases'
-            - 'tg-cvaas-aawg-ci-cv-unit'
+            - 'cv-dev-unit-01'
 
   tasks:
     # --------------------
@@ -22,9 +21,9 @@
     - name: "Configure devices on {{inventory_hostname}}"
       arista.cvp.cv_device_v3:
         devices: "{{CVP_DEVICES}}"
-        state: present
+        state: absent
         apply_mode: strict
-        search_key: serialNumber
+        search_key: fqdn
       register: CVP_DEVICES_RESULTS
 
     - name: 'Display debug'

@@ -425,8 +425,6 @@ ansible_playbook_python: /Users/tgrimonet/.pyenv/versions/3.9.7/envs/arista-avd/
 ansible_config_file: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/ansible.cfg
 groups:
   all:
-  - cv_server1
-  - cv_server2
   - cv_server
   - DHCP_SERVER
   - DC1-SPINE1
@@ -440,9 +438,6 @@ groups:
   - DC1-LEAF3A
   - DC1-LEAF4A
   ungrouped: []
-  cvp_sync:
-  - cv_server1
-  - cv_server2
   CVP:
   - cv_server
   TOOLS:
@@ -525,7 +520,7 @@ groups:
   - DC1-LEAF2B
   - DC1-LEAF3A
   - DC1-LEAF4A
-omit: __omit_place_holder__11fe456cbd1f16fe5384fa169a513e79dea6beba
+omit: __omit_place_holder__ee7143152cf8ac0d68be34486d3595cf56163530
 ansible_version:
   string: 2.10.14
   full: 2.10.14
@@ -539,7 +534,7 @@ ansible_inventory_sources:
 - /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/inventories/inetsix-cvp/inventory.yml
 ansible_skip_tags: []
 ansible_run_tags:
-- build
 - provision
 - apply
+- build
 ansible_verbosity: 0

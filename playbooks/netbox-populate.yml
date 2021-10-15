@@ -1,6 +1,6 @@
 ---
 - name: Populate Netbox from AVD
-  hosts: DC1_FABRIC
+  hosts: EAPI_FABRIC
   connection: local
   gather_facts: False
   collections:
@@ -11,3 +11,6 @@
     - name: "AVD populated on Netbox {{ inventory_hostname }}"
       import_role:
         name: inetsix.avd_tools.eos_netbox_provisioner
+      vars:
+        netbox_fabric_group: EAPI_FABRIC
+        netbox_svc_group: EAPI_SERVICES

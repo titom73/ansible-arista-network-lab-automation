@@ -1,0 +1,65 @@
+---
+all:
+  children:
+    CVP:
+      hosts:
+        cv_server:
+          ansible_host: 10.73.1.239
+          ansible_user: ansible
+          ansible_password: ansible
+    TOOLS:
+      hosts:
+        DHCP_SERVER:
+          ansible_host: 10.73.1.239
+          ansible_user: root
+          ansible_password: ansible
+    # DC1_Fabric - EVPN Fabric running in home lab
+    DC1:
+      vars:
+        ansible_host: 10.73.1.240
+      children:
+        DC1_FABRIC:
+          children:
+            DC1_SPINES:
+              vars:
+                type: spine
+              hosts:
+                DC1-SPINE1:
+                  ansible_ssh_port: 8101
+                  ansible_port: 8001
+                DC1-SPINE2:
+                  ansible_ssh_port: 8102
+                  ansible_port: 8002
+            DC1_L2LEAFS:
+              vars:
+                type: l2leaf
+              children:
+                DC1_LEAF1:
+                  hosts:
+                    DC1-LEAF1A:
+                      ansible_ssh_port: 8111
+                      ansible_port: 8011
+                    DC1-LEAF1B:
+                      ansible_ssh_port: 8112
+                      ansible_port: 8012
+                DC1_LEAF2:
+                  hosts:
+                    DC1-LEAF2A:
+                      ansible_ssh_port: 8113
+                      ansible_port: 8013
+                    DC1-LEAF2B:
+                      ansible_ssh_port: 8114
+                      ansible_port: 8014
+        SERVICES:
+          children:
+            DC1_L2LEAFS:
+            DC1_EDGES:
+        ENDPOINTS:
+          children:
+            DC1_L2LEAFS:
+            DC1_EDGES:
+
+# Group to run arista.avd.eos_validate_state
+EOS:
+  children:
+    DC1:
