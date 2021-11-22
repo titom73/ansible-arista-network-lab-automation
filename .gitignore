@@ -11,3 +11,5 @@ playbooks/documentation/*
 collections/*
 
 *.DS_Store
+
+context/*

@@ -20,6 +20,10 @@ DOCKER_TAG ?= 3.6
 AVD_REPOSITORY ?= ../ansible-avd/development/
 ANSIBLE_VERSION ?=
 
+ANSIBLE_EE ?= inetsix/ansible-ee-avd
+ANSIBLE_EE_TAG ?= 2.11
+ANSIBLE_EE_CMD ?= /bin/bash
+
 .PHONY: help
 help: ## Display help message (*: main entry points / []: part of an entry point)
 	@grep -E '^[0-9a-zA-Z_-]+\.*[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -27,6 +31,23 @@ help: ## Display help message (*: main entry points / []: part of an entry point
 .PHONY: facts
 facts: ## Get facts from CVP and save locally
 	ansible-playbook playbooks/extract-facts.yml --extra-vars "output_file=${FACTS_LOG}" -i $(INVENTORY)/$(INVENTORY_FILE)
+
+.PHONY: ee-build
+ee-build: ## Build Ansible Execution Builder
+	ansible-builder build --tag $(ANSIBLE_EE):$(ANSIBLE_EE_TAG) --container-runtime docker --build-arg EE_BASE_IMAGE=quay.io/ansible/ansible-runner:stable-$(ANSIBLE_EE_TAG)-latest
+
+.PHONY: ee-build-latest
+ee-build-latest: ## Build Ansible Execution Builder
+	ansible-builder build --tag $(ANSIBLE_EE):latest --container-runtime docker --build-arg EE_BASE_IMAGE=quay.io/ansible/ansible-runner:latest
+
+
+.PHONY: ee-runner
+ee-runner: ## Execute ansible EE runner in interactive mode
+	docker run -it --rm -v ${PWD}:/runner \
+		-v ${PWD}/../ansible-avd:/ansible-avd \
+		-v ${PWD}/../ansible-cvp:/ansible-cvp \
+		-v ${PWD}../ansible-inetsix:/ansible-inetsix \
+		$(ANSIBLE_EE):$(ANSIBLE_EE_TAG) $(ANSIBLE_EE_CMD)
 
 ################################################################################
 # AVD Commands for DC1 & Cloudvision
