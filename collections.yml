@@ -1,5 +1,7 @@
 collections:
-  - arista.avd
+  - name: https://github.com/aristanetworks/ansible-avd.git#/ansible_collections/arista/avd/
+    type: git
+    version: devel
   - arista.cvp
   - arista.eos
   - ansible.netcommon

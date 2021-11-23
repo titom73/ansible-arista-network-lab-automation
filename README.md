@@ -3,10 +3,13 @@
 - [Arista Validated Design Lab](#arista-validated-design-lab)
   - [Topology](#topology)
   - [Setup](#setup)
+  - [Ansible Execution Engine](#ansible-execution-engine)
+    - [Build Image](#build-image)
+    - [Run Execution Engine](#run-execution-engine)
   - [Inventory Information](#inventory-information)
+    - [Inetsix eAPI Inventory](#inetsix-eapi-inventory)
     - [EMEA Inventory](#emea-inventory)
     - [Inetsix CVP Inventory](#inetsix-cvp-inventory)
-    - [Inetsix eAPI Inventory](#inetsix-eapi-inventory)
   - [Enable debugging](#enable-debugging)
     - [Cloudvision collection](#cloudvision-collection)
   - [AVD Commands and Playbooks for CVP deployment](#avd-commands-and-playbooks-for-cvp-deployment)
@@ -37,7 +40,63 @@ Inventory can be changed with following command:
 $ make <command> INVENTORY=<your inventory>
 ```
 
+## Ansible Execution Engine
+
+### Build Image
+
+```bash
+$ make ee-build
+ansible-builder build --tag inetsix/ansible-ee-avd:2.11 --container-runtime docker\
+ -f docker-images/ansible-ee-avd/execution-environment.yml \
+ --build-arg EE_BASE_IMAGE=quay.io/ansible/\
+ ansible-runner:stable-2.11-latest
+Running command:
+  docker build -f context/Dockerfile -t inetsix/ansible-ee-avd:2.11 \
+  --build-arg=EE_BASE_IMAGE=quay.io/ansible/ansible-runner:stable-2.11-latest context
+Complete! The build context can be found at: ./context
+```
+
+__Options__:
+
+- `EE_IMAGE`: default is `inetsix/ansible-ee-avd`
+- `EE_TAG`: default is `2.11` It is also the tag used for ansible version in base EE image
+
+### Run Execution Engine
+
+```bash
+$ make ee-runner EE_CMD='ansible --version'
+
+ansible [core 2.11.6.post0]
+  config file = /runner/ansible.cfg
+  configured module search path = ['/runner/ansible-avd/library']
+  ansible python module location = /usr/local/lib/python3.8/site-packages/ansible
+  ansible collection location = /ansible-inetsix:/ansible-cvp:/ansible-avd:\
+    /home/runner/.ansible/collections:/usr/share/ansible/collections
+  executable location = /usr/local/bin/ansible
+  python version = 3.8.8 (default, Aug 25 2021, 16:13:02) \
+    [GCC 8.5.0 20210514 (Red Hat 8.5.0-3)]
+  jinja version = 3.0.3
+  libyaml = True
+```
+
+__Options__:
+
+- `EE_IMAGE`: default is `inetsix/ansible-ee-avd`
+- `EE_TAG`: default is `2.11` It is also the tag used for ansible version in base EE image
+- `EE_CMD`: default is `/bin/bash` and can be customized
+
 ## Inventory Information
+
+### Inetsix eAPI Inventory
+
+- __Devices:__
+  - Out of band network: 10.73.254.0/24
+  - Username: ansible
+  - Password: ansible
+
+Available [here](inventories/inetsix-eapi/README.md)
+
+Jumphost and Iptables are used in this inventory and must be configured prior any test.
 
 ### EMEA Inventory
 
@@ -64,17 +123,6 @@ $ make <command> INVENTORY=<your inventory>
   - Password: ansible
 
 Available [here](inventories/inetsix-cvp/README.md)
-
-### Inetsix eAPI Inventory
-
-- __Devices:__
-  - Out of band network: 10.73.254.0/24
-  - Username: ansible
-  - Password: ansible
-
-Available [here](inventories/inetsix-eapi/README.md)
-
-Jumphost and Iptables are used in this inventory and must be configured prior any test.
 
 ## Enable debugging
 

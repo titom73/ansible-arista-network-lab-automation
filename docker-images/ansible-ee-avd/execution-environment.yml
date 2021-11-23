@@ -6,8 +6,8 @@ build_arg_defaults:
   EE_BASE_IMAGE: 'quay.io/ansible/ansible-runner:latest'
 
 dependencies:
-  galaxy: collections.yml
-  python: ../ansible-avd/ansible_collections/arista/avd/requirements.txt
+  galaxy: ../../collections.yml
+  python: ../../../ansible-avd/ansible_collections/arista/avd/requirements.txt
 
 additional_build_steps:
   prepend: |
