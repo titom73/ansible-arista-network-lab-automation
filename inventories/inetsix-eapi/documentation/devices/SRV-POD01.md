@@ -1,12 +1,12 @@
 # SRV-POD01
 # Table of Contents
-<!-- toc -->
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
   - [Name Servers](#name-servers)
-  - [NTP](#ntp)
+  - [Clock Settings](#clock-settings)
   - [Management SSH](#management-ssh)
+  - [Management Console](#management-console)
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
   - [Local Users](#local-users)
@@ -35,7 +35,6 @@
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
 - [Quality Of Service](#quality-of-service)
 
-<!-- toc -->
 # Management
 
 ## Management Interfaces
@@ -81,26 +80,17 @@ ip name-server vrf MGMT 10.73.1.254
 ip name-server vrf MGMT 10.73.254.253
 ```
 
-## NTP
+## Clock Settings
 
-### NTP Summary
+### Clock Timezone Settings
 
-- Local Interface: Management1
+Clock Timezone is set to **Europe/Paris**.
 
-- VRF: MGMT
-
-| Node | Primary |
-| ---- | ------- |
-| 10.73.254.253 | true |
-| 10.73.1.254 | - |
-
-### NTP Device Configuration
+### Clock Configuration
 
 ```eos
 !
-ntp local-interface vrf MGMT Management1
-ntp server vrf MGMT 10.73.254.253 prefer
-ntp server vrf MGMT 10.73.1.254
+clock timezone Europe/Paris
 ```
 
 ## Management SSH
@@ -111,6 +101,12 @@ ntp server vrf MGMT 10.73.1.254
 | Idle Timeout | SSH Management |
 | ------------ | -------------- |
 | default |  Enabled  |
+
+### Max number of SSH sessions limit and per-host limit
+
+| Connection Limit | Max from a single Host |
+| ---------------- | ---------------------- |
+| - | - |
 
 ### Ciphers and algorithms
 
@@ -132,6 +128,20 @@ management ssh
    no shutdown
    vrf MGMT
       no shutdown
+```
+
+## Management Console
+
+### Management Console Timeout
+
+Management Console Timeout is set to **0** minutes.
+
+### Management Console Configuration
+
+```eos
+!
+management console
+   idle-timeout 0
 ```
 
 ## Management API HTTP

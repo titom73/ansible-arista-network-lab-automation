@@ -26,8 +26,8 @@ local_users:
 
 # Cloud Vision server information
 cvp_instance_ips:
-  - 10.73.254.1
-cvp_ingestauth_key: ''
+  - 10.73.254.254
+cvp_ingestauth_key: 'telarista'
 # cvp_ingestauth_key: telarista
 
 # OOB Management network default gateway.
@@ -35,13 +35,19 @@ mgmt_gateway: 10.73.254.253
 
 # dns servers.
 name_servers:
-  - 10.73.254.253
-  - 10.73.1.254
+  - 10.73.1.251
 
 # NTP Servers IP or DNS name, first NTP server will be prefered, and sourced from Managment VRF
-ntp_servers:
-  - 10.73.254.253
-  - 10.73.1.254
+ntp:
+  local_interface:
+    name: Management1
+    vrf: MGMT
+  servers:
+  - name: 10.73.254.253
+    vrf: MGMT
+  - name: 10.73.1.254
+    vrf: MGMT
+    preferred: true
 
 # Clock timezone | Optional
 timezone: Europe/Paris

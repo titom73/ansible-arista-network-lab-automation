@@ -1,15 +1,4 @@
 type: l2leaf
-ansible_connection: httpapi
-ansible_httpapi_port: 8029
-ansible_httpapi_host: 10.73.1.241
-ansible_httpapi_use_ssl: true
-ansible_httpapi_validate_certs: false
-ansible_network_os: eos
-ansible_user: ansible
-ansible_ssh_pass: ansible
-ansible_become: true
-ansible_become_method: enable
-ansible_host: 10.73.1.241
 local_users:
   admin:
     privilege: 15
@@ -28,15 +17,21 @@ local_users:
     role: network-admin
     sha512_password: $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 cvp_instance_ips:
-- 10.73.254.1
-cvp_ingestauth_key: ''
+- 10.73.254.254
+cvp_ingestauth_key: telarista
 mgmt_gateway: 10.73.254.253
 name_servers:
-- 10.73.254.253
-- 10.73.1.254
-ntp_servers:
-- 10.73.254.253
-- 10.73.1.254
+- 10.73.1.251
+ntp:
+  local_interface:
+    name: Management1
+    vrf: MGMT
+  servers:
+  - name: 10.73.254.253
+    vrf: MGMT
+  - name: 10.73.1.254
+    vrf: MGMT
+    preferred: true
 timezone: Europe/Paris
 snmp_server:
   communities:
@@ -57,6 +52,17 @@ inetsix_management_ssh:
 inetsix_aaa_authorization:
   exec:
     default: local
+ansible_connection: httpapi
+ansible_httpapi_port: 8029
+ansible_httpapi_host: 10.73.1.241
+ansible_httpapi_use_ssl: true
+ansible_httpapi_validate_certs: false
+ansible_network_os: eos
+ansible_user: ansible
+ansible_ssh_pass: ansible
+ansible_become: true
+ansible_become_method: enable
+ansible_host: 10.73.1.241
 node_type_keys:
   spine:
     type: spine
@@ -199,14 +205,14 @@ l3leaf:
           uplink_switch_interfaces:
           - Ethernet1
           - Ethernet1
-          mac_address: 0c:1d:c0:1d:62:01
+          mac_address: 0c:1d:c0:1d:62:11
         EAPI-LEAF1B:
           id: 2
           mgmt_ip: 10.73.254.12/24
           uplink_switch_interfaces:
           - Ethernet2
           - Ethernet2
-          mac_address: 0c:1d:c0:1d:62:01
+          mac_address: 0c:1d:c0:1d:62:12
     EAPI_LEAF2:
       bgp_as: 65102
       filter:
@@ -220,14 +226,14 @@ l3leaf:
         EAPI-LEAF2A:
           id: 3
           mgmt_ip: 10.73.254.13/24
-          mac_address: 0c:1d:c0:1d:62:01
+          mac_address: 0c:1d:c0:1d:62:13
           uplink_switch_interfaces:
           - Ethernet3
           - Ethernet3
         EAPI-LEAF2B:
           id: 4
           mgmt_ip: 10.73.254.14/24
-          mac_address: 0c:1d:c0:1d:62:01
+          mac_address: 0c:1d:c0:1d:62:14
           uplink_switch_interfaces:
           - Ethernet4
           - Ethernet4
@@ -245,7 +251,7 @@ l3leaf:
           id: 5
           bgp_as: 65103
           mgmt_ip: 10.73.254.17/24
-          mac_address: 0c:1d:c0:1d:62:01
+          mac_address: 0c:1d:c0:1d:62:17
           uplink_switch_interfaces:
           - Ethernet7
           - Ethernet7
@@ -253,7 +259,7 @@ l3leaf:
           id: 6
           bgp_as: 65104
           mgmt_ip: 10.73.254.18/24
-          mac_address: 0c:1d:c0:1d:62:01
+          mac_address: 0c:1d:c0:1d:62:18
           uplink_switch_interfaces:
           - Ethernet8
           - Ethernet8
@@ -270,14 +276,14 @@ l3leaf:
         EAPI-BL01A:
           id: 7
           mgmt_ip: 10.73.254.15/24
-          mac_address: 0c:1d:c0:1d:62:01
+          mac_address: 0c:1d:c0:1d:62:15
           uplink_switch_interfaces:
           - Ethernet5
           - Ethernet5
         EAPI-BL01B:
           id: 8
           mgmt_ip: 10.73.254.16/24
-          mac_address: 0c:1d:c0:1d:62:01
+          mac_address: 0c:1d:c0:1d:62:16
           uplink_switch_interfaces:
           - Ethernet6
           - Ethernet6
@@ -296,14 +302,14 @@ l3leaf:
         EAPI-CL01A:
           id: 9
           mgmt_ip: 10.73.254.19/24
-          mac_address: 0c:1d:c0:1d:62:01
+          mac_address: '50:01:00:11:00:00'
           uplink_switch_interfaces:
           - Ethernet9
           - Ethernet9
         EAPI-CL01B:
           id: 10
           mgmt_ip: 10.73.254.20/24
-          mac_address: 0c:1d:c0:1d:62:01
+          mac_address: '50:01:00:12:00:00'
           uplink_switch_interfaces:
           - Ethernet10
           - Ethernet10
@@ -353,6 +359,7 @@ l2leaf:
             - CENTRAL_ROUTING_LAB
             tags:
             - POD05_NODE01
+          mac_address: '50:01:00:14:00:00'
         EAPI-L2LEAF02:
           id: 2
           bgp_as: 65108
@@ -367,6 +374,7 @@ l2leaf:
             - CENTRAL_ROUTING_LAB
             tags:
             - POD05_NODE02
+          mac_address: '50:01:00:15:00:00'
 edge:
   defaults:
     uplink_switches:
@@ -393,7 +401,7 @@ edge:
         EAPI-AGG01:
           id: 9
           mgmt_ip: 10.73.254.21/24
-          mac_address: 0c:1d:c0:1d:62:01
+          mac_address: 0c:1d:c0:1d:62:21
           uplink_switch_interfaces:
           - Ethernet5
           - Ethernet5
@@ -412,7 +420,7 @@ edge:
         EAPI-AGG02:
           id: 10
           mgmt_ip: 10.73.254.22/24
-          mac_address: 0c:1d:c0:1d:62:01
+          mac_address: 0c:1d:c0:1d:62:22
           uplink_switch_interfaces:
           - Ethernet5
           - Ethernet5
@@ -436,18 +444,23 @@ route_server:
     EAPI-RS01:
       id: 1
       mgmt_ip: 10.73.254.51/24
+      mac_address: '50:01:00:19:00:00'
       uplink_switches:
       - EAPI-SPINE1
     EAPI-RS02:
       id: 2
       mgmt_ip: 10.73.254.52/24
+      mac_address: 50:01:00:1a:00:00
       uplink_switches:
       - EAPI-SPINE2
-veos_bgp_defaults:
+bgp_defaults_veos:
 - no bgp default ipv4-unicast
 - distance bgp 20 200 200
 - graceful-restart restart-time 300
 - graceful-restart
+mlag_interfaces_veos:
+- Ethernet3
+- Ethernet4
 port_profiles:
   ALL:
     mode: trunk
@@ -685,17 +698,22 @@ ansible_facts:
     uplink_type: p2p
     vtep: true
     ip_addressing:
-      router_id: designs/l3ls-evpn/ip-addressing/router-id.j2
-      mlag_ip_primary: designs/l3ls-evpn/ip-addressing/mlag-ip-primary.j2
-      mlag_ip_secondary: designs/l3ls-evpn/ip-addressing/mlag-ip-secondary.j2
-      mlag_l3_ip_primary: designs/l3ls-evpn/ip-addressing/mlag-l3-ip-primary.j2
-      mlag_l3_ip_secondary: designs/l3ls-evpn/ip-addressing/mlag-l3-ip-secondary.j2
-      p2p_uplinks_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-ip.j2
-      p2p_uplinks_peer_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-peer-ip.j2
-      vtep_ip_mlag: designs/l3ls-evpn/ip-addressing/vtep-ip-mlag.j2
-      vtep_ip: designs/l3ls-evpn/ip-addressing/vtep-ip.j2
-    underlay_routing_protocol: ebgp
-    overlay_routing_protocol: ebgp
+      router_id: ip_addressing/router-id.j2
+      mlag_ip_primary: ip_addressing/mlag-ip-primary.j2
+      mlag_ip_secondary: ip_addressing/mlag-ip-secondary.j2
+      mlag_l3_ip_primary: ip_addressing/mlag-l3-ip-primary.j2
+      mlag_l3_ip_secondary: ip_addressing/mlag-l3-ip-secondary.j2
+      p2p_uplinks_ip: ip_addressing/p2p-uplinks-ip.j2
+      p2p_uplinks_peer_ip: ip_addressing/p2p-uplinks-peer-ip.j2
+      vtep_ip_mlag: ip_addressing/vtep-ip-mlag.j2
+      vtep_ip: ip_addressing/vtep-ip.j2
+    interface_descriptions:
+      underlay_ethernet_interfaces: interface_descriptions/underlay/ethernet-interfaces.j2
+      underlay_port_channel_interfaces: interface_descriptions/underlay/port-channel-interfaces.j2
+      connected_endpoints_ethernet_interfaces: interface_descriptions/connected_endpoints/ethernet-interfaces.j2
+      connected_endpoints_port_channel_interfaces: interface_descriptions/connected_endpoints/port-channel-interfaces.j2
+      overlay_loopback_interface: interface_descriptions/loopback_interfaces/overlay-loopback.j2
+      vtep_loopback_interface: interface_descriptions/loopback_interfaces/vtep-loopback.j2
     group: EAPI_L2LEAF1
     id: 1
     mgmt_ip: 10.73.254.31/24
@@ -707,6 +725,8 @@ ansible_facts:
         non_mlag: 330
       feature_support:
         queue_monitor_length_notify: false
+    underlay_routing_protocol: ebgp
+    overlay_routing_protocol: ebgp
     filter_tenants:
     - Tenant_A
     - Tenant_B
@@ -793,17 +813,22 @@ switch:
   uplink_type: p2p
   vtep: true
   ip_addressing:
-    router_id: designs/l3ls-evpn/ip-addressing/router-id.j2
-    mlag_ip_primary: designs/l3ls-evpn/ip-addressing/mlag-ip-primary.j2
-    mlag_ip_secondary: designs/l3ls-evpn/ip-addressing/mlag-ip-secondary.j2
-    mlag_l3_ip_primary: designs/l3ls-evpn/ip-addressing/mlag-l3-ip-primary.j2
-    mlag_l3_ip_secondary: designs/l3ls-evpn/ip-addressing/mlag-l3-ip-secondary.j2
-    p2p_uplinks_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-ip.j2
-    p2p_uplinks_peer_ip: designs/l3ls-evpn/ip-addressing/p2p-uplinks-peer-ip.j2
-    vtep_ip_mlag: designs/l3ls-evpn/ip-addressing/vtep-ip-mlag.j2
-    vtep_ip: designs/l3ls-evpn/ip-addressing/vtep-ip.j2
-  underlay_routing_protocol: ebgp
-  overlay_routing_protocol: ebgp
+    router_id: ip_addressing/router-id.j2
+    mlag_ip_primary: ip_addressing/mlag-ip-primary.j2
+    mlag_ip_secondary: ip_addressing/mlag-ip-secondary.j2
+    mlag_l3_ip_primary: ip_addressing/mlag-l3-ip-primary.j2
+    mlag_l3_ip_secondary: ip_addressing/mlag-l3-ip-secondary.j2
+    p2p_uplinks_ip: ip_addressing/p2p-uplinks-ip.j2
+    p2p_uplinks_peer_ip: ip_addressing/p2p-uplinks-peer-ip.j2
+    vtep_ip_mlag: ip_addressing/vtep-ip-mlag.j2
+    vtep_ip: ip_addressing/vtep-ip.j2
+  interface_descriptions:
+    underlay_ethernet_interfaces: interface_descriptions/underlay/ethernet-interfaces.j2
+    underlay_port_channel_interfaces: interface_descriptions/underlay/port-channel-interfaces.j2
+    connected_endpoints_ethernet_interfaces: interface_descriptions/connected_endpoints/ethernet-interfaces.j2
+    connected_endpoints_port_channel_interfaces: interface_descriptions/connected_endpoints/port-channel-interfaces.j2
+    overlay_loopback_interface: interface_descriptions/loopback_interfaces/overlay-loopback.j2
+    vtep_loopback_interface: interface_descriptions/loopback_interfaces/vtep-loopback.j2
   group: EAPI_L2LEAF1
   id: 1
   mgmt_ip: 10.73.254.31/24
@@ -815,6 +840,8 @@ switch:
       non_mlag: 330
     feature_support:
       queue_monitor_length_notify: false
+  underlay_routing_protocol: ebgp
+  overlay_routing_protocol: ebgp
   filter_tenants:
   - Tenant_A
   - Tenant_B
@@ -894,6 +921,7 @@ ansible_playbook_python: /Users/tgrimonet/.pyenv/versions/3.9.7/envs/arista-avd/
 ansible_config_file: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/ansible.cfg
 groups:
   all:
+  - cv_server
   - DHCP_SERVER
   - SRV-POD01
   - SRV-POD02
@@ -919,6 +947,8 @@ groups:
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
   ungrouped: []
+  CVP:
+  - cv_server
   TOOLS:
   - DHCP_SERVER
   ENDPOINTS:
@@ -1013,6 +1043,8 @@ groups:
   EAPI_SERVICES:
   - EAPI-AGG01
   - EAPI-AGG02
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -1023,11 +1055,11 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-  - EAPI-L2LEAF01
-  - EAPI-L2LEAF02
   EAPI_PORTS:
   - EAPI-AGG01
   - EAPI-AGG02
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -1038,8 +1070,6 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-  - EAPI-L2LEAF01
-  - EAPI-L2LEAF02
   EOS:
   - EAPI-RS01
   - EAPI-RS02
@@ -1059,13 +1089,13 @@ groups:
   - EAPI-AGG02
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
-omit: __omit_place_holder__b3ab75cd3f94de1be1e93ad0d59488894049db7e
+omit: __omit_place_holder__af909630ef181719495a4a325b21ab89722dccca
 ansible_version:
-  string: 2.10.14
-  full: 2.10.14
+  string: 2.12.0
+  full: 2.12.0
   major: 2
-  minor: 10
-  revision: 14
+  minor: 12
+  revision: 0
 ansible_check_mode: false
 ansible_diff_mode: true
 ansible_forks: 15
@@ -1073,6 +1103,6 @@ ansible_inventory_sources:
 - /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/inventory.yml
 ansible_skip_tags: []
 ansible_run_tags:
-- deploy
 - build
+- deploy
 ansible_verbosity: 0

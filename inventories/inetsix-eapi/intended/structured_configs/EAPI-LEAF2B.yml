@@ -122,9 +122,10 @@ service_routing_protocols_model: multi-agent
 ip_routing: true
 daemon_terminattr:
   cvaddrs:
-  - 10.73.254.1:9910
+  - 10.73.254.254:9910
   cvauth:
     method: key
+    key: telarista
   cvvrf: MGMT
   smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
   ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
@@ -138,15 +139,7 @@ name_server:
   source:
     vrf: MGMT
   nodes:
-  - 10.73.254.253
-  - 10.73.1.254
-ntp_server:
-  local_interface:
-    vrf: MGMT
-    interface: Management1
-  nodes:
-  - 10.73.254.253
-  - 10.73.1.254
+  - 10.73.1.251
 spanning_tree:
   mode: mstp
   mst_instances:
@@ -375,8 +368,7 @@ route_maps:
         type: permit
         set:
         - origin incomplete
-        description: Make routes learned over MLAG Peer-link less preferred on spines
-          to ensure optimal routing
+        description: Make routes learned over MLAG Peer-link less preferred on spines to ensure optimal routing
   RM-CONN-2-BGP:
     sequence_numbers:
       10:
@@ -411,6 +403,7 @@ ip_igmp_snooping:
       enabled: false
     112:
       enabled: false
+ip_virtual_router_mac_address: 00:1c:73:00:dc:01
 vxlan_interface:
   Vxlan1:
     description: EAPI-LEAF2B_VTEP
@@ -432,7 +425,6 @@ vxlan_interface:
           vni: 13
         TENANT_A_PROJECT01:
           vni: 11
-ip_virtual_router_mac_address: 00:1c:73:00:dc:01
 management_ssh:
   idle_timeout: 0
   enable: true

@@ -81,9 +81,10 @@ service_routing_protocols_model: multi-agent
 ip_routing: true
 daemon_terminattr:
   cvaddrs:
-  - 10.73.254.1:9910
+  - 10.73.254.254:9910
   cvauth:
     method: key
+    key: telarista
   cvvrf: MGMT
   smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
   ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
@@ -97,15 +98,7 @@ name_server:
   source:
     vrf: MGMT
   nodes:
-  - 10.73.254.253
-  - 10.73.1.254
-ntp_server:
-  local_interface:
-    vrf: MGMT
-    interface: Management1
-  nodes:
-  - 10.73.254.253
-  - 10.73.1.254
+  - 10.73.1.251
 spanning_tree:
   mode: mstp
   mst_instances:

@@ -20,7 +20,7 @@ DOCKER_TAG ?= 3.6
 AVD_REPOSITORY ?= ../ansible-avd/development/
 ANSIBLE_VERSION ?=
 
-EE_FILE ?= docker-images/ansible-ee-avd/execution-environment.yml
+EE_FILE ?= docker-images/ansible-ee-avd/execution-environment-default.yml
 EE_IMAGE ?= inetsix/ansible-ee-avd
 EE_TAG ?= 2.11
 EE_CMD ?= /bin/bash

@@ -1,10 +1,10 @@
 # EAPI-BL01B
 # Table of Contents
-<!-- toc -->
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
   - [Name Servers](#name-servers)
+  - [Clock Settings](#clock-settings)
   - [NTP](#ntp)
   - [Management SSH](#management-ssh)
   - [Management API HTTP](#management-api-http)
@@ -52,7 +52,6 @@
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
 - [Quality Of Service](#quality-of-service)
 
-<!-- toc -->
 # Management
 
 ## Management Interfaces
@@ -88,36 +87,51 @@ interface Management1
 
 | Name Server | Source VRF |
 | ----------- | ---------- |
-| 10.73.254.253 | MGMT |
-| 10.73.1.254 | MGMT |
+| 10.73.1.251 | MGMT |
 
 ### Name Servers Device Configuration
 
 ```eos
-ip name-server vrf MGMT 10.73.1.254
-ip name-server vrf MGMT 10.73.254.253
+ip name-server vrf MGMT 10.73.1.251
+```
+
+## Clock Settings
+
+### Clock Timezone Settings
+
+Clock Timezone is set to **Europe/Paris**.
+
+### Clock Configuration
+
+```eos
+!
+clock timezone Europe/Paris
 ```
 
 ## NTP
 
 ### NTP Summary
 
-- Local Interface: Management1
+#### NTP Local Interface
 
-- VRF: MGMT
+| Interface | VRF |
+| --------- | --- |
+| Management1 | MGMT |
 
-| Node | Primary |
-| ---- | ------- |
-| 10.73.254.253 | true |
-| 10.73.1.254 | - |
+#### NTP Servers
+
+| Server | VRF | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Key |
+| ------ | --- | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | --- |
+| 10.73.1.254 | MGMT | True | - | - | - | - | - | - | - |
+| 10.73.254.253 | MGMT | - | - | - | - | - | - | - | - |
 
 ### NTP Device Configuration
 
 ```eos
 !
 ntp local-interface vrf MGMT Management1
-ntp server vrf MGMT 10.73.254.253 prefer
-ntp server vrf MGMT 10.73.1.254
+ntp server vrf MGMT 10.73.1.254 prefer
+ntp server vrf MGMT 10.73.254.253
 ```
 
 ## Management SSH
@@ -128,6 +142,12 @@ ntp server vrf MGMT 10.73.1.254
 | Idle Timeout | SSH Management |
 | ------------ | -------------- |
 | 0 |  Enabled  |
+
+### Max number of SSH sessions limit and per-host limit
+
+| Connection Limit | Max from a single Host |
+| ---------------- | ---------------------- |
+| - | - |
 
 ### Ciphers and algorithms
 
@@ -228,14 +248,14 @@ aaa authorization exec default local
 
 | CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
 | -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
-| gzip | 10.73.254.1:9910 | MGMT | - | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | False |
+| gzip | 10.73.254.254:9910 | MGMT | key,telarista | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | False |
 
 ### TerminAttr Daemon Device Configuration
 
 ```eos
 !
 daemon TerminAttr
-   exec /usr/bin/TerminAttr -cvaddr=10.73.254.1:9910 -cvvrf=MGMT -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
+   exec /usr/bin/TerminAttr -cvaddr=10.73.254.254:9910 -cvauth=key,telarista -cvvrf=MGMT -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
    no shutdown
 ```
 
@@ -243,9 +263,9 @@ daemon TerminAttr
 
 ### SNMP Configuration Summary
 
-| Contact | Location | SNMP Traps |
-| ------- | -------- | ---------- |
-| - | - | Disabled |
+| Contact | Location | SNMP Traps | State |
+| ------- | -------- | ---------- | ----- |
+| - | - | All | Disabled |
 
 ### SNMP Communities
 
@@ -529,18 +549,18 @@ interface Vlan4094
 
 #### EVPN MLAG Shared Router MAC : mlag-system-id
 
-#### VLAN to VNI and Flood List Mappings
+#### VLAN to VNI, Flood List and Multicast Group Mappings
 
-| VLAN | VNI | Flood List |
-| ---- | --- | ---------- |
-| 110 | 10110 | - |
-| 201 | 20201 | - |
+| VLAN | VNI | Flood List | Multicast Group |
+| ---- | --- | ---------- | --------------- |
+| 110 | 10110 | - | - |
+| 201 | 20201 | - | - |
 
-#### VRF to VNI Mappings
+#### VRF to VNI and Multicast Group Mappings
 
-| VLAN | VNI |
-| ---- | --- |
-| TENANT_A_PROJECT01 | 11 |
+| VRF | VNI | Multicast Group |
+| ---- | --- | --------------- |
+| TENANT_A_PROJECT01 | 11 | - |
 
 ### VXLAN Interface Device Configuration
 
@@ -672,14 +692,14 @@ ip route vrf TENANT_A_PROJECT01 1.1.1.0/24 10.1.10.1
 
 ### BGP Neighbors
 
-| Neighbor | Remote AS | VRF |
-| -------- | --------- | --- |
-| 172.31.253.14 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default |
-| 172.31.255.28 | 65001 | default |
-| 172.31.255.30 | 65001 | default |
-| 192.168.0.2 | 65000 | default |
-| 192.168.0.3 | 65000 | default |
-| 172.31.253.14 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 |
+| Neighbor | Remote AS | VRF | Send-community | Maximum-routes |
+| -------- | --------- | --- | -------------- | -------------- |
+| 172.31.253.14 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
+| 172.31.255.28 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 172.31.255.30 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
+| 192.168.0.2 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS |
+| 192.168.0.3 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS |
+| 172.31.253.14 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
 
 ### Router BGP EVPN Address Family
 
@@ -783,7 +803,7 @@ router bgp 65105
 | -------- | ---------- | ---------- |
 | 1200 | 1200 | 3 |
 
-### Router BFD Multihop Device Configuration
+### Router BFD Device Configuration
 
 ```eos
 !

@@ -91,9 +91,10 @@ service_routing_protocols_model: multi-agent
 ip_routing: true
 daemon_terminattr:
   cvaddrs:
-  - 10.73.254.1:9910
+  - 10.73.254.254:9910
   cvauth:
     method: key
+    key: telarista
   cvvrf: MGMT
   smashexcludes: ale,flexCounter,hardware,kni,pulse,strata
   ingestexclude: /Sysdb/cell/1/agent,/Sysdb/cell/2/agent
@@ -107,15 +108,7 @@ name_server:
   source:
     vrf: MGMT
   nodes:
-  - 10.73.254.253
-  - 10.73.1.254
-ntp_server:
-  local_interface:
-    vrf: MGMT
-    interface: Management1
-  nodes:
-  - 10.73.254.253
-  - 10.73.1.254
+  - 10.73.1.251
 spanning_tree:
   mode: mstp
   mst_instances:
@@ -232,22 +225,7 @@ ip_igmp_snooping:
   vlans:
     113:
       enabled: true
-vxlan_interface:
-  Vxlan1:
-    description: EAPI-LEAF4A_VTEP
-    vxlan:
-      source_interface: Loopback1
-      udp_port: 4789
-      vlans:
-        110:
-          vni: 10110
-        113:
-          vni: 10113
-        201:
-          vni: 20201
-      vrfs:
-        TENANT_A_PROJECT01:
-          vni: 11
+ip_virtual_router_mac_address: 00:1c:73:00:dc:01
 vlan_interfaces:
   Vlan110:
     tenant: Tenant_A
@@ -265,7 +243,22 @@ vlan_interfaces:
     shutdown: false
     vrf: TENANT_A_PROJECT01
     ip_address_virtual: 10.1.13.254/24
-ip_virtual_router_mac_address: 00:1c:73:00:dc:01
+vxlan_interface:
+  Vxlan1:
+    description: EAPI-LEAF4A_VTEP
+    vxlan:
+      source_interface: Loopback1
+      udp_port: 4789
+      vlans:
+        110:
+          vni: 10110
+        113:
+          vni: 10113
+        201:
+          vni: 20201
+      vrfs:
+        TENANT_A_PROJECT01:
+          vni: 11
 port_channel_interfaces:
   Port-Channel5:
     description: SRV-POD03_PortChanne1

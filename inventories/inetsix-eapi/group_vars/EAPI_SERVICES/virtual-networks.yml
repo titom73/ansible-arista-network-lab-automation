@@ -27,10 +27,10 @@ tenants:
             tags: ['DC1']
             enabled: true
             ip_address_virtual: 10.1.10.254/24
-            structured_config:
-              ipv6_enable: < true | false >
-              ipv6_address: < IPv6_address/Mask >
-              ipv6_virtual_router_address: < IPv6_address/Mask >
+            # structured_config:
+            #   ipv6_enable: < true | false >
+            #   ipv6_address: < IPv6_address/Mask >
+            #   ipv6_virtual_router_address: < IPv6_address/Mask >
 
             # igmp_snooping: false
           111:
