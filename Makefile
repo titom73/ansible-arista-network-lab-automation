@@ -216,6 +216,11 @@ unit-device: ## Unit test for cv_configlet
 # Tooling Management
 ################################################################################
 
+.PHONY: containerlab
+containerlab: ## Build containerlab topology from AVD
+	ansible-playbook playbooks/containerlab-build.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
+
 .PHONY: centos-bootstrap
 centos-bootstrap: ## Initial Centos 7 Configuration
 	ansible-playbook playbooks/centos07-bootstrap.yml -i $(TOOLS)/$(INVENTORY_FILE)

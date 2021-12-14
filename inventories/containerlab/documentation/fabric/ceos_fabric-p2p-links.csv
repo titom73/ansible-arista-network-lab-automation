@@ -1,0 +1,17 @@
+Type, Node,Node Interface,Leaf IP Address,Peer Type,Peer Node,Peer Interface,Peer IP Address
+l3leaf,ceos-bl01a,Ethernet1,172.31.255.65/31,spine,ceos-spine1,Ethernet5,172.31.255.64/31
+l3leaf,ceos-bl01a,Ethernet2,172.31.255.67/31,spine,ceos-spine2,Ethernet5,172.31.255.66/31
+l3leaf,ceos-bl01b,Ethernet1,172.31.255.69/31,spine,ceos-spine1,Ethernet6,172.31.255.68/31
+l3leaf,ceos-bl01b,Ethernet2,172.31.255.71/31,spine,ceos-spine2,Ethernet6,172.31.255.70/31
+l3leaf,ceos-leaf1a,Ethernet1,172.31.255.41/31,spine,ceos-spine1,Ethernet1,172.31.255.40/31
+l3leaf,ceos-leaf1a,Ethernet2,172.31.255.43/31,spine,ceos-spine2,Ethernet1,172.31.255.42/31
+l3leaf,ceos-leaf1b,Ethernet1,172.31.255.45/31,spine,ceos-spine1,Ethernet2,172.31.255.44/31
+l3leaf,ceos-leaf1b,Ethernet2,172.31.255.47/31,spine,ceos-spine2,Ethernet2,172.31.255.46/31
+l3leaf,ceos-leaf2a,Ethernet1,172.31.255.49/31,spine,ceos-spine1,Ethernet3,172.31.255.48/31
+l3leaf,ceos-leaf2a,Ethernet2,172.31.255.51/31,spine,ceos-spine2,Ethernet3,172.31.255.50/31
+l3leaf,ceos-leaf2b,Ethernet1,172.31.255.53/31,spine,ceos-spine1,Ethernet4,172.31.255.52/31
+l3leaf,ceos-leaf2b,Ethernet2,172.31.255.55/31,spine,ceos-spine2,Ethernet4,172.31.255.54/31
+l3leaf,ceos-leaf3a,Ethernet1,172.31.255.57/31,spine,ceos-spine1,Ethernet7,172.31.255.56/31
+l3leaf,ceos-leaf3a,Ethernet2,172.31.255.59/31,spine,ceos-spine2,Ethernet7,172.31.255.58/31
+l3leaf,ceos-leaf4a,Ethernet1,172.31.255.61/31,spine,ceos-spine1,Ethernet8,172.31.255.60/31
+l3leaf,ceos-leaf4a,Ethernet2,172.31.255.63/31,spine,ceos-spine2,Ethernet8,172.31.255.62/31

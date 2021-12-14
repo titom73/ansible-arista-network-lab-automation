@@ -20,6 +20,7 @@ cvp_instance_ips:
 - 10.73.254.254
 cvp_ingestauth_key: telarista
 mgmt_gateway: 10.73.254.253
+mgmt_interface: Management0
 name_servers:
 - 10.73.1.251
 ntp:
@@ -44,10 +45,9 @@ validate_state_markdown_flavor: github
 custom_structured_configuration_prefix:
 - inetsix_
 inetsix_management_ssh:
-  idle_timeout: 0
   enable: true
   vrfs:
-    MGT:
+    MGMT:
       enable: true
 inetsix_aaa_authorization:
   exec:
@@ -672,8 +672,8 @@ tenants:
             - POD05_NODE01
             enabled: true
             ip_address_virtual: 10.3.2.254/24
-inventory_file: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/inventory.yml
-inventory_dir: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi
+inventory_file: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/inventory.yml
+inventory_dir: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi
 ansible_port: 8017
 inventory_hostname: EAPI-LEAF3A
 inventory_hostname_short: EAPI-LEAF3A
@@ -930,9 +930,9 @@ topology:
   - 110
   - 113
   - 201
-playbook_dir: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/playbooks
-ansible_playbook_python: /Users/tgrimonet/.pyenv/versions/3.9.7/envs/arista-avd/bin/python3.9
-ansible_config_file: /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/ansible.cfg
+playbook_dir: /home/tom/arista-avd/avd-lab-validation/playbooks
+ansible_playbook_python: /home/tom/.pyenv/versions/3.8.9/envs/arista-avd/bin/python3.8
+ansible_config_file: /home/tom/arista-avd/avd-lab-validation/ansible.cfg
 groups:
   all:
   - cv_server
@@ -956,10 +956,10 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   ungrouped: []
   CVP:
   - cv_server
@@ -986,10 +986,10 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   EAPI_FABRIC:
   - EAPI-RS01
   - EAPI-RS02
@@ -1005,10 +1005,10 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
+  - EAPI-AGG01
+  - EAPI-AGG02
   EAPI_ROUTE_SERVERS:
   - EAPI-RS01
   - EAPI-RS02
@@ -1055,10 +1055,6 @@ groups:
   EAPI_EDGE_LEAF2:
   - EAPI-AGG02
   EAPI_SERVICES:
-  - EAPI-AGG01
-  - EAPI-AGG02
-  - EAPI-L2LEAF01
-  - EAPI-L2LEAF02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -1069,11 +1065,11 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
+  - EAPI-AGG01
+  - EAPI-AGG02
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
   EAPI_PORTS:
-  - EAPI-AGG01
-  - EAPI-AGG02
-  - EAPI-L2LEAF01
-  - EAPI-L2LEAF02
   - EAPI-LEAF1A
   - EAPI-LEAF1B
   - EAPI-LEAF2A
@@ -1084,6 +1080,10 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
+  - EAPI-AGG01
+  - EAPI-AGG02
+  - EAPI-L2LEAF01
+  - EAPI-L2LEAF02
   EOS:
   - EAPI-RS01
   - EAPI-RS02
@@ -1099,24 +1099,23 @@ groups:
   - EAPI-BL01B
   - EAPI-CL01A
   - EAPI-CL01B
-  - EAPI-AGG01
-  - EAPI-AGG02
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
-omit: __omit_place_holder__af909630ef181719495a4a325b21ab89722dccca
+  - EAPI-AGG01
+  - EAPI-AGG02
+omit: __omit_place_holder__f5d31ebb9f260a541fe9b7c3e4f305ee5523ac1b
 ansible_version:
-  string: 2.12.0
-  full: 2.12.0
+  string: 2.12.1
+  full: 2.12.1
   major: 2
   minor: 12
-  revision: 0
+  revision: 1
 ansible_check_mode: false
 ansible_diff_mode: true
 ansible_forks: 15
 ansible_inventory_sources:
-- /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/inventory.yml
+- /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/inventory.yml
 ansible_skip_tags: []
 ansible_run_tags:
 - build
-- deploy
 ansible_verbosity: 0

@@ -175,7 +175,7 @@ vrfs:
     tenant: Tenant_A
     ip_routing: true
 management_interfaces:
-  Management1:
+  Management0:
     description: oob_management
     shutdown: false
     vrf: MGMT
@@ -426,10 +426,9 @@ vxlan_interface:
         TENANT_A_PROJECT01:
           vni: 11
 management_ssh:
-  idle_timeout: 0
   enable: true
   vrfs:
-    MGT:
+    MGMT:
       enable: true
 aaa_authorization:
   exec:

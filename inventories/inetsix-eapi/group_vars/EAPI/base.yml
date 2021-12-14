@@ -32,6 +32,7 @@ cvp_ingestauth_key: 'telarista'
 
 # OOB Management network default gateway.
 mgmt_gateway: 10.73.254.253
+mgmt_interface: Management0
 
 # dns servers.
 name_servers:
@@ -74,6 +75,12 @@ inetsix_management_ssh:
 inetsix_aaa_authorization:
   exec:
     default: local
+
+inetsix_management_ssh:
+  enable: true
+  vrfs:
+    MGMT:
+      enable: true
 
 # custom_structured_configuration_static_routes:
 #   static_routes:

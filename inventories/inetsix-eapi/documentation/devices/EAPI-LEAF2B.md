@@ -1,5 +1,6 @@
 # EAPI-LEAF2B
 # Table of Contents
+<!-- toc -->
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
@@ -52,6 +53,7 @@
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
 - [Quality Of Service](#quality-of-service)
 
+<!-- toc -->
 # Management
 
 ## Management Interfaces
@@ -62,19 +64,19 @@
 
 | Management Interface | description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management1 | oob_management | oob | MGMT | 10.73.254.14/24 | 10.73.254.253 |
+| Management0 | oob_management | oob | MGMT | 10.73.254.14/24 | 10.73.254.253 |
 
 #### IPv6
 
 | Management Interface | description | Type | VRF | IPv6 Address | IPv6 Gateway |
 | -------------------- | ----------- | ---- | --- | ------------ | ------------ |
-| Management1 | oob_management | oob | MGMT | -  | - |
+| Management0 | oob_management | oob | MGMT | -  | - |
 
 ### Management Interfaces Device Configuration
 
 ```eos
 !
-interface Management1
+interface Management0
    description oob_management
    no shutdown
    vrf MGMT
@@ -141,7 +143,7 @@ ntp server vrf MGMT 10.73.254.253
 
 | Idle Timeout | SSH Management |
 | ------------ | -------------- |
-| 0 |  Enabled  |
+| default |  Enabled  |
 
 ### Max number of SSH sessions limit and per-host limit
 
@@ -159,16 +161,15 @@ ntp server vrf MGMT 10.73.254.253
 
 | VRF | Status |
 | --- | ------ |
-| MGT |  Enabled  |
+| MGMT |  Enabled  |
 
 ### Management SSH Configuration
 
 ```eos
 !
 management ssh
-   idle-timeout 0
    no shutdown
-   vrf MGT
+   vrf MGMT
       no shutdown
 ```
 
@@ -615,21 +616,21 @@ interface Vlan4094
 
 #### EVPN MLAG Shared Router MAC : mlag-system-id
 
-#### VLAN to VNI, Flood List and Multicast Group Mappings
+#### VLAN to VNI and Flood List Mappings
 
-| VLAN | VNI | Flood List | Multicast Group |
-| ---- | --- | ---------- | --------------- |
-| 110 | 10110 | - | - |
-| 111 | 10111 | - | - |
-| 112 | 10112 | - | - |
-| 201 | 20201 | - | - |
+| VLAN | VNI | Flood List |
+| ---- | --- | ---------- |
+| 110 | 10110 | - |
+| 111 | 10111 | - |
+| 112 | 10112 | - |
+| 201 | 20201 | - |
 
-#### VRF to VNI and Multicast Group Mappings
+#### VRF to VNI Mappings
 
-| VRF | VNI | Multicast Group |
-| ---- | --- | --------------- |
-| PURE_TYPE5 | 13 | - |
-| TENANT_A_PROJECT01 | 11 | - |
+| VLAN | VNI |
+| ---- | --- |
+| PURE_TYPE5 | 13 |
+| TENANT_A_PROJECT01 | 11 |
 
 ### VXLAN Interface Device Configuration
 

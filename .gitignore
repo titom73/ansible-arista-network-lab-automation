@@ -13,3 +13,5 @@ collections/*
 *.DS_Store
 
 context/*
+.containerlabs.yaml
+clab-*

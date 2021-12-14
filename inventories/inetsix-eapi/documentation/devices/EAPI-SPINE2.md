@@ -1,5 +1,6 @@
 # EAPI-SPINE2
 # Table of Contents
+<!-- toc -->
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
@@ -39,6 +40,7 @@
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
 - [Quality Of Service](#quality-of-service)
 
+<!-- toc -->
 # Management
 
 ## Management Interfaces
@@ -49,19 +51,19 @@
 
 | Management Interface | description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management1 | oob_management | oob | MGMT | 10.73.254.2/24 | 10.73.254.253 |
+| Management0 | oob_management | oob | MGMT | 10.73.254.2/24 | 10.73.254.253 |
 
 #### IPv6
 
 | Management Interface | description | Type | VRF | IPv6 Address | IPv6 Gateway |
 | -------------------- | ----------- | ---- | --- | ------------ | ------------ |
-| Management1 | oob_management | oob | MGMT | -  | - |
+| Management0 | oob_management | oob | MGMT | -  | - |
 
 ### Management Interfaces Device Configuration
 
 ```eos
 !
-interface Management1
+interface Management0
    description oob_management
    no shutdown
    vrf MGMT
@@ -128,7 +130,7 @@ ntp server vrf MGMT 10.73.254.253
 
 | Idle Timeout | SSH Management |
 | ------------ | -------------- |
-| 0 |  Enabled  |
+| default |  Enabled  |
 
 ### Max number of SSH sessions limit and per-host limit
 
@@ -146,16 +148,15 @@ ntp server vrf MGMT 10.73.254.253
 
 | VRF | Status |
 | --- | ------ |
-| MGT |  Enabled  |
+| MGMT |  Enabled  |
 
 ### Management SSH Configuration
 
 ```eos
 !
 management ssh
-   idle-timeout 0
    no shutdown
-   vrf MGT
+   vrf MGMT
       no shutdown
 ```
 

@@ -244,6 +244,7 @@ route_server:
     loopback_ipv4_offset: 1
     uplink_interfaces: ['Ethernet1']
     uplink_switch_interfaces: [Ethernet13]
+    # uplink_switches: ['EAPI-SPINE1']
     uplink_ipv4_pool: 172.31.250.0/24
     mlag: false
     bgp_defaults: '{{bgp_defaults_veos}}'
@@ -253,9 +254,13 @@ route_server:
       id: 1
       mgmt_ip: 10.73.254.51/24
       mac_address: '50:01:00:19:00:00'
+      uplink_interfaces: ['Ethernet1']
+      uplink_switch_interfaces: [Ethernet13]
       uplink_switches: ['EAPI-SPINE1']
     EAPI-RS02:
       id: 2
       mgmt_ip: 10.73.254.52/24
       mac_address: '50:01:00:1a:00:00'
+      uplink_interfaces: ['Ethernet1']
+      uplink_switch_interfaces: [Ethernet13]
       uplink_switches: ['EAPI-SPINE2']

@@ -140,7 +140,7 @@ vrfs:
     tenant: Tenant_A
     ip_routing: true
 management_interfaces:
-  Management1:
+  Management0:
     description: oob_management
     shutdown: false
     vrf: MGMT
@@ -270,10 +270,9 @@ port_channel_interfaces:
     rt: 03:03:02:02:01:01
     lacp_id: 0303.0202.0101
 management_ssh:
-  idle_timeout: 0
   enable: true
   vrfs:
-    MGT:
+    MGMT:
       enable: true
 aaa_authorization:
   exec:
