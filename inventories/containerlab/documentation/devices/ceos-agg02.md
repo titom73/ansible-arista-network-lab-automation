@@ -325,6 +325,9 @@ vlan 201
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet1 | CEOS-LEAF2A_Ethernet5 | *trunk | *110-112,132,201 | *- | *- | 1 |
 | Ethernet2 | CEOS-LEAF2B_Ethernet5 | *trunk | *110-112,132,201 | *- | *- | 1 |
+| Ethernet3 |  SRV-POD02_Eth1 | trunk | 1-4000 | - | - | - |
+| Ethernet4 | client21_Eth2 | *trunk | *1-4000 | *- | *- | 3 |
+| Ethernet5 |  client22_Eth1 | access | 110 | - | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -341,6 +344,25 @@ interface Ethernet2
    description CEOS-LEAF2B_Ethernet5
    no shutdown
    channel-group 1 mode active
+!
+interface Ethernet3
+   description SRV-POD02_Eth1
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 1-4000
+   switchport mode trunk
+!
+interface Ethernet4
+   description client21_Eth2
+   no shutdown
+   channel-group 3 mode active
+!
+interface Ethernet5
+   description client22_Eth1
+   no shutdown
+   switchport
+   switchport access vlan 110
+   switchport mode access
 ```
 
 ## Port-Channel Interfaces
@@ -352,6 +374,7 @@ interface Ethernet2
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
 | Port-Channel1 | CEOS_LEAF2_Po5 | switched | trunk | 110-112,132,201 | - | - | - | - | - | - |
+| Port-Channel3 | client21_PortChanne1 | switched | trunk | 1-4000 | - | - | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -362,6 +385,13 @@ interface Port-Channel1
    no shutdown
    switchport
    switchport trunk allowed vlan 110-112,132,201
+   switchport mode trunk
+!
+interface Port-Channel3
+   description client21_PortChanne1
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 1-4000
    switchport mode trunk
 ```
 

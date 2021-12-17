@@ -1,8 +1,14 @@
 Node Type,Node,Node Interface,Peer Type,Peer,Peer Interface
 edge,ceos-agg01,Ethernet1,l3leaf,ceos-leaf1a,Ethernet5
 edge,ceos-agg01,Ethernet2,l3leaf,ceos-leaf1b,Ethernet5
+edge,ceos-agg01,Ethernet3,server,SRV-POD01,Eth1
+edge,ceos-agg01,Ethernet4,server,client11,Eth2
+edge,ceos-agg01,Ethernet5,server,client12,Eth1
 edge,ceos-agg02,Ethernet1,l3leaf,ceos-leaf2a,Ethernet5
 edge,ceos-agg02,Ethernet2,l3leaf,ceos-leaf2b,Ethernet5
+edge,ceos-agg02,Ethernet3,server,SRV-POD02,Eth1
+edge,ceos-agg02,Ethernet4,server,client21,Eth2
+edge,ceos-agg02,Ethernet5,server,client22,Eth1
 l3leaf,ceos-bl01a,Ethernet1,spine,ceos-spine1,Ethernet5
 l3leaf,ceos-bl01a,Ethernet2,spine,ceos-spine2,Ethernet5
 l3leaf,ceos-bl01a,Ethernet3,mlag_peer,ceos-bl01b,Ethernet3

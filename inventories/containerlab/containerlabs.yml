@@ -9,6 +9,8 @@ topology:
   kinds:
     ceos:
       image: arista/ceos:4.27.1F
+    linux:
+      image: titom73/network-multitool:extra
   nodes:
     ceos-agg01:
       image: arista/ceos:4.27.1F
@@ -118,6 +120,22 @@ topology:
       - 8002:443/tcp
       env:
         TMODE: lacp
+    client11:
+      kind: linux
+      mgmt_ipv4: 10.73.255.191
+      env:
+        TMODE: lacp
+    client21:
+      kind: linux
+      mgmt_ipv4: 10.73.255.193
+      env:
+        TMODE: lacp
+    client12:
+      kind: linux
+      mgmt_ipv4: 10.73.255.192
+    client22:
+      kind: linux
+      mgmt_ipv4: 10.73.255.194
 
   links:
     - endpoints: ["ceos-agg01:eth1", "ceos-leaf1a:eth5"]
@@ -148,3 +166,11 @@ topology:
     - endpoints: ["ceos-leaf3a:eth4", "ceos-leaf4a:eth4"]
     - endpoints: ["ceos-leaf4a:eth1", "ceos-spine1:eth8"]
     - endpoints: ["ceos-leaf4a:eth2", "ceos-spine2:eth8"]
+
+    - endpoints: ["ceos-agg01:eth3", "client11:eth1"]
+    - endpoints: ["ceos-agg01:eth4", "client11:eth2"]
+    - endpoints: ["ceos-agg01:eth5", "client12:eth1"]
+
+    - endpoints: ["ceos-agg02:eth3", "client21:eth1"]
+    - endpoints: ["ceos-agg02:eth4", "client21:eth2"]
+    - endpoints: ["ceos-agg02:eth5", "client22:eth1"]
