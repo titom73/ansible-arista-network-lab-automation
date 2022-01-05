@@ -108,12 +108,12 @@ cli-config-gen: ## Run ansible playbook to build EVPN Fabric configuration for g
 
 .PHONY: eos-backup
 eos-backup: ## Backup current running configuration
-	ansible-playbook playbooks/eos-configuration-backup.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/eos-configuration-backup.yml --limit $(FABRIC) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
-.PHONY: snapshot
-snapshot: ## Extract commands outputs
-	ansible-playbook playbooks/eos-snapshot.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+.PHONY: eos-snapshot
+eos-snapshot: ## Extract commands outputs
+	ansible-playbook playbooks/eos-snapshot.yml --limit $(FABRIC) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: eapi-states-validation
 eapi-states-validation: ## eapi-states-validation description
-	ansible-playbook playbooks/avd-eapi-states-validation.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/avd-eapi-states-validation.yml --limit $(FABRIC) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)

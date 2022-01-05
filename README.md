@@ -3,21 +3,15 @@
 - [Arista Validated Design Lab](#arista-validated-design-lab)
   - [Topology](#topology)
   - [Setup](#setup)
+    - [Required tools:](#required-tools)
+  - [Make commands](#make-commands)
+  - [Make Options](#make-options)
   - [Ansible Execution Engine](#ansible-execution-engine)
     - [Build Image](#build-image)
     - [Run Execution Engine](#run-execution-engine)
   - [Inventory Information](#inventory-information)
     - [Inetsix eAPI Inventory](#inetsix-eapi-inventory)
-    - [EMEA Inventory](#emea-inventory)
-    - [Inetsix CVP Inventory](#inetsix-cvp-inventory)
-  - [Enable debugging](#enable-debugging)
-    - [Cloudvision collection](#cloudvision-collection)
-  - [AVD Commands and Playbooks for CVP deployment](#avd-commands-and-playbooks-for-cvp-deployment)
-  - [Make commands](#make-commands)
-    - [AVD with Cloudvision deployment](#avd-with-cloudvision-deployment)
-    - [AVD with EAPI deployment](#avd-with-eapi-deployment)
-    - [AVD Tools](#avd-tools)
-    - [Misc](#misc)
+  - [Make commands](#make-commands-1)
 
 ## Topology
 
@@ -27,7 +21,7 @@
 
 - [`ansible-cvp`](https://github.com/aristanetworks/ansible-cvp): configured under ../ansible-cvp
 - [`ansible-avd`](https://github.com/aristanetworks/ansible-avd): configured under ../ansible-avd
-- If required, `make install`: will clone avd and cvp under `collections/`: folder
+- If required, `make setup-development` will set up your environment
 - Ansible playbook debugger activated in ansible.cfg
 - Execution time configured
 - Default inventory is set to [`inventories/inetsix-eapi/`](inventories/inetsix-eapi/inventory.yml)
@@ -38,6 +32,42 @@ Inventory can be changed with following command:
 
 ```bash
 $ make <command> INVENTORY=<your inventory>
+```
+### Required tools:
+
+- Github CLI
+
+## Make commands
+
+- `avd-cvp-build`                  Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
+- `avd-cvp-deploy`                 Run ansible playbook to deploy EVPN Fabric.
+- `avd-cvp-provision`              Run ansible playbook to deploy EVPN Fabric.
+- `avd-eapi-apply`                 Run ansible playbook to Apply previously generated configuration
+- `avd-eapi-build-all`             Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
+- `avd-eapi-build`                 Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV (No Documentation)
+- `avd-eapi-deploy`                Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
+- `cli-config-gen`                 Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology
+- `eapi-states-validation`         eapi-states-validation description
+- `ee-build-latest`                Build Ansible Execution Builder
+- `ee-build`                       Build Ansible Execution Builder
+- `ee-runner`                      Execute ansible EE runner in interactive mode
+- `eos-backup`                     Backup current running configuration
+- `eos-snapshot`                   Extract commands outputs
+- `help`                           Display help message (*: main entry points / []: part of an entry point)
+- `setup-development`              Setup development environment
+- `setup-galaxy`                   Install arista collections using ansible galaxy
+
+## Make Options
+
+```bash
+# Inventory for EOS playbooks
+INVENTORY ?= inventories/inetsix-eapi
+# Default Inventory file to look for
+INVENTORY_FILE = inventory.yml
+# Name of the Fabric to build. Used in --limit scope
+FABRIC ?= EAPI_FABRIC
+# For optional ansible options
+ANSIBLE_ARGS ?= --diff
 ```
 
 ## Ansible Execution Engine
@@ -98,111 +128,22 @@ Available [here](inventories/inetsix-eapi/README.md)
 
 Jumphost and Iptables are used in this inventory and must be configured prior any test.
 
-### EMEA Inventory
-
-- __Cloudvision__
-  - IP: 10.83.28.164
-  - Username: ansible
-  - Password: ansible
-
-- __Devices:__
-  - Out of band network: 10.255.0.0/24
-  - Username: ansible
-  - Password: ansible
-
-### Inetsix CVP Inventory
-
-- __Cloudvision__
-  - IP: 10.73.1.239
-  - Username: ansible
-  - Password: ansible
-
-- __Devices:__
-  - Out of band network: 10.73.255.0/24
-  - Username: ansible
-  - Password: ansible
-
-Available [here](inventories/inetsix-cvp/README.md)
-
-## Enable debugging
-
-### Cloudvision collection
-
-```shell
-$ source activate-arista.cvp-logs.env
-
-export ANSIBLE_CVP_LOG_FILE=cvp-debug-logs/arista.cvp.debug.log
-export ANSIBLE_CVP_LOG_LEVEL=debug
-export ANSIBLE_CVP_LOG_APICALL=warning
-```
-
-Log folder: `cvp-debug-logs/`
-
-## AVD Commands and Playbooks for CVP deployment
-
-__Available options:__
-
-- `INVENTORY`: Variable to target a specific inventory.
-- `ANSIBLE_ARGS`: Variable to pass some ansible arguments
-
 ## Make commands
 
-[Makefile](./Makefile) provides some shortcuts:
-
-### AVD with Cloudvision deployment
-
-- `avd-build-all`:                  Run AVD Build for all ISIS, OSPF and BGP Underlay
-- `avd-build-generic`:              Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
-- `avd-build-isis`:                 Run ansible playbook to build EVPN Fabric configuration with ISIS as underlay with DC1 and CV
-- `avd-build-ospf`:                 Run ansible playbook to build EVPN Fabric configuration with OSPF as underlay with DC1 and CV
-- `avd-build`:                      Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
-- `avd-deploy-isis`:                Run ansible playbook to deploy EVPN Fabric with ISIS as underlay.
-- `avd-deploy-ospf`:                Run ansible playbook to deploy EVPN Fabric with OSPF as underlay.
-- `avd-deploy`:                     Run ansible playbook to deploy EVPN Fabric.
-- `avd-dhcp-generate`:              Generate DHCPd configuration
-- `avd-dhcp-rollout`:               Configure DHCP server with topology information.
-- `avd-migrate`:                    Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
-- `avd-provision`:                  Run ansible playbook to deploy EVPN Fabric.
-- `avd-reset`:                      Run ansible playbook to reset all devices.
-- `avd-vars-devices`:               Run ansible playbook to extract Devices variables.
-- `avd-vars-input`:                 Run ansible playbook to extract EVPN Fabric variables.
-
-### AVD with EAPI deployment
-
-- `eapi-build-isis`:                Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with ISIS underlay
-- `eapi-build-ospf`:                Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with OSPF underlay
-- `eapi-build`:                     Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
-- `eapi-deploy-isis`:               Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with ISIS underlay
-- `eapi-deploy-ospf`:               Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with OSPF underlay
-- `eapi-deploy`:                    Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
-- `eapi-states-validation`:         eapi-states-validation description
-
-### AVD Tools
-
-- `eos-backup`:                     Backup current running configuration
-- `snapshot`:                       Extract commands outputs
-
-### Misc
-
-- `centos-bootstrap`:               Initial Centos 7 Configuration
-- `cli-config-gen`:                 Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV with OSPF underlay
-- `configlet-delete`:               Delete Configlets (GLOBAL-ALIASES*) from CVP
-- `configlet-unbound`:              Rebuild configlets binding based on AVD standard
-- `configlet-upload`:               Upload configlets available in configlets/ to CVP.
-- `container-create`:               Create DC2 container topology on CVP.
-- `container-delete`:               Remove DC2 container topology from CVP.
-- `dhcp-bootstrap`:                 Configure DHCP service
-- `docker-run`:                     Connect to docker container
-- `dump-vars`:                      Dump all ansible variables into $(INVENTORY)/dump.json
-- `facts`:                          Get facts from CVP and save locally
-- `help`:                           Display help message (*: main entry points / []: part of an entry point)
-- `install`:                        Install arista collections
-- `log-clean`:                      log-clean description
-- `repo-clean`:                     Delete previously generated outputs
-- `repo-rebuild`:                   Delete previously generated outputs
-- `uninstall`:                      Remove arista collections
-- `unit-configlet`:                 Unit test for cv_configlet
-- `unit-container-v1`:              Unit test for cv_container
-- `unit-container-v3`:              Unit test for cv_container
-- `unit-container-v4`:              Unit test for cv_container
-- `unit-device`:                    Unit test for cv_configlet
+- `avd-cvp-build`                  Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
+- `avd-cvp-deploy`                 Run ansible playbook to deploy EVPN Fabric.
+- `avd-cvp-provision`              Run ansible playbook to deploy EVPN Fabric.
+- `avd-eapi-apply`                 Run ansible playbook to Apply previously generated configuration
+- `avd-eapi-build-all`             Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
+- `avd-eapi-build`                 Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV (No Documentation)
+- `avd-eapi-deploy`                Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
+- `cli-config-gen`                 Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology
+- `eapi-states-validation`         eapi-states-validation description
+- `ee-build-latest`                Build Ansible Execution Builder
+- `ee-build`                       Build Ansible Execution Builder
+- `ee-runner`                      Execute ansible EE runner in interactive mode
+- `eos-backup`                     Backup current running configuration
+- `eos-snapshot`                   Extract commands outputs
+- `help`                           Display help message (*: main entry points / []: part of an entry point)
+- `setup-development`              Setup development environment
+- `setup-galaxy`                   Install arista collections using ansible galaxy
