@@ -10,6 +10,6 @@ Et8                            up             up
 Lo0                            up             up                 EVPN_Overlay_Peering
 Lo1                            up             up                 VTEP_VXLAN_Tunnel_Source
 Ma1                            up             up                 oob_management
-Vl1192                         up             up                 
-Vl1195                         up             up                 
+Vl1198                         up             up                 
+Vl1199                         up             up                 
 Vx1                            up             up                 EAPI-L2LEAF02_VTEP

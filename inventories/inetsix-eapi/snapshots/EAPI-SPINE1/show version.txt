@@ -1,13 +1,15 @@
-vEOS
-Hardware version:    
-Serial number:       
-System MAC address:  0c1d.c0a3.86f3
+Arista vEOS-lab
+Hardware version: 
+Serial number: E8568EE81E7A2F31A882B0EB395EDC21
+Hardware MAC address: 0c1d.c0a3.86f3
+System MAC address: 0c1d.c0a3.86f3
 
-Software image version: 4.22.5M
-Architecture:           i686
-Internal build version: 4.22.5M-16511818.4225M
-Internal build ID:      ca78196c-426c-40e9-9d55-80540fb5ac07
+Software image version: 4.27.0F
+Architecture: i686
+Internal build version: 4.27.0F-24305004.4270F
+Internal build ID: fed9e33b-669e-42ea-bee6-c7bf3cca1a73
+Image format version: 1.0
 
-Uptime:                 0 weeks, 2 days, 14 hours and 40 minutes
-Total memory:           2014520 kB
-Free memory:            1132368 kB
+Uptime: 23 minutes
+Total memory: 2006636 kB
+Free memory: 1073200 kB

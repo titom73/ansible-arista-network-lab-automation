@@ -47,7 +47,7 @@ vrfs:
   MGMT:
     ip_routing: false
 management_interfaces:
-  Management0:
+  Management1:
     description: oob_management
     shutdown: false
     vrf: MGMT
@@ -119,9 +119,10 @@ ip_igmp_snooping:
     112:
       enabled: false
 management_ssh:
+  idle_timeout: 0
   enable: true
   vrfs:
-    MGMT:
+    MGT:
       enable: true
 aaa_authorization:
   exec:

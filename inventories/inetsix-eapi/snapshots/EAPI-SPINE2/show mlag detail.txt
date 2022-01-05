@@ -1,24 +1,25 @@
-MLAG Configuration:   
-domain-id              :                    
-local-interface        :                    
-peer-address           :             0.0.0.0
-peer-link              :                    
-peer-config            :                    
-                                            
-MLAG Status:          
-state                  :            Disabled
-negotiation status     :                    
-peer-link status       :                    
-local-int status       :                    
-system-id              :   00:00:00:00:00:00
-dual-primary detection :            Disabled
-                                            
-MLAG Ports:           
-Disabled               :                   0
-Configured             :                   0
-Inactive               :                   0
-Active-partial         :                   0
-Active-full            :                   0
+MLAG Configuration:              
+domain-id                          :                   
+local-interface                    :                   
+peer-address                       :             0.0.0.0
+peer-link                          :                   
+peer-config                        :                   
+                                                       
+MLAG Status:                     
+state                              :            Disabled
+negotiation status                 :                   
+peer-link status                   :                   
+local-int status                   :                   
+system-id                          :   00:00:00:00:00:00
+dual-primary detection             :            Disabled
+dual-primary interface errdisabled :               False
+                                                       
+MLAG Ports:                      
+Disabled                           :                   0
+Configured                         :                   0
+Inactive                           :                   0
+Active-partial                     :                   0
+Active-full                        :                   0
 
 MLAG Detailed Status:
 State                           :            disabled

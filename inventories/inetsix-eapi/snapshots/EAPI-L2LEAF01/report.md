@@ -24,14 +24,14 @@
 ```
 VRF name: default
 -----------------
-DstAddr         MyDisc   YourDisc Interface/Transport     Type          LastUp  
------------ ---------- ---------- ------------------- --------- --------------- 
-192.168.0.2  507366949 1970466543                  NA multihop  08/27/21 17:14  
-192.168.0.3 1061049470 1100995086                  NA multihop  08/27/21 17:14  
+DstAddr         MyDisc   YourDisc Interface/Transport     Type          LastUp 
+----------- ---------- ---------- ------------------- --------- ---------------
+192.168.0.2 2335697008 2790874598                  NA multihop  01/05/22 17:05 
+192.168.0.3 1103731635 3058020852                  NA multihop  01/05/22 17:05 
 
-   LastDown            LastDiag    State 
--------------- ------------------- ----- 
-         NA       No Diagnostic       Up 
+   LastDown            LastDiag    State
+-------------- ------------------- -----
+         NA       No Diagnostic       Up
          NA       No Diagnostic       Up
 ```
 ## show bgp evpn summary
@@ -41,8 +41,8 @@ BGP summary information for VRF default
 Router identifier 192.168.253.2, local AS number 65107
 Neighbor Status Codes: m - Under maintenance
   Description              Neighbor         V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
-  EAPI-RS01                192.168.0.2      4 65000           3335      2988    0    0 18:09:45 Estab   94     94
-  EAPI-RS02                192.168.0.3      4 65000           3144      3104    0    0 18:09:43 Estab   94     94
+  EAPI-RS01                192.168.0.2      4 65000             54        38    0    0 00:12:00 Estab   77     77
+  EAPI-RS02                192.168.0.3      4 65000             54        43    0    0 00:11:59 Estab   77     77
 ```
 ## show bgp evpn
 
@@ -56,92 +56,6 @@ Origin codes: i - IGP, e - EGP, ? - incomplete
 AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
 
           Network                Next Hop              Metric  LocPref Weight  Path
- * >Ec   RD: 192.168.255.7:11 auto-discovery 10110 0000:0000:0303:0202:0101
-                                 192.168.254.7         -       100     0       65000 65103 i
- *  ec   RD: 192.168.255.7:11 auto-discovery 10110 0000:0000:0303:0202:0101
-                                 192.168.254.7         -       100     0       65000 65103 i
- * >Ec   RD: 192.168.255.8:11 auto-discovery 10110 0000:0000:0303:0202:0101
-                                 192.168.254.8         -       100     0       65000 65104 i
- *  ec   RD: 192.168.255.8:11 auto-discovery 10110 0000:0000:0303:0202:0101
-                                 192.168.254.8         -       100     0       65000 65104 i
- * >Ec   RD: 192.168.255.7:11 auto-discovery 10113 0000:0000:0303:0202:0101
-                                 192.168.254.7         -       100     0       65000 65103 i
- *  ec   RD: 192.168.255.7:11 auto-discovery 10113 0000:0000:0303:0202:0101
-                                 192.168.254.7         -       100     0       65000 65103 i
- * >Ec   RD: 192.168.255.8:11 auto-discovery 10113 0000:0000:0303:0202:0101
-                                 192.168.254.8         -       100     0       65000 65104 i
- *  ec   RD: 192.168.255.8:11 auto-discovery 10113 0000:0000:0303:0202:0101
-                                 192.168.254.8         -       100     0       65000 65104 i
- * >Ec   RD: 192.168.255.7:20201 auto-discovery 20201 0000:0000:0303:0202:0101
-                                 192.168.254.7         -       100     0       65000 65103 i
- *  ec   RD: 192.168.255.7:20201 auto-discovery 20201 0000:0000:0303:0202:0101
-                                 192.168.254.7         -       100     0       65000 65103 i
- * >Ec   RD: 192.168.255.8:20201 auto-discovery 20201 0000:0000:0303:0202:0101
-                                 192.168.254.8         -       100     0       65000 65104 i
- *  ec   RD: 192.168.255.8:20201 auto-discovery 20201 0000:0000:0303:0202:0101
-                                 192.168.254.8         -       100     0       65000 65104 i
- * >Ec   RD: 192.168.254.7:1 auto-discovery 0000:0000:0303:0202:0101
-                                 192.168.254.7         -       100     0       65000 65103 i
- *  ec   RD: 192.168.254.7:1 auto-discovery 0000:0000:0303:0202:0101
-                                 192.168.254.7         -       100     0       65000 65103 i
- * >Ec   RD: 192.168.254.8:1 auto-discovery 0000:0000:0303:0202:0101
-                                 192.168.254.8         -       100     0       65000 65104 i
- *  ec   RD: 192.168.254.8:1 auto-discovery 0000:0000:0303:0202:0101
-                                 192.168.254.8         -       100     0       65000 65104 i
- * >Ec   RD: 192.168.255.5:11 mac-ip 10110 5001.0002.f6c5
-                                 192.168.254.5         -       100     0       65000 65102 i
- *  ec   RD: 192.168.255.5:11 mac-ip 10110 5001.0002.f6c5
-                                 192.168.254.5         -       100     0       65000 65102 i
- * >Ec   RD: 192.168.255.6:11 mac-ip 10110 5001.0002.f6c5
-                                 192.168.254.5         -       100     0       65000 65102 i
- *  ec   RD: 192.168.255.6:11 mac-ip 10110 5001.0002.f6c5
-                                 192.168.254.5         -       100     0       65000 65102 i
- * >Ec   RD: 192.168.255.5:11 mac-ip 10110 5001.0002.f6c5 10.1.10.2
-                                 192.168.254.5         -       100     0       65000 65102 i
- *  ec   RD: 192.168.255.5:11 mac-ip 10110 5001.0002.f6c5 10.1.10.2
-                                 192.168.254.5         -       100     0       65000 65102 i
- * >Ec   RD: 192.168.255.6:11 mac-ip 10110 5001.0002.f6c5 10.1.10.2
-                                 192.168.254.5         -       100     0       65000 65102 i
- *  ec   RD: 192.168.255.6:11 mac-ip 10110 5001.0002.f6c5 10.1.10.2
-                                 192.168.254.5         -       100     0       65000 65102 i
- * >Ec   RD: 192.168.255.3:11 mac-ip 10110 5001.0056.2a6e
-                                 192.168.254.3         -       100     0       65000 65101 i
- *  ec   RD: 192.168.255.3:11 mac-ip 10110 5001.0056.2a6e
-                                 192.168.254.3         -       100     0       65000 65101 i
- * >Ec   RD: 192.168.255.4:11 mac-ip 10110 5001.0056.2a6e
-                                 192.168.254.3         -       100     0       65000 65101 i
- *  ec   RD: 192.168.255.4:11 mac-ip 10110 5001.0056.2a6e
-                                 192.168.254.3         -       100     0       65000 65101 i
- * >Ec   RD: 192.168.255.3:11 mac-ip 10110 5001.0056.2a6e 10.1.10.1
-                                 192.168.254.3         -       100     0       65000 65101 i
- *  ec   RD: 192.168.255.3:11 mac-ip 10110 5001.0056.2a6e 10.1.10.1
-                                 192.168.254.3         -       100     0       65000 65101 i
- * >Ec   RD: 192.168.255.4:11 mac-ip 10110 5001.0056.2a6e 10.1.10.1
-                                 192.168.254.3         -       100     0       65000 65101 i
- *  ec   RD: 192.168.255.4:11 mac-ip 10110 5001.0056.2a6e 10.1.10.1
-                                 192.168.254.3         -       100     0       65000 65101 i
- * >Ec   RD: 192.168.255.5:11 mac-ip 10112 5001.0002.f6c5
-                                 192.168.254.5         -       100     0       65000 65102 i
- *  ec   RD: 192.168.255.5:11 mac-ip 10112 5001.0002.f6c5
-                                 192.168.254.5         -       100     0       65000 65102 i
- * >Ec   RD: 192.168.255.6:11 mac-ip 10112 5001.0002.f6c5
-                                 192.168.254.5         -       100     0       65000 65102 i
- *  ec   RD: 192.168.255.6:11 mac-ip 10112 5001.0002.f6c5
-                                 192.168.254.5         -       100     0       65000 65102 i
- * >Ec   RD: 192.168.255.5:11 mac-ip 10112 5001.0002.f6c5 10.1.12.2
-                                 192.168.254.5         -       100     0       65000 65102 i
- *  ec   RD: 192.168.255.5:11 mac-ip 10112 5001.0002.f6c5 10.1.12.2
-                                 192.168.254.5         -       100     0       65000 65102 i
- * >Ec   RD: 192.168.255.6:11 mac-ip 10112 5001.0002.f6c5 10.1.12.2
-                                 192.168.254.5         -       100     0       65000 65102 i
- *  ec   RD: 192.168.255.6:11 mac-ip 10112 5001.0002.f6c5 10.1.12.2
-                                 192.168.254.5         -       100     0       65000 65102 i
- * >     RD: 192.168.253.2:13 mac-ip 30302 5001.0073.5ad7
-                                 -                     -       -       0       i
- * >Ec   RD: 192.168.253.3:13 mac-ip 30302 5001.00bf.cca4
-                                 192.168.252.3         -       100     0       65000 65108 i
- *  ec   RD: 192.168.253.3:13 mac-ip 30302 5001.00bf.cca4
-                                 192.168.252.3         -       100     0       65000 65108 i
  * >Ec   RD: 192.168.255.3:11 imet 10110 192.168.254.3
                                  192.168.254.3         -       100     0       65000 65101 i
  *  ec   RD: 192.168.255.3:11 imet 10110 192.168.254.3
@@ -286,22 +200,6 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                                  192.168.254.11        -       100     0       65000 65106 i
  *  ec   RD: 192.168.255.12:13 imet 30302 192.168.254.11
                                  192.168.254.11        -       100     0       65000 65106 i
- * >Ec   RD: 192.168.254.7:1 ethernet-segment 0000:0000:0303:0202:0101 192.168.254.7
-                                 192.168.254.7         -       100     0       65000 65103 i
- *  ec   RD: 192.168.254.7:1 ethernet-segment 0000:0000:0303:0202:0101 192.168.254.7
-                                 192.168.254.7         -       100     0       65000 65103 i
- * >Ec   RD: 192.168.254.8:1 ethernet-segment 0000:0000:0303:0202:0101 192.168.254.8
-                                 192.168.254.8         -       100     0       65000 65104 i
- *  ec   RD: 192.168.254.8:1 ethernet-segment 0000:0000:0303:0202:0101 192.168.254.8
-                                 192.168.254.8         -       100     0       65000 65104 i
- * >Ec   RD: 192.168.255.9:11 ip-prefix 1.1.1.0/24
-                                 192.168.254.9         -       100     0       65000 65105 ?
- *  ec   RD: 192.168.255.9:11 ip-prefix 1.1.1.0/24
-                                 192.168.254.9         -       100     0       65000 65105 ?
- * >Ec   RD: 192.168.255.10:11 ip-prefix 1.1.1.0/24
-                                 192.168.254.9         -       100     0       65000 65105 ?
- *  ec   RD: 192.168.255.10:11 ip-prefix 1.1.1.0/24
-                                 192.168.254.9         -       100     0       65000 65105 ?
  * >Ec   RD: 192.168.255.3:11 ip-prefix 10.1.10.0/24
                                  192.168.254.3         -       100     0       65000 65101 i
  *  ec   RD: 192.168.255.3:11 ip-prefix 10.1.10.0/24
@@ -382,6 +280,22 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                                  192.168.254.8         -       100     0       65000 65104 i
  *  ec   RD: 192.168.255.8:11 ip-prefix 10.1.13.0/24
                                  192.168.254.8         -       100     0       65000 65104 i
+ * >Ec   RD: 192.168.255.3:13 ip-prefix 10.1.31.0/24
+                                 192.168.254.3         -       100     0       65000 65101 i
+ *  ec   RD: 192.168.255.3:13 ip-prefix 10.1.31.0/24
+                                 192.168.254.3         -       100     0       65000 65101 i
+ * >Ec   RD: 192.168.255.4:13 ip-prefix 10.1.31.0/24
+                                 192.168.254.3         -       100     0       65000 65101 i
+ *  ec   RD: 192.168.255.4:13 ip-prefix 10.1.31.0/24
+                                 192.168.254.3         -       100     0       65000 65101 i
+ * >Ec   RD: 192.168.255.5:13 ip-prefix 10.1.32.0/24
+                                 192.168.254.5         -       100     0       65000 65102 i
+ *  ec   RD: 192.168.255.5:13 ip-prefix 10.1.32.0/24
+                                 192.168.254.5         -       100     0       65000 65102 i
+ * >Ec   RD: 192.168.255.6:13 ip-prefix 10.1.32.0/24
+                                 192.168.254.5         -       100     0       65000 65102 i
+ *  ec   RD: 192.168.255.6:13 ip-prefix 10.1.32.0/24
+                                 192.168.254.5         -       100     0       65000 65102 i
  * >Ec   RD: 192.168.255.11:13 ip-prefix 10.3.1.0/24
                                  192.168.254.11        -       100     0       65000 65106 i
  *  ec   RD: 192.168.255.11:13 ip-prefix 10.3.1.0/24
@@ -402,17 +316,33 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                                  192.168.254.3         -       100     0       65000 65101 i
  *  ec   RD: 192.168.255.3:11 ip-prefix 172.31.253.2/31
                                  192.168.254.3         -       100     0       65000 65101 i
+ * >Ec   RD: 192.168.255.3:13 ip-prefix 172.31.253.2/31
+                                 192.168.254.3         -       100     0       65000 65101 i
+ *  ec   RD: 192.168.255.3:13 ip-prefix 172.31.253.2/31
+                                 192.168.254.3         -       100     0       65000 65101 i
  * >Ec   RD: 192.168.255.4:11 ip-prefix 172.31.253.2/31
                                  192.168.254.3         -       100     0       65000 65101 i
  *  ec   RD: 192.168.255.4:11 ip-prefix 172.31.253.2/31
+                                 192.168.254.3         -       100     0       65000 65101 i
+ * >Ec   RD: 192.168.255.4:13 ip-prefix 172.31.253.2/31
+                                 192.168.254.3         -       100     0       65000 65101 i
+ *  ec   RD: 192.168.255.4:13 ip-prefix 172.31.253.2/31
                                  192.168.254.3         -       100     0       65000 65101 i
  * >Ec   RD: 192.168.255.5:11 ip-prefix 172.31.253.6/31
                                  192.168.254.5         -       100     0       65000 65102 i
  *  ec   RD: 192.168.255.5:11 ip-prefix 172.31.253.6/31
                                  192.168.254.5         -       100     0       65000 65102 i
+ * >Ec   RD: 192.168.255.5:13 ip-prefix 172.31.253.6/31
+                                 192.168.254.5         -       100     0       65000 65102 i
+ *  ec   RD: 192.168.255.5:13 ip-prefix 172.31.253.6/31
+                                 192.168.254.5         -       100     0       65000 65102 i
  * >Ec   RD: 192.168.255.6:11 ip-prefix 172.31.253.6/31
                                  192.168.254.5         -       100     0       65000 65102 i
  *  ec   RD: 192.168.255.6:11 ip-prefix 172.31.253.6/31
+                                 192.168.254.5         -       100     0       65000 65102 i
+ * >Ec   RD: 192.168.255.6:13 ip-prefix 172.31.253.6/31
+                                 192.168.254.5         -       100     0       65000 65102 i
+ *  ec   RD: 192.168.255.6:13 ip-prefix 172.31.253.6/31
                                  192.168.254.5         -       100     0       65000 65102 i
  * >Ec   RD: 192.168.255.9:11 ip-prefix 172.31.253.14/31
                                  192.168.254.9         -       100     0       65000 65105 i
@@ -454,7 +384,7 @@ Et8                            up             up
 Lo0                            up             up                 EVPN_Overlay_Peering
 Lo1                            up             up                 VTEP_VXLAN_Tunnel_Source
 Ma1                            up             up                 oob_management
-Vl1197                         up             up                 
+Vl1198                         up             up                 
 Vl1199                         up             up                 
 Vx1                            up             up                 EAPI-L2LEAF01_VTEP
 ```
@@ -465,21 +395,21 @@ BGP summary information for VRF default
 Router identifier 192.168.253.2, local AS number 65107
 Neighbor Status Codes: m - Under maintenance
   Description              Neighbor         V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
-  EAPI-SPINE1_Ethernet11   172.31.251.0     4 65001           4310      4298    0    0    2d12h Estab   20     20
-  EAPI-SPINE2_Ethernet11   172.31.251.2     4 65001           4312      4296    0    0    2d12h Estab   20     20
+  EAPI-SPINE1_Ethernet11   172.31.251.0     4 65001             31        27    0    0 00:12:00 Estab   20     20
+  EAPI-SPINE2_Ethernet11   172.31.251.2     4 65001             32        23    0    0 00:12:00 Estab   20     20
 ```
 ## show ip interface brief
 
 ```
-Address 
-Interface       IP Address           Status     Protocol         MTU    Owner   
---------------- -------------------- ---------- ------------ ---------- ------- 
-Ethernet1       172.31.251.1/31      up         up              1500            
-Ethernet2       172.31.251.3/31      up         up              1500            
-Loopback0       192.168.253.2/32     up         up             65535            
-Loopback1       192.168.252.2/32     up         up             65535            
-Management1     10.73.254.31/24      up         up              1500            
-Vlan1197        unassigned           up         up              9164            
+Address
+Interface       IP Address           Status     Protocol         MTU    Owner  
+--------------- -------------------- ---------- ------------ ---------- -------
+Ethernet1       172.31.251.1/31      up         up              1500           
+Ethernet2       172.31.251.3/31      up         up              1500           
+Loopback0       192.168.253.2/32     up         up             65535           
+Loopback1       192.168.252.2/32     up         up             65535           
+Management1     10.73.254.31/24      up         up              1500           
+Vlan1198        unassigned           up         up              9164           
 Vlan1199        unassigned           up         up              9164
 ```
 ## show ip route vrf all
@@ -567,33 +497,17 @@ Gateway of last resort:
 ## show lldp neighbors
 
 ```
-Last table change time   : 2 days, 1:56:37 ago
-Number of table inserts  : 23
-Number of table deletes  : 4
+Last table change time   : 0:12:18 ago
+Number of table inserts  : 3
+Number of table deletes  : 0
 Number of table drops    : 0
-Number of table age-outs : 4
+Number of table age-outs : 0
 
-Port          Neighbor Device ID       Neighbor Port ID    TTL 
----------- ------------------------ ---------------------- --- 
-Et1           EAPI-SPINE1              Ethernet11          120 
-Et2           EAPI-SPINE2              Ethernet11          120 
-Et5           SRV-POD05-23             Ethernet1           120 
-Ma1           EAPI-LEAF3A              Management1         120 
-Ma1           EAPI-SPINE1              Management1         120 
-Ma1           EAPI-SPINE2              Management1         120 
-Ma1           EAPI-AGG02               Management1         120 
-Ma1           EAPI-LEAF1B              Management1         120 
-Ma1           EAPI-AGG01               Management1         120 
-Ma1           EAPI-BL01A               Management1         120 
-Ma1           EAPI-LEAF2A              Management1         120 
-Ma1           EAPI-LEAF1A              Management1         120 
-Ma1           EAPI-LEAF2B              Management1         120 
-Ma1           EAPI-BL01B               Management1         120 
-Ma1           EAPI-CL01A               Management1         120 
-Ma1           EAPI-LEAF4A              Management1         120 
-Ma1           EAPI-L2LEAF02            Management1         120 
-Ma1           EAPI-CL01B               Management1         120 
-Ma1           SRV-POD05-24             Management1         120
+Port          Neighbor Device ID       Neighbor Port ID    TTL
+---------- ------------------------ ---------------------- ---
+Et1           EAPI-SPINE1              Ethernet11          120
+Et2           EAPI-SPINE2              Ethernet11          120
+Et5           localhost                Ethernet1           120
 ```
 ## show mac address-table
 
@@ -603,15 +517,15 @@ Mac Address Table
 
 Vlan    Mac Address       Type        Ports      Moves   Last Move
 ----    -----------       ----        -----      -----   ---------
- 302    5001.0073.5ad7    DYNAMIC     Et5        1       1:58:07 ago
- 302    5001.00bf.cca4    DYNAMIC     Vx1        1       1:58:07 ago
-1197    0c1d.c0d2.9e98    DYNAMIC     Vx1        1       18:10:20 ago
-1197    0c1d.c0e4.777b    DYNAMIC     Vx1        1       18:10:20 ago
-1197    0e1d.c025.6541    DYNAMIC     Vx1        1       18:10:20 ago
-1197    0e1d.c0a3.43e0    DYNAMIC     Vx1        1       18:10:08 ago
-1197    0e1d.c0f0.bdd1    DYNAMIC     Vx1        1       18:10:20 ago
-1197    5201.0068.b446    DYNAMIC     Vx1        1       18:10:17 ago
-1199    5201.0068.b446    DYNAMIC     Vx1        1       18:10:17 ago
+1198    0c1d.c0d2.9e98    DYNAMIC     Vx1        1       0:12:03 ago
+1198    0c1d.c0e4.777b    DYNAMIC     Vx1        1       0:12:03 ago
+1198    0e1d.c025.6541    DYNAMIC     Vx1        1       0:12:03 ago
+1198    0e1d.c0a3.43e0    DYNAMIC     Vx1        1       0:12:03 ago
+1198    0e1d.c0f0.bdd1    DYNAMIC     Vx1        1       0:12:03 ago
+1198    5201.0068.b446    DYNAMIC     Vx1        1       0:07:37 ago
+1199    0e1d.c0a3.43e0    DYNAMIC     Vx1        1       0:12:03 ago
+1199    0e1d.c0f0.bdd1    DYNAMIC     Vx1        1       0:12:03 ago
+1199    5201.0068.b446    DYNAMIC     Vx1        1       0:07:37 ago
 Total Mac Addresses for this criterion: 9
 
           Multicast Mac Address Table
@@ -629,23 +543,23 @@ Command not applicable for inactive MLAG state.
 ## show mlag detail
 
 ```
-MLAG Configuration:               
-domain-id                          :                    
-local-interface                    :                    
+MLAG Configuration:              
+domain-id                          :                   
+local-interface                    :                   
 peer-address                       :             0.0.0.0
-peer-link                          :                    
-peer-config                        :                    
-                                                        
-MLAG Status:                      
+peer-link                          :                   
+peer-config                        :                   
+                                                       
+MLAG Status:                     
 state                              :            Disabled
-negotiation status                 :                    
-peer-link status                   :                    
-local-int status                   :                    
+negotiation status                 :                   
+peer-link status                   :                   
+local-int status                   :                   
 system-id                          :   00:00:00:00:00:00
 dual-primary detection             :            Disabled
 dual-primary interface errdisabled :               False
-                                                        
-MLAG Ports:                       
+                                                       
+MLAG Ports:                      
 Disabled                           :                   0
 Configured                         :                   0
 Inactive                           :                   0
@@ -698,15 +612,15 @@ Serial number: BC11E2545C549D2728F273B821613D68
 Hardware MAC address: 5001.0050.554b
 System MAC address: 5001.0050.554b
 
-Software image version: 4.26.2F
+Software image version: 4.27.0F
 Architecture: i686
-Internal build version: 4.26.2F-23563874.4262F
-Internal build ID: fa3a49f3-6093-4925-ad11-55fe15eac5ae
+Internal build version: 4.27.0F-24305004.4270F
+Internal build ID: fed9e33b-669e-42ea-bee6-c7bf3cca1a73
 Image format version: 1.0
 
-Uptime: 2 days, 12 hours and 58 minutes
-Total memory: 2006804 kB
-Free memory: 1036164 kB
+Uptime: 17 minutes
+Total memory: 2006636 kB
+Free memory: 1056440 kB
 ```
 ## show vlan
 
@@ -716,7 +630,7 @@ VLAN  Name                             Status    Ports
 1     default                          active    Et3, Et4, Et5, Et6, Et7, Et8
 301   CENTRAL_LAN_01                   active    Et5, Vx1
 302   CENTRAL_LAN_02                   active    Et5, Vx1
-1197* VLAN1197                         active    Cpu, Vx1
+1198* VLAN1198                         active    Cpu, Vx1
 1199* VLAN1199                         active    Cpu, Vx1
 
 * indicates a Dynamic VLAN
@@ -729,31 +643,32 @@ Vxlan Mac Address Table
 
 VLAN  Mac Address     Type      Prt  VTEP             Moves   Last Move
 ----  -----------     ----      ---  ----             -----   ---------
- 302  5001.00bf.cca4  EVPN      Vx1  192.168.252.3    1       1:57:49 ago
-1197  0c1d.c0d2.9e98  EVPN      Vx1  192.168.254.8    1       18:10:02 ago
-1197  0c1d.c0e4.777b  EVPN      Vx1  192.168.254.7    1       18:10:02 ago
-1197  0e1d.c025.6541  EVPN      Vx1  192.168.254.9    1       18:10:02 ago
-1197  0e1d.c0a3.43e0  EVPN      Vx1  192.168.254.5    1       18:09:50 ago
-1197  0e1d.c0f0.bdd1  EVPN      Vx1  192.168.254.3    1       18:10:02 ago
-1197  5201.0068.b446  EVPN      Vx1  192.168.254.11   1       18:09:59 ago
-1199  5201.0068.b446  EVPN      Vx1  192.168.254.11   1       18:09:59 ago
-Total Remote Mac Addresses for this criterion: 8
+1198  0c1d.c0d2.9e98  EVPN      Vx1  192.168.254.8    1       0:12:01 ago
+1198  0c1d.c0e4.777b  EVPN      Vx1  192.168.254.7    1       0:12:01 ago
+1198  0e1d.c025.6541  EVPN      Vx1  192.168.254.9    1       0:12:01 ago
+1198  0e1d.c0a3.43e0  EVPN      Vx1  192.168.254.5    1       0:12:01 ago
+1198  0e1d.c0f0.bdd1  EVPN      Vx1  192.168.254.3    1       0:12:01 ago
+1198  5201.0068.b446  EVPN      Vx1  192.168.254.11   1       0:07:35 ago
+1199  0e1d.c0a3.43e0  EVPN      Vx1  192.168.254.5    1       0:12:01 ago
+1199  0e1d.c0f0.bdd1  EVPN      Vx1  192.168.254.3    1       0:12:01 ago
+1199  5201.0068.b446  EVPN      Vx1  192.168.254.11   1       0:07:35 ago
+Total Remote Mac Addresses for this criterion: 9
 ```
 ## show vxlan vni
 
 ```
 VNI to VLAN Mapping for Vxlan1
-VNI         VLAN       Source       Interface       802.1Q Tag 
------------ ---------- ------------ --------------- ---------- 
-30301       301        static       Ethernet5       301        
-                                    Vxlan1          301        
-30302       302        static       Ethernet5       302        
-                                    Vxlan1          302        
+VNI         VLAN       Source       Interface       802.1Q Tag
+----------- ---------- ------------ --------------- ----------
+30301       301        static       Ethernet5       301       
+                                    Vxlan1          301       
+30302       302        static       Ethernet5       302       
+                                    Vxlan1          302       
 
 VNI to dynamic VLAN Mapping for Vxlan1
-VNI       VLAN       VRF                   Source        
---------- ---------- --------------------- ------------  
-11        1197                             evpn          
+VNI       VLAN       VRF                   Source       
+--------- ---------- --------------------- ------------ 
+11        1198                             evpn         
 13        1199       CENTRAL_ROUTING       evpn
 ```
 ## show vxlan vtep
@@ -761,15 +676,15 @@ VNI       VLAN       VRF                   Source
 ```
 Remote VTEPS for Vxlan1:
 
-VTEP                 Tunnel Type(s) 
--------------------- -------------- 
-192.168.252.3        unicast, flood 
-192.168.254.3        unicast        
-192.168.254.5        unicast        
-192.168.254.7        unicast        
-192.168.254.8        unicast        
-192.168.254.9        unicast        
-192.168.254.11       unicast, flood 
+VTEP                 Tunnel Type(s)
+-------------------- --------------
+192.168.252.3        flood         
+192.168.254.3        unicast       
+192.168.254.5        unicast       
+192.168.254.7        unicast       
+192.168.254.8        unicast       
+192.168.254.9        unicast       
+192.168.254.11       unicast, flood
 
 Total number of remote VTEPS:  7
 ```

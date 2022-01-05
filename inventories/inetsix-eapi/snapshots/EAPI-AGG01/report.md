@@ -35,7 +35,7 @@ BGP is disabled for VRF default
 BGP is disabled for VRF default
 BGP routing table information for VRF default
 Router identifier 0.0.0.0, local AS number 0
-Route status codes: s - suppressed, * - valid, > - active, # - not installed, E - ECMP head, e - ECMP
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
                     S - Stale, c - Contributing to ECMP, b - backup
                     % - Pending BGP convergence
 Origin codes: i - IGP, e - EGP, ? - incomplete
@@ -66,9 +66,9 @@ BGP is disabled for VRF default
 ## show ip interface brief
 
 ```
-Address 
-Interface       IP Address          Status      Protocol         MTU    Owner   
---------------- ------------------- ----------- ------------- --------- ------- 
+Address
+Interface       IP Address          Status      Protocol         MTU    Owner  
+--------------- ------------------- ----------- ------------- --------- -------
 Management1     10.73.254.21/24     up          up              1500
 ```
 ## show ip route vrf all
@@ -84,7 +84,7 @@ Codes: C - connected, S - static, K - kernel,
        NG - Nexthop Group Static Route, V - VXLAN Control Service,
        DH - DHCP client installed default route, M - Martian,
        DP - Dynamic Policy Route, L - VRF Leaked,
-       RC - Route Cache Route
+       G  - gRIBI, RC - Route Cache Route
 
 Gateway of last resort is not set
 
@@ -100,7 +100,7 @@ Codes: C - connected, S - static, K - kernel,
        NG - Nexthop Group Static Route, V - VXLAN Control Service,
        DH - DHCP client installed default route, M - Martian,
        DP - Dynamic Policy Route, L - VRF Leaked,
-       RC - Route Cache Route
+       G  - gRIBI, RC - Route Cache Route
 
 Gateway of last resort:
  S        0.0.0.0/0 [1/0] via 10.73.254.253, Management1
@@ -112,33 +112,16 @@ Gateway of last resort:
 ## show lldp neighbors
 
 ```
-Last table change time   : 2:38:05 ago
-Number of table inserts  : 36
-Number of table deletes  : 17
+Last table change time   : 0:13:17 ago
+Number of table inserts  : 2
+Number of table deletes  : 0
 Number of table drops    : 0
-Number of table age-outs : 16
+Number of table age-outs : 0
 
-Port          Neighbor Device ID       Neighbor Port ID    TTL 
----------- ------------------------ ---------------------- --- 
-Et1           EAPI-LEAF1A              Ethernet5           120 
-Et2           EAPI-LEAF1B              Ethernet5           120 
-Et3           SRV-POD01                Ethernet1           120 
-Ma1           EAPI-LEAF4A              Management1         120 
-Ma1           EAPI-AGG02               Management1         120 
-Ma1           EAPI-BL01B               Management1         120 
-Ma1           EAPI-BL01A               Management1         120 
-Ma1           EAPI-LEAF1B              Management1         120 
-Ma1           EAPI-LEAF1A              Management1         120 
-Ma1           EAPI-LEAF2B              Management1         120 
-Ma1           EAPI-LEAF2A              Management1         120 
-Ma1           EAPI-LEAF3A              Management1         120 
-Ma1           EAPI-SPINE2              Management1         120 
-Ma1           EAPI-SPINE1              Management1         120 
-Ma1           EAPI-CL01A               Management1         120 
-Ma1           EAPI-L2LEAF02            Management1         120 
-Ma1           EAPI-L2LEAF01            Management1         120 
-Ma1           EAPI-CL01B               Management1         120 
-Ma1           SRV-POD05-24             Management1         120
+Port          Neighbor Device ID       Neighbor Port ID    TTL
+---------- ------------------------ ---------------------- ---
+Et1           EAPI-LEAF1A              Ethernet5           120
+Et2           EAPI-LEAF1B              Ethernet5           120
 ```
 ## show mac address-table
 
@@ -148,10 +131,8 @@ Mac Address Table
 
 Vlan    Mac Address       Type        Ports      Moves   Last Move
 ----    -----------       ----        -----      -----   ---------
- 110    0c1d.c0f4.7b39    DYNAMIC     Po1        1       1:59:13 ago
- 110    5001.0002.f6c5    DYNAMIC     Po1        1       1:59:16 ago
- 110    5001.0056.2a6e    DYNAMIC     Et3        1       2:04:22 ago
-Total Mac Addresses for this criterion: 3
+ 110    001c.7300.dc01    DYNAMIC     Po1        1       0:14:01 ago
+Total Mac Addresses for this criterion: 1
 
           Multicast Mac Address Table
 ------------------------------------------------------------------
@@ -168,23 +149,23 @@ Command not applicable for inactive MLAG state.
 ## show mlag detail
 
 ```
-MLAG Configuration:               
-domain-id                          :                    
-local-interface                    :                    
+MLAG Configuration:              
+domain-id                          :                   
+local-interface                    :                   
 peer-address                       :             0.0.0.0
-peer-link                          :                    
-peer-config                        :                    
-                                                        
-MLAG Status:                      
+peer-link                          :                   
+peer-config                        :                   
+                                                       
+MLAG Status:                     
 state                              :            Disabled
-negotiation status                 :                    
-peer-link status                   :                    
-local-int status                   :                    
+negotiation status                 :                   
+peer-link status                   :                   
+local-int status                   :                   
 system-id                          :   00:00:00:00:00:00
 dual-primary detection             :            Disabled
 dual-primary interface errdisabled :               False
-                                                        
-MLAG Ports:                       
+                                                       
+MLAG Ports:                      
 Disabled                           :                   0
 Configured                         :                   0
 Inactive                           :                   0
@@ -231,19 +212,21 @@ Fan Status  Speed  Speed Uptime Stability Uptime
 ## show version
 
 ```
-vEOS
-Hardware version:    
-Serial number:       
-System MAC address:  0c1d.c090.1379
+Arista vEOS-lab
+Hardware version: 
+Serial number: 4A74C75E25836D39B196A7995006854A
+Hardware MAC address: 0c1d.c090.1379
+System MAC address: 0c1d.c090.1379
 
-Software image version: 4.24.0F
-Architecture:           i686
-Internal build version: 4.24.0F-16270098.4240F
-Internal build ID:      da8d6269-c25f-4a12-930b-c3c42c12c38a
+Software image version: 4.27.0F
+Architecture: i686
+Internal build version: 4.27.0F-24305004.4270F
+Internal build ID: fed9e33b-669e-42ea-bee6-c7bf3cca1a73
+Image format version: 1.0
 
-Uptime:                 0 weeks, 2 days, 18 hours and 32 minutes
-Total memory:           2014424 kB
-Free memory:            1124868 kB
+Uptime: 19 minutes
+Total memory: 2006636 kB
+Free memory: 1099496 kB
 ```
 ## show vlan
 
@@ -254,6 +237,7 @@ VLAN  Name                             Status    Ports
 110   PR01-DEMO                        active    Et3, Po1
 111   PR01-TRUST                       active    Et3, Po1
 112   PR01-TRUST                       active    Et3, Po1
+131   vl131_no_vni                     active    Et3, Po1
 201   B-ELAN-201                       active    Et3, Po1
 ```
 ## show vxlan address-table
@@ -262,8 +246,8 @@ VLAN  Name                             Status    Ports
 Vxlan Mac Address Table
 ----------------------------------------------------------------------
 
-VLAN  Mac Address     Type     Prt  VTEP             Moves   Last Move
-----  -----------     ----     ---  ----             -----   ---------
+VLAN  Mac Address     Type      Prt  VTEP             Moves   Last Move
+----  -----------     ----      ---  ----             -----   ---------
 Total Remote Mac Addresses for this criterion: 0
 ```
 ## show vxlan vni

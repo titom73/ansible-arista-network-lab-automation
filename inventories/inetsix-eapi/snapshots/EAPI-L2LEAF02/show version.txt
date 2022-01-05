@@ -4,12 +4,12 @@ Serial number: B181409FE490443A7A50F5C144FF0585
 Hardware MAC address: 5001.001e.cf92
 System MAC address: 5001.001e.cf92
 
-Software image version: 4.26.2F
+Software image version: 4.27.0F
 Architecture: i686
-Internal build version: 4.26.2F-23563874.4262F
-Internal build ID: fa3a49f3-6093-4925-ad11-55fe15eac5ae
+Internal build version: 4.27.0F-24305004.4270F
+Internal build ID: fed9e33b-669e-42ea-bee6-c7bf3cca1a73
 Image format version: 1.0
 
-Uptime: 2 days, 12 hours and 58 minutes
-Total memory: 2006804 kB
-Free memory: 1036504 kB
+Uptime: 17 minutes
+Total memory: 2006636 kB
+Free memory: 1060268 kB

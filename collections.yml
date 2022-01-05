@@ -7,4 +7,5 @@ collections:
     version: devel
   - arista.eos
   - ansible.netcommon
+  - ansible.posix
   - community.general

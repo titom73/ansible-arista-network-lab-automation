@@ -7,7 +7,8 @@ Codes: C - connected, S - static, K - kernel,
        O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
        NG - Nexthop Group Static Route, V - VXLAN Control Service,
        DH - DHCP client installed default route, M - Martian,
-       DP - Dynamic Policy Route, L - VRF Leaked
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
 
 Gateway of last resort is not set
 
@@ -61,7 +62,8 @@ Codes: C - connected, S - static, K - kernel,
        O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
        NG - Nexthop Group Static Route, V - VXLAN Control Service,
        DH - DHCP client installed default route, M - Martian,
-       DP - Dynamic Policy Route, L - VRF Leaked
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
 
 Gateway of last resort:
  S        0.0.0.0/0 [1/0] via 10.73.254.253, Management1

@@ -1,4 +1,25 @@
 type: route_server
+output_format:
+- text
+- markdown
+commands_list:
+- show lldp neighbors
+- show ip interface brief
+- show interfaces description
+- show version
+- show ip bgp summary vrf all
+- show bgp evpn summary
+- show bgp evpn
+- show ip route vrf all
+- show vxlan vtep
+- show vxlan address-table
+- show vxlan vni
+- show vlan
+- show mac address-table
+- show bfd peers
+- show mlag detail
+- show mlag config-sanity
+- show system environment cooling
 local_users:
   admin:
     privilege: 15
@@ -20,7 +41,7 @@ cvp_instance_ips:
 - 10.73.254.254
 cvp_ingestauth_key: telarista
 mgmt_gateway: 10.73.254.253
-mgmt_interface: Management0
+mgmt_interface: Management1
 name_servers:
 - 10.73.1.251
 ntp:
@@ -45,9 +66,10 @@ validate_state_markdown_flavor: github
 custom_structured_configuration_prefix:
 - inetsix_
 inetsix_management_ssh:
+  idle_timeout: 0
   enable: true
   vrfs:
-    MGMT:
+    MGT:
       enable: true
 inetsix_aaa_authorization:
   exec:
@@ -96,27 +118,6 @@ node_type_keys:
   route_server:
     type: route_server
     default_evpn_role: server
-output_format:
-- text
-- markdown
-commands_list:
-- show lldp neighbors
-- show ip interface brief
-- show interfaces description
-- show version
-- show ip bgp summary vrf all
-- show bgp evpn summary
-- show bgp evpn
-- show ip route vrf all
-- show vxlan vtep
-- show vxlan address-table
-- show vxlan vni
-- show vlan
-- show mac address-table
-- show bfd peers
-- show mlag detail
-- show mlag config-sanity
-- show system environment cooling
 fabric_name: EAPI_FABRIC
 p2p_uplinks_mtu: 1500
 bfd_multihop:
@@ -801,7 +802,7 @@ groups:
   - EAPI-AGG02
   - EAPI-L2LEAF01
   - EAPI-L2LEAF02
-omit: __omit_place_holder__4125d97f9e93b7f009307bd739a287ebfb390c26
+omit: __omit_place_holder__48b8f3b8eda6f28e3e7033863412378a8705a8c0
 ansible_version:
   string: 2.12.1
   full: 2.12.1
@@ -813,7 +814,8 @@ ansible_diff_mode: true
 ansible_forks: 15
 ansible_inventory_sources:
 - /Users/tgrimonet/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/inventory.yml
-ansible_skip_tags: []
+ansible_skip_tags:
+- documentation
 ansible_limit: EAPI_FABRIC
 ansible_run_tags:
 - build

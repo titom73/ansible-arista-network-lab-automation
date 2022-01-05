@@ -139,7 +139,7 @@ vrfs:
   MGMT:
     ip_routing: false
 management_interfaces:
-  Management0:
+  Management1:
     description: oob_management
     shutdown: false
     vrf: MGMT
@@ -183,9 +183,10 @@ router_bfd:
     min_rx: 1200
     multiplier: 3
 management_ssh:
+  idle_timeout: 0
   enable: true
   vrfs:
-    MGMT:
+    MGT:
       enable: true
 aaa_authorization:
   exec:

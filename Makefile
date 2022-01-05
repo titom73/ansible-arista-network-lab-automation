@@ -7,8 +7,8 @@ GH_CLI := $(which gh)
 INVENTORY ?= inventories/inetsix-eapi
 # Default Inventory file to look for
 INVENTORY_FILE = inventory.yml
-# Name of the Fabric to build. Used in --limit scope
-FABRIC ?= EAPI_FABRIC
+# Name of the SCOPE to build. Used in --limit scope
+SCOPE ?= EAPI_FABRIC
 # For optional ansible options
 ANSIBLE_ARGS ?= --diff
 
@@ -60,16 +60,16 @@ ee-runner: ## Execute ansible EE runner in interactive mode
 ################################################################################
 
 .PHONY: avd-cvp-build
-avd-cvp-build:  ## Run ansible playbook to build EVPN Fabric configuration with DC1 and CV
-	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build --limit $(FABRIC) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+avd-cvp-build:  ## Run ansible playbook to build EVPN SCOPE configuration with DC1 and CV
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-cvp-provision
-avd-cvp-provision: ## Run ansible playbook to deploy EVPN Fabric.
+avd-cvp-provision: ## Run ansible playbook to deploy EVPN SCOPE.
 	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags provision --limit CVP -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-cvp-deploy
-avd-cvp-deploy: ## Run ansible playbook to deploy EVPN Fabric.
-	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "execute_tasks=true" --tags "build,provision,apply" --limit $(FABRIC),CVP -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+avd-cvp-deploy: ## Run ansible playbook to deploy EVPN SCOPE.
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "execute_tasks=true" --tags "build,provision,apply" --limit $(SCOPE),CVP -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 
 ################################################################################
@@ -77,20 +77,20 @@ avd-cvp-deploy: ## Run ansible playbook to deploy EVPN Fabric.
 ################################################################################
 
 .PHONY: avd-eapi-build
-avd-eapi-build: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV (No Documentation)
-	ansible-playbook playbooks/avd-eapi-generic.yml --tags build --skip-tags documentation --limit $(FABRIC) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+avd-eapi-build: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
+	ansible-playbook playbooks/avd-eapi-generic.yml --tags build --skip-tags documentation --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-eapi-build-all
-avd-eapi-build-all: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
-	ansible-playbook playbooks/avd-eapi-generic.yml --tags build --limit $(FABRIC) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+avd-eapi-build-all: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV
+	ansible-playbook playbooks/avd-eapi-generic.yml --tags build --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-eapi-apply
 avd-eapi-apply: ## Run ansible playbook to Apply previously generated configuration
-	ansible-playbook playbooks/avd-eapi-generic.yml --tags "deploy" --limit $(FABRIC) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/avd-eapi-generic.yml --tags "deploy" --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-eapi-deploy
-avd-eapi-deploy: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology and NO CV
-	ansible-playbook playbooks/avd-eapi-generic.yml --tags "build, deploy" --skip-tags documentation --limit $(FABRIC) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+avd-eapi-deploy: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV
+	ansible-playbook playbooks/avd-eapi-generic.yml --tags "build, deploy" --skip-tags documentation --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 
 ################################################################################
@@ -98,7 +98,7 @@ avd-eapi-deploy: ## Run ansible playbook to build EVPN Fabric configuration for 
 ################################################################################
 
 .PHONY: cli-config-gen
-cli-config-gen: ## Run ansible playbook to build EVPN Fabric configuration for generic EOS AVD topology
+cli-config-gen: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology
 	ansible-playbook playbooks/avd-eos-cli-config-gen.yml -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 
@@ -108,12 +108,12 @@ cli-config-gen: ## Run ansible playbook to build EVPN Fabric configuration for g
 
 .PHONY: eos-backup
 eos-backup: ## Backup current running configuration
-	ansible-playbook playbooks/eos-configuration-backup.yml --limit $(FABRIC) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/eos-configuration-backup.yml --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: eos-snapshot
 eos-snapshot: ## Extract commands outputs
-	ansible-playbook playbooks/eos-snapshot.yml --limit $(FABRIC) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/eos-snapshot.yml --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: eapi-states-validation
 eapi-states-validation: ## eapi-states-validation description
-	ansible-playbook playbooks/avd-eapi-states-validation.yml --limit $(FABRIC) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/avd-eapi-states-validation.yml --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)

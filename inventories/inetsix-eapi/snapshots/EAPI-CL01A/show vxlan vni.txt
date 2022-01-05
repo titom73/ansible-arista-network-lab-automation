@@ -9,5 +9,5 @@ VNI         VLAN       Source       Interface       802.1Q Tag
 VNI to dynamic VLAN Mapping for Vxlan1
 VNI       VLAN       VRF                      Source        
 --------- ---------- ------------------------ ------------  
-11        1196       TENANT_A_PROJECT01       evpn          
-13        1197       CENTRAL_ROUTING          evpn
+11        1197       TENANT_A_PROJECT01       evpn          
+13        1196       CENTRAL_ROUTING          evpn

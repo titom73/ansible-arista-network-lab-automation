@@ -30,20 +30,20 @@
 BGP summary information for VRF default
 Router identifier 192.168.1.2, local AS number 65001
 Neighbor Status Codes: m - Under maintenance
-  Description              Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+  Description              Neighbor         V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
 ```
 ## show bgp evpn
 
 ```
 BGP routing table information for VRF default
 Router identifier 192.168.1.2, local AS number 65001
-Route status codes: s - suppressed, * - valid, > - active, # - not installed, E - ECMP head, e - ECMP
+Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
                     S - Stale, c - Contributing to ECMP, b - backup
                     % - Pending BGP convergence
 Origin codes: i - IGP, e - EGP, ? - incomplete
 AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
 
-         Network                Next Hop              Metric  LocPref Weight  Path
+          Network                Next Hop              Metric  LocPref Weight  Path
 ```
 ## show interfaces description
 
@@ -72,41 +72,41 @@ Ma1                            up             up                 oob_management
 BGP summary information for VRF default
 Router identifier 192.168.1.2, local AS number 65001
 Neighbor Status Codes: m - Under maintenance
-  Description              Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
-  EAPI-RS02_Ethernet1      172.31.250.3     4  65000           1284      1291    0    0 18:09:41 Estab   1      1
-  EAPI-L2LEAF01_Ethernet2  172.31.251.3     4  65107           4340      4376    0    0    2d12h Estab   2      2
-  EAPI-L2LEAF02_Ethernet2  172.31.251.7     4  65108           4330      4343    0    0    1d23h Estab   2      2
-  EAPI-LEAF1A_Ethernet2    172.31.255.3     4  65101           4461      4469    0    0    2d13h Estab   3      3
-  EAPI-LEAF1B_Ethernet2    172.31.255.7     4  65101           4457      4485    0    0    2d13h Estab   3      3
-  EAPI-LEAF2A_Ethernet2    172.31.255.11    4  65102           4450      4486    0    0    2d13h Estab   3      3
-  EAPI-LEAF2B_Ethernet2    172.31.255.15    4  65102           4448      4470    0    0    2d13h Estab   3      3
-  EAPI-LEAF3A_Ethernet2    172.31.255.19    4  65103           4452      4493    0    0    2d13h Estab   2      2
-  EAPI-LEAF4A_Ethernet2    172.31.255.23    4  65104           4452      4483    0    0    2d13h Estab   2      2
-  EAPI-BL01A_Ethernet2     172.31.255.27    4  65105           4478      4489    0    0    2d13h Estab   3      3
-  EAPI-BL01B_Ethernet2     172.31.255.31    4  65105           4494      4486    0    0    2d13h Estab   3      3
-  EAPI-CL01A_Ethernet2     172.31.255.35    4  65106           4360      4369    0    0    2d12h Estab   3      3
-  EAPI-CL01B_Ethernet2     172.31.255.39    4  65106           4346      4378    0    0    2d12h Estab   3      3
+  Description              Neighbor         V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+  EAPI-RS02_Ethernet1      172.31.250.3     4 65000             29        39    0    0 00:21:38 Estab   1      1
+  EAPI-L2LEAF01_Ethernet2  172.31.251.3     4 65107             22        31    0    0 00:11:20 Estab   2      2
+  EAPI-L2LEAF02_Ethernet2  172.31.251.7     4 65108             27        30    0    0 00:11:27 Estab   2      2
+  EAPI-LEAF1A_Ethernet2    172.31.255.3     4 65101             30        32    0    0 00:13:42 Estab   3      3
+  EAPI-LEAF1B_Ethernet2    172.31.255.7     4 65101             30        32    0    0 00:13:44 Estab   3      3
+  EAPI-LEAF2A_Ethernet2    172.31.255.11    4 65102             28        31    0    0 00:13:49 Estab   3      3
+  EAPI-LEAF2B_Ethernet2    172.31.255.15    4 65102             27        32    0    0 00:13:41 Estab   3      3
+  EAPI-LEAF3A_Ethernet2    172.31.255.19    4 65103             32        36    0    0 00:16:56 Estab   2      2
+  EAPI-LEAF4A_Ethernet2    172.31.255.23    4 65104             32        36    0    0 00:17:22 Estab   2      2
+  EAPI-BL01A_Ethernet2     172.31.255.27    4 65105             35        35    0    0 00:13:54 Estab   3      3
+  EAPI-BL01B_Ethernet2     172.31.255.31    4 65105             27        33    0    0 00:14:07 Estab   3      3
+  EAPI-CL01A_Ethernet2     172.31.255.35    4 65106             24        25    0    0 00:06:52 Estab   3      3
+  EAPI-CL01B_Ethernet2     172.31.255.39    4 65106             23        25    0    0 00:06:52 Estab   3      3
 ```
 ## show ip interface brief
 
 ```
-Address 
-Interface       IP Address           Status     Protocol         MTU    Owner   
---------------- -------------------- ---------- ------------ ---------- ------- 
-Ethernet1       172.31.255.2/31      up         up              1500            
-Ethernet2       172.31.255.6/31      up         up              1500            
-Ethernet3       172.31.255.10/31     up         up              1500            
-Ethernet4       172.31.255.14/31     up         up              1500            
-Ethernet5       172.31.255.26/31     up         up              1500            
-Ethernet6       172.31.255.30/31     up         up              1500            
-Ethernet7       172.31.255.18/31     up         up              1500            
-Ethernet8       172.31.255.22/31     up         up              1500            
-Ethernet9       172.31.255.34/31     up         up              1500            
-Ethernet10      172.31.255.38/31     up         up              1500            
-Ethernet11      172.31.251.2/31      up         up              1500            
-Ethernet12      172.31.251.6/31      up         up              1500            
-Ethernet13      172.31.250.2/31      up         up              1500            
-Loopback0       192.168.1.2/32       up         up             65535            
+Address
+Interface       IP Address           Status     Protocol         MTU    Owner  
+--------------- -------------------- ---------- ------------ ---------- -------
+Ethernet1       172.31.255.2/31      up         up              1500           
+Ethernet2       172.31.255.6/31      up         up              1500           
+Ethernet3       172.31.255.10/31     up         up              1500           
+Ethernet4       172.31.255.14/31     up         up              1500           
+Ethernet5       172.31.255.26/31     up         up              1500           
+Ethernet6       172.31.255.30/31     up         up              1500           
+Ethernet7       172.31.255.18/31     up         up              1500           
+Ethernet8       172.31.255.22/31     up         up              1500           
+Ethernet9       172.31.255.34/31     up         up              1500           
+Ethernet10      172.31.255.38/31     up         up              1500           
+Ethernet11      172.31.251.2/31      up         up              1500           
+Ethernet12      172.31.251.6/31      up         up              1500           
+Ethernet13      172.31.250.2/31      up         up              1500           
+Loopback0       192.168.1.2/32       up         up             65535           
 Management1     10.73.254.2/24       up         up              1500
 ```
 ## show ip route vrf all
@@ -121,7 +121,8 @@ Codes: C - connected, S - static, K - kernel,
        O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
        NG - Nexthop Group Static Route, V - VXLAN Control Service,
        DH - DHCP client installed default route, M - Martian,
-       DP - Dynamic Policy Route, L - VRF Leaked
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
 
 Gateway of last resort is not set
 
@@ -175,7 +176,8 @@ Codes: C - connected, S - static, K - kernel,
        O3 - OSPFv3, A B - BGP Aggregate, A O - OSPF Summary,
        NG - Nexthop Group Static Route, V - VXLAN Control Service,
        DH - DHCP client installed default route, M - Martian,
-       DP - Dynamic Policy Route, L - VRF Leaked
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
 
 Gateway of last resort:
  S        0.0.0.0/0 [1/0] via 10.73.254.253, Management1
@@ -187,42 +189,27 @@ Gateway of last resort:
 ## show lldp neighbors
 
 ```
-Last table change time   : 18:09:26 ago
-Number of table inserts  : 60
-Number of table deletes  : 31
+Last table change time   : 0:06:34 ago
+Number of table inserts  : 15
+Number of table deletes  : 2
 Number of table drops    : 0
-Number of table age-outs : 26
+Number of table age-outs : 2
 
-Port       Neighbor Device ID               Neighbor Port ID           TTL
-Et1        EAPI-LEAF1A                      Ethernet2                  120
-Et2        EAPI-LEAF1B                      Ethernet2                  120
-Et3        EAPI-LEAF2A                      Ethernet2                  120
-Et4        EAPI-LEAF2B                      Ethernet2                  120
-Et5        EAPI-BL01A                       Ethernet2                  120
-Et6        EAPI-BL01B                       Ethernet2                  120
-Et7        EAPI-LEAF3A                      Ethernet2                  120
-Et8        EAPI-LEAF4A                      Ethernet2                  120
-Et9        EAPI-CL01A                       Ethernet2                  120
-Et10       EAPI-CL01B                       Ethernet2                  120
-Et11       EAPI-L2LEAF01                    Ethernet2                  120
-Et12       EAPI-L2LEAF02                    Ethernet2                  120
-Et13       EAPI-RS02                        Ethernet1                  120
-Ma1        EAPI-AGG02                       Management1                120
-Ma1        EAPI-LEAF1B                      Management1                120
-Ma1        EAPI-AGG01                       Management1                120
-Ma1        EAPI-BL01B                       Management1                120
-Ma1        EAPI-LEAF4A                      Management1                120
-Ma1        EAPI-LEAF1A                      Management1                120
-Ma1        EAPI-LEAF2A                      Management1                120
-Ma1        EAPI-LEAF2B                      Management1                120
-Ma1        EAPI-LEAF3A                      Management1                120
-Ma1        EAPI-BL01A                       Management1                120
-Ma1        EAPI-SPINE1                      Management1                120
-Ma1        EAPI-CL01A                       Management1                120
-Ma1        EAPI-L2LEAF02                    Management1                120
-Ma1        EAPI-L2LEAF01                    Management1                120
-Ma1        EAPI-CL01B                       Management1                120
-Ma1        SRV-POD05-24                     Management1                120
+Port          Neighbor Device ID       Neighbor Port ID    TTL
+---------- ------------------------ ---------------------- ---
+Et1           EAPI-LEAF1A              Ethernet2           120
+Et2           EAPI-LEAF1B              Ethernet2           120
+Et3           EAPI-LEAF2A              Ethernet2           120
+Et4           EAPI-LEAF2B              Ethernet2           120
+Et5           EAPI-BL01A               Ethernet2           120
+Et6           EAPI-BL01B               Ethernet2           120
+Et7           EAPI-LEAF3A              Ethernet2           120
+Et8           EAPI-LEAF4A              Ethernet2           120
+Et9           EAPI-CL01A               Ethernet2           120
+Et10          EAPI-CL01B               Ethernet2           120
+Et11          EAPI-L2LEAF01            Ethernet2           120
+Et12          EAPI-L2LEAF02            Ethernet2           120
+Et13          EAPI-RS02                Ethernet1           120
 ```
 ## show mac address-table
 
@@ -232,9 +219,7 @@ Mac Address Table
 
 Vlan    Mac Address       Type        Ports      Moves   Last Move
 ----    -----------       ----        -----      -----   ---------
-   1    5001.0050.554b    DYNAMIC     Et11       1       2 days, 13:35:14 ago
-   1    5001.0069.bdbc    DYNAMIC     Et10       1       2 days, 13:45:20 ago
-Total Mac Addresses for this criterion: 2
+Total Mac Addresses for this criterion: 0
 
           Multicast Mac Address Table
 ------------------------------------------------------------------
@@ -251,27 +236,28 @@ Command not applicable for inactive MLAG state.
 ## show mlag detail
 
 ```
-MLAG Configuration:   
-domain-id              :                    
-local-interface        :                    
-peer-address           :             0.0.0.0
-peer-link              :                    
-peer-config            :                    
-                                            
-MLAG Status:          
-state                  :            Disabled
-negotiation status     :                    
-peer-link status       :                    
-local-int status       :                    
-system-id              :   00:00:00:00:00:00
-dual-primary detection :            Disabled
-                                            
-MLAG Ports:           
-Disabled               :                   0
-Configured             :                   0
-Inactive               :                   0
-Active-partial         :                   0
-Active-full            :                   0
+MLAG Configuration:              
+domain-id                          :                   
+local-interface                    :                   
+peer-address                       :             0.0.0.0
+peer-link                          :                   
+peer-config                        :                   
+                                                       
+MLAG Status:                     
+state                              :            Disabled
+negotiation status                 :                   
+peer-link status                   :                   
+local-int status                   :                   
+system-id                          :   00:00:00:00:00:00
+dual-primary detection             :            Disabled
+dual-primary interface errdisabled :               False
+                                                       
+MLAG Ports:                      
+Disabled                           :                   0
+Configured                         :                   0
+Inactive                           :                   0
+Active-partial                     :                   0
+Active-full                        :                   0
 
 MLAG Detailed Status:
 State                           :            disabled
@@ -313,19 +299,21 @@ Fan Status  Speed  Speed Uptime Stability Uptime
 ## show version
 
 ```
-vEOS
-Hardware version:    
-Serial number:       
-System MAC address:  0c1d.c05f.613b
+Arista vEOS-lab
+Hardware version: 
+Serial number: 63BF7259FE75EBAE191298FDCEEEEC0C
+Hardware MAC address: 0c1d.c05f.613b
+System MAC address: 0c1d.c05f.613b
 
-Software image version: 4.22.5M
-Architecture:           i686
-Internal build version: 4.22.5M-16511818.4225M
-Internal build ID:      ca78196c-426c-40e9-9d55-80540fb5ac07
+Software image version: 4.27.0F
+Architecture: i686
+Internal build version: 4.27.0F-24305004.4270F
+Internal build ID: fed9e33b-669e-42ea-bee6-c7bf3cca1a73
+Image format version: 1.0
 
-Uptime:                 0 weeks, 2 days, 14 hours and 40 minutes
-Total memory:           2014520 kB
-Free memory:            1133584 kB
+Uptime: 23 minutes
+Total memory: 2006636 kB
+Free memory: 1078584 kB
 ```
 ## show vlan
 
@@ -340,8 +328,8 @@ VLAN  Name                             Status    Ports
 Vxlan Mac Address Table
 ----------------------------------------------------------------------
 
-VLAN  Mac Address     Type     Prt  VTEP             Moves   Last Move
-----  -----------     ----     ---  ----             -----   ---------
+VLAN  Mac Address     Type      Prt  VTEP             Moves   Last Move
+----  -----------     ----      ---  ----             -----   ---------
 Total Remote Mac Addresses for this criterion: 0
 ```
 ## show vxlan vni

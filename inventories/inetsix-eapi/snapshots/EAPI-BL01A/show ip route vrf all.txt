@@ -8,7 +8,7 @@ Codes: C - connected, S - static, K - kernel,
        NG - Nexthop Group Static Route, V - VXLAN Control Service,
        DH - DHCP client installed default route, M - Martian,
        DP - Dynamic Policy Route, L - VRF Leaked,
-       RC - Route Cache Route
+       G  - gRIBI, RC - Route Cache Route
 
 Gateway of last resort is not set
 
@@ -69,7 +69,7 @@ Codes: C - connected, S - static, K - kernel,
        NG - Nexthop Group Static Route, V - VXLAN Control Service,
        DH - DHCP client installed default route, M - Martian,
        DP - Dynamic Policy Route, L - VRF Leaked,
-       RC - Route Cache Route
+       G  - gRIBI, RC - Route Cache Route
 
 Gateway of last resort:
  S        0.0.0.0/0 [1/0] via 10.73.254.253, Management1
@@ -79,8 +79,6 @@ Gateway of last resort:
 ! IP routing not enabled
 
 VRF: TENANT_A_PROJECT01
-WARNING: Some of the routes are not programmed in     
-kernel, and they are marked with '%'.                 
 Codes: C - connected, S - static, K - kernel, 
        O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
        E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
@@ -90,22 +88,18 @@ Codes: C - connected, S - static, K - kernel,
        NG - Nexthop Group Static Route, V - VXLAN Control Service,
        DH - DHCP client installed default route, M - Martian,
        DP - Dynamic Policy Route, L - VRF Leaked,
-       RC - Route Cache Route
+       G  - gRIBI, RC - Route Cache Route
 
 Gateway of last resort is not set
 
- S%       1.1.1.0/24 [1/0] via 10.1.10.1 VTEP 192.168.254.3 VNI 11 router-mac 0e:1d:c0:f0:bd:d1
- B E      10.1.10.1/32 [20/0] via VTEP 192.168.254.3 VNI 11 router-mac 0e:1d:c0:f0:bd:d1
- B E      10.1.10.2/32 [20/0] via VTEP 192.168.254.5 VNI 11 router-mac 0e:1d:c0:a3:43:e0
  C        10.1.10.0/24 is directly connected, Vlan110
- B E      10.1.11.0/24 [20/0] via VTEP 192.168.254.3 VNI 11 router-mac 0e:1d:c0:f0:bd:d1
-                              via VTEP 192.168.254.5 VNI 11 router-mac 0e:1d:c0:a3:43:e0
- B E      10.1.12.2/32 [20/0] via VTEP 192.168.254.5 VNI 11 router-mac 0e:1d:c0:a3:43:e0
- B E      10.1.12.0/24 [20/0] via VTEP 192.168.254.3 VNI 11 router-mac 0e:1d:c0:f0:bd:d1
-                              via VTEP 192.168.254.5 VNI 11 router-mac 0e:1d:c0:a3:43:e0
- B E      10.1.13.0/24 [20/0] via VTEP 192.168.254.8 VNI 11 router-mac 0c:1d:c0:d2:9e:98
-                              via VTEP 192.168.254.7 VNI 11 router-mac 0c:1d:c0:e4:77:7b
- B E      172.31.253.2/31 [20/0] via VTEP 192.168.254.3 VNI 11 router-mac 0e:1d:c0:f0:bd:d1
- B E      172.31.253.6/31 [20/0] via VTEP 192.168.254.5 VNI 11 router-mac 0e:1d:c0:a3:43:e0
+ B E      10.1.11.0/24 [20/0] via VTEP 192.168.254.5 VNI 11 router-mac 0e:1d:c0:a3:43:e0 local-interface Vxlan1
+                              via VTEP 192.168.254.3 VNI 11 router-mac 0e:1d:c0:f0:bd:d1 local-interface Vxlan1
+ B E      10.1.12.0/24 [20/0] via VTEP 192.168.254.5 VNI 11 router-mac 0e:1d:c0:a3:43:e0 local-interface Vxlan1
+                              via VTEP 192.168.254.3 VNI 11 router-mac 0e:1d:c0:f0:bd:d1 local-interface Vxlan1
+ B E      10.1.13.0/24 [20/0] via VTEP 192.168.254.8 VNI 11 router-mac 0c:1d:c0:d2:9e:98 local-interface Vxlan1
+                              via VTEP 192.168.254.7 VNI 11 router-mac 0c:1d:c0:e4:77:7b local-interface Vxlan1
+ B E      172.31.253.2/31 [20/0] via VTEP 192.168.254.3 VNI 11 router-mac 0e:1d:c0:f0:bd:d1 local-interface Vxlan1
+ B E      172.31.253.6/31 [20/0] via VTEP 192.168.254.5 VNI 11 router-mac 0e:1d:c0:a3:43:e0 local-interface Vxlan1
  C        172.31.253.14/31 is directly connected, Vlan3010
- B E      172.31.253.18/31 [20/0] via VTEP 192.168.254.11 VNI 11 router-mac 52:01:00:68:b4:46
+ B E      172.31.253.18/31 [20/0] via VTEP 192.168.254.11 VNI 11 router-mac 52:01:00:68:b4:46 local-interface Vxlan1

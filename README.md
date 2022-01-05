@@ -65,7 +65,7 @@ INVENTORY ?= inventories/inetsix-eapi
 # Default Inventory file to look for
 INVENTORY_FILE = inventory.yml
 # Name of the Fabric to build. Used in --limit scope
-FABRIC ?= EAPI_FABRIC
+SCOPE ?= EAPI_FABRIC
 # For optional ansible options
 ANSIBLE_ARGS ?= --diff
 ```
