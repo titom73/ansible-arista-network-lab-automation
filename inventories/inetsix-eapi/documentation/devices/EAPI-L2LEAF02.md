@@ -1,6 +1,5 @@
 # EAPI-L2LEAF02
 # Table of Contents
-<!-- toc -->
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
@@ -47,7 +46,6 @@
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
 - [Quality Of Service](#quality-of-service)
 
-<!-- toc -->
 # Management
 
 ## Management Interfaces
@@ -418,17 +416,17 @@ interface Loopback1
 
 #### UDP port: 4789
 
-#### VLAN to VNI and Flood List Mappings
+#### VLAN to VNI, Flood List and Multicast Group Mappings
 
-| VLAN | VNI | Flood List |
-| ---- | --- | ---------- |
-| 302 | 30302 | - |
+| VLAN | VNI | Flood List | Multicast Group |
+| ---- | --- | ---------- | --------------- |
+| 302 | 30302 | - | - |
 
-#### VRF to VNI Mappings
+#### VRF to VNI and Multicast Group Mappings
 
-| VLAN | VNI |
-| ---- | --- |
-| CENTRAL_ROUTING | 13 |
+| VRF | VNI | Multicast Group |
+| ---- | --- | --------------- |
+| CENTRAL_ROUTING | 13 | - |
 
 ### VXLAN Interface Device Configuration
 

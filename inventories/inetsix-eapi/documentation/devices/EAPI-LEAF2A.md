@@ -1,6 +1,5 @@
 # EAPI-LEAF2A
 # Table of Contents
-<!-- toc -->
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
@@ -53,7 +52,6 @@
   - [VRF Instances Device Configuration](#vrf-instances-device-configuration)
 - [Quality Of Service](#quality-of-service)
 
-<!-- toc -->
 # Management
 
 ## Management Interfaces
@@ -616,21 +614,21 @@ interface Vlan4094
 
 #### EVPN MLAG Shared Router MAC : mlag-system-id
 
-#### VLAN to VNI and Flood List Mappings
+#### VLAN to VNI, Flood List and Multicast Group Mappings
 
-| VLAN | VNI | Flood List |
-| ---- | --- | ---------- |
-| 110 | 10110 | - |
-| 111 | 10111 | - |
-| 112 | 10112 | - |
-| 201 | 20201 | - |
+| VLAN | VNI | Flood List | Multicast Group |
+| ---- | --- | ---------- | --------------- |
+| 110 | 10110 | - | - |
+| 111 | 10111 | - | - |
+| 112 | 10112 | - | - |
+| 201 | 20201 | - | - |
 
-#### VRF to VNI Mappings
+#### VRF to VNI and Multicast Group Mappings
 
-| VLAN | VNI |
-| ---- | --- |
-| PURE_TYPE5 | 13 |
-| TENANT_A_PROJECT01 | 11 |
+| VRF | VNI | Multicast Group |
+| ---- | --- | --------------- |
+| PURE_TYPE5 | 13 | - |
+| TENANT_A_PROJECT01 | 11 | - |
 
 ### VXLAN Interface Device Configuration
 
