@@ -2,7 +2,9 @@ collections:
   - name: https://github.com/aristanetworks/ansible-avd.git#/ansible_collections/arista/avd/
     type: git
     version: devel
-  - arista.cvp
+  - name: https://github.com/aristanetworks/ansible-cvp.git#/ansible_collections/arista/cvp/
+    type: git
+    version: devel
   - arista.eos
   - ansible.netcommon
   - community.general

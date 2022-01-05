@@ -1,6 +1,6 @@
 ---
 - name: Build Switch configuration
-  hosts: DC1_FABRIC
+  hosts: [all]
   connection: local
   gather_facts: false
   collections:

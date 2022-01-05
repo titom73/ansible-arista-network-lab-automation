@@ -1,6 +1,6 @@
 ---
 - name: Build Switch configuration
-  hosts: [EAPI_FABRIC]
+  hosts: [all]
   collections:
     - arista.avd
     - arista.cvp
