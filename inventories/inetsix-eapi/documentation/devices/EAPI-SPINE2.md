@@ -164,15 +164,14 @@ management ssh
 ### Management API HTTP Summary
 
 | HTTP | HTTPS |
-| ---------- | ---------- |
-| default | true |
+| ---- | ----- |
+| False | True |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
 | MGMT | - | - |
-
 
 ### Management API HTTP Configuration
 
@@ -529,27 +528,21 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 ### BGP Neighbors
 
-| Neighbor | Remote AS | VRF | Send-community | Maximum-routes |
-| -------- | --------- | --- | -------------- | -------------- |
-| 172.31.250.3 | 65000 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.251.3 | 65107 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.251.7 | 65108 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.3 | 65101 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.7 | 65101 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.11 | 65102 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.15 | 65102 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.19 | 65103 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.23 | 65104 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.27 | 65105 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.31 | 65105 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.35 | 65106 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.39 | 65106 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-
-### Router BGP EVPN Address Family
-
-#### Router BGP EVPN MAC-VRFs
-
-#### Router BGP EVPN VRFs
+| Neighbor | Remote AS | VRF | Send-community | Maximum-routes | Allowas-in |
+| -------- | --------- | --- | -------------- | -------------- | ---------- |
+| 172.31.250.3 | 65000 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.251.3 | 65107 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.251.7 | 65108 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.255.3 | 65101 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.255.7 | 65101 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.255.11 | 65102 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.255.15 | 65102 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.255.19 | 65103 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.255.23 | 65104 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.255.27 | 65105 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.255.31 | 65105 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.255.35 | 65106 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.255.39 | 65106 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
 
 ### Router BGP Device Configuration
 

@@ -174,15 +174,14 @@ management ssh
 ### Management API HTTP Summary
 
 | HTTP | HTTPS |
-| ---------- | ---------- |
-| default | true |
+| ---- | ----- |
+| False | True |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
 | MGMT | - | - |
-
 
 ### Management API HTTP Configuration
 
@@ -618,25 +617,29 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 ### BGP Neighbors
 
-| Neighbor | Remote AS | VRF | Send-community | Maximum-routes |
-| -------- | --------- | --- | -------------- | -------------- |
-| 172.31.255.16 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.18 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 192.168.0.2 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.168.0.3 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS |
+| Neighbor | Remote AS | VRF | Send-community | Maximum-routes | Allowas-in |
+| -------- | --------- | --- | -------------- | -------------- | ---------- |
+| 172.31.255.16 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.255.18 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 192.168.0.2 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.0.3 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - |
 
 ### Router BGP EVPN Address Family
 
-#### Router BGP EVPN MAC-VRFs
+#### EVPN Peer Groups
 
-##### VLAN aware bundles
+| Peer Group | Activate |
+| ---------- | -------- |
+| EVPN-OVERLAY-PEERS | True |
+
+### Router BGP VLAN Aware Bundles
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
 | B-ELAN-201 | 192.168.255.7:20201 | 20201:20201 | - | - | learned | 201 |
 | TENANT_A_PROJECT01 | 192.168.255.7:11 | 11:11 | - | - | learned | 110,113 |
 
-#### Router BGP EVPN VRFs
+### Router BGP VRFs
 
 | VRF | Route-Distinguisher | Redistribute |
 | --- | ------------------- | ------------ |

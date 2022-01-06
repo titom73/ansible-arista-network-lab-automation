@@ -177,15 +177,14 @@ management ssh
 ### Management API HTTP Summary
 
 | HTTP | HTTPS |
-| ---------- | ---------- |
-| default | true |
+| ---- | ----- |
+| False | True |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
 | MGMT | - | - |
-
 
 ### Management API HTTP Configuration
 
@@ -737,21 +736,25 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 ### BGP Neighbors
 
-| Neighbor | Remote AS | VRF | Send-community | Maximum-routes |
-| -------- | --------- | --- | -------------- | -------------- |
-| 172.31.253.19 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
-| 172.31.255.32 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.255.34 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 192.168.0.2 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.168.0.3 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 172.31.253.19 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | CENTRAL_ROUTING | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
-| 172.31.253.19 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER |
+| Neighbor | Remote AS | VRF | Send-community | Maximum-routes | Allowas-in |
+| -------- | --------- | --- | -------------- | -------------- | ---------- |
+| 172.31.253.19 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - |
+| 172.31.255.32 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.255.34 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 192.168.0.2 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.0.3 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 172.31.253.19 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | CENTRAL_ROUTING | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - |
+| 172.31.253.19 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | TENANT_A_PROJECT01 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - |
 
 ### Router BGP EVPN Address Family
 
-#### Router BGP EVPN MAC-VRFs
+#### EVPN Peer Groups
 
-##### VLAN aware bundles
+| Peer Group | Activate |
+| ---------- | -------- |
+| EVPN-OVERLAY-PEERS | True |
+
+### Router BGP VLAN Aware Bundles
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
@@ -759,7 +762,7 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 | CENTRAL_ROUTING | 192.168.255.11:13 | 13:13 | - | - | learned | 301-302 |
 | TENANT_A_PROJECT01 | 192.168.255.11:11 | 11:11 | - | - | learned | 110 |
 
-#### Router BGP EVPN VRFs
+### Router BGP VRFs
 
 | VRF | Route-Distinguisher | Redistribute |
 | --- | ------------------- | ------------ |

@@ -51,19 +51,6 @@ router_bgp:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
-  vrfs:
-    CENTRAL_ROUTING:
-      router_id: 192.168.253.2
-      rd: 192.168.253.2:13
-      route_targets:
-        import:
-          evpn:
-          - '13:13'
-        export:
-          evpn:
-          - '13:13'
-      redistribute_routes:
-      - connected
   vlan_aware_bundles:
     CENTRAL_ROUTING:
       rd: 192.168.253.2:13
@@ -214,9 +201,6 @@ vxlan_interface:
           vni: 30301
         302:
           vni: 30302
-      vrfs:
-        CENTRAL_ROUTING:
-          vni: 13
 management_ssh:
   idle_timeout: 0
   enable: true

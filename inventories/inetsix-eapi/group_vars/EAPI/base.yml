@@ -28,7 +28,16 @@ local_users:
 cvp_instance_ips:
   - 10.73.254.254
 cvp_ingestauth_key: 'telarista'
-# cvp_ingestauth_key: telarista
+
+### Example to use token Auth with eos_designs
+# cvp_instance_ip: 10.83.31.63
+# cvp_ingestauth_key: blah
+
+# # Cloud Vision server information
+# custom_structured_configuration_daemon_terminattr:
+#   cvauth:
+#     method: "token"
+#     token_file: "/tmp/token"
 
 # OOB Management network default gateway.
 mgmt_gateway: 10.73.254.253
@@ -63,7 +72,7 @@ snmp_server:
 
 validate_state_markdown_flavor: github
 
-custom_structured_configuration_prefix: [ inetsix_ ]
+custom_structured_configuration_prefix: [ inetsix_, custom_structured_configuration_ ]
 
 inetsix_management_ssh:
   idle_timeout: 0

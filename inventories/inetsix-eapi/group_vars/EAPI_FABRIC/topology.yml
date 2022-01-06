@@ -171,20 +171,20 @@ l2leaf:
           id: 1
           bgp_as: 65107
           mgmt_ip: 10.73.254.31/24
+          mac_address: '50:01:00:14:00:00'
           uplink_switch_interfaces: [Ethernet11, Ethernet11]
           filter:
             tenants: [ 'Tenant_A', 'Tenant_B', 'CENTRAL_ROUTING_LAB' ]
             tags: [ 'POD05_NODE01' ]
-          mac_address: '50:01:00:14:00:00'
         EAPI-L2LEAF02:
           id: 2
           bgp_as: 65108
           mgmt_ip: 10.73.254.32/24
+          mac_address: '50:01:00:15:00:00'
           uplink_switch_interfaces: [Ethernet12, Ethernet12]
           filter:
             tenants: [ 'Tenant_A', 'Tenant_B', 'CENTRAL_ROUTING_LAB' ]
             tags: [ 'POD05_NODE02' ]
-          mac_address: '50:01:00:15:00:00'
 
 edge:
   defaults:

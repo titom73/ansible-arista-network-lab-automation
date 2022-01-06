@@ -171,15 +171,14 @@ management ssh
 ### Management API HTTP Summary
 
 | HTTP | HTTPS |
-| ---------- | ---------- |
-| default | true |
+| ---- | ----- |
+| False | True |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
 | MGMT | - | - |
-
 
 ### Management API HTTP Configuration
 
@@ -428,12 +427,6 @@ interface Loopback1
 | 301 | 30301 | - | - |
 | 302 | 30302 | - | - |
 
-#### VRF to VNI and Multicast Group Mappings
-
-| VRF | VNI | Multicast Group |
-| ---- | --- | --------------- |
-| CENTRAL_ROUTING | 13 | - |
-
 ### VXLAN Interface Device Configuration
 
 ```eos
@@ -444,7 +437,6 @@ interface Vxlan1
    vxlan udp-port 4789
    vxlan vlan 301 vni 30301
    vxlan vlan 302 vni 30302
-   vxlan vrf CENTRAL_ROUTING vni 13
 ```
 
 # Routing
@@ -535,28 +527,26 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 ### BGP Neighbors
 
-| Neighbor | Remote AS | VRF | Send-community | Maximum-routes |
-| -------- | --------- | --- | -------------- | -------------- |
-| 172.31.251.0 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 172.31.251.2 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS |
-| 192.168.0.2 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.168.0.3 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS |
+| Neighbor | Remote AS | VRF | Send-community | Maximum-routes | Allowas-in |
+| -------- | --------- | --- | -------------- | -------------- | ---------- |
+| 172.31.251.0 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 172.31.251.2 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - |
+| 192.168.0.2 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.0.3 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - |
 
 ### Router BGP EVPN Address Family
 
-#### Router BGP EVPN MAC-VRFs
+#### EVPN Peer Groups
 
-##### VLAN aware bundles
+| Peer Group | Activate |
+| ---------- | -------- |
+| EVPN-OVERLAY-PEERS | True |
+
+### Router BGP VLAN Aware Bundles
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
 | CENTRAL_ROUTING | 192.168.253.2:13 | 13:13 | - | - | learned | 301-302 |
-
-#### Router BGP EVPN VRFs
-
-| VRF | Route-Distinguisher | Redistribute |
-| --- | ------------------- | ------------ |
-| CENTRAL_ROUTING | 192.168.253.2:13 | connected |
 
 ### Router BGP Device Configuration
 
@@ -606,13 +596,6 @@ router bgp 65107
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
-   !
-   vrf CENTRAL_ROUTING
-      rd 192.168.253.2:13
-      route-target import evpn 13:13
-      route-target export evpn 13:13
-      router-id 192.168.253.2
-      redistribute connected
 ```
 
 # BFD

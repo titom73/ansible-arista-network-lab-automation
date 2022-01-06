@@ -119,3 +119,7 @@ eos-snapshot: ## Extract commands outputs
 .PHONY: eapi-states-validation
 eapi-states-validation: ## eapi-states-validation description
 	ansible-playbook playbooks/avd-eapi-states-validation.yml --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
+.PHONY: avd-dhcp-build
+avd-dhcp-build: ## Build DHCP configuration from AVD topology
+	ansible-playbook playbooks/dhcp-generate-dhcpd-conf.yml --limit DHCP_SERVER -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
