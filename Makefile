@@ -10,7 +10,9 @@ INVENTORY_FILE = inventory.yml
 # Name of the SCOPE to build. Used in --limit scope
 SCOPE ?= EAPI_FABRIC
 # For optional ansible options
-ANSIBLE_ARGS ?= --diff
+ANSIBLE_ARGS ?= --skip-tags debug --diff
+# Underlay protocol to configure in Fabric
+UNDERLAY_PROTO ? = EBGP
 
 
 
@@ -61,15 +63,15 @@ ee-runner: ## Execute ansible EE runner in interactive mode
 
 .PHONY: avd-cvp-build
 avd-cvp-build:  ## Run ansible playbook to build EVPN SCOPE configuration with DC1 and CV
-	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags build --limit $(SCOPE) --extra-vars "underlay_routing_protocol=$(UNDERLAY_PROTO)" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-cvp-provision
 avd-cvp-provision: ## Run ansible playbook to deploy EVPN SCOPE.
-	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags provision --limit CVP -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --tags provision --limit CVP --extra-vars "underlay_routing_protocol=$(UNDERLAY_PROTO)"  -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-cvp-deploy
 avd-cvp-deploy: ## Run ansible playbook to deploy EVPN SCOPE.
-	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "execute_tasks=true" --tags "build,provision,apply" --limit $(SCOPE),CVP -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/avd-cvp-deploy-generic.yml --extra-vars "execute_tasks=true" --extra-vars "underlay_routing_protocol=$(UNDERLAY_PROTO)"  --tags "build,provision,apply" --limit $(SCOPE),CVP -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 
 ################################################################################
@@ -78,11 +80,11 @@ avd-cvp-deploy: ## Run ansible playbook to deploy EVPN SCOPE.
 
 .PHONY: avd-eapi-build
 avd-eapi-build: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
-	ansible-playbook playbooks/avd-eapi-generic.yml --tags build --skip-tags documentation --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/avd-eapi-generic.yml --tags build --skip-tags documentation --limit $(SCOPE) --extra-vars "underlay_routing_protocol=$(UNDERLAY_PROTO)"  -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-eapi-build-all
 avd-eapi-build-all: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV
-	ansible-playbook playbooks/avd-eapi-generic.yml --tags build --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/avd-eapi-generic.yml --tags build --limit $(SCOPE) --extra-vars "underlay_routing_protocol=$(UNDERLAY_PROTO)"  -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: avd-eapi-apply
 avd-eapi-apply: ## Run ansible playbook to Apply previously generated configuration
@@ -90,7 +92,7 @@ avd-eapi-apply: ## Run ansible playbook to Apply previously generated configurat
 
 .PHONY: avd-eapi-deploy
 avd-eapi-deploy: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV
-	ansible-playbook playbooks/avd-eapi-generic.yml --tags "build, deploy" --skip-tags documentation --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/avd-eapi-generic.yml --tags "build, deploy" --skip-tags documentation ---extra-vars "underlay_routing_protocol=$(UNDERLAY_PROTO)"  -limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 
 ################################################################################

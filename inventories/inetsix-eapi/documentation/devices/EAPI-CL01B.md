@@ -62,19 +62,19 @@
 
 | Management Interface | description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management0 | oob_management | oob | MGMT | 10.73.254.20/24 | 10.73.254.253 |
+| Management1 | oob_management | oob | MGMT | 10.73.254.20/24 | 10.73.254.253 |
 
 #### IPv6
 
 | Management Interface | description | Type | VRF | IPv6 Address | IPv6 Gateway |
 | -------------------- | ----------- | ---- | --- | ------------ | ------------ |
-| Management0 | oob_management | oob | MGMT | -  | - |
+| Management1 | oob_management | oob | MGMT | -  | - |
 
 ### Management Interfaces Device Configuration
 
 ```eos
 !
-interface Management0
+interface Management1
    description oob_management
    no shutdown
    vrf MGMT
@@ -141,7 +141,7 @@ ntp server vrf MGMT 10.73.254.253
 
 | Idle Timeout | SSH Management |
 | ------------ | -------------- |
-| default |  Enabled  |
+| 0 |  Enabled  |
 
 ### Max number of SSH sessions limit and per-host limit
 
@@ -159,15 +159,16 @@ ntp server vrf MGMT 10.73.254.253
 
 | VRF | Status |
 | --- | ------ |
-| MGMT |  Enabled  |
+| MGT |  Enabled  |
 
 ### Management SSH Configuration
 
 ```eos
 !
 management ssh
+   idle-timeout 0
    no shutdown
-   vrf MGMT
+   vrf MGT
       no shutdown
 ```
 
