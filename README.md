@@ -67,7 +67,9 @@ INVENTORY_FILE = inventory.yml
 # Name of the Fabric to build. Used in --limit scope
 SCOPE ?= EAPI_FABRIC
 # For optional ansible options
-ANSIBLE_ARGS ?= --diff
+ANSIBLE_ARGS ?= --skip-tags debug --diff
+# Underlay protocol to configure in Fabric
+UNDERLAY_PROTO ? = EBGP
 ```
 
 ## Ansible Execution Engine
