@@ -128,4 +128,3 @@ tenants:
             #     ip_address: 10.3.2.253/24
             #   EAPI-CL01B:
             #     ip_address: 10.3.2.252/24
-

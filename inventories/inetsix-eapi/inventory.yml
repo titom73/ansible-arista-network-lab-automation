@@ -5,6 +5,7 @@ CVP:
       ansible_host: 10.73.1.239
       ansible_user: ansible
       ansible_password: ansible
+      type: unset
 
 TOOLS:
   hosts:
@@ -12,21 +13,27 @@ TOOLS:
       ansible_host: 10.73.1.241
       ansible_user: tom
       ansible_password: ansible
+      type: unset
 
 ENDPOINTS:
   hosts:
     SRV-POD01:
       ansible_port: 8023
+      type: endpoint
     SRV-POD02:
       ansible_port: 8024
+      type: endpoint
     SRV-POD03:
       ansible_port: 8025
+      type: endpoint
     # DCI-RTR:
     #   ansible_port: 8026
     SRV-POD05-23:
       ansible_port: 8031
+      type: endpoint
     SRV-POD05-24:
       ansible_port: 8032
+      type: endpoint
 
 EAPI:
   children:

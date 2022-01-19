@@ -274,9 +274,6 @@ snmp-server community inetsix-ro view test rw inetsix-snmp-acl
 
 STP mode: **none**
 
-### Global Spanning-Tree Settings
-
-
 ## Spanning Tree Device Configuration
 
 ```eos

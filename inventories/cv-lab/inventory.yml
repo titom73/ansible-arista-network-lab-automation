@@ -5,9 +5,9 @@ all:
       hosts:
         CloudVision:
           # ansible_host: 'www.cv-staging.corp.arista.io'
-          ansible_host: "{{ lookup('env', 'ARISTA_HOME_CV_SERVER') }}"
-          ansible_user: "{{ lookup('env', 'ARISTA_HOME_CV_USER') }}"
-          ansible_ssh_pass: "{{ lookup('env', 'ARISTA_HOME_CV_TOKEN') }}"
+          ansible_host: "{{ lookup('env', 'ARISTA_AVD_CV_SERVER') }}"
+          ansible_user: "{{ lookup('env', 'ARISTA_AVD_CV_USER') }}"
+          ansible_ssh_pass: "{{ lookup('env', 'ARISTA_AVD_CV_TOKEN') }}"
           ansible_become: true
           ansible_become_method: enable
           ansible_connection: httpapi
