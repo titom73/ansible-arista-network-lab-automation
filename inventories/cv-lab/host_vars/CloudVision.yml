@@ -1,0 +1,17 @@
+---
+ansible_httpapi_host: '{{ ansible_host }}'
+ansible_connection: httpapi
+ansible_httpapi_use_ssl: true
+ansible_httpapi_validate_certs: false
+ansible_network_os: eos
+ansible_httpapi_port: 443
+# Configuration to get Virtual Env information
+ansible_python_interpreter: $(which python3)
+
+
+# For testing cv_image_v3
+ansible_command_timeout: 1200
+ansible_connect_timeout: 600
+image_path: EOS-4.26.1F.swi
+action: add
+bundle_name: 'CV-module-test'

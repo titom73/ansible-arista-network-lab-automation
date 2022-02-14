@@ -1,0 +1,22 @@
+---
+- name: Cloudvision v3 test playbook for image management
+  hosts: all
+  connection: local
+  gather_facts: false
+  # collections:
+  #   - arista.cvp
+  tasks:
+    - name: "Upload image"
+      arista.cvp.cv_image_v3:
+        image: '{{image_path}}'
+        mode: 'image'
+        action: '{{action}}'
+      register: CVP_DEVICES_RESULTS
+
+    - name: "Create bundle on {{inventory_hostname}}"
+      arista.cvp.cv_image_v3:
+        image_list:
+          - '{{image_path}}'
+        mode: 'bundle'
+        action: '{{action}}'
+      register: CVP_DEVICES_RESULTS

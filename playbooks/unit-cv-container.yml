@@ -18,7 +18,7 @@
       spines_TG:
         parentContainerName: tg-cvp-dev
         configlets:
-          - 'tg-configlet-alias-01'
+          - 'AVD_DC1-AGG01'
 
   tasks:
     # - name: "collect CV facts on {{inventory_hostname}}"

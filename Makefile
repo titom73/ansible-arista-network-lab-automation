@@ -14,7 +14,9 @@ ANSIBLE_ARGS ?= --skip-tags debug --diff
 # Underlay protocol to configure in Fabric
 UNDERLAY_PROTO ? = eBGP
 
-
+EE_FILE ?= docker-images/ansible-ee-avd/execution-environment-default.yml
+EE_IMAGE ?= titom73/ansible-ee-avd
+EE_TAG ?= stable-2.12-devel
 
 .PHONY: help
 help: ## Display help message (*: main entry points / []: part of an entry point)
@@ -42,7 +44,7 @@ setup-development: ## Setup development environment
 
 .PHONY: ee-build
 ee-build: ## Build Ansible Execution Builder
-	ansible-builder build --tag $(EE_IMAGE):$(EE_TAG) --container-runtime docker -f $(EE_FILE) --build-arg EE_BASE_IMAGE=quay.io/ansible/ansible-runner:stable-$(EE_TAG)-latest
+	ansible-builder build --tag $(EE_IMAGE):$(EE_TAG) --container-runtime docker -f $(EE_FILE) --build-arg EE_BASE_IMAGE=quay.io/ansible/ansible-runner:$(EE_TAG)
 
 .PHONY: ee-build-latest
 ee-build-latest: ## Build Ansible Execution Builder
