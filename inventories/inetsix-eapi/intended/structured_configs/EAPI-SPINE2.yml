@@ -21,55 +21,55 @@ router_bgp:
     connected:
       route_map: RM-CONN-2-BGP
   neighbors:
-    172.31.255.3:
+    172.31.255.43:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65101'
       description: EAPI-LEAF1A_Ethernet2
-    172.31.255.7:
+    172.31.255.47:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65101'
       description: EAPI-LEAF1B_Ethernet2
-    172.31.255.11:
+    172.31.255.51:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65102'
       description: EAPI-LEAF2A_Ethernet2
-    172.31.255.15:
+    172.31.255.55:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65102'
       description: EAPI-LEAF2B_Ethernet2
-    172.31.255.27:
+    172.31.255.67:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65105'
       description: EAPI-BL01A_Ethernet2
-    172.31.255.31:
+    172.31.255.71:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65105'
       description: EAPI-BL01B_Ethernet2
-    172.31.255.19:
+    172.31.255.59:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65103'
       description: EAPI-LEAF3A_Ethernet2
-    172.31.255.23:
+    172.31.255.63:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65104'
       description: EAPI-LEAF4A_Ethernet2
-    172.31.255.35:
+    172.31.255.75:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65106'
       description: EAPI-CL01A_Ethernet2
-    172.31.255.39:
+    172.31.255.79:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65106'
       description: EAPI-CL01B_Ethernet2
-    172.31.251.3:
+    172.31.251.83:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65107'
       description: EAPI-L2LEAF01_Ethernet2
-    172.31.251.7:
+    172.31.251.87:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65108'
       description: EAPI-L2LEAF02_Ethernet2
-    172.31.250.3:
+    172.31.250.51:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65000'
       description: EAPI-RS02_Ethernet1
@@ -128,7 +128,7 @@ management_interfaces:
     description: oob_management
     shutdown: false
     vrf: MGMT
-    ip_address: 10.73.254.2/24
+    ip_address: 10.73.254.102/24
     gateway: 10.73.254.253
     type: oob
 management_api_http:
@@ -144,7 +144,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.2/31
+    ip_address: 172.31.255.42/31
   Ethernet2:
     peer: EAPI-LEAF1B
     peer_interface: Ethernet2
@@ -153,7 +153,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.6/31
+    ip_address: 172.31.255.46/31
   Ethernet3:
     peer: EAPI-LEAF2A
     peer_interface: Ethernet2
@@ -162,7 +162,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.10/31
+    ip_address: 172.31.255.50/31
   Ethernet4:
     peer: EAPI-LEAF2B
     peer_interface: Ethernet2
@@ -171,7 +171,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.14/31
+    ip_address: 172.31.255.54/31
   Ethernet5:
     peer: EAPI-BL01A
     peer_interface: Ethernet2
@@ -180,7 +180,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.26/31
+    ip_address: 172.31.255.66/31
   Ethernet6:
     peer: EAPI-BL01B
     peer_interface: Ethernet2
@@ -189,7 +189,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.30/31
+    ip_address: 172.31.255.70/31
   Ethernet7:
     peer: EAPI-LEAF3A
     peer_interface: Ethernet2
@@ -198,7 +198,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.18/31
+    ip_address: 172.31.255.58/31
   Ethernet8:
     peer: EAPI-LEAF4A
     peer_interface: Ethernet2
@@ -207,7 +207,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.22/31
+    ip_address: 172.31.255.62/31
   Ethernet9:
     peer: EAPI-CL01A
     peer_interface: Ethernet2
@@ -216,7 +216,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.34/31
+    ip_address: 172.31.255.74/31
   Ethernet10:
     peer: EAPI-CL01B
     peer_interface: Ethernet2
@@ -225,7 +225,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.38/31
+    ip_address: 172.31.255.78/31
   Ethernet11:
     peer: EAPI-L2LEAF01
     peer_interface: Ethernet2
@@ -234,7 +234,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.251.2/31
+    ip_address: 172.31.251.82/31
   Ethernet12:
     peer: EAPI-L2LEAF02
     peer_interface: Ethernet2
@@ -243,7 +243,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.251.6/31
+    ip_address: 172.31.251.86/31
   Ethernet13:
     peer: EAPI-RS02
     peer_interface: Ethernet1
@@ -252,7 +252,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.250.2/31
+    ip_address: 172.31.250.50/31
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering

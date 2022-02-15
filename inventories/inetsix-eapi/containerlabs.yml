@@ -8,132 +8,168 @@ mgmt:
 topology:
   kinds:
     ceos:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
   nodes:
     EAPI-AGG01:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.21
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-AGG01.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-AGG01.cfg
+      ports:
+      - 8023:443/tcp
       env:
         TMODE: lacp
     EAPI-AGG02:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.22
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-AGG02.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-AGG02.cfg
+      ports:
+      - 8024:443/tcp
       env:
         TMODE: lacp
     EAPI-L2LEAF01:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.31
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-L2LEAF01.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-L2LEAF01.cfg
+      ports:
+      - 8021:443/tcp
       env:
         TMODE: lacp
     EAPI-L2LEAF02:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.32
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-L2LEAF02.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-L2LEAF02.cfg
+      ports:
+      - 8022:443/tcp
       env:
         TMODE: lacp
     EAPI-BL01A:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.15
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-BL01A.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-BL01A.cfg
+      ports:
+      - 8017:443/tcp
       env:
         TMODE: lacp
     EAPI-BL01B:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.16
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-BL01B.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-BL01B.cfg
+      ports:
+      - 8018:443/tcp
       env:
         TMODE: lacp
     EAPI-CL01A:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.19
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-CL01A.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-CL01A.cfg
+      ports:
+      - 8019:443/tcp
       env:
         TMODE: lacp
     EAPI-CL01B:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.20
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-CL01B.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-CL01B.cfg
+      ports:
+      - 8020:443/tcp
       env:
         TMODE: lacp
     EAPI-LEAF1A:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.11
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF1A.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF1A.cfg
+      ports:
+      - 8011:443/tcp
       env:
         TMODE: lacp
     EAPI-LEAF1B:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.12
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF1B.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF1B.cfg
+      ports:
+      - 8012:443/tcp
       env:
         TMODE: lacp
     EAPI-LEAF2A:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.13
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF2A.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF2A.cfg
+      ports:
+      - 8013:443/tcp
       env:
         TMODE: lacp
     EAPI-LEAF2B:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.14
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF2B.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF2B.cfg
+      ports:
+      - 8014:443/tcp
       env:
         TMODE: lacp
     EAPI-LEAF3A:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.17
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF3A.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF3A.cfg
+      ports:
+      - 8015:443/tcp
       env:
         TMODE: lacp
     EAPI-LEAF4A:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.18
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF4A.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF4A.cfg
+      ports:
+      - 8016:443/tcp
       env:
         TMODE: lacp
     EAPI-RS01:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.51
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-RS01.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-RS01.cfg
+      ports:
+      - 8025:443/tcp
       env:
         TMODE: lacp
     EAPI-RS02:
-      image: ceos:4.27.1F
+      image: arista/ceos:4.27.1F
       mgmt_ipv4: 10.73.254.52
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-RS02.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-RS02.cfg
+      ports:
+      - 8026:443/tcp
       env:
         TMODE: lacp
     EAPI-SPINE1:
-      image: ceos:4.27.1F
-      mgmt_ipv4: 10.73.254.1
+      image: arista/ceos:4.27.1F
+      mgmt_ipv4: 10.73.254.101
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-SPINE1.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-SPINE1.cfg
+      ports:
+      - 8001:443/tcp
       env:
         TMODE: lacp
     EAPI-SPINE2:
-      image: ceos:4.27.1F
-      mgmt_ipv4: 10.73.254.2
+      image: arista/ceos:4.27.1F
+      mgmt_ipv4: 10.73.254.102
       kind: ceos
-      startup-config: /home/tom/arista-avd/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-SPINE2.cfg
+      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-SPINE2.cfg
+      ports:
+      - 8002:443/tcp
       env:
         TMODE: lacp
 

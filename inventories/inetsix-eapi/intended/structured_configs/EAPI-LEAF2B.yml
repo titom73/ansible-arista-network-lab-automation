@@ -1,6 +1,6 @@
 router_bgp:
   as: '65102'
-  router_id: 192.168.255.6
+  router_id: 192.168.255.16
   bgp_defaults:
   - no bgp default ipv4-unicast
   - distance bgp 20 200 200
@@ -38,22 +38,22 @@ router_bgp:
       EVPN-OVERLAY-PEERS:
         activate: false
   neighbors:
-    172.31.253.6:
+    172.31.253.26:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
       description: EAPI-LEAF2A
-    172.31.255.12:
+    172.31.255.52:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65001'
       description: EAPI-SPINE1_Ethernet4
-    172.31.255.14:
+    172.31.255.54:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65001'
       description: EAPI-SPINE2_Ethernet4
-    192.168.0.2:
+    192.168.0.26:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-RS01
       remote_as: '65000'
-    192.168.0.3:
+    192.168.0.27:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-RS02
       remote_as: '65000'
@@ -66,8 +66,8 @@ router_bgp:
         activate: true
   vrfs:
     PURE_TYPE5:
-      router_id: 192.168.255.6
-      rd: 192.168.255.6:13
+      router_id: 192.168.255.16
+      rd: 192.168.255.16:13
       route_targets:
         import:
           evpn:
@@ -76,13 +76,13 @@ router_bgp:
           evpn:
           - '13:13'
       neighbors:
-        172.31.253.6:
+        172.31.253.26:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
     TENANT_A_PROJECT01:
-      router_id: 192.168.255.6
-      rd: 192.168.255.6:11
+      router_id: 192.168.255.16
+      rd: 192.168.255.16:11
       route_targets:
         import:
           evpn:
@@ -91,14 +91,14 @@ router_bgp:
           evpn:
           - '11:11'
       neighbors:
-        172.31.253.6:
+        172.31.253.26:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
       - static
   vlan_aware_bundles:
     TENANT_A_PROJECT01:
-      rd: 192.168.255.6:11
+      rd: 192.168.255.16:11
       route_targets:
         both:
         - '11:11'
@@ -107,7 +107,7 @@ router_bgp:
       vlan: 110-112
     B-ELAN-201:
       tenant: Tenant_B
-      rd: 192.168.255.6:20201
+      rd: 192.168.255.16:20201
       route_targets:
         both:
         - 20201:20201
@@ -226,12 +226,12 @@ vlan_interfaces:
   Vlan4093:
     description: MLAG_PEER_L3_PEERING
     shutdown: false
-    ip_address: 172.31.253.7/31
+    ip_address: 172.31.253.27/31
     mtu: 1500
   Vlan4094:
     description: MLAG_PEER
     shutdown: false
-    ip_address: 172.31.253.5/31
+    ip_address: 172.31.253.25/31
     no_autostate: true
     mtu: 1500
   Vlan132:
@@ -248,7 +248,7 @@ vlan_interfaces:
     shutdown: false
     description: 'MLAG_PEER_L3_iBGP: vrf PURE_TYPE5'
     vrf: PURE_TYPE5
-    ip_address: 172.31.253.7/31
+    ip_address: 172.31.253.27/31
     mtu: 1500
   Vlan110:
     tenant: Tenant_A
@@ -286,7 +286,7 @@ vlan_interfaces:
     shutdown: false
     description: 'MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01'
     vrf: TENANT_A_PROJECT01
-    ip_address: 172.31.253.7/31
+    ip_address: 172.31.253.27/31
     mtu: 1500
 port_channel_interfaces:
   Port-Channel3:
@@ -334,7 +334,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.13/31
+    ip_address: 172.31.255.53/31
   Ethernet2:
     peer: EAPI-SPINE2
     peer_interface: Ethernet4
@@ -343,7 +343,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.15/31
+    ip_address: 172.31.255.55/31
   Ethernet5:
     peer: EAPI-AGG02
     peer_interface: Ethernet2
@@ -357,7 +357,7 @@ ethernet_interfaces:
 mlag_configuration:
   domain_id: EAPI_LEAF2
   local_interface: Vlan4094
-  peer_address: 172.31.253.4
+  peer_address: 172.31.253.24
   peer_link: Port-Channel3
   reload_delay_mlag: 300
   reload_delay_non_mlag: 330
@@ -379,11 +379,11 @@ loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
     shutdown: false
-    ip_address: 192.168.255.6/32
+    ip_address: 192.168.255.16/32
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
     shutdown: false
-    ip_address: 192.168.254.5/32
+    ip_address: 192.168.254.15/32
 prefix_lists:
   PL-LOOPBACKS-EVPN-OVERLAY:
     sequence_numbers:

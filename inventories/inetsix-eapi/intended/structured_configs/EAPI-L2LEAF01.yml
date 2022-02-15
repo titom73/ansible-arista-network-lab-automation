@@ -1,6 +1,6 @@
 router_bgp:
   as: '65107'
-  router_id: 192.168.253.2
+  router_id: 192.168.253.22
   bgp_defaults:
   - no bgp default ipv4-unicast
   - distance bgp 20 200 200
@@ -31,19 +31,19 @@ router_bgp:
     connected:
       route_map: RM-CONN-2-BGP
   neighbors:
-    172.31.251.0:
+    172.31.251.80:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65001'
       description: EAPI-SPINE1_Ethernet11
-    172.31.251.2:
+    172.31.251.82:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65001'
       description: EAPI-SPINE2_Ethernet11
-    192.168.0.2:
+    192.168.0.26:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-RS01
       remote_as: '65000'
-    192.168.0.3:
+    192.168.0.27:
       peer_group: EVPN-OVERLAY-PEERS
       description: EAPI-RS02
       remote_as: '65000'
@@ -53,7 +53,7 @@ router_bgp:
         activate: true
   vlan_aware_bundles:
     CENTRAL_ROUTING:
-      rd: 192.168.253.2:13
+      rd: 192.168.253.22:13
       route_targets:
         both:
         - '13:13'
@@ -134,7 +134,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.251.1/31
+    ip_address: 172.31.251.81/31
   Ethernet2:
     peer: EAPI-SPINE2
     peer_interface: Ethernet11
@@ -143,7 +143,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.251.3/31
+    ip_address: 172.31.251.83/31
   Ethernet5:
     peer: SRV-POD05-23
     peer_interface: Eth1
@@ -157,11 +157,11 @@ loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
     shutdown: false
-    ip_address: 192.168.253.2/32
+    ip_address: 192.168.253.22/32
   Loopback1:
     description: VTEP_VXLAN_Tunnel_Source
     shutdown: false
-    ip_address: 192.168.252.2/32
+    ip_address: 192.168.252.22/32
 prefix_lists:
   PL-LOOPBACKS-EVPN-OVERLAY:
     sequence_numbers:

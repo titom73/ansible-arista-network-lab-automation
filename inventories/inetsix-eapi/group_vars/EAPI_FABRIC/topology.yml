@@ -40,11 +40,11 @@ spine:
   nodes:
     EAPI-SPINE1:
       id: 1
-      mgmt_ip: 10.73.254.1/24
+      mgmt_ip: 10.73.254.101/24
       mac_address: '0c:1d:c0:1d:62:01'
     EAPI-SPINE2:
       id: 2
-      mgmt_ip: 10.73.254.2/24
+      mgmt_ip: 10.73.254.102/24
       mac_address: '0c:1d:c0:1d:62:02'
 
 l3leaf:
@@ -71,12 +71,12 @@ l3leaf:
         tags: [ 'POD01', 'DC1' ]
       nodes:
         EAPI-LEAF1A:
-          id: 1
+          id: 11
           mgmt_ip: 10.73.254.11/24
           uplink_switch_interfaces: [Ethernet1, Ethernet1]
           mac_address: '0c:1d:c0:1d:62:11'
         EAPI-LEAF1B:
-          id: 2
+          id: 12
           mgmt_ip: 10.73.254.12/24
           uplink_switch_interfaces: [Ethernet2, Ethernet2]
           mac_address: '0c:1d:c0:1d:62:12'
@@ -87,12 +87,12 @@ l3leaf:
         tags: [ 'POD02', 'DC1' ]
       nodes:
         EAPI-LEAF2A:
-          id: 3
+          id: 13
           mgmt_ip: 10.73.254.13/24
           mac_address: '0c:1d:c0:1d:62:13'
           uplink_switch_interfaces: [Ethernet3, Ethernet3]
         EAPI-LEAF2B:
-          id: 4
+          id: 14
           mgmt_ip: 10.73.254.14/24
           mac_address: '0c:1d:c0:1d:62:14'
           uplink_switch_interfaces: [Ethernet4, Ethernet4]
@@ -103,13 +103,13 @@ l3leaf:
         tags: [ 'POD03', 'DC1' ]
       nodes:
         EAPI-LEAF3A:
-          id: 5
+          id: 15
           bgp_as: 65103
           mgmt_ip: 10.73.254.17/24
           mac_address: '0c:1d:c0:1d:62:17'
           uplink_switch_interfaces: [Ethernet7, Ethernet7]
         EAPI-LEAF4A:
-          id: 6
+          id: 16
           bgp_as: 65104
           mgmt_ip: 10.73.254.18/24
           mac_address: '0c:1d:c0:1d:62:18'
@@ -121,12 +121,12 @@ l3leaf:
         tags: [ 'BORDER', 'DC1' ]
       nodes:
         EAPI-BL01A:
-          id: 7
+          id: 17
           mgmt_ip: 10.73.254.15/24
           mac_address: '0c:1d:c0:1d:62:15'
           uplink_switch_interfaces: [Ethernet5, Ethernet5]
         EAPI-BL01B:
-          id: 8
+          id: 18
           mgmt_ip: 10.73.254.16/24
           mac_address: '0c:1d:c0:1d:62:16'
           uplink_switch_interfaces: [Ethernet6, Ethernet6]
@@ -137,12 +137,12 @@ l3leaf:
         tags: [ 'POD05_NODE01', 'POD05_NODE02', 'DC1' ]
       nodes:
         EAPI-CL01A:
-          id: 9
+          id: 19
           mgmt_ip: 10.73.254.19/24
           mac_address: '50:01:00:11:00:00'
           uplink_switch_interfaces: [Ethernet9, Ethernet9]
         EAPI-CL01B:
-          id: 10
+          id: 20
           mgmt_ip: 10.73.254.20/24
           mac_address: '50:01:00:12:00:00'
           uplink_switch_interfaces: [Ethernet10, Ethernet10]
@@ -168,7 +168,7 @@ l2leaf:
       mlag: false
       nodes:
         EAPI-L2LEAF01:
-          id: 1
+          id: 21
           bgp_as: 65107
           mgmt_ip: 10.73.254.31/24
           mac_address: '50:01:00:14:00:00'
@@ -177,7 +177,7 @@ l2leaf:
             tenants: [ 'Tenant_A', 'Tenant_B', 'CENTRAL_ROUTING_LAB' ]
             tags: [ 'POD05_NODE01' ]
         EAPI-L2LEAF02:
-          id: 2
+          id: 22
           bgp_as: 65108
           mgmt_ip: 10.73.254.32/24
           mac_address: '50:01:00:15:00:00'
@@ -200,7 +200,7 @@ edge:
         tags: [ 'POD01', 'DC1' ]
       nodes:
         EAPI-AGG01:
-          id: 9
+          id: 23
           mgmt_ip: 10.73.254.21/24
           mac_address: '0c:1d:c0:1d:62:21'
           uplink_switch_interfaces: [ Ethernet5, Ethernet5 ]
@@ -211,7 +211,7 @@ edge:
         tags: [ 'POD02', 'DC1' ]
       nodes:
         EAPI-AGG02:
-          id: 10
+          id: 24
           mgmt_ip: 10.73.254.22/24
           mac_address: '0c:1d:c0:1d:62:22'
           uplink_switch_interfaces: [ Ethernet5, Ethernet5 ]
@@ -229,14 +229,14 @@ route_server:
     bgp_as: 65000
   nodes:
     EAPI-RS01:
-      id: 1
+      id: 25
       mgmt_ip: 10.73.254.51/24
       mac_address: '50:01:00:19:00:00'
       uplink_interfaces: ['Ethernet1']
       uplink_switch_interfaces: [Ethernet13]
       uplink_switches: ['EAPI-SPINE1']
     EAPI-RS02:
-      id: 2
+      id: 26
       mgmt_ip: 10.73.254.52/24
       mac_address: '50:01:00:1a:00:00'
       uplink_interfaces: ['Ethernet1']

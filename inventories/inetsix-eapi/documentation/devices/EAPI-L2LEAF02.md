@@ -342,8 +342,8 @@ vlan 302
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 | P2P_LINK_TO_EAPI-SPINE1_Ethernet12 | routed | - | 172.31.251.5/31 | default | 1500 | false | - | - |
-| Ethernet2 | P2P_LINK_TO_EAPI-SPINE2_Ethernet12 | routed | - | 172.31.251.7/31 | default | 1500 | false | - | - |
+| Ethernet1 | P2P_LINK_TO_EAPI-SPINE1_Ethernet12 | routed | - | 172.31.251.85/31 | default | 1500 | false | - | - |
+| Ethernet2 | P2P_LINK_TO_EAPI-SPINE2_Ethernet12 | routed | - | 172.31.251.87/31 | default | 1500 | false | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -354,14 +354,14 @@ interface Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.251.5/31
+   ip address 172.31.251.85/31
 !
 interface Ethernet2
    description P2P_LINK_TO_EAPI-SPINE2_Ethernet12
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.251.7/31
+   ip address 172.31.251.87/31
 !
 interface Ethernet5
    description SRV-POD05-24_Eth1
@@ -379,8 +379,8 @@ interface Ethernet5
 
 | Interface | Description | VRF | IP Address |
 | --------- | ----------- | --- | ---------- |
-| Loopback0 | EVPN_Overlay_Peering | default | 192.168.253.3/32 |
-| Loopback1 | VTEP_VXLAN_Tunnel_Source | default | 192.168.252.3/32 |
+| Loopback0 | EVPN_Overlay_Peering | default | 192.168.253.23/32 |
+| Loopback1 | VTEP_VXLAN_Tunnel_Source | default | 192.168.252.23/32 |
 
 #### IPv6
 
@@ -397,12 +397,12 @@ interface Ethernet5
 interface Loopback0
    description EVPN_Overlay_Peering
    no shutdown
-   ip address 192.168.253.3/32
+   ip address 192.168.253.23/32
 !
 interface Loopback1
    description VTEP_VXLAN_Tunnel_Source
    no shutdown
-   ip address 192.168.252.3/32
+   ip address 192.168.252.23/32
 ```
 
 ## VXLAN Interface
@@ -486,7 +486,7 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 | BGP AS | Router ID |
 | ------ | --------- |
-| 65108|  192.168.253.3 |
+| 65108|  192.168.253.23 |
 
 | BGP Tuning |
 | ---------- |
@@ -521,10 +521,10 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 | Neighbor | Remote AS | VRF | Send-community | Maximum-routes | Allowas-in | BFD |
 | -------- | --------- | --- | -------------- | -------------- | ---------- | --- |
-| 172.31.251.4 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.251.6 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 192.168.0.2 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.168.0.3 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
+| 172.31.251.84 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.251.86 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 192.168.0.26 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
+| 192.168.0.27 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
 
 ### Router BGP EVPN Address Family
 
@@ -538,14 +538,14 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 | VLAN Aware Bundle | Route-Distinguisher | Both Route-Target | Import Route Target | Export Route-Target | Redistribute | VLANs |
 | ----------------- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ | ----- |
-| CENTRAL_ROUTING | 192.168.253.3:13 | 13:13 | - | - | learned | 302 |
+| CENTRAL_ROUTING | 192.168.253.23:13 | 13:13 | - | - | learned | 302 |
 
 ### Router BGP Device Configuration
 
 ```eos
 !
 router bgp 65108
-   router-id 192.168.253.3
+   router-id 192.168.253.23
    no bgp default ipv4-unicast
    distance bgp 20 200 200
    graceful-restart restart-time 300
@@ -562,22 +562,22 @@ router bgp 65108
    neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 172.31.251.4 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.4 remote-as 65001
-   neighbor 172.31.251.4 description EAPI-SPINE1_Ethernet12
-   neighbor 172.31.251.6 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.6 remote-as 65001
-   neighbor 172.31.251.6 description EAPI-SPINE2_Ethernet12
-   neighbor 192.168.0.2 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.0.2 remote-as 65000
-   neighbor 192.168.0.2 description EAPI-RS01
-   neighbor 192.168.0.3 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.168.0.3 remote-as 65000
-   neighbor 192.168.0.3 description EAPI-RS02
+   neighbor 172.31.251.84 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.251.84 remote-as 65001
+   neighbor 172.31.251.84 description EAPI-SPINE1_Ethernet12
+   neighbor 172.31.251.86 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.251.86 remote-as 65001
+   neighbor 172.31.251.86 description EAPI-SPINE2_Ethernet12
+   neighbor 192.168.0.26 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.0.26 remote-as 65000
+   neighbor 192.168.0.26 description EAPI-RS01
+   neighbor 192.168.0.27 peer group EVPN-OVERLAY-PEERS
+   neighbor 192.168.0.27 remote-as 65000
+   neighbor 192.168.0.27 description EAPI-RS02
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan-aware-bundle CENTRAL_ROUTING
-      rd 192.168.253.3:13
+      rd 192.168.253.23:13
       route-target both 13:13
       redistribute learned
       vlan 302

@@ -49,7 +49,7 @@
 
 | Management Interface | description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management1 | oob_management | oob | MGMT | 10.73.254.1/24 | 10.73.254.253 |
+| Management1 | oob_management | oob | MGMT | 10.73.254.101/24 | 10.73.254.253 |
 
 #### IPv6
 
@@ -65,7 +65,7 @@ interface Management1
    description oob_management
    no shutdown
    vrf MGMT
-   ip address 10.73.254.1/24
+   ip address 10.73.254.101/24
 ```
 
 ## Name Servers
@@ -311,19 +311,19 @@ vlan internal order ascending range 1006 1199
 
 | Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet1 | P2P_LINK_TO_EAPI-LEAF1A_Ethernet1 | routed | - | 172.31.255.0/31 | default | 1500 | false | - | - |
-| Ethernet2 | P2P_LINK_TO_EAPI-LEAF1B_Ethernet1 | routed | - | 172.31.255.4/31 | default | 1500 | false | - | - |
-| Ethernet3 | P2P_LINK_TO_EAPI-LEAF2A_Ethernet1 | routed | - | 172.31.255.8/31 | default | 1500 | false | - | - |
-| Ethernet4 | P2P_LINK_TO_EAPI-LEAF2B_Ethernet1 | routed | - | 172.31.255.12/31 | default | 1500 | false | - | - |
-| Ethernet5 | P2P_LINK_TO_EAPI-BL01A_Ethernet1 | routed | - | 172.31.255.24/31 | default | 1500 | false | - | - |
-| Ethernet6 | P2P_LINK_TO_EAPI-BL01B_Ethernet1 | routed | - | 172.31.255.28/31 | default | 1500 | false | - | - |
-| Ethernet7 | P2P_LINK_TO_EAPI-LEAF3A_Ethernet1 | routed | - | 172.31.255.16/31 | default | 1500 | false | - | - |
-| Ethernet8 | P2P_LINK_TO_EAPI-LEAF4A_Ethernet1 | routed | - | 172.31.255.20/31 | default | 1500 | false | - | - |
-| Ethernet9 | P2P_LINK_TO_EAPI-CL01A_Ethernet1 | routed | - | 172.31.255.32/31 | default | 1500 | false | - | - |
-| Ethernet10 | P2P_LINK_TO_EAPI-CL01B_Ethernet1 | routed | - | 172.31.255.36/31 | default | 1500 | false | - | - |
-| Ethernet11 | P2P_LINK_TO_EAPI-L2LEAF01_Ethernet1 | routed | - | 172.31.251.0/31 | default | 1500 | false | - | - |
-| Ethernet12 | P2P_LINK_TO_EAPI-L2LEAF02_Ethernet1 | routed | - | 172.31.251.4/31 | default | 1500 | false | - | - |
-| Ethernet13 | P2P_LINK_TO_EAPI-RS01_Ethernet1 | routed | - | 172.31.250.0/31 | default | 1500 | false | - | - |
+| Ethernet1 | P2P_LINK_TO_EAPI-LEAF1A_Ethernet1 | routed | - | 172.31.255.40/31 | default | 1500 | false | - | - |
+| Ethernet2 | P2P_LINK_TO_EAPI-LEAF1B_Ethernet1 | routed | - | 172.31.255.44/31 | default | 1500 | false | - | - |
+| Ethernet3 | P2P_LINK_TO_EAPI-LEAF2A_Ethernet1 | routed | - | 172.31.255.48/31 | default | 1500 | false | - | - |
+| Ethernet4 | P2P_LINK_TO_EAPI-LEAF2B_Ethernet1 | routed | - | 172.31.255.52/31 | default | 1500 | false | - | - |
+| Ethernet5 | P2P_LINK_TO_EAPI-BL01A_Ethernet1 | routed | - | 172.31.255.64/31 | default | 1500 | false | - | - |
+| Ethernet6 | P2P_LINK_TO_EAPI-BL01B_Ethernet1 | routed | - | 172.31.255.68/31 | default | 1500 | false | - | - |
+| Ethernet7 | P2P_LINK_TO_EAPI-LEAF3A_Ethernet1 | routed | - | 172.31.255.56/31 | default | 1500 | false | - | - |
+| Ethernet8 | P2P_LINK_TO_EAPI-LEAF4A_Ethernet1 | routed | - | 172.31.255.60/31 | default | 1500 | false | - | - |
+| Ethernet9 | P2P_LINK_TO_EAPI-CL01A_Ethernet1 | routed | - | 172.31.255.72/31 | default | 1500 | false | - | - |
+| Ethernet10 | P2P_LINK_TO_EAPI-CL01B_Ethernet1 | routed | - | 172.31.255.76/31 | default | 1500 | false | - | - |
+| Ethernet11 | P2P_LINK_TO_EAPI-L2LEAF01_Ethernet1 | routed | - | 172.31.251.80/31 | default | 1500 | false | - | - |
+| Ethernet12 | P2P_LINK_TO_EAPI-L2LEAF02_Ethernet1 | routed | - | 172.31.251.84/31 | default | 1500 | false | - | - |
+| Ethernet13 | P2P_LINK_TO_EAPI-RS01_Ethernet1 | routed | - | 172.31.250.48/31 | default | 1500 | false | - | - |
 
 ### Ethernet Interfaces Device Configuration
 
@@ -334,91 +334,91 @@ interface Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.255.0/31
+   ip address 172.31.255.40/31
 !
 interface Ethernet2
    description P2P_LINK_TO_EAPI-LEAF1B_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.255.4/31
+   ip address 172.31.255.44/31
 !
 interface Ethernet3
    description P2P_LINK_TO_EAPI-LEAF2A_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.255.8/31
+   ip address 172.31.255.48/31
 !
 interface Ethernet4
    description P2P_LINK_TO_EAPI-LEAF2B_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.255.12/31
+   ip address 172.31.255.52/31
 !
 interface Ethernet5
    description P2P_LINK_TO_EAPI-BL01A_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.255.24/31
+   ip address 172.31.255.64/31
 !
 interface Ethernet6
    description P2P_LINK_TO_EAPI-BL01B_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.255.28/31
+   ip address 172.31.255.68/31
 !
 interface Ethernet7
    description P2P_LINK_TO_EAPI-LEAF3A_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.255.16/31
+   ip address 172.31.255.56/31
 !
 interface Ethernet8
    description P2P_LINK_TO_EAPI-LEAF4A_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.255.20/31
+   ip address 172.31.255.60/31
 !
 interface Ethernet9
    description P2P_LINK_TO_EAPI-CL01A_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.255.32/31
+   ip address 172.31.255.72/31
 !
 interface Ethernet10
    description P2P_LINK_TO_EAPI-CL01B_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.255.36/31
+   ip address 172.31.255.76/31
 !
 interface Ethernet11
    description P2P_LINK_TO_EAPI-L2LEAF01_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.251.0/31
+   ip address 172.31.251.80/31
 !
 interface Ethernet12
    description P2P_LINK_TO_EAPI-L2LEAF02_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.251.4/31
+   ip address 172.31.251.84/31
 !
 interface Ethernet13
    description P2P_LINK_TO_EAPI-RS01_Ethernet1
    no shutdown
    mtu 1500
    no switchport
-   ip address 172.31.250.0/31
+   ip address 172.31.250.48/31
 ```
 
 ## Loopback Interfaces
@@ -528,19 +528,19 @@ ip route vrf MGMT 0.0.0.0/0 10.73.254.253
 
 | Neighbor | Remote AS | VRF | Send-community | Maximum-routes | Allowas-in | BFD |
 | -------- | --------- | --- | -------------- | -------------- | ---------- | --- |
-| 172.31.250.1 | 65000 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.251.1 | 65107 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.251.5 | 65108 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.255.1 | 65101 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.255.5 | 65101 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.255.9 | 65102 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.255.13 | 65102 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.255.17 | 65103 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.255.21 | 65104 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.255.25 | 65105 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.255.29 | 65105 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.255.33 | 65106 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.255.37 | 65106 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.250.49 | 65000 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.251.81 | 65107 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.251.85 | 65108 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.255.41 | 65101 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.255.45 | 65101 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.255.49 | 65102 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.255.53 | 65102 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.255.57 | 65103 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.255.61 | 65104 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.255.65 | 65105 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.255.69 | 65105 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.255.73 | 65106 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
+| 172.31.255.77 | 65106 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
 
 ### Router BGP Device Configuration
 
@@ -557,45 +557,45 @@ router bgp 65001
    neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 172.31.250.1 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.250.1 remote-as 65000
-   neighbor 172.31.250.1 description EAPI-RS01_Ethernet1
-   neighbor 172.31.251.1 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.1 remote-as 65107
-   neighbor 172.31.251.1 description EAPI-L2LEAF01_Ethernet1
-   neighbor 172.31.251.5 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.251.5 remote-as 65108
-   neighbor 172.31.251.5 description EAPI-L2LEAF02_Ethernet1
-   neighbor 172.31.255.1 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.1 remote-as 65101
-   neighbor 172.31.255.1 description EAPI-LEAF1A_Ethernet1
-   neighbor 172.31.255.5 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.5 remote-as 65101
-   neighbor 172.31.255.5 description EAPI-LEAF1B_Ethernet1
-   neighbor 172.31.255.9 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.9 remote-as 65102
-   neighbor 172.31.255.9 description EAPI-LEAF2A_Ethernet1
-   neighbor 172.31.255.13 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.13 remote-as 65102
-   neighbor 172.31.255.13 description EAPI-LEAF2B_Ethernet1
-   neighbor 172.31.255.17 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.17 remote-as 65103
-   neighbor 172.31.255.17 description EAPI-LEAF3A_Ethernet1
-   neighbor 172.31.255.21 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.21 remote-as 65104
-   neighbor 172.31.255.21 description EAPI-LEAF4A_Ethernet1
-   neighbor 172.31.255.25 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.25 remote-as 65105
-   neighbor 172.31.255.25 description EAPI-BL01A_Ethernet1
-   neighbor 172.31.255.29 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.29 remote-as 65105
-   neighbor 172.31.255.29 description EAPI-BL01B_Ethernet1
-   neighbor 172.31.255.33 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.33 remote-as 65106
-   neighbor 172.31.255.33 description EAPI-CL01A_Ethernet1
-   neighbor 172.31.255.37 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.37 remote-as 65106
-   neighbor 172.31.255.37 description EAPI-CL01B_Ethernet1
+   neighbor 172.31.250.49 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.250.49 remote-as 65000
+   neighbor 172.31.250.49 description EAPI-RS01_Ethernet1
+   neighbor 172.31.251.81 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.251.81 remote-as 65107
+   neighbor 172.31.251.81 description EAPI-L2LEAF01_Ethernet1
+   neighbor 172.31.251.85 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.251.85 remote-as 65108
+   neighbor 172.31.251.85 description EAPI-L2LEAF02_Ethernet1
+   neighbor 172.31.255.41 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.41 remote-as 65101
+   neighbor 172.31.255.41 description EAPI-LEAF1A_Ethernet1
+   neighbor 172.31.255.45 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.45 remote-as 65101
+   neighbor 172.31.255.45 description EAPI-LEAF1B_Ethernet1
+   neighbor 172.31.255.49 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.49 remote-as 65102
+   neighbor 172.31.255.49 description EAPI-LEAF2A_Ethernet1
+   neighbor 172.31.255.53 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.53 remote-as 65102
+   neighbor 172.31.255.53 description EAPI-LEAF2B_Ethernet1
+   neighbor 172.31.255.57 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.57 remote-as 65103
+   neighbor 172.31.255.57 description EAPI-LEAF3A_Ethernet1
+   neighbor 172.31.255.61 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.61 remote-as 65104
+   neighbor 172.31.255.61 description EAPI-LEAF4A_Ethernet1
+   neighbor 172.31.255.65 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.65 remote-as 65105
+   neighbor 172.31.255.65 description EAPI-BL01A_Ethernet1
+   neighbor 172.31.255.69 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.69 remote-as 65105
+   neighbor 172.31.255.69 description EAPI-BL01B_Ethernet1
+   neighbor 172.31.255.73 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.73 remote-as 65106
+   neighbor 172.31.255.73 description EAPI-CL01A_Ethernet1
+   neighbor 172.31.255.77 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.31.255.77 remote-as 65106
+   neighbor 172.31.255.77 description EAPI-CL01B_Ethernet1
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family ipv4
