@@ -12,13 +12,11 @@ router_bgp:
       type: ipv4
       remote_as: '65101'
       next_hop_self: true
-      password: vnEaG8gMeQf3d3cN6PktXQ==
       maximum_routes: 12000
       send_community: all
       route_map_in: RM-MLAG-PEER-IN
     IPv4-UNDERLAY-PEERS:
       type: ipv4
-      password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
       send_community: all
     EVPN-OVERLAY-PEERS:
@@ -26,7 +24,6 @@ router_bgp:
       update_source: Loopback0
       bfd: true
       ebgp_multihop: '3'
-      password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: all
       maximum_routes: 0
   address_family_ipv4:
@@ -40,22 +37,22 @@ router_bgp:
   neighbors:
     172.31.253.22:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
-      description: EAPI-LEAF1A
+      description: eapi-leaf1a
     172.31.255.44:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65001'
-      description: EAPI-SPINE1_Ethernet2
+      description: eapi-spine1_ethernet2
     172.31.255.46:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65001'
-      description: EAPI-SPINE2_Ethernet2
+      description: eapi-spine2_ethernet2
     192.168.0.26:
       peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-RS01
+      description: eapi-rs01
       remote_as: '65000'
     192.168.0.27:
       peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-RS02
+      description: eapi-rs02
       remote_as: '65000'
   redistribute_routes:
     connected:
@@ -64,56 +61,6 @@ router_bgp:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
-  vrfs:
-    PURE_TYPE5:
-      router_id: 192.168.255.14
-      rd: 192.168.255.14:13
-      route_targets:
-        import:
-          evpn:
-          - '13:13'
-        export:
-          evpn:
-          - '13:13'
-      neighbors:
-        172.31.253.22:
-          peer_group: MLAG-IPv4-UNDERLAY-PEER
-      redistribute_routes:
-      - connected
-    TENANT_A_PROJECT01:
-      router_id: 192.168.255.14
-      rd: 192.168.255.14:11
-      route_targets:
-        import:
-          evpn:
-          - '11:11'
-        export:
-          evpn:
-          - '11:11'
-      neighbors:
-        172.31.253.22:
-          peer_group: MLAG-IPv4-UNDERLAY-PEER
-      redistribute_routes:
-      - connected
-      - static
-  vlan_aware_bundles:
-    TENANT_A_PROJECT01:
-      rd: 192.168.255.14:11
-      route_targets:
-        both:
-        - '11:11'
-      redistribute_routes:
-      - learned
-      vlan: 110-112
-    B-ELAN-201:
-      tenant: Tenant_B
-      rd: 192.168.255.14:20201
-      route_targets:
-        both:
-        - 20201:20201
-      redistribute_routes:
-      - learned
-      vlan: 201
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
@@ -168,12 +115,6 @@ clock:
 vrfs:
   MGMT:
     ip_routing: false
-  PURE_TYPE5:
-    tenant: Tenant_A
-    ip_routing: true
-  TENANT_A_PROJECT01:
-    tenant: Tenant_A
-    ip_routing: true
 management_interfaces:
   Management1:
     description: oob_management
@@ -197,31 +138,6 @@ vlans:
     name: MLAG_PEER
     trunk_groups:
     - MLAG
-  131:
-    tenant: Tenant_A
-    name: vl131_no_vni
-  3012:
-    tenant: Tenant_A
-    name: MLAG_iBGP_PURE_TYPE5
-    trunk_groups:
-    - LEAF_PEER_L3
-  110:
-    tenant: Tenant_A
-    name: PR01-DEMO
-  111:
-    tenant: Tenant_A
-    name: PR01-TRUST
-  112:
-    tenant: Tenant_A
-    name: PR01-TRUST
-  3010:
-    tenant: Tenant_A
-    name: MLAG_iBGP_TENANT_A_PROJECT01
-    trunk_groups:
-    - LEAF_PEER_L3
-  201:
-    tenant: Tenant_B
-    name: B-ELAN-201
 vlan_interfaces:
   Vlan4093:
     description: MLAG_PEER_L3_PEERING
@@ -234,63 +150,9 @@ vlan_interfaces:
     ip_address: 172.31.253.21/31
     no_autostate: true
     mtu: 1500
-  Vlan131:
-    tenant: Tenant_A
-    tags:
-    - POD01
-    description: vl131_no_vni
-    shutdown: false
-    vrf: PURE_TYPE5
-    ip_address_virtual: 10.1.31.254/24
-  Vlan3012:
-    tenant: Tenant_A
-    type: underlay_peering
-    shutdown: false
-    description: 'MLAG_PEER_L3_iBGP: vrf PURE_TYPE5'
-    vrf: PURE_TYPE5
-    ip_address: 172.31.253.23/31
-    mtu: 1500
-  Vlan110:
-    tenant: Tenant_A
-    tags:
-    - DC1
-    description: PR01-DEMO
-    shutdown: false
-    vrf: TENANT_A_PROJECT01
-    ip_address_virtual: 10.1.10.254/24
-  Vlan111:
-    tenant: Tenant_A
-    tags:
-    - POD01
-    - POD02
-    description: PR01-TRUST
-    shutdown: false
-    vrf: TENANT_A_PROJECT01
-    ip_address_virtual: 10.1.11.254/24
-    ip_helpers:
-      1.1.1.1:
-        source_interface: lo100
-        vrf: TEST
-  Vlan112:
-    tenant: Tenant_A
-    tags:
-    - POD01
-    - POD02
-    description: PR01-TRUST
-    shutdown: false
-    vrf: TENANT_A_PROJECT01
-    ip_address_virtual: 10.1.12.254/24
-  Vlan3010:
-    tenant: Tenant_A
-    type: underlay_peering
-    shutdown: false
-    description: 'MLAG_PEER_L3_iBGP: vrf TENANT_A_PROJECT01'
-    vrf: TENANT_A_PROJECT01
-    ip_address: 172.31.253.23/31
-    mtu: 1500
 port_channel_interfaces:
   Port-Channel3:
-    description: MLAG_PEER_EAPI-LEAF1A_Po3
+    description: MLAG_PEER_eapi-leaf1a_Po3
     type: switched
     shutdown: false
     vlans: 2-4094
@@ -302,60 +164,59 @@ port_channel_interfaces:
     description: EAPI-AGG01_Po1
     type: switched
     shutdown: false
-    vlans: 110-112,131,201
     mode: trunk
     mlag: 5
 ethernet_interfaces:
   Ethernet3:
-    peer: EAPI-LEAF1A
+    peer: eapi-leaf1a
     peer_interface: Ethernet3
     peer_type: mlag_peer
-    description: MLAG_PEER_EAPI-LEAF1A_Ethernet3
+    description: MLAG_PEER_eapi-leaf1a_Ethernet3
     type: switched
     shutdown: false
     channel_group:
       id: 3
       mode: active
   Ethernet4:
-    peer: EAPI-LEAF1A
+    peer: eapi-leaf1a
     peer_interface: Ethernet4
     peer_type: mlag_peer
-    description: MLAG_PEER_EAPI-LEAF1A_Ethernet4
+    description: MLAG_PEER_eapi-leaf1a_Ethernet4
     type: switched
     shutdown: false
     channel_group:
       id: 3
       mode: active
-  Ethernet1:
-    peer: EAPI-SPINE1
-    peer_interface: Ethernet2
+  ethernet1:
+    peer: eapi-spine1
+    peer_interface: ethernet2
     peer_type: spine
-    description: P2P_LINK_TO_EAPI-SPINE1_Ethernet2
+    description: P2P_LINK_TO_EAPI-SPINE1_ethernet2
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.255.45/31
-  Ethernet2:
-    peer: EAPI-SPINE2
-    peer_interface: Ethernet2
+  ethernet2:
+    peer: eapi-spine2
+    peer_interface: ethernet2
     peer_type: spine
-    description: P2P_LINK_TO_EAPI-SPINE2_Ethernet2
+    description: P2P_LINK_TO_EAPI-SPINE2_ethernet2
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.255.47/31
-  Ethernet5:
-    peer: EAPI-AGG01
-    peer_interface: Ethernet2
+  ethernet5:
+    peer: eapi-agg01
+    peer_interface: ethernet2
     peer_type: edge
-    description: EAPI-AGG01_Ethernet2
+    description: EAPI-AGG01_ethernet2
     type: switched
     shutdown: false
     channel_group:
       id: 5
       mode: active
 mlag_configuration:
-  domain_id: EAPI_LEAF1
+  domain_id: eapi_leaf1
   local_interface: Vlan4094
   peer_address: 172.31.253.20
   peer_link: Port-Channel3
@@ -398,33 +259,14 @@ router_bfd:
     multiplier: 3
 ip_igmp_snooping:
   globally_enabled: true
-  vlans:
-    111:
-      enabled: false
-    112:
-      enabled: false
 ip_virtual_router_mac_address: 00:1c:73:00:dc:01
 vxlan_interface:
   Vxlan1:
-    description: EAPI-LEAF1B_VTEP
+    description: eapi-leaf1b_VTEP
     vxlan:
       source_interface: Loopback1
       virtual_router_encapsulation_mac_address: mlag-system-id
       udp_port: 4789
-      vlans:
-        110:
-          vni: 10110
-        111:
-          vni: 10111
-        112:
-          vni: 10112
-        201:
-          vni: 20201
-      vrfs:
-        PURE_TYPE5:
-          vni: 13
-        TENANT_A_PROJECT01:
-          vni: 11
 management_ssh:
   idle_timeout: 0
   enable: true

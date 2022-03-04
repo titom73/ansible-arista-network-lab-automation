@@ -1,0 +1,15 @@
+---
+- name: Build Switch configuration
+  hosts: [eapi]
+  collections:
+    - arista.avd
+    - titom73.avd_tools
+  tasks:
+    - name: 'Build Containerlab Topology'
+      tags:
+        - containerlab
+      import_role:
+        name: titom73.avd_tools.avd_to_clab
+      vars:
+        mgmt_network_v4: "{{clab_management_network}}"
+        ceos_version: '{{clab_runner_eos}}'

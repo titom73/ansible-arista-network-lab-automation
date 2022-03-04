@@ -10,7 +10,6 @@ router_bgp:
   peer_groups:
     IPv4-UNDERLAY-PEERS:
       type: ipv4
-      password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
       send_community: all
   address_family_ipv4:
@@ -24,55 +23,55 @@ router_bgp:
     172.31.255.41:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65101'
-      description: EAPI-LEAF1A_Ethernet1
+      description: eapi-leaf1a_ethernet1
     172.31.255.45:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65101'
-      description: EAPI-LEAF1B_Ethernet1
+      description: eapi-leaf1b_ethernet1
     172.31.255.49:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65102'
-      description: EAPI-LEAF2A_Ethernet1
+      description: eapi-leaf2a_ethernet1
     172.31.255.53:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65102'
-      description: EAPI-LEAF2B_Ethernet1
+      description: eapi-leaf2b_ethernet1
     172.31.255.65:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65105'
-      description: EAPI-BL01A_Ethernet1
+      description: eapi-bl01a_ethernet1
     172.31.255.69:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65105'
-      description: EAPI-BL01B_Ethernet1
+      description: eapi-bl01b_ethernet1
     172.31.255.57:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65103'
-      description: EAPI-LEAF3A_Ethernet1
+      description: eapi-leaf3a_ethernet1
     172.31.255.61:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65104'
-      description: EAPI-LEAF4A_Ethernet1
+      description: eapi-leaf4a_ethernet1
     172.31.255.73:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65106'
-      description: EAPI-CL01A_Ethernet1
+      description: eapi-cl01a_ethernet1
     172.31.255.77:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65106'
-      description: EAPI-CL01B_Ethernet1
+      description: eapi-cl01b_ethernet1
     172.31.251.81:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65107'
-      description: EAPI-L2LEAF01_Ethernet1
+      description: eapi-l2leaf01_ethernet1
     172.31.251.85:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65108'
-      description: EAPI-L2LEAF02_Ethernet1
+      description: eapi-l2leaf02_ethernet1
     172.31.250.49:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65000'
-      description: EAPI-RS01_Ethernet1
+      description: eapi-rs01_ethernet1
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
@@ -136,119 +135,119 @@ management_api_http:
     MGMT: {}
   enable_https: true
 ethernet_interfaces:
-  Ethernet1:
-    peer: EAPI-LEAF1A
-    peer_interface: Ethernet1
+  ethernet1:
+    peer: eapi-leaf1a
+    peer_interface: ethernet1
     peer_type: l3leaf
-    description: P2P_LINK_TO_EAPI-LEAF1A_Ethernet1
+    description: P2P_LINK_TO_EAPI-LEAF1A_ethernet1
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.255.40/31
-  Ethernet2:
-    peer: EAPI-LEAF1B
-    peer_interface: Ethernet1
+  ethernet2:
+    peer: eapi-leaf1b
+    peer_interface: ethernet1
     peer_type: l3leaf
-    description: P2P_LINK_TO_EAPI-LEAF1B_Ethernet1
+    description: P2P_LINK_TO_EAPI-LEAF1B_ethernet1
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.255.44/31
-  Ethernet3:
-    peer: EAPI-LEAF2A
-    peer_interface: Ethernet1
+  ethernet3:
+    peer: eapi-leaf2a
+    peer_interface: ethernet1
     peer_type: l3leaf
-    description: P2P_LINK_TO_EAPI-LEAF2A_Ethernet1
+    description: P2P_LINK_TO_EAPI-LEAF2A_ethernet1
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.255.48/31
-  Ethernet4:
-    peer: EAPI-LEAF2B
-    peer_interface: Ethernet1
+  ethernet4:
+    peer: eapi-leaf2b
+    peer_interface: ethernet1
     peer_type: l3leaf
-    description: P2P_LINK_TO_EAPI-LEAF2B_Ethernet1
+    description: P2P_LINK_TO_EAPI-LEAF2B_ethernet1
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.255.52/31
-  Ethernet5:
-    peer: EAPI-BL01A
-    peer_interface: Ethernet1
+  ethernet5:
+    peer: eapi-bl01a
+    peer_interface: ethernet1
     peer_type: l3leaf
-    description: P2P_LINK_TO_EAPI-BL01A_Ethernet1
+    description: P2P_LINK_TO_EAPI-BL01A_ethernet1
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.255.64/31
-  Ethernet6:
-    peer: EAPI-BL01B
-    peer_interface: Ethernet1
+  ethernet6:
+    peer: eapi-bl01b
+    peer_interface: ethernet1
     peer_type: l3leaf
-    description: P2P_LINK_TO_EAPI-BL01B_Ethernet1
+    description: P2P_LINK_TO_EAPI-BL01B_ethernet1
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.255.68/31
-  Ethernet7:
-    peer: EAPI-LEAF3A
-    peer_interface: Ethernet1
+  ethernet7:
+    peer: eapi-leaf3a
+    peer_interface: ethernet1
     peer_type: l3leaf
-    description: P2P_LINK_TO_EAPI-LEAF3A_Ethernet1
+    description: P2P_LINK_TO_EAPI-LEAF3A_ethernet1
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.255.56/31
-  Ethernet8:
-    peer: EAPI-LEAF4A
-    peer_interface: Ethernet1
+  ethernet8:
+    peer: eapi-leaf4a
+    peer_interface: ethernet1
     peer_type: l3leaf
-    description: P2P_LINK_TO_EAPI-LEAF4A_Ethernet1
+    description: P2P_LINK_TO_EAPI-LEAF4A_ethernet1
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.255.60/31
-  Ethernet9:
-    peer: EAPI-CL01A
-    peer_interface: Ethernet1
+  ethernet9:
+    peer: eapi-cl01a
+    peer_interface: ethernet1
     peer_type: l3leaf
-    description: P2P_LINK_TO_EAPI-CL01A_Ethernet1
+    description: P2P_LINK_TO_EAPI-CL01A_ethernet1
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.255.72/31
-  Ethernet10:
-    peer: EAPI-CL01B
-    peer_interface: Ethernet1
+  ethernet10:
+    peer: eapi-cl01b
+    peer_interface: ethernet1
     peer_type: l3leaf
-    description: P2P_LINK_TO_EAPI-CL01B_Ethernet1
+    description: P2P_LINK_TO_EAPI-CL01B_ethernet1
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.255.76/31
-  Ethernet11:
-    peer: EAPI-L2LEAF01
-    peer_interface: Ethernet1
+  ethernet11:
+    peer: eapi-l2leaf01
+    peer_interface: ethernet1
     peer_type: l2leaf
-    description: P2P_LINK_TO_EAPI-L2LEAF01_Ethernet1
+    description: P2P_LINK_TO_EAPI-L2LEAF01_ethernet1
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.251.80/31
-  Ethernet12:
-    peer: EAPI-L2LEAF02
-    peer_interface: Ethernet1
+  ethernet12:
+    peer: eapi-l2leaf02
+    peer_interface: ethernet1
     peer_type: l2leaf
-    description: P2P_LINK_TO_EAPI-L2LEAF02_Ethernet1
+    description: P2P_LINK_TO_EAPI-L2LEAF02_ethernet1
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.251.84/31
-  Ethernet13:
-    peer: EAPI-RS01
-    peer_interface: Ethernet1
+  ethernet13:
+    peer: eapi-rs01
+    peer_interface: ethernet1
     peer_type: route_server
-    description: P2P_LINK_TO_EAPI-RS01_Ethernet1
+    description: P2P_LINK_TO_EAPI-RS01_ethernet1
     mtu: 1500
     type: routed
     shutdown: false

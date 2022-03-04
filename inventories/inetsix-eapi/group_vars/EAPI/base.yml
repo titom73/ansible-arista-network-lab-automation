@@ -49,9 +49,9 @@ name_servers:
 
 # NTP Servers IP or DNS name, first NTP server will be prefered, and sourced from Managment VRF
 ntp:
-  local_interface:
-    name: Management1
-    vrf: MGMT
+  # local_interface:
+  #   name: Management1
+  #   vrf: MGMT
   servers:
   - name: 10.73.254.253
     vrf: MGMT

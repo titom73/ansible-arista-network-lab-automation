@@ -10,7 +10,6 @@ router_bgp:
   peer_groups:
     IPv4-UNDERLAY-PEERS:
       type: ipv4
-      password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
       send_community: all
     EVPN-OVERLAY-PEERS:
@@ -18,7 +17,6 @@ router_bgp:
       update_source: Loopback0
       bfd: true
       ebgp_multihop: '3'
-      password: q+VNViP5i4rVjW1cxFv2wA==
       send_community: all
       maximum_routes: 0
   address_family_ipv4:
@@ -34,32 +32,23 @@ router_bgp:
     172.31.251.84:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65001'
-      description: EAPI-SPINE1_Ethernet12
+      description: eapi-spine1_ethernet12
     172.31.251.86:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65001'
-      description: EAPI-SPINE2_Ethernet12
+      description: eapi-spine2_ethernet12
     192.168.0.26:
       peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-RS01
+      description: eapi-rs01
       remote_as: '65000'
     192.168.0.27:
       peer_group: EVPN-OVERLAY-PEERS
-      description: EAPI-RS02
+      description: eapi-rs02
       remote_as: '65000'
   address_family_evpn:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
-  vlan_aware_bundles:
-    CENTRAL_ROUTING:
-      rd: 192.168.253.23:13
-      route_targets:
-        both:
-        - '13:13'
-      redistribute_routes:
-      - learned
-      vlan: 302
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
@@ -126,33 +115,24 @@ management_api_http:
     MGMT: {}
   enable_https: true
 ethernet_interfaces:
-  Ethernet1:
-    peer: EAPI-SPINE1
-    peer_interface: Ethernet12
+  ethernet1:
+    peer: eapi-spine1
+    peer_interface: ethernet12
     peer_type: spine
-    description: P2P_LINK_TO_EAPI-SPINE1_Ethernet12
+    description: P2P_LINK_TO_EAPI-SPINE1_ethernet12
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.251.85/31
-  Ethernet2:
-    peer: EAPI-SPINE2
-    peer_interface: Ethernet12
+  ethernet2:
+    peer: eapi-spine2
+    peer_interface: ethernet12
     peer_type: spine
-    description: P2P_LINK_TO_EAPI-SPINE2_Ethernet12
+    description: P2P_LINK_TO_EAPI-SPINE2_ethernet12
     mtu: 1500
     type: routed
     shutdown: false
     ip_address: 172.31.251.87/31
-  Ethernet5:
-    peer: SRV-POD05-24
-    peer_interface: Eth1
-    peer_type: server
-    description: SRV-POD05-24_Eth1
-    type: switched
-    shutdown: false
-    mode: trunk
-    vlans: 1-4000
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
@@ -181,21 +161,14 @@ router_bfd:
     interval: 1200
     min_rx: 1200
     multiplier: 3
-vlans:
-  302:
-    tenant: CENTRAL_ROUTING_LAB
-    name: CENTRAL_LAN_02
 ip_igmp_snooping:
   globally_enabled: true
 vxlan_interface:
   Vxlan1:
-    description: EAPI-L2LEAF02_VTEP
+    description: eapi-l2leaf02_VTEP
     vxlan:
       source_interface: Loopback1
       udp_port: 4789
-      vlans:
-        302:
-          vni: 30302
 management_ssh:
   idle_timeout: 0
   enable: true

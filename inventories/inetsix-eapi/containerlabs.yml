@@ -1,218 +1,218 @@
 ---
-name: EAPI_FABRIC
+name: eapi-fabric
 
 mgmt:
-  network: 'mgmt_EAPI_FABRIC'
-  ipv4_subnet: 10.73.254.0/24
+  network: 'mgmt-eapi-fabric'
+  ipv4_subnet: 10.254.254.0/24
 
 topology:
   kinds:
     ceos:
-      image: arista/ceos:4.27.1F
+      image: arista/ceos:4.27.2F
   nodes:
-    EAPI-AGG01:
-      image: arista/ceos:4.27.1F
+    eapi-agg01:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.21
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-AGG01.cfg
+      startup-config: intended/configs/eapi-agg01.cfg
       ports:
-      - 8023:443/tcp
+        - 8021:443/tcp
       env:
         TMODE: lacp
-    EAPI-AGG02:
-      image: arista/ceos:4.27.1F
+    eapi-agg02:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.22
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-AGG02.cfg
+      startup-config: intended/configs/eapi-agg02.cfg
       ports:
-      - 8024:443/tcp
+        - 8022:443/tcp
       env:
         TMODE: lacp
-    EAPI-L2LEAF01:
-      image: arista/ceos:4.27.1F
+    eapi-l2leaf01:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.31
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-L2LEAF01.cfg
+      startup-config: intended/configs/eapi-l2leaf01.cfg
       ports:
-      - 8021:443/tcp
+        - 8029:443/tcp
       env:
         TMODE: lacp
-    EAPI-L2LEAF02:
-      image: arista/ceos:4.27.1F
+    eapi-l2leaf02:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.32
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-L2LEAF02.cfg
+      startup-config: intended/configs/eapi-l2leaf02.cfg
       ports:
-      - 8022:443/tcp
+        - 8030:443/tcp
       env:
         TMODE: lacp
-    EAPI-BL01A:
-      image: arista/ceos:4.27.1F
+    eapi-bl01a:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.15
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-BL01A.cfg
+      startup-config: intended/configs/eapi-bl01a.cfg
       ports:
-      - 8017:443/tcp
+        - 8015:443/tcp
       env:
         TMODE: lacp
-    EAPI-BL01B:
-      image: arista/ceos:4.27.1F
+    eapi-bl01b:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.16
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-BL01B.cfg
+      startup-config: intended/configs/eapi-bl01b.cfg
       ports:
-      - 8018:443/tcp
+        - 8016:443/tcp
       env:
         TMODE: lacp
-    EAPI-CL01A:
-      image: arista/ceos:4.27.1F
+    eapi-cl01a:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.19
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-CL01A.cfg
+      startup-config: intended/configs/eapi-cl01a.cfg
       ports:
-      - 8019:443/tcp
+        - 8027:443/tcp
       env:
         TMODE: lacp
-    EAPI-CL01B:
-      image: arista/ceos:4.27.1F
+    eapi-cl01b:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.20
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-CL01B.cfg
+      startup-config: intended/configs/eapi-cl01b.cfg
       ports:
-      - 8020:443/tcp
+        - 8028:443/tcp
       env:
         TMODE: lacp
-    EAPI-LEAF1A:
-      image: arista/ceos:4.27.1F
+    eapi-leaf1a:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.11
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF1A.cfg
+      startup-config: intended/configs/eapi-leaf1a.cfg
       ports:
-      - 8011:443/tcp
+        - 8011:443/tcp
       env:
         TMODE: lacp
-    EAPI-LEAF1B:
-      image: arista/ceos:4.27.1F
+    eapi-leaf1b:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.12
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF1B.cfg
+      startup-config: intended/configs/eapi-leaf1b.cfg
       ports:
-      - 8012:443/tcp
+        - 8012:443/tcp
       env:
         TMODE: lacp
-    EAPI-LEAF2A:
-      image: arista/ceos:4.27.1F
+    eapi-leaf2a:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.13
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF2A.cfg
+      startup-config: intended/configs/eapi-leaf2a.cfg
       ports:
-      - 8013:443/tcp
+        - 8013:443/tcp
       env:
         TMODE: lacp
-    EAPI-LEAF2B:
-      image: arista/ceos:4.27.1F
+    eapi-leaf2b:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.14
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF2B.cfg
+      startup-config: intended/configs/eapi-leaf2b.cfg
       ports:
-      - 8014:443/tcp
+        - 8014:443/tcp
       env:
         TMODE: lacp
-    EAPI-LEAF3A:
-      image: arista/ceos:4.27.1F
+    eapi-leaf3a:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.17
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF3A.cfg
+      startup-config: intended/configs/eapi-leaf3a.cfg
       ports:
-      - 8015:443/tcp
+        - 8017:443/tcp
       env:
         TMODE: lacp
-    EAPI-LEAF4A:
-      image: arista/ceos:4.27.1F
+    eapi-leaf4a:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.18
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-LEAF4A.cfg
+      startup-config: intended/configs/eapi-leaf4a.cfg
       ports:
-      - 8016:443/tcp
+        - 8018:443/tcp
       env:
         TMODE: lacp
-    EAPI-RS01:
-      image: arista/ceos:4.27.1F
+    eapi-rs01:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.51
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-RS01.cfg
+      startup-config: intended/configs/eapi-rs01.cfg
       ports:
-      - 8025:443/tcp
+        - 8033:443/tcp
       env:
         TMODE: lacp
-    EAPI-RS02:
-      image: arista/ceos:4.27.1F
+    eapi-rs02:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.52
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-RS02.cfg
+      startup-config: intended/configs/eapi-rs02.cfg
       ports:
-      - 8026:443/tcp
+        - 8034:443/tcp
       env:
         TMODE: lacp
-    EAPI-SPINE1:
-      image: arista/ceos:4.27.1F
+    eapi-spine1:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.101
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-SPINE1.cfg
+      startup-config: intended/configs/eapi-spine1.cfg
       ports:
-      - 8001:443/tcp
+        - 8001:443/tcp
       env:
         TMODE: lacp
-    EAPI-SPINE2:
-      image: arista/ceos:4.27.1F
+    eapi-spine2:
+      image: arista/ceos:4.27.2F
       mgmt_ipv4: 10.73.254.102
       kind: ceos
-      startup-config: /home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-eapi/intended/configs/EAPI-SPINE2.cfg
+      startup-config: intended/configs/eapi-spine2.cfg
       ports:
-      - 8002:443/tcp
+        - 8002:443/tcp
       env:
         TMODE: lacp
 
   links:
-    - endpoints: ["EAPI-AGG01:eth1", "EAPI-LEAF1A:eth5"]
-    - endpoints: ["EAPI-AGG01:eth2", "EAPI-LEAF1B:eth5"]
-    - endpoints: ["EAPI-AGG02:eth1", "EAPI-LEAF2A:eth5"]
-    - endpoints: ["EAPI-AGG02:eth2", "EAPI-LEAF2B:eth5"]
-    - endpoints: ["EAPI-L2LEAF01:eth1", "EAPI-SPINE1:eth11"]
-    - endpoints: ["EAPI-L2LEAF01:eth2", "EAPI-SPINE2:eth11"]
-    - endpoints: ["EAPI-L2LEAF01:eth3", "EAPI-L2LEAF02:eth3"]
-    - endpoints: ["EAPI-L2LEAF01:eth4", "EAPI-L2LEAF02:eth4"]
-    - endpoints: ["EAPI-L2LEAF02:eth1", "EAPI-SPINE1:eth12"]
-    - endpoints: ["EAPI-L2LEAF02:eth2", "EAPI-SPINE2:eth12"]
-    - endpoints: ["EAPI-BL01A:eth1", "EAPI-SPINE1:eth5"]
-    - endpoints: ["EAPI-BL01A:eth2", "EAPI-SPINE2:eth5"]
-    - endpoints: ["EAPI-BL01A:eth3", "EAPI-BL01B:eth3"]
-    - endpoints: ["EAPI-BL01A:eth4", "EAPI-BL01B:eth4"]
-    - endpoints: ["EAPI-BL01B:eth1", "EAPI-SPINE1:eth6"]
-    - endpoints: ["EAPI-BL01B:eth2", "EAPI-SPINE2:eth6"]
-    - endpoints: ["EAPI-CL01A:eth1", "EAPI-SPINE1:eth9"]
-    - endpoints: ["EAPI-CL01A:eth2", "EAPI-SPINE2:eth9"]
-    - endpoints: ["EAPI-CL01A:eth3", "EAPI-CL01B:eth3"]
-    - endpoints: ["EAPI-CL01A:eth4", "EAPI-CL01B:eth4"]
-    - endpoints: ["EAPI-CL01B:eth1", "EAPI-SPINE1:eth10"]
-    - endpoints: ["EAPI-CL01B:eth2", "EAPI-SPINE2:eth10"]
-    - endpoints: ["EAPI-LEAF1A:eth1", "EAPI-SPINE1:eth1"]
-    - endpoints: ["EAPI-LEAF1A:eth2", "EAPI-SPINE2:eth1"]
-    - endpoints: ["EAPI-LEAF1A:eth3", "EAPI-LEAF1B:eth3"]
-    - endpoints: ["EAPI-LEAF1A:eth4", "EAPI-LEAF1B:eth4"]
-    - endpoints: ["EAPI-LEAF1B:eth1", "EAPI-SPINE1:eth2"]
-    - endpoints: ["EAPI-LEAF1B:eth2", "EAPI-SPINE2:eth2"]
-    - endpoints: ["EAPI-LEAF2A:eth1", "EAPI-SPINE1:eth3"]
-    - endpoints: ["EAPI-LEAF2A:eth2", "EAPI-SPINE2:eth3"]
-    - endpoints: ["EAPI-LEAF2A:eth3", "EAPI-LEAF2B:eth3"]
-    - endpoints: ["EAPI-LEAF2A:eth4", "EAPI-LEAF2B:eth4"]
-    - endpoints: ["EAPI-LEAF2B:eth1", "EAPI-SPINE1:eth4"]
-    - endpoints: ["EAPI-LEAF2B:eth2", "EAPI-SPINE2:eth4"]
-    - endpoints: ["EAPI-LEAF3A:eth1", "EAPI-SPINE1:eth7"]
-    - endpoints: ["EAPI-LEAF3A:eth2", "EAPI-SPINE2:eth7"]
-    - endpoints: ["EAPI-LEAF3A:eth3", "EAPI-LEAF4A:eth3"]
-    - endpoints: ["EAPI-LEAF3A:eth4", "EAPI-LEAF4A:eth4"]
-    - endpoints: ["EAPI-LEAF4A:eth1", "EAPI-SPINE1:eth8"]
-    - endpoints: ["EAPI-LEAF4A:eth2", "EAPI-SPINE2:eth8"]
-    - endpoints: ["EAPI-RS01:eth1", "EAPI-SPINE1:eth13"]
-    - endpoints: ["EAPI-RS02:eth1", "EAPI-SPINE2:eth13"]
+    - endpoints: ["eapi-agg01:ethernet1", "eapi-leaf1a:ethernet5"]
+    - endpoints: ["eapi-agg01:ethernet2", "eapi-leaf1b:ethernet5"]
+    - endpoints: ["eapi-agg02:ethernet1", "eapi-leaf2a:ethernet5"]
+    - endpoints: ["eapi-agg02:ethernet2", "eapi-leaf2b:ethernet5"]
+    - endpoints: ["eapi-l2leaf01:ethernet1", "eapi-spine1:ethernet11"]
+    - endpoints: ["eapi-l2leaf01:ethernet2", "eapi-spine2:ethernet11"]
+    - endpoints: ["eapi-l2leaf01:eth3", "eapi-l2leaf02:eth3"]
+    - endpoints: ["eapi-l2leaf01:eth4", "eapi-l2leaf02:eth4"]
+    - endpoints: ["eapi-l2leaf02:ethernet1", "eapi-spine1:ethernet12"]
+    - endpoints: ["eapi-l2leaf02:ethernet2", "eapi-spine2:ethernet12"]
+    - endpoints: ["eapi-bl01a:ethernet1", "eapi-spine1:ethernet5"]
+    - endpoints: ["eapi-bl01a:ethernet2", "eapi-spine2:ethernet5"]
+    - endpoints: ["eapi-bl01a:eth3", "eapi-bl01b:eth3"]
+    - endpoints: ["eapi-bl01a:eth4", "eapi-bl01b:eth4"]
+    - endpoints: ["eapi-bl01b:ethernet1", "eapi-spine1:ethernet6"]
+    - endpoints: ["eapi-bl01b:ethernet2", "eapi-spine2:ethernet6"]
+    - endpoints: ["eapi-cl01a:ethernet1", "eapi-spine1:ethernet9"]
+    - endpoints: ["eapi-cl01a:ethernet2", "eapi-spine2:ethernet9"]
+    - endpoints: ["eapi-cl01a:eth3", "eapi-cl01b:eth3"]
+    - endpoints: ["eapi-cl01a:eth4", "eapi-cl01b:eth4"]
+    - endpoints: ["eapi-cl01b:ethernet1", "eapi-spine1:ethernet10"]
+    - endpoints: ["eapi-cl01b:ethernet2", "eapi-spine2:ethernet10"]
+    - endpoints: ["eapi-leaf1a:ethernet1", "eapi-spine1:ethernet1"]
+    - endpoints: ["eapi-leaf1a:ethernet2", "eapi-spine2:ethernet1"]
+    - endpoints: ["eapi-leaf1a:eth3", "eapi-leaf1b:eth3"]
+    - endpoints: ["eapi-leaf1a:eth4", "eapi-leaf1b:eth4"]
+    - endpoints: ["eapi-leaf1b:ethernet1", "eapi-spine1:ethernet2"]
+    - endpoints: ["eapi-leaf1b:ethernet2", "eapi-spine2:ethernet2"]
+    - endpoints: ["eapi-leaf2a:ethernet1", "eapi-spine1:ethernet3"]
+    - endpoints: ["eapi-leaf2a:ethernet2", "eapi-spine2:ethernet3"]
+    - endpoints: ["eapi-leaf2a:eth3", "eapi-leaf2b:eth3"]
+    - endpoints: ["eapi-leaf2a:eth4", "eapi-leaf2b:eth4"]
+    - endpoints: ["eapi-leaf2b:ethernet1", "eapi-spine1:ethernet4"]
+    - endpoints: ["eapi-leaf2b:ethernet2", "eapi-spine2:ethernet4"]
+    - endpoints: ["eapi-leaf3a:ethernet1", "eapi-spine1:ethernet7"]
+    - endpoints: ["eapi-leaf3a:ethernet2", "eapi-spine2:ethernet7"]
+    - endpoints: ["eapi-leaf3a:eth3", "eapi-leaf4a:eth3"]
+    - endpoints: ["eapi-leaf3a:eth4", "eapi-leaf4a:eth4"]
+    - endpoints: ["eapi-leaf4a:ethernet1", "eapi-spine1:ethernet8"]
+    - endpoints: ["eapi-leaf4a:ethernet2", "eapi-spine2:ethernet8"]
+    - endpoints: ["eapi-rs01:ethernet1", "eapi-spine1:ethernet13"]
+    - endpoints: ["eapi-rs02:ethernet1", "eapi-spine2:ethernet13"]

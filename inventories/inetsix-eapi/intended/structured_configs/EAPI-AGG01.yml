@@ -59,65 +59,34 @@ management_api_http:
     MGMT: {}
   enable_https: true
 ethernet_interfaces:
-  Ethernet1:
-    peer: EAPI-LEAF1A
-    peer_interface: Ethernet5
+  ethernet1:
+    peer: eapi-leaf1a
+    peer_interface: ethernet5
     peer_type: l3leaf
-    description: EAPI-LEAF1A_Ethernet5
+    description: EAPI-LEAF1A_ethernet5
     type: switched
     shutdown: false
     channel_group:
       id: 1
       mode: active
-  Ethernet2:
-    peer: EAPI-LEAF1B
-    peer_interface: Ethernet5
+  ethernet2:
+    peer: eapi-leaf1b
+    peer_interface: ethernet5
     peer_type: l3leaf
-    description: EAPI-LEAF1B_Ethernet5
+    description: EAPI-LEAF1B_ethernet5
     type: switched
     shutdown: false
     channel_group:
       id: 1
       mode: active
-  Ethernet3:
-    peer: SRV-POD01
-    peer_interface: Eth1
-    peer_type: server
-    description: SRV-POD01_Eth1
-    type: switched
-    shutdown: false
-    mode: trunk
-    vlans: 1-4000
 port_channel_interfaces:
   Port-Channel1:
     description: EAPI_LEAF1_Po5
     type: switched
     shutdown: false
-    vlans: 110-112,131,201
     mode: trunk
-vlans:
-  131:
-    tenant: Tenant_A
-    name: vl131_no_vni
-  110:
-    tenant: Tenant_A
-    name: PR01-DEMO
-  111:
-    tenant: Tenant_A
-    name: PR01-TRUST
-  112:
-    tenant: Tenant_A
-    name: PR01-TRUST
-  201:
-    tenant: Tenant_B
-    name: B-ELAN-201
 ip_igmp_snooping:
   globally_enabled: true
-  vlans:
-    111:
-      enabled: false
-    112:
-      enabled: false
 management_ssh:
   idle_timeout: 0
   enable: true
