@@ -1,25 +1,35 @@
 - name: Cloudvision v3 test playbook
-  hosts: cv_server
+  hosts: all
   connection: local
   gather_facts: false
   collections:
     - arista.avd
     - arista.cvp
   vars:
-    execute_tasks: true
+    execute_tasks: false
     CVP_DEVICES:
-      - fqdn: CV-ANSIBLE-EOS02
-        parentContainerName: 'ANSIBLE'
+      - fqdn: leaf-1-unit-test
+        hostname: leaf-1-unit-test
+        serialNumber: A2BC886CB9408A0453A3CFDD9C251999
+        parentContainerName: 'ansible-tests'
         configlets:
-            - 'CV-EOS-ANSIBLE02'
+            - 'cvaas-unit-test-01'
+            - 'leaf-1-unit-test'
+            - leaf-2-unit-test
+            - test_configlet
+            - test_device_configlet
   tasks:
     # --------------------
     # DEVICES
     # --------------------
+    - name: 'Display initial information'
+      debug:
+        msg: 'Connecting to {{ansible_host}} using token {{ansible_ssh_pass}}'
     - name: "Configure devices on {{inventory_hostname}}"
       arista.cvp.cv_device_v3:
         devices: "{{CVP_DEVICES}}"
         state: present
+        search_key: serialNumber
       register: CVP_DEVICES_RESULTS
 
     - name: 'Display debug'

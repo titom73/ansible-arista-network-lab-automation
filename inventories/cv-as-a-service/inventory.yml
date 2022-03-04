@@ -1,0 +1,19 @@
+---
+all:
+  children:
+    CVP:
+      hosts:
+        CloudVision:
+          # ansible_host: 'www.cv-staging.corp.arista.io'
+          ansible_host: "{{ lookup('env', 'ARISTA_AVD_CV_SERVER') }}"
+          ansible_user: "{{ lookup('env', 'ARISTA_AVD_CV_USER') }}"
+          ansible_ssh_pass: "{{ lookup('env', 'ARISTA_AVD_CV_TOKEN') }}"
+          ansible_become: true
+          ansible_become_method: enable
+          ansible_connection: httpapi
+          ansible_httpapi_use_ssl: true
+          ansible_httpapi_validate_certs: false
+          ansible_network_os: eos
+          ansible_httpapi_port: 443
+          # Configuration to get Virtual Env information
+          # ansible_python_interpreter: $(which python3)
