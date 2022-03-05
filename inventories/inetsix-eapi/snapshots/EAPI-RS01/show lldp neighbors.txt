@@ -1,9 +1,0 @@
-Last table change time   : 0:21:19 ago
-Number of table inserts  : 1
-Number of table deletes  : 0
-Number of table drops    : 0
-Number of table age-outs : 0
-
-Port          Neighbor Device ID       Neighbor Port ID    TTL
----------- ------------------------ ---------------------- ---
-Et1           EAPI-SPINE1              Ethernet13          120
