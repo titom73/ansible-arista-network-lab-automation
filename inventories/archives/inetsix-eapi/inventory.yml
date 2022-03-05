@@ -1,0 +1,130 @@
+---
+CVP:
+  hosts:
+    cv_server:
+      ansible_host: 10.73.1.239
+      ansible_user: ansible
+      ansible_password: ansible
+      type: unset
+
+TOOLS:
+  hosts:
+    DHCP_SERVER:
+      ansible_host: 10.73.1.241
+      ansible_user: tom
+      ansible_password: ansible
+      type: unset
+
+ENDPOINTS:
+  hosts:
+    SRV-POD01:
+      ansible_port: 8023
+      type: endpoint
+    SRV-POD02:
+      ansible_port: 8024
+      type: endpoint
+    SRV-POD03:
+      ansible_port: 8025
+      type: endpoint
+    # DCI-RTR:
+    #   ansible_port: 8026
+    SRV-POD05-23:
+      ansible_port: 8031
+      type: endpoint
+    SRV-POD05-24:
+      ansible_port: 8032
+      type: endpoint
+
+EAPI:
+  children:
+    EAPI_FABRIC:
+      children:
+        EAPI_ROUTE_SERVERS:
+          vars:
+            type: route_server
+          hosts:
+            EAPI-RS01:
+              ansible_port: 8033
+            EAPI-RS02:
+              ansible_port: 8034
+        EAPI_SPINES:
+          vars:
+            type: spine
+          hosts:
+            EAPI-SPINE1:
+              ansible_port: 8001
+            EAPI-SPINE2:
+              ansible_port: 8002
+        EAPI_L3LEAFS:
+          vars:
+            type: l3leaf
+          children:
+            EAPI_LEAF1:
+              hosts:
+                EAPI-LEAF1A:
+                  ansible_port: 8011
+                EAPI-LEAF1B:
+                  ansible_port: 8012
+            EAPI_LEAF2:
+              hosts:
+                EAPI-LEAF2A:
+                  ansible_port: 8013
+                EAPI-LEAF2B:
+                  ansible_port: 8014
+            EAPI_LEAF_ESI:
+              hosts:
+                EAPI-LEAF3A:
+                  ansible_port: 8017
+                EAPI-LEAF4A:
+                  ansible_port: 8018
+            EAPI_BL01:
+              hosts:
+                EAPI-BL01A:
+                  ansible_port: 8015
+                EAPI-BL01B:
+                  ansible_port: 8016
+            # Nodes for central routing (L3 nodes)
+            EAPI_CL02:
+              hosts:
+                EAPI-CL01A:
+                  ansible_port: 8027
+                EAPI-CL01B:
+                  ansible_port: 8028
+        # Nodes for central routing (L2 nodes)
+        EAPI_L2LEAFS:
+          vars:
+            type: l2leaf
+          children:
+            EAPI_L2LEAF1:
+              hosts:
+                EAPI-L2LEAF01:
+                  ansible_port: 8029
+                EAPI-L2LEAF02:
+                  ansible_port: 8030
+        EAPI_EDGE:
+          vars:
+            type: edge
+          children:
+            EAPI_EDGE_LEAF1:
+              hosts:
+                EAPI-AGG01:
+                  ansible_port: 8021
+            EAPI_EDGE_LEAF2:
+              hosts:
+                EAPI-AGG02:
+                  ansible_port: 8022
+    EAPI_SERVICES:
+      children:
+        EAPI_L3LEAFS:
+        EAPI_L2LEAFS:
+        EAPI_EDGE:
+    EAPI_PORTS:
+      children:
+        EAPI_L3LEAFS:
+        EAPI_L2LEAFS:
+        EAPI_EDGE:
+
+# Group to run arista.avd.eos_validate_state
+EOS:
+  children:
+    EAPI_FABRIC:
