@@ -1,9 +1,9 @@
 ---
-name: eapi-fabric
+name: fabric
 
 mgmt:
-  network: 'mgmt-eapi-fabric'
-  ipv4_subnet: 10.254.254.0/24
+  network: 'mgmt-fabric'
+  ipv4_subnet: 10.73.254.0/24
 
 topology:
   kinds:
@@ -16,7 +16,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-agg01.cfg
       ports:
-        - 8021:443/tcp
+        - 9021:443/tcp
       env:
         TMODE: lacp
     eapi-agg02:
@@ -25,7 +25,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-agg02.cfg
       ports:
-        - 8022:443/tcp
+        - 9022:443/tcp
       env:
         TMODE: lacp
     eapi-l2leaf01:
@@ -34,7 +34,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-l2leaf01.cfg
       ports:
-        - 8029:443/tcp
+        - 9029:443/tcp
       env:
         TMODE: lacp
     eapi-l2leaf02:
@@ -43,7 +43,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-l2leaf02.cfg
       ports:
-        - 8030:443/tcp
+        - 9030:443/tcp
       env:
         TMODE: lacp
     eapi-bl01a:
@@ -52,7 +52,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-bl01a.cfg
       ports:
-        - 8015:443/tcp
+        - 9015:443/tcp
       env:
         TMODE: lacp
     eapi-bl01b:
@@ -61,7 +61,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-bl01b.cfg
       ports:
-        - 8016:443/tcp
+        - 9016:443/tcp
       env:
         TMODE: lacp
     eapi-cl01a:
@@ -70,7 +70,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-cl01a.cfg
       ports:
-        - 8027:443/tcp
+        - 9027:443/tcp
       env:
         TMODE: lacp
     eapi-cl01b:
@@ -79,7 +79,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-cl01b.cfg
       ports:
-        - 8028:443/tcp
+        - 9028:443/tcp
       env:
         TMODE: lacp
     eapi-leaf1a:
@@ -88,7 +88,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-leaf1a.cfg
       ports:
-        - 8011:443/tcp
+        - 9011:443/tcp
       env:
         TMODE: lacp
     eapi-leaf1b:
@@ -97,7 +97,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-leaf1b.cfg
       ports:
-        - 8012:443/tcp
+        - 9012:443/tcp
       env:
         TMODE: lacp
     eapi-leaf2a:
@@ -106,7 +106,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-leaf2a.cfg
       ports:
-        - 8013:443/tcp
+        - 9013:443/tcp
       env:
         TMODE: lacp
     eapi-leaf2b:
@@ -115,7 +115,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-leaf2b.cfg
       ports:
-        - 8014:443/tcp
+        - 9014:443/tcp
       env:
         TMODE: lacp
     eapi-leaf3a:
@@ -124,7 +124,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-leaf3a.cfg
       ports:
-        - 8017:443/tcp
+        - 9017:443/tcp
       env:
         TMODE: lacp
     eapi-leaf4a:
@@ -133,7 +133,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-leaf4a.cfg
       ports:
-        - 8018:443/tcp
+        - 9018:443/tcp
       env:
         TMODE: lacp
     eapi-rs01:
@@ -142,7 +142,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-rs01.cfg
       ports:
-        - 8033:443/tcp
+        - 9033:443/tcp
       env:
         TMODE: lacp
     eapi-rs02:
@@ -151,7 +151,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-rs02.cfg
       ports:
-        - 8034:443/tcp
+        - 9034:443/tcp
       env:
         TMODE: lacp
     eapi-spine1:
@@ -160,7 +160,7 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-spine1.cfg
       ports:
-        - 8001:443/tcp
+        - 9001:443/tcp
       env:
         TMODE: lacp
     eapi-spine2:
@@ -169,50 +169,66 @@ topology:
       kind: ceos
       startup-config: intended/configs/eapi-spine2.cfg
       ports:
-        - 8002:443/tcp
+        - 9002:443/tcp
       env:
         TMODE: lacp
+    srv-pod01:
+      env:
+          TMODE: lacp
+      image: arista/ceos:4.27.2F
+      kind: ceos
+      mgmt_ipv4: 10.73.254.41
+      startup-config: intended/configs/srv-pod01.cfg
+    srv-pod02:
+      env:
+          TMODE: lacp
+      image: arista/ceos:4.27.2F
+      kind: ceos
+      mgmt_ipv4: 10.73.254.42
+      startup-config: intended/configs/srv-pod02.cfg
 
   links:
-    - endpoints: ["eapi-agg01:ethernet1", "eapi-leaf1a:ethernet5"]
-    - endpoints: ["eapi-agg01:ethernet2", "eapi-leaf1b:ethernet5"]
-    - endpoints: ["eapi-agg02:ethernet1", "eapi-leaf2a:ethernet5"]
-    - endpoints: ["eapi-agg02:ethernet2", "eapi-leaf2b:ethernet5"]
-    - endpoints: ["eapi-l2leaf01:ethernet1", "eapi-spine1:ethernet11"]
-    - endpoints: ["eapi-l2leaf01:ethernet2", "eapi-spine2:ethernet11"]
-    - endpoints: ["eapi-l2leaf01:eth3", "eapi-l2leaf02:eth3"]
-    - endpoints: ["eapi-l2leaf01:eth4", "eapi-l2leaf02:eth4"]
-    - endpoints: ["eapi-l2leaf02:ethernet1", "eapi-spine1:ethernet12"]
-    - endpoints: ["eapi-l2leaf02:ethernet2", "eapi-spine2:ethernet12"]
-    - endpoints: ["eapi-bl01a:ethernet1", "eapi-spine1:ethernet5"]
-    - endpoints: ["eapi-bl01a:ethernet2", "eapi-spine2:ethernet5"]
-    - endpoints: ["eapi-bl01a:eth3", "eapi-bl01b:eth3"]
-    - endpoints: ["eapi-bl01a:eth4", "eapi-bl01b:eth4"]
-    - endpoints: ["eapi-bl01b:ethernet1", "eapi-spine1:ethernet6"]
-    - endpoints: ["eapi-bl01b:ethernet2", "eapi-spine2:ethernet6"]
-    - endpoints: ["eapi-cl01a:ethernet1", "eapi-spine1:ethernet9"]
-    - endpoints: ["eapi-cl01a:ethernet2", "eapi-spine2:ethernet9"]
-    - endpoints: ["eapi-cl01a:eth3", "eapi-cl01b:eth3"]
-    - endpoints: ["eapi-cl01a:eth4", "eapi-cl01b:eth4"]
-    - endpoints: ["eapi-cl01b:ethernet1", "eapi-spine1:ethernet10"]
-    - endpoints: ["eapi-cl01b:ethernet2", "eapi-spine2:ethernet10"]
-    - endpoints: ["eapi-leaf1a:ethernet1", "eapi-spine1:ethernet1"]
-    - endpoints: ["eapi-leaf1a:ethernet2", "eapi-spine2:ethernet1"]
-    - endpoints: ["eapi-leaf1a:eth3", "eapi-leaf1b:eth3"]
-    - endpoints: ["eapi-leaf1a:eth4", "eapi-leaf1b:eth4"]
-    - endpoints: ["eapi-leaf1b:ethernet1", "eapi-spine1:ethernet2"]
-    - endpoints: ["eapi-leaf1b:ethernet2", "eapi-spine2:ethernet2"]
-    - endpoints: ["eapi-leaf2a:ethernet1", "eapi-spine1:ethernet3"]
-    - endpoints: ["eapi-leaf2a:ethernet2", "eapi-spine2:ethernet3"]
-    - endpoints: ["eapi-leaf2a:eth3", "eapi-leaf2b:eth3"]
-    - endpoints: ["eapi-leaf2a:eth4", "eapi-leaf2b:eth4"]
-    - endpoints: ["eapi-leaf2b:ethernet1", "eapi-spine1:ethernet4"]
-    - endpoints: ["eapi-leaf2b:ethernet2", "eapi-spine2:ethernet4"]
-    - endpoints: ["eapi-leaf3a:ethernet1", "eapi-spine1:ethernet7"]
-    - endpoints: ["eapi-leaf3a:ethernet2", "eapi-spine2:ethernet7"]
-    - endpoints: ["eapi-leaf3a:eth3", "eapi-leaf4a:eth3"]
-    - endpoints: ["eapi-leaf3a:eth4", "eapi-leaf4a:eth4"]
-    - endpoints: ["eapi-leaf4a:ethernet1", "eapi-spine1:ethernet8"]
-    - endpoints: ["eapi-leaf4a:ethernet2", "eapi-spine2:ethernet8"]
-    - endpoints: ["eapi-rs01:ethernet1", "eapi-spine1:ethernet13"]
-    - endpoints: ["eapi-rs02:ethernet1", "eapi-spine2:ethernet13"]
+    - endpoints: ["eapi-agg01:eth1", "eapi-leaf1a:eth5"]
+    - endpoints: ["eapi-agg01:eth2", "eapi-leaf1b:eth5"]
+    - endpoints: ["eapi-agg02:eth1", "eapi-leaf2a:eth5"]
+    - endpoints: ["eapi-agg02:eth2", "eapi-leaf2b:eth5"]
+    - endpoints: ["eapi-l2leaf01:eth1", "eapi-spine1:eth11"]
+    - endpoints: ["eapi-l2leaf01:eth2", "eapi-spine2:eth11"]
+    - endpoints: ["eapi-l2leaf01:eth7", "eapi-l2leaf02:eth7"]
+    - endpoints: ["eapi-l2leaf01:eth8", "eapi-l2leaf02:eth8"]
+    - endpoints: ["eapi-l2leaf02:eth1", "eapi-spine1:eth12"]
+    - endpoints: ["eapi-l2leaf02:eth2", "eapi-spine2:eth12"]
+    - endpoints: ["eapi-bl01a:eth1", "eapi-spine1:eth5"]
+    - endpoints: ["eapi-bl01a:eth2", "eapi-spine2:eth5"]
+    - endpoints: ["eapi-bl01a:eth7", "eapi-bl01b:eth7"]
+    - endpoints: ["eapi-bl01a:eth8", "eapi-bl01b:eth8"]
+    - endpoints: ["eapi-bl01b:eth1", "eapi-spine1:eth6"]
+    - endpoints: ["eapi-bl01b:eth2", "eapi-spine2:eth6"]
+    - endpoints: ["eapi-cl01a:eth1", "eapi-spine1:eth9"]
+    - endpoints: ["eapi-cl01a:eth2", "eapi-spine2:eth9"]
+    - endpoints: ["eapi-cl01a:eth7", "eapi-cl01b:eth7"]
+    - endpoints: ["eapi-cl01a:eth8", "eapi-cl01b:eth8"]
+    - endpoints: ["eapi-cl01b:eth1", "eapi-spine1:eth10"]
+    - endpoints: ["eapi-cl01b:eth2", "eapi-spine2:eth10"]
+    - endpoints: ["eapi-leaf1a:eth1", "eapi-spine1:eth1"]
+    - endpoints: ["eapi-leaf1a:eth2", "eapi-spine2:eth1"]
+    - endpoints: ["eapi-leaf1a:eth7", "eapi-leaf1b:eth7"]
+    - endpoints: ["eapi-leaf1a:eth8", "eapi-leaf1b:eth8"]
+    - endpoints: ["eapi-leaf1b:eth1", "eapi-spine1:eth2"]
+    - endpoints: ["eapi-leaf1b:eth2", "eapi-spine2:eth2"]
+    - endpoints: ["eapi-leaf2a:eth1", "eapi-spine1:eth3"]
+    - endpoints: ["eapi-leaf2a:eth2", "eapi-spine2:eth3"]
+    - endpoints: ["eapi-leaf2a:eth7", "eapi-leaf2b:eth7"]
+    - endpoints: ["eapi-leaf2a:eth8", "eapi-leaf2b:eth8"]
+    - endpoints: ["eapi-leaf2b:eth1", "eapi-spine1:eth4"]
+    - endpoints: ["eapi-leaf2b:eth2", "eapi-spine2:eth4"]
+    - endpoints: ["eapi-leaf3a:eth1", "eapi-spine1:eth7"]
+    - endpoints: ["eapi-leaf3a:eth2", "eapi-spine2:eth7"]
+    - endpoints: ["eapi-leaf3a:eth7", "eapi-leaf4a:eth7"]
+    - endpoints: ["eapi-leaf3a:eth8", "eapi-leaf4a:eth8"]
+    - endpoints: ["eapi-leaf4a:eth1", "eapi-spine1:eth8"]
+    - endpoints: ["eapi-leaf4a:eth2", "eapi-spine2:eth8"]
+    - endpoints: ["eapi-rs01:eth1", "eapi-spine1:eth13"]
+    - endpoints: ["eapi-rs02:eth1", "eapi-spine2:eth13"]
+    - endpoints: ['srv-pod01:eth1', 'eapi-agg01:eth3']
+    - endpoints: ['srv-pod02:eth1', 'eapi-agg02:eth3']

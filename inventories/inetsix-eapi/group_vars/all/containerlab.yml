@@ -1,32 +1,22 @@
 clab_runner_eos: arista/ceos:4.27.2F
-clab_management_network: 10.254.254.0/24
+clab_management_network: 10.73.254.0/24
 
-# clab_nodes:
-#   client-nr2:
-#     kind: linux
-#     image: titom73/network-multitool:extra
-#     mgmt_ipv4: 10.126.51.101
+clab_nodes:
+  srv-pod01:
+    kind: ceos
+    image: "{{ clab_runner_eos }}"
+    startup-config: intended/configs/srv-pod01.cfg
+    mgmt_ipv4: 10.73.254.41
+    env:
+      TMODE: lacp
 
-#   client-r1:
-#     kind: linux
-#     image: titom73/network-multitool:extra
-#     mgmt_ipv4: 10.126.51.102
-
-#   airbus-core:
-#       image: "{{ clab_runner_eos }}"
-#       mgmt_ipv4: 10.126.51.251
-#       kind: ceos
-#       startup-config: intended/configs/airbus-core.cfg
-#       env:
-#         TMODE: lacp
-
-#   blagnac-r-access01:
-#       image: "{{ clab_runner_eos }}"
-#       mgmt_ipv4: 10.126.51.252
-#       kind: ceos
-#       startup-config: intended/configs/blagnac-r-access01.cfg
-#       env:
-#         TMODE: lacp
+  srv-pod02:
+    kind: ceos
+    image: "{{ clab_runner_eos }}"
+    startup-config: intended/configs/srv-pod02.cfg
+    mgmt_ipv4: 10.73.254.42
+    env:
+      TMODE: lacp
 
 #   # tls-management:
 #   #     image: "{{ clab_runner_eos }}"
@@ -44,11 +34,6 @@ clab_management_network: 10.254.254.0/24
 #   #   binds:
 #   #     - .mysocketio_token:/root/.mysocketio_token
 
-# clab_links:
-#  - endpoints: ["tls-cuag-blagnac-nr02:eth5", "client-nr2:eth1"]
-#  - endpoints: ["tls-cuag-blagnac-r01a:eth5", "blagnac-r-access01:eth1"]
-#  - endpoints: ["tls-cuag-blagnac-r01b:eth5", "blagnac-r-access01:eth2"]
-#  - endpoints: ["client-r1:eth5", "blagnac-r-access01:eth5"]
-#  - endpoints: ["tls-sedi-01a:eth5", "airbus-core:eth1"]
-#  - endpoints: ["tls-sedi-01b:eth5", "airbus-core:eth2"]
-#  - endpoints: ["tls-rr-01:eth1", "airbus-core:eth3"]
+clab_links:
+ - endpoints: ["srv-pod01:eth1", "avd-agg01:eth3"]
+ - endpoints: ["srv-pod02:eth1", "avd-agg02:eth3"]

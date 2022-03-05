@@ -1,6 +1,6 @@
 ---
 - name: Build Switch configuration
-  hosts: [eapi]
+  hosts: [avd]
   tags: [avd]
   collections:
     - arista.avd
@@ -22,12 +22,20 @@
       import_role:
         name: arista.avd.eos_config_deploy_eapi
 
+- name: Build Switch configuration
+  hosts: [cvp]
+  tags: [avd, cvp]
+  collections:
+    - arista.avd
+    - arista.cvp
+    - arista.eos
+  tasks:
     - name: "[CVP] deploy configuration to device"
       tags: [deploy_cvp, never]
       import_role:
         name: arista.avd.eos_config_deploy_cvp
       vars:
-        container_root: 'eapi_fabric'
+        container_root: "{{ fabric_name }}"
         configlets_prefix: 'AVD'
         execute_tasks: false
         state: present

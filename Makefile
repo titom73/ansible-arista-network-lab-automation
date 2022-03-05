@@ -4,18 +4,18 @@ GH_CLI := $(which gh)
 
 ### Ansible variables
 # Inventory for EOS playbooks
-INVENTORY ?= inventories/inetsix-eapi
+INVENTORY ?= inventories/inetsix-lab
 # Default Inventory file to look for
 INVENTORY_FILE = inventory.yml
 # Name of the SCOPE to build. Used in --limit scope
 # Name of the SCOPE to build. Used in --limit scope
-SCOPE ?= eapi,tooling
+SCOPE ?= avd,tooling
 # For optional ansible options
 ANSIBLE_ARGS ?= --skip-tags debug --diff
 # Email to login with Mysocket.io
 EMAIL ?=
 # Topology file generated for containerlab
-CLAB_TOPO ?= clab-topology.yml
+CLAB_TOPO ?= containerlabs.yml
 # EAPI NAT Host
 JUMP ?= 10.73.1.27
 
@@ -40,7 +40,7 @@ build: build-avd build-tooling build-clab ## Build AVD topology, tooling configu
 push: push-clab ## Alias to push configuration to default lab
 
 .PHONY: clean
-clean: clean-avd clab-clean  ## Cleanup local environment (AVD and Containerlab)
+clean: clab-clean clean-avd  ## Cleanup local environment (AVD and Containerlab)
 
 .PHONE: deploy
 deploy: deploy-clab
@@ -99,7 +99,7 @@ build-clab:
 
 .PHONY: deploy-clab
 deploy-clab: ## Deploy containerlab topology
-	cd ${INVENTORY} && sudo containerlab deploy --topo ${CLAB_TOPO}
+	cd ${INVENTORY} && sudo containerlab deploy --topo ${CLAB_TOPO} --reconfigure
 
 .PHONY: destroy-clab
 destroy-clab:  ## Destroy Containerlab topology
@@ -107,7 +107,7 @@ destroy-clab:  ## Destroy Containerlab topology
 
 .PHONY: clab-clean
 clab-clean: destroy-clab ## Cleanup Containerlab previous builds
-	cd ${INVENTORY} && sudo rm -rf clab-campus/*
+	cd ${INVENTORY} && sudo rm -rf clab-*/*
 
 .PHONY: mysocket-login
 mysocket-login: ## Login Mysocket.io with Containerlab
