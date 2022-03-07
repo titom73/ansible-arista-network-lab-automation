@@ -1,0 +1,61 @@
+---
+- name: Build Switch configuration
+  hosts: [avd]
+  tags: [avd]
+  collections:
+    - arista.avd
+    - arista.cvp
+    - arista.eos
+  tasks:
+    - name: "generate intended variables"
+      tags: [build]
+      import_role:
+        name: eos_designs
+
+    - name: "generate device intended config and documentation"
+      tags: [build]
+      import_role:
+        name: eos_cli_config_gen
+
+    - name: "[EAPI] deploy configuration to device"
+      tags: [deploy_eapi, never]
+      import_role:
+        name: arista.avd.eos_config_deploy_eapi
+
+- name: Build Switch configuration
+  hosts: [cvp]
+  tags: [avd, cvp]
+  collections:
+    - arista.avd
+    - arista.cvp
+    - arista.eos
+  tasks:
+    - name: "[CVP] deploy configuration to device"
+      tags: [deploy_cvp, never]
+      import_role:
+        name: arista.avd.eos_config_deploy_cvp
+      vars:
+        container_root: "{{ fabric_name }}"
+        configlets_prefix: 'AVD'
+        execute_tasks: false
+        state: present
+        cv_collection: v3
+
+
+- name: Build Switch configuration
+  hosts: [tooling]
+  tags: [tooling]
+  collections:
+    - arista.avd
+    - arista.cvp
+    - arista.eos
+  tasks:
+    - name: "generate device intended config and documentation"
+      tags: [build]
+      import_role:
+        name: eos_cli_config_gen
+
+    - name: "deploy configuration to tooling devices"
+      tags: [deploy_eapi, never]
+      import_role:
+        name: arista.avd.eos_config_deploy_eapi

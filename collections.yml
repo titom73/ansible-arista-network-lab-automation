@@ -5,3 +5,4 @@ collections:
   - ansible.netcommon
   - ansible.posix
   - community.general
+  - titom73.avd-tools
