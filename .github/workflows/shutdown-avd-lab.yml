@@ -1,0 +1,35 @@
+name: AVD Lab Management
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        type: choice
+        description: Action to run
+        options:
+        - deploy
+        - destroy
+
+jobs:
+  power_up:
+    name: Deploy AVD lab
+    runs-on: [self-hosted, containerlab, root]
+    if:  ${{ github.event.inputs.action == 'deploy' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy lab Topology
+        run: |
+          make deploy
+
+  shutdown_lab:
+    name: Shutdown running lab
+    runs-on: [self-hosted, containerlab, root]
+    if:  ${{ github.event.inputs.action == 'destroy' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Destory Containerlab Topology
+        run: |
+          make destroy-clab
