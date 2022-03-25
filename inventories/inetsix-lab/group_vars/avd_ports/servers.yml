@@ -6,7 +6,7 @@ servers:
       - type: nic
         server_ports: [Ethernet1]
         switch_ports: [Ethernet3]
-        switches: [eapi-agg01]
+        switches: [avd-agg01]
         profile: all
   srv-pod02:
     rack: pod02
@@ -14,14 +14,14 @@ servers:
       - type: nic
         server_ports: [Ethernet1]
         switch_ports: [Ethernet3]
-        switches: [eapi-agg02]
+        switches: [avd-agg02]
         profile: all
   srv-pod03:
     rack: pod03
     adapters:
       - server_ports: [ Ethernet1, Ethernet2 ]
         switch_ports: [ Ethernet5, Ethernet5 ]
-        switches: [ eapi-leaf3a, eapi-leaf4a ]
+        switches: [ avd-leaf3a, avd-leaf4a ]
         profile: all
         port_channel:
           state: present
@@ -34,7 +34,7 @@ servers:
       - type: nic
         server_ports: [Ethernet1]
         switch_ports: [Ethernet5]
-        switches: [eapi-l2leaf01]
+        switches: [avd-l2leaf01]
         profile: all
   srv-pod05-24:
     rack: pod05
@@ -42,5 +42,5 @@ servers:
       - type: nic
         server_ports: [Ethernet1]
         switch_ports: [Ethernet5]
-        switches: [eapi-l2leaf02]
+        switches: [avd-l2leaf02]
         profile: all

@@ -25,6 +25,7 @@
   - [VLANs Device Configuration](#vlans-device-configuration)
 - [Interfaces](#interfaces)
   - [Ethernet Interfaces](#ethernet-interfaces)
+  - [Port-Channel Interfaces](#port-channel-interfaces)
   - [Loopback Interfaces](#loopback-interfaces)
   - [VLAN Interfaces](#vlan-interfaces)
   - [VXLAN Interface](#vxlan-interface)
@@ -330,6 +331,7 @@ vlan 201
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
+| Ethernet5 | srv-pod03_Ethernet2 | *trunk | *1-4000 | *- | *- | 5 |
 
 *Inherited from Port-Channel Interface
 
@@ -357,6 +359,37 @@ interface Ethernet2
    mtu 1500
    no switchport
    ip address 172.31.255.63/31
+!
+interface Ethernet5
+   description srv-pod03_Ethernet2
+   no shutdown
+   channel-group 5 mode active
+```
+
+## Port-Channel Interfaces
+
+### Port-Channel Interfaces Summary
+
+#### L2
+
+| Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
+| --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
+| Port-Channel5 | srv-pod03_portchanne1 | switched | trunk | 1-4000 | - | - | - | - | - | 0000:0000:0303:0202:0101 |
+
+### Port-Channel Interfaces Device Configuration
+
+```eos
+!
+interface Port-Channel5
+   description srv-pod03_portchanne1
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 1-4000
+   switchport mode trunk
+   evpn ethernet-segment
+      identifier 0000:0000:0303:0202:0101
+      route-target import 03:03:02:02:01:01
+   lacp system-id 0303.0202.0101
 ```
 
 ## Loopback Interfaces

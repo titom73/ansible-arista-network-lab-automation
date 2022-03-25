@@ -226,6 +226,15 @@ topology:
       kind: ceos
       mgmt_ipv4: 10.73.254.42
       startup-config: intended/configs/srv-pod02.cfg
+    srv-pod03:
+      binds:
+      - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+      env:
+          TMODE: lacp
+      image: arista/ceos:4.27.2F
+      kind: ceos
+      mgmt_ipv4: 10.73.254.43
+      startup-config: intended/configs/srv-pod03.cfg
 
   links:
     - endpoints: ["avd-agg01:eth1", "avd-leaf1a:eth5"]
@@ -272,3 +281,5 @@ topology:
     - endpoints: ["avd-rs02:eth1", "avd-spine2:eth13"]
     - endpoints: ['srv-pod01:eth1', 'avd-agg01:eth3']
     - endpoints: ['srv-pod02:eth1', 'avd-agg02:eth3']
+    - endpoints: ['srv-pod03:eth1', 'avd-leaf3a:eth5']
+    - endpoints: ['srv-pod03:eth2', 'avd-leaf4a:eth5']

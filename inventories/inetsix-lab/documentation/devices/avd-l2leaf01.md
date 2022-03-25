@@ -324,6 +324,7 @@ vlan 302
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
+| Ethernet5 |  srv-pod05-23_Ethernet1 | trunk | 1-4000 | - | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -351,6 +352,13 @@ interface Ethernet2
    mtu 1500
    no switchport
    ip address 172.31.251.83/31
+!
+interface Ethernet5
+   description srv-pod05-23_Ethernet1
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 1-4000
+   switchport mode trunk
 ```
 
 ## Loopback Interfaces

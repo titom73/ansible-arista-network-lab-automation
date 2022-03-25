@@ -1,8 +1,10 @@
 Node Type,Node,Node Interface,Peer Type,Peer,Peer Interface
 edge,avd-agg01,Ethernet1,l3leaf,avd-leaf1a,Ethernet5
 edge,avd-agg01,Ethernet2,l3leaf,avd-leaf1b,Ethernet5
+edge,avd-agg01,Ethernet3,server,srv-pod01,Ethernet1
 edge,avd-agg02,Ethernet1,l3leaf,avd-leaf2a,Ethernet5
 edge,avd-agg02,Ethernet2,l3leaf,avd-leaf2b,Ethernet5
+edge,avd-agg02,Ethernet3,server,srv-pod02,Ethernet1
 l3leaf,avd-bl01a,Ethernet1,spine,avd-spine1,Ethernet5
 l3leaf,avd-bl01a,Ethernet2,spine,avd-spine2,Ethernet5
 l3leaf,avd-bl01a,Ethernet7,mlag_peer,avd-bl01b,Ethernet7
@@ -21,8 +23,10 @@ l3leaf,avd-cl01b,Ethernet7,mlag_peer,avd-cl01a,Ethernet7
 l3leaf,avd-cl01b,Ethernet8,mlag_peer,avd-cl01a,Ethernet8
 l2leaf,avd-l2leaf01,Ethernet1,spine,avd-spine1,Ethernet11
 l2leaf,avd-l2leaf01,Ethernet2,spine,avd-spine2,Ethernet11
+l2leaf,avd-l2leaf01,Ethernet5,server,srv-pod05-23,Ethernet1
 l2leaf,avd-l2leaf02,Ethernet1,spine,avd-spine1,Ethernet12
 l2leaf,avd-l2leaf02,Ethernet2,spine,avd-spine2,Ethernet12
+l2leaf,avd-l2leaf02,Ethernet5,server,srv-pod05-24,Ethernet1
 l3leaf,avd-leaf1a,Ethernet1,spine,avd-spine1,Ethernet1
 l3leaf,avd-leaf1a,Ethernet2,spine,avd-spine2,Ethernet1
 l3leaf,avd-leaf1a,Ethernet5,edge,avd-agg01,Ethernet1
@@ -45,8 +49,10 @@ l3leaf,avd-leaf2b,Ethernet7,mlag_peer,avd-leaf2a,Ethernet7
 l3leaf,avd-leaf2b,Ethernet8,mlag_peer,avd-leaf2a,Ethernet8
 l3leaf,avd-leaf3a,Ethernet1,spine,avd-spine1,Ethernet7
 l3leaf,avd-leaf3a,Ethernet2,spine,avd-spine2,Ethernet7
+l3leaf,avd-leaf3a,Ethernet5,server,srv-pod03,Ethernet1
 l3leaf,avd-leaf4a,Ethernet1,spine,avd-spine1,Ethernet8
 l3leaf,avd-leaf4a,Ethernet2,spine,avd-spine2,Ethernet8
+l3leaf,avd-leaf4a,Ethernet5,server,srv-pod03,Ethernet2
 route_server,avd-rs01,Ethernet1,spine,avd-spine1,Ethernet13
 route_server,avd-rs02,Ethernet1,spine,avd-spine2,Ethernet13
 spine,avd-spine1,Ethernet1,l3leaf,avd-leaf1a,Ethernet1

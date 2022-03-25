@@ -19,10 +19,10 @@ tooling:
           ansible_port: 9024
           ansible_host: 10.73.254.42
           type: endpoint
-        # srv-pod03:
-        #   ansible_port: 9025
-        #   ansible_host: 10.73.254.43
-        #   type: endpoint
+        srv-pod03:
+          ansible_port: 9025
+          ansible_host: 10.73.254.43
+          type: endpoint
         # dci-rtr:
         #   ansible_port: 9026
         # srv-pod05-23:

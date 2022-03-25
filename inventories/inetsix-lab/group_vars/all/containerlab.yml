@@ -22,6 +22,16 @@ clab_nodes:
     binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
 
+  srv-pod03:
+    kind: ceos
+    image: "{{ clab_runner_eos }}"
+    startup-config: intended/configs/srv-pod03.cfg
+    mgmt_ipv4: 10.73.254.43
+    env:
+      TMODE: lacp
+    binds:
+        - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+
 #   # tls-management:
 #   #     image: "{{ clab_runner_eos }}"
 #   #     mgmt_ipv4: 10.126.51.250
@@ -41,3 +51,5 @@ clab_nodes:
 clab_links:
  - endpoints: ["srv-pod01:eth1", "avd-agg01:eth3"]
  - endpoints: ["srv-pod02:eth1", "avd-agg02:eth3"]
+ - endpoints: ["srv-pod03:eth1", "avd-leaf3a:eth5"]
+ - endpoints: ["srv-pod03:eth2", "avd-leaf4a:eth5"]

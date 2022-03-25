@@ -80,6 +80,15 @@ ethernet_interfaces:
     channel_group:
       id: 1
       mode: active
+  Ethernet3:
+    peer: srv-pod01
+    peer_interface: Ethernet1
+    peer_type: server
+    description: srv-pod01_Ethernet1
+    type: switched
+    shutdown: false
+    mode: trunk
+    vlans: 1-4000
 port_channel_interfaces:
   Port-Channel1:
     description: AVD_LEAF1_Po5

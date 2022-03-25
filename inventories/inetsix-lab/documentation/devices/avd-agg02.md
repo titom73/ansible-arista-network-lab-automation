@@ -309,6 +309,7 @@ vlan 201
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet1 | AVD-LEAF2A_Ethernet5 | *trunk | *110-112,132,201 | *- | *- | 1 |
 | Ethernet2 | AVD-LEAF2B_Ethernet5 | *trunk | *110-112,132,201 | *- | *- | 1 |
+| Ethernet3 |  srv-pod02_Ethernet1 | trunk | 1-4000 | - | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -325,6 +326,13 @@ interface Ethernet2
    description AVD-LEAF2B_Ethernet5
    no shutdown
    channel-group 1 mode active
+!
+interface Ethernet3
+   description srv-pod02_Ethernet1
+   no shutdown
+   switchport
+   switchport trunk allowed vlan 1-4000
+   switchport mode trunk
 ```
 
 ## Port-Channel Interfaces
