@@ -7,7 +7,8 @@ GH_CLI := $(which gh)
 INVENTORY ?= inventories/inetsix-lab
 # Default Inventory file to look for
 INVENTORY_FILE = inventory.yml
-# Name of the SCOPE to build. Used in --limit scope
+# VAULT file
+VAULT_FILE ?= ~/bin/op-vault
 # Name of the SCOPE to build. Used in --limit scope
 SCOPE ?= avd,tooling
 # For optional ansible options
@@ -51,23 +52,23 @@ deploy: deploy-clab
 
 .PHONY: build-avd
 build-avd: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
-	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --tags build --skip-tags documentation --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags build --skip-tags documentation --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: build-tooling
 build-tooling: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
-	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --tags build --skip-tags documentation --limit tooling -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags build --skip-tags documentation --limit tooling -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: build-avd-complete
 build-avd-complete: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
-	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --tags build --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags build --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: push-clab
 push-clab: ## Run ansible playbook to push previsouly generated configurations via eAPI
-	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --tags "deploy_eapi" --extra-vars "ansible_port=443" --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags "deploy_eapi" --extra-vars "ansible_port=443" --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: push-jump
 push-jump: ## Run ansible playbook to push previsouly generated configurations via eAPI
-	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --tags "deploy_eapi"  --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) --skip-tags debug --diff --extra-vars "ansible_host=$(JUMP)" $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags "deploy_eapi"  --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) --skip-tags debug --diff --extra-vars "ansible_host=$(JUMP)" $(ANSIBLE_ARGS)
 
 .PHONY: clean-avd
 clean-avd: ## Clenup Build environment
@@ -95,7 +96,7 @@ clean-avd: ## Clenup Build environment
 
 .PHONY: build-clab
 build-clab:
-	ansible-playbook playbooks/topology/containerlab-build-topology-file.yml -i $(INVENTORY)/$(INVENTORY_FILE) --skip-tags debug --diff
+	ansible-playbook playbooks/topology/containerlab-build-topology-file.yml -i $(INVENTORY)/$(INVENTORY_FILE) --skip-tags debug --diff --vault-password-file=$(VAULT_FILE)
 
 .PHONY: deploy-clab
 deploy-clab: ## Deploy containerlab topology

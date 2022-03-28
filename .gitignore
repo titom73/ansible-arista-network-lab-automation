@@ -184,3 +184,5 @@ cython_debug/
 .python-version
 .vscode/
 
+*.zip
+*.qcow2
