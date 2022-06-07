@@ -1,12 +1,12 @@
 clab_runner_eos: arista/ceos:4.27.2F
-clab_management_network: 10.73.254.0/24
+clab_management_network: 10.73.252.0/24
 
 clab_nodes:
   srv-pod01:
     kind: ceos
     image: "{{ clab_runner_eos }}"
     startup-config: intended/configs/srv-pod01.cfg
-    mgmt_ipv4: 10.73.254.41
+    mgmt_ipv4: 10.73.252.41
     env:
       TMODE: lacp
     binds:
@@ -16,7 +16,7 @@ clab_nodes:
     kind: ceos
     image: "{{ clab_runner_eos }}"
     startup-config: intended/configs/srv-pod02.cfg
-    mgmt_ipv4: 10.73.254.42
+    mgmt_ipv4: 10.73.252.42
     env:
       TMODE: lacp
     binds:
@@ -26,11 +26,29 @@ clab_nodes:
     kind: ceos
     image: "{{ clab_runner_eos }}"
     startup-config: intended/configs/srv-pod03.cfg
-    mgmt_ipv4: 10.73.254.43
+    mgmt_ipv4: 10.73.252.43
     env:
       TMODE: lacp
     binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+
+  # graphite:
+  #   kind: linux
+  #   image: netreplica/graphite:webssh2
+  #   mgmt_ipv4: 10.73.252.250
+  #   env:
+  #     GRAPHITE_DEFAULT_TYPE: clab
+  #     GRAPHITE_DEFAULT_TOPO: fabric
+  #     CLAB_SSH_CONNECTION: ${SSH_CONNECTION}
+  #   binds:
+  #     - .:/htdocs/clab
+  #   ports:
+  #     - 8080:80
+  #   exec:
+  #     - sh -c 'generate_offline_graph.sh'
+  #     - sh -c 'graphite_motd.sh 8080'
+  #   labels:
+  #     graph-hide: yes
 
 #   # tls-management:
 #   #     image: "{{ clab_runner_eos }}"

@@ -22,7 +22,7 @@ l2leaf:
         avd-l2leaf01:
           id: 21
           bgp_as: 65107
-          mgmt_ip: 10.73.254.31/24
+          mgmt_ip: 10.73.252.31/24
           mac_address: '50:01:00:14:00:00'
           uplink_switch_interfaces: [Ethernet11, Ethernet11]
           filter:
@@ -31,7 +31,7 @@ l2leaf:
         avd-l2leaf02:
           id: 22
           bgp_as: 65108
-          mgmt_ip: 10.73.254.32/24
+          mgmt_ip: 10.73.252.32/24
           mac_address: '50:01:00:15:00:00'
           uplink_switch_interfaces: [Ethernet12, Ethernet12]
           filter:

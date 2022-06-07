@@ -3,7 +3,7 @@ name: fabric
 
 mgmt:
   network: 'mgmt-fabric'
-  ipv4_subnet: 10.73.254.0/24
+  ipv4_subnet: 10.73.252.0/24
 
 topology:
   kinds:
@@ -12,200 +12,218 @@ topology:
   nodes:
     avd-agg01:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.21
+      mgmt_ipv4: 10.73.252.21
       kind: ceos
       startup-config: intended/configs/avd-agg01.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9021:443/tcp
+        - 8021:443/tcp
+        - 9021:22/tcp
       env:
         TMODE: lacp
     avd-agg02:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.22
+      mgmt_ipv4: 10.73.252.22
       kind: ceos
       startup-config: intended/configs/avd-agg02.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9022:443/tcp
+        - 8022:443/tcp
+        - 9022:22/tcp
       env:
         TMODE: lacp
     avd-l2leaf01:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.31
+      mgmt_ipv4: 10.73.252.31
       kind: ceos
       startup-config: intended/configs/avd-l2leaf01.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9029:443/tcp
+        - 8029:443/tcp
+        - 9029:22/tcp
       env:
         TMODE: lacp
     avd-l2leaf02:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.32
+      mgmt_ipv4: 10.73.252.32
       kind: ceos
       startup-config: intended/configs/avd-l2leaf02.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9030:443/tcp
+        - 8030:443/tcp
+        - 9030:22/tcp
       env:
         TMODE: lacp
     avd-bl01a:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.15
+      mgmt_ipv4: 10.73.252.15
       kind: ceos
       startup-config: intended/configs/avd-bl01a.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9015:443/tcp
+        - 8015:443/tcp
+        - 9015:22/tcp
       env:
         TMODE: lacp
     avd-bl01b:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.16
+      mgmt_ipv4: 10.73.252.16
       kind: ceos
       startup-config: intended/configs/avd-bl01b.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9016:443/tcp
+        - 8016:443/tcp
+        - 9016:22/tcp
       env:
         TMODE: lacp
     avd-cl01a:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.19
+      mgmt_ipv4: 10.73.252.19
       kind: ceos
       startup-config: intended/configs/avd-cl01a.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9027:443/tcp
+        - 8027:443/tcp
+        - 9027:22/tcp
       env:
         TMODE: lacp
     avd-cl01b:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.20
+      mgmt_ipv4: 10.73.252.20
       kind: ceos
       startup-config: intended/configs/avd-cl01b.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9028:443/tcp
+        - 8028:443/tcp
+        - 9028:22/tcp
       env:
         TMODE: lacp
     avd-leaf1a:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.11
+      mgmt_ipv4: 10.73.252.11
       kind: ceos
       startup-config: intended/configs/avd-leaf1a.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9011:443/tcp
+        - 8011:443/tcp
+        - 9011:22/tcp
       env:
         TMODE: lacp
     avd-leaf1b:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.12
+      mgmt_ipv4: 10.73.252.12
       kind: ceos
       startup-config: intended/configs/avd-leaf1b.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9012:443/tcp
+        - 8012:443/tcp
+        - 9012:22/tcp
       env:
         TMODE: lacp
     avd-leaf2a:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.13
+      mgmt_ipv4: 10.73.252.13
       kind: ceos
       startup-config: intended/configs/avd-leaf2a.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9013:443/tcp
+        - 8013:443/tcp
+        - 9013:22/tcp
       env:
         TMODE: lacp
     avd-leaf2b:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.14
+      mgmt_ipv4: 10.73.252.14
       kind: ceos
       startup-config: intended/configs/avd-leaf2b.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9014:443/tcp
+        - 8014:443/tcp
+        - 9014:22/tcp
       env:
         TMODE: lacp
     avd-leaf3a:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.17
+      mgmt_ipv4: 10.73.252.17
       kind: ceos
       startup-config: intended/configs/avd-leaf3a.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9017:443/tcp
+        - 8017:443/tcp
+        - 9017:22/tcp
       env:
         TMODE: lacp
     avd-leaf4a:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.18
+      mgmt_ipv4: 10.73.252.18
       kind: ceos
       startup-config: intended/configs/avd-leaf4a.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9018:443/tcp
+        - 8018:443/tcp
+        - 9018:22/tcp
       env:
         TMODE: lacp
     avd-rs01:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.51
+      mgmt_ipv4: 10.73.252.51
       kind: ceos
       startup-config: intended/configs/avd-rs01.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9033:443/tcp
+        - 8033:443/tcp
+        - 9033:22/tcp
       env:
         TMODE: lacp
     avd-rs02:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.52
+      mgmt_ipv4: 10.73.252.52
       kind: ceos
       startup-config: intended/configs/avd-rs02.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9034:443/tcp
+        - 8034:443/tcp
+        - 9034:22/tcp
       env:
         TMODE: lacp
     avd-spine1:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.101
+      mgmt_ipv4: 10.73.252.101
       kind: ceos
       startup-config: intended/configs/avd-spine1.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9001:443/tcp
+        - 8001:443/tcp
+        - 9001:22/tcp
       env:
         TMODE: lacp
     avd-spine2:
       image: arista/ceos:4.27.2F
-      mgmt_ipv4: 10.73.254.102
+      mgmt_ipv4: 10.73.252.102
       kind: ceos
       startup-config: intended/configs/avd-spine2.cfg
       binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       ports:
-        - 9002:443/tcp
+        - 8002:443/tcp
+        - 9002:22/tcp
       env:
         TMODE: lacp
     srv-pod01:
@@ -215,7 +233,7 @@ topology:
           TMODE: lacp
       image: arista/ceos:4.27.2F
       kind: ceos
-      mgmt_ipv4: 10.73.254.41
+      mgmt_ipv4: 10.73.252.41
       startup-config: intended/configs/srv-pod01.cfg
     srv-pod02:
       binds:
@@ -224,7 +242,7 @@ topology:
           TMODE: lacp
       image: arista/ceos:4.27.2F
       kind: ceos
-      mgmt_ipv4: 10.73.254.42
+      mgmt_ipv4: 10.73.252.42
       startup-config: intended/configs/srv-pod02.cfg
     srv-pod03:
       binds:
@@ -233,7 +251,7 @@ topology:
           TMODE: lacp
       image: arista/ceos:4.27.2F
       kind: ceos
-      mgmt_ipv4: 10.73.254.43
+      mgmt_ipv4: 10.73.252.43
       startup-config: intended/configs/srv-pod03.cfg
 
   links:

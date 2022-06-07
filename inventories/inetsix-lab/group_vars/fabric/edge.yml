@@ -14,7 +14,7 @@ edge:
       nodes:
         avd-agg01:
           id: 23
-          mgmt_ip: 10.73.254.21/24
+          mgmt_ip: 10.73.252.21/24
           mac_address: '0c:1d:c0:1d:62:21'
           uplink_switch_interfaces: [ Ethernet5, Ethernet5 ]
     avd_edge_leaf2:
@@ -25,6 +25,6 @@ edge:
       nodes:
         avd-agg02:
           id: 24
-          mgmt_ip: 10.73.254.22/24
+          mgmt_ip: 10.73.252.22/24
           mac_address: '0c:1d:c0:1d:62:22'
           uplink_switch_interfaces: [ Ethernet5, Ethernet5 ]

@@ -26,7 +26,7 @@ local_users:
 
 # Cloud Vision server information
 cvp_instance_ips:
-  - 10.73.254.254
+  - 10.73.1.239
 cvp_ingestauth_key: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   30363163626631663738643137643331323131633236303036363537323334633934666632306435
@@ -36,8 +36,8 @@ cvp_ingestauth_key: !vault |
   6636
 
 ### Example to use token Auth with eos_designs
-# cvp_instance_ip: 10.83.31.63
-# cvp_ingestauth_key: blah
+# cvp_instance_ip: 10.73.1.239
+# cvp_ingestauth_key: telarista
 
 # # Cloud Vision server information
 # custom_structured_configuration_daemon_terminattr:
@@ -46,7 +46,7 @@ cvp_ingestauth_key: !vault |
 #     token_file: "/tmp/token"
 
 # OOB Management network default gateway.
-mgmt_gateway: 10.73.254.253
+mgmt_gateway: 10.73.254.1
 mgmt_interface_vrf: "{{ default_mgmt_interface_vrf }}"
 
 # dns servers.

@@ -24,12 +24,12 @@ l3leaf:
       nodes:
         avd-leaf1a:
           id: 11
-          mgmt_ip: 10.73.254.11/24
+          mgmt_ip: 10.73.252.11/24
           uplink_switch_interfaces: [Ethernet1, Ethernet1]
           mac_address: '0c:1d:c0:1d:62:11'
         avd-leaf1b:
           id: 12
-          mgmt_ip: 10.73.254.12/24
+          mgmt_ip: 10.73.252.12/24
           uplink_switch_interfaces: [Ethernet2, Ethernet2]
           mac_address: '0c:1d:c0:1d:62:12'
     avd_leaf2:
@@ -40,12 +40,12 @@ l3leaf:
       nodes:
         avd-leaf2a:
           id: 13
-          mgmt_ip: 10.73.254.13/24
+          mgmt_ip: 10.73.252.13/24
           mac_address: '0c:1d:c0:1d:62:13'
           uplink_switch_interfaces: [Ethernet3, Ethernet3]
         avd-leaf2b:
           id: 14
-          mgmt_ip: 10.73.254.14/24
+          mgmt_ip: 10.73.252.14/24
           mac_address: '0c:1d:c0:1d:62:14'
           uplink_switch_interfaces: [Ethernet4, Ethernet4]
     avd_leaf_esi:
@@ -57,13 +57,13 @@ l3leaf:
         avd-leaf3a:
           id: 15
           bgp_as: 65103
-          mgmt_ip: 10.73.254.17/24
+          mgmt_ip: 10.73.252.17/24
           mac_address: '0c:1d:c0:1d:62:17'
           uplink_switch_interfaces: [Ethernet7, Ethernet7]
         avd-leaf4a:
           id: 16
           bgp_as: 65104
-          mgmt_ip: 10.73.254.18/24
+          mgmt_ip: 10.73.252.18/24
           mac_address: '0c:1d:c0:1d:62:18'
           uplink_switch_interfaces: [Ethernet8, Ethernet8]
     avd_bl01:
@@ -74,12 +74,12 @@ l3leaf:
       nodes:
         avd-bl01a:
           id: 17
-          mgmt_ip: 10.73.254.15/24
+          mgmt_ip: 10.73.252.15/24
           mac_address: '0c:1d:c0:1d:62:15'
           uplink_switch_interfaces: [Ethernet5, Ethernet5]
         avd-bl01b:
           id: 18
-          mgmt_ip: 10.73.254.16/24
+          mgmt_ip: 10.73.252.16/24
           mac_address: '0c:1d:c0:1d:62:16'
           uplink_switch_interfaces: [Ethernet6, Ethernet6]
     avd_cl01:
@@ -90,11 +90,11 @@ l3leaf:
       nodes:
         avd-cl01a:
           id: 19
-          mgmt_ip: 10.73.254.19/24
+          mgmt_ip: 10.73.252.19/24
           mac_address: '50:01:00:11:00:00'
           uplink_switch_interfaces: [Ethernet9, Ethernet9]
         avd-cl01b:
           id: 20
-          mgmt_ip: 10.73.254.20/24
+          mgmt_ip: 10.73.252.20/24
           mac_address: '50:01:00:12:00:00'
           uplink_switch_interfaces: [Ethernet10, Ethernet10]

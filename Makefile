@@ -100,7 +100,7 @@ build-clab:
 
 .PHONY: deploy-clab
 deploy-clab: ## Deploy containerlab topology
-	cd ${INVENTORY} && sudo containerlab deploy --topo ${CLAB_TOPO} --reconfigure
+	cd ${INVENTORY} && sudo -E containerlab deploy --topo ${CLAB_TOPO} --reconfigure
 
 .PHONY: destroy-clab
 destroy-clab:  ## Destroy Containerlab topology
@@ -112,7 +112,7 @@ clab-clean: destroy-clab ## Cleanup Containerlab previous builds
 
 .PHONY: mysocket-login
 mysocket-login: ## Login Mysocket.io with Containerlab
-	cd ${INVENTORY} && sudo containerlab tools mysocketio login -e ${EMAIL}
+	cd ${INVENTORY} && sudo -E containerlab tools mysocketio login -e ${EMAIL}
 
 .PHONY: reload-clab
 reload-clab: clab-clean build-clab deploy-clab
