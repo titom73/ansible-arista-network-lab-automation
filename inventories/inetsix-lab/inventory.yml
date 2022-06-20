@@ -18,14 +18,17 @@ tooling:
     endpoints:
       hosts:
         srv-pod01:
+          ansible_httpapi_port: 9023
           ansible_port: 9023
           ansible_host: 10.73.252.41
           type: endpoint
         srv-pod02:
+          ansible_httpapi_port: 9024
           ansible_port: 9024
           ansible_host: 10.73.252.42
           type: endpoint
         srv-pod03:
+          ansible_httpapi_port: 9025
           ansible_port: 9025
           ansible_host: 10.73.252.43
           type: endpoint
@@ -49,9 +52,11 @@ avd:
             type: route_server
           hosts:
             avd-rs01:
+              ansible_httpapi_port: 8033
               ansible_port: 9033
               ansible_host: 10.73.252.51
             avd-rs02:
+              ansible_httpapi_port: 8034
               ansible_port: 9034
               ansible_host: 10.73.252.52
         avd_spines:
@@ -59,9 +64,11 @@ avd:
             type: spine
           hosts:
             avd-spine1:
+              ansible_httpapi_port: 8001
               ansible_port: 9001
               ansible_host: 10.73.252.101
             avd-spine2:
+              ansible_httpapi_port: 8002
               ansible_port: 9002
               ansible_host: 10.73.252.102
         avd_l3leafs:
@@ -71,42 +78,52 @@ avd:
             avd_leaf1:
               hosts:
                 avd-leaf1a:
+                  ansible_httpapi_port: 8011
                   ansible_port: 9011
                   ansible_host: 10.73.252.11
                 avd-leaf1b:
+                  ansible_httpapi_port: 8012
                   ansible_port: 9012
                   ansible_host: 10.73.252.12
             avd_leaf2:
               hosts:
                 avd-leaf2a:
+                  ansible_httpapi_port: 8013
                   ansible_port: 9013
                   ansible_host: 10.73.252.13
                 avd-leaf2b:
+                  ansible_httpapi_port: 8014
                   ansible_port: 9014
                   ansible_host: 10.73.252.14
             avd_leaf_esi:
               hosts:
                 avd-leaf3a:
+                  ansible_httpapi_port: 8017
                   ansible_port: 9017
                   ansible_host: 10.73.252.17
                 avd-leaf4a:
+                  ansible_httpapi_port: 8018
                   ansible_port: 9018
                   ansible_host: 10.73.252.18
             avd_bl01:
               hosts:
                 avd-bl01a:
+                  ansible_httpapi_port: 8015
                   ansible_port: 9015
                   ansible_host: 10.73.252.15
                 avd-bl01b:
+                  ansible_httpapi_port: 8016
                   ansible_port: 9016
                   ansible_host: 10.73.252.16
             # nodes for central routing (l3 nodes)
             avd_cl02:
               hosts:
                 avd-cl01a:
+                  ansible_httpapi_port: 8027
                   ansible_port: 9027
                   ansible_host: 10.73.252.19
                 avd-cl01b:
+                  ansible_httpapi_port: 8028
                   ansible_port: 9028
                   ansible_host: 10.73.252.20
         # nodes for central routing (l2 nodes)
@@ -117,9 +134,11 @@ avd:
             avd_l2leaf1:
               hosts:
                 avd-l2leaf01:
+                  ansible_httpapi_port: 8029
                   ansible_port: 9029
                   ansible_host: 10.73.252.31
                 avd-l2leaf02:
+                  ansible_httpapi_port: 8030
                   ansible_port: 9030
                   ansible_host: 10.73.252.32
         avd_edge:
@@ -129,11 +148,13 @@ avd:
             avd_edge_leaf1:
               hosts:
                 avd-agg01:
+                  ansible_httpapi_port: 8021
                   ansible_port: 9021
                   ansible_host: 10.73.252.21
             avd_edge_leaf2:
               hosts:
                 avd-agg02:
+                  ansible_httpapi_port: 8022
                   ansible_port: 9022
                   ansible_host: 10.73.252.22
     avd_services:

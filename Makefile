@@ -64,7 +64,7 @@ build-avd-complete: ## Run ansible playbook to build EVPN SCOPE configuration fo
 
 .PHONY: push-clab
 push-clab: ## Run ansible playbook to push previsouly generated configurations via eAPI
-	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags "deploy_eapi" --extra-vars "ansible_port=443" --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags "deploy_eapi" --extra-vars "ansible_httpapi_port=443" --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 .PHONY: push-jump
 push-jump: ## Run ansible playbook to push previsouly generated configurations via eAPI

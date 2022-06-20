@@ -28,19 +28,19 @@ servers:
           description: portchanne1
           mode: active
           short_esi: '0303:0202:0101'
-  srv-pod05-23:
-    rack: pod05
-    adapters:
-      - type: nic
-        server_ports: [Ethernet1]
-        switch_ports: [Ethernet5]
-        switches: [avd-l2leaf01]
-        profile: all
-  srv-pod05-24:
-    rack: pod05
-    adapters:
-      - type: nic
-        server_ports: [Ethernet1]
-        switch_ports: [Ethernet5]
-        switches: [avd-l2leaf02]
-        profile: all
+  # srv-pod05-23:
+  #   rack: pod05
+  #   adapters:
+  #     - type: nic
+  #       server_ports: [Ethernet1]
+  #       switch_ports: [Ethernet5]
+  #       switches: [avd-l2leaf01]
+  #       profile: all
+  # srv-pod05-24:
+  #   rack: pod05
+  #   adapters:
+  #     - type: nic
+  #       server_ports: [Ethernet1]
+  #       switch_ports: [Ethernet5]
+  #       switches: [avd-l2leaf02]
+  #       profile: all

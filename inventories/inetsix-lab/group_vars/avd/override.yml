@@ -10,9 +10,9 @@ inetsix_management_ssh:
   #   MGT:
   #     enable: true
 
-inetsix_aaa_authorization:
-  exec:
-    default: local
+# inetsix_aaa_authorization:
+#   exec:
+#     default: local
 
 # custom_structured_configuration_static_routes:
 #   static_routes:

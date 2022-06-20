@@ -1,10 +1,10 @@
-aaa_authorization:
+inetsix_aaa_authorization:
   exec:
     default: group radius local
   commands:
     all_default: group radius local
 
-aaa_authentication:
+inetsix_aaa_authentication:
   login:
     default: group radius local
     console: local
@@ -16,19 +16,18 @@ aaa_authentication:
     local:
       allow_nopassword: true
 
-
-ip_radius_source_interfaces:
+inetsix_ip_radius_source_interfaces:
   - name: Management0
     vrf: "{{ default_mgmt_interface_vrf }}"
 
-aaa_server_groups:
+inetsix_aaa_server_groups:
   - name: LAB_AAA
     type: radius
     servers:
       - server: 10.73.252.252
         vrf: "{{ default_mgmt_interface_vrf }}"
 
-radius_servers:
+inetsix_radius_servers:
   - host: 10.73.252.252
     vrf: "{{ default_mgmt_interface_vrf }}"
     key: 14031718180D242C757A60

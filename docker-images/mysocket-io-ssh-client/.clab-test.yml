@@ -1,0 +1,24 @@
+---
+name: test
+
+mgmt:
+  network: 'mgmt-test'
+  ipv4_subnet: 192.168.1.0/24
+
+topology:
+  kinds:
+    ceos:
+      image: arista/ceos:4.27.2F
+  nodes:
+    management:
+        image: titom73/mysocket-io-ssh-client:0.2.0
+        mgmt_ipv4: 192.168.1.10
+        kind: linux
+        publish:
+        - tcp/22/tgrimonet@arista.com
+
+    mysocketio:
+      kind: mysocketio
+      image: ghcr.io/hellt/mysocketctl:0.5.0
+      binds:
+        - /home/tom/.mysocketio_token:/root/.mysocketio_token

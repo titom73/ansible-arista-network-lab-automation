@@ -32,39 +32,53 @@ clab_nodes:
     binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
 
+  # ------------------------- #
+  # --- Network Services ---- #
+  # ------------------------- #
+  # AAA Auth server
+  radius:
+    image: titom73/radius:0.3.0
+    mgmt_ipv4: 10.73.252.252
+    kind: linux
+    binds:
+      - radius_authorize:/etc/raddb/mods-config/files/authorize
+
+  # --------------------------------------- #
+  # Graphite Node                           #
+  # Provides Topology Graphing and the      #
+  # ability to connect to nodes in the      #
+  # topology via a web/ssh session          #
+  # --------------------------------------- #
   # graphite:
   #   kind: linux
-  #   image: netreplica/graphite:webssh2
-  #   mgmt_ipv4: 10.73.252.250
+  #   image: netreplica/graphite
+  #   mgmt_ipv4:  10.73.252.253
   #   env:
   #     GRAPHITE_DEFAULT_TYPE: clab
   #     GRAPHITE_DEFAULT_TOPO: fabric
-  #     CLAB_SSH_CONNECTION: ${SSH_CONNECTION}
+  #     # CLAB_SSH_CONNECTION: ${SSH_CONNECTION}
   #   binds:
-  #     - .:/htdocs/clab
+  #     # - .:/var/www/localhost/htdocs/clab   <----  This is the old path in docker image netreplica/graphite:webssh2
+  #     - .:/htdocs/clab    # New path required for latest version
   #   ports:
-  #     - 8080:80
+  #     - 8182:80
   #   exec:
-  #     - sh -c 'generate_offline_graph.sh'
-  #     - sh -c 'graphite_motd.sh 8080'
+  #     # - sh -c 'generate_offline_graph.sh'   # used to generate offline graphs
+  #     - sh -c 'graphite_motd.sh 80'
   #   labels:
   #     graph-hide: yes
 
-#   # tls-management:
-#   #     image: "{{ clab_runner_eos }}"
-#   #     mgmt_ipv4: 10.126.51.250
-#   #     kind: ceos
-#   #     startup-config: intended/configs/eos-jump.cfg
-#   #     publish:
-#   #     - tcp/22/tgrimonet@arista.com
-#   #     env:
-#   #       TMODE: lacp
+  # oob-management:
+  #     image: titom73/mysocket-io-ssh-client:0.3.0
+  #     kind: linux
+  #     publish:
+  #     - tcp/22/arista.com
 
-#   # mysocketio:
-#   #   kind: mysocketio
-#   #   image: ghcr.io/hellt/mysocketctl:0.5.0
-#   #   binds:
-#   #     - .mysocketio_token:/root/.mysocketio_token
+  # mysocketio:
+  #   kind: mysocketio
+  #   image: ghcr.io/hellt/mysocketctl:0.5.0
+  #   binds:
+  #     - .mysocketio_token:/root/.mysocketio_token
 
 clab_links:
  - endpoints: ["srv-pod01:eth1", "avd-agg01:eth3"]

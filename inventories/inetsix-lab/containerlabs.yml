@@ -253,6 +253,12 @@ topology:
       kind: ceos
       mgmt_ipv4: 10.73.252.43
       startup-config: intended/configs/srv-pod03.cfg
+    radius:
+      binds:
+      - radius_authorize:/etc/raddb/mods-config/files/authorize
+      image: titom73/radius:0.3.0
+      kind: linux
+      mgmt_ipv4: 10.73.252.252
 
   links:
     - endpoints: ["avd-agg01:eth1", "avd-leaf1a:eth5"]

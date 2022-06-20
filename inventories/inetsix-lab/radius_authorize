@@ -1,0 +1,24 @@
+
+cvpuser Cleartext-Password := "cvpuser"
+        Auth-Type := Accept,
+        Arista-AVPair := "shell:priv-lvl=15",
+        Arista-AVpair += "shell:roles=network-admin",
+        Arista-Command += 'permit mode exec command show|clear',
+        Arista-AVpair += "shell:cvp-roles=network-admin",
+        Service-Type := NAS-Prompt-User
+
+cvpadmin Cleartext-Password := "cvpadmin"
+        Auth-Type := Accept,
+        Arista-AVPair := "shell:priv-lvl=15",
+        Arista-AVpair += "shell:roles=network-admin",
+        Arista-Command += 'permit command .*',
+        Arista-AVpair += "shell:cvp-roles=network-admin",
+        Service-Type := NAS-Prompt-User
+
+ansible Cleartext-Password := "ansible"
+        Auth-Type := Accept,
+        Arista-AVPair := "shell:priv-lvl=15",
+        Arista-AVpair += "shell:roles=network-admin",
+        Arista-Command += 'permit command .*',
+        Arista-AVpair += "shell:cvp-roles=network-admin",
+        Service-Type := NAS-Prompt-User

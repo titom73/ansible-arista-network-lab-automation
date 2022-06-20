@@ -186,3 +186,7 @@ cython_debug/
 
 *.zip
 *.qcow2
+
+*/.mysocketio_token
+**/.containerlabs.yml
+**/.mysocketio_token
