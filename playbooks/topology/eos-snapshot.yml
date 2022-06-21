@@ -1,0 +1,13 @@
+---
+- name: Collect EOS commands from the Fabric
+  hosts: [avd]
+  tags: [avd]
+  collections:
+    - arista.avd
+    - arista.cvp
+    - arista.eos
+  vars:
+  tasks:
+    - name: "Run arista.avd.eos_snapshot"
+      import_role:
+        name: arista.avd.eos_snapshot
