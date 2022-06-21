@@ -78,4 +78,4 @@ snmp_server:
 
 validate_state_markdown_flavor: github
 
-custom_structured_configuration_prefix: [ inetsix_, custom_structured_configuration_ ]
+custom_structured_configuration_prefix: [ inetsix_, gnmi_, custom_structured_configuration_ ]

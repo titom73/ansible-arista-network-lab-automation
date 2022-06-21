@@ -1,0 +1,22 @@
+Interface                      Status         Protocol           Description
+Et1                            up             up                 P2P_LINK_TO_AVD-SPINE1_Ethernet4
+Et2                            up             up                 P2P_LINK_TO_AVD-SPINE2_Ethernet4
+Et5                            up             up                 AVD-AGG02_Ethernet2
+Et7                            up             up                 MLAG_PEER_avd-leaf2a_Ethernet7
+Et8                            up             up                 MLAG_PEER_avd-leaf2a_Ethernet8
+Lo0                            up             up                 EVPN_Overlay_Peering
+Lo1                            up             up                 VTEP_VXLAN_Tunnel_Source
+Ma0                            up             up                 oob_management
+Po5                            up             up                 AVD-AGG02_Po1
+Po7                            up             up                 MLAG_PEER_avd-leaf2a_Po7
+Vl110                          up             up                 pr01-demo
+Vl111                          up             up                 pr01-trust
+Vl112                          up             up                 pr01-trust
+Vl132                          up             up                 vl132_no_vni
+Vl1198                         up             up                 
+Vl1199                         up             up                 
+Vl3010                         up             up                 MLAG_PEER_L3_iBGP: vrf tenant_a_project01
+Vl3012                         up             up                 MLAG_PEER_L3_iBGP: vrf pure_type5
+Vl4093                         up             up                 MLAG_PEER_L3_PEERING
+Vl4094                         up             up                 MLAG_PEER
+Vx1                            up             up                 avd-leaf2b_VTEP

@@ -1,0 +1,79 @@
+VRF: default
+Codes: C - connected, S - static, K - kernel, 
+       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+       N2 - OSPF NSSA external type2, B - Other BGP Routes,
+       B I - iBGP, B E - eBGP, R - RIP, I L1 - IS-IS level 1,
+       I L2 - IS-IS level 2, O3 - OSPFv3, A B - BGP Aggregate,
+       A O - OSPF Summary, NG - Nexthop Group Static Route,
+       V - VXLAN Control Service, M - Martian,
+       DH - DHCP client installed default route,
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
+
+Gateway of last resort is not set
+
+ C        172.31.251.84/31 is directly connected, Ethernet1
+ C        172.31.251.86/31 is directly connected, Ethernet2
+ B E      192.168.0.26/32 [20/0] via 172.31.251.84, Ethernet1
+ B E      192.168.0.27/32 [20/0] via 172.31.251.86, Ethernet2
+ B E      192.168.1.1/32 [20/0] via 172.31.251.84, Ethernet1
+ B E      192.168.1.2/32 [20/0] via 172.31.251.86, Ethernet2
+ B E      192.168.252.22/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ C        192.168.252.23/32 is directly connected, Loopback1
+ B E      192.168.253.22/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ C        192.168.253.23/32 is directly connected, Loopback0
+ B E      192.168.254.13/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.254.15/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.254.17/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.254.18/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.254.19/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.254.21/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.255.13/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.255.14/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.255.15/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.255.16/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.255.17/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.255.18/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.255.19/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.255.20/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.255.21/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+ B E      192.168.255.22/32 [20/0] via 172.31.251.84, Ethernet1
+                                   via 172.31.251.86, Ethernet2
+
+
+VRF: MGMT
+Codes: C - connected, S - static, K - kernel, 
+       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
+       E2 - OSPF external type 2, N1 - OSPF NSSA external type 1,
+       N2 - OSPF NSSA external type2, B - Other BGP Routes,
+       B I - iBGP, B E - eBGP, R - RIP, I L1 - IS-IS level 1,
+       I L2 - IS-IS level 2, O3 - OSPFv3, A B - BGP Aggregate,
+       A O - OSPF Summary, NG - Nexthop Group Static Route,
+       V - VXLAN Control Service, M - Martian,
+       DH - DHCP client installed default route,
+       DP - Dynamic Policy Route, L - VRF Leaked,
+       G  - gRIBI, RC - Route Cache Route
+
+Gateway of last resort is not reachable
+
+ C        10.73.252.0/24 is directly connected, Management0
+
+! IP routing not enabled

@@ -1,0 +1,16 @@
+BGP summary information for VRF default
+Router identifier 192.168.0.27, local AS number 65000
+Neighbor Status Codes: m - Under maintenance
+  Description              Neighbor       V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+  avd-l2leaf01             192.168.253.22 4 65107            305       345    0    0 03:27:59 Estab   2      2
+  avd-l2leaf02             192.168.253.23 4 65108            301       347    0    0 03:28:03 Estab   1      1
+  avd-leaf1a               192.168.255.13 4 65101            312       326    0    0 03:27:43 Estab   10     10
+  avd-leaf1b               192.168.255.14 4 65101            307       322    0    0 03:27:44 Estab   10     10
+  avd-leaf2a               192.168.255.15 4 65102            318       316    0    0 03:27:36 Estab   12     12
+  avd-leaf2b               192.168.255.16 4 65102            284       315    0    0 03:27:34 Estab   12     12
+  avd-leaf3a               192.168.255.17 4 65103            303       330    0    0 03:27:49 Estab   12     12
+  avd-leaf4a               192.168.255.18 4 65104            314       335    0    0 03:28:01 Estab   11     11
+  avd-bl01a                192.168.255.19 4 65105            334       326    0    0 03:27:34 Estab   4      4
+  avd-bl01b                192.168.255.20 4 65105            327       321    0    0 03:27:35 Estab   4      4
+  avd-cl01a                192.168.255.21 4 65106            316       345    0    0 03:27:55 Estab   9      9
+  avd-cl01b                192.168.255.22 4 65106            319       338    0    0 03:27:49 Estab   9      9

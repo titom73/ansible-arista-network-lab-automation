@@ -1,0 +1,10 @@
+VLAN  Name                             Status    Ports
+----- -------------------------------- --------- -------------------------------
+1     default                          active    Et7, Et8, Po5
+110   pr01-demo                        active    Cpu, Po5, Vx1
+113   pr01-dmz                         active    Cpu, Po5, Vx1
+201   b-elan-201                       active    Po5, Vx1
+1198* VLAN1198                         active    Cpu, Vx1
+1199* VLAN1199                         active    Cpu, Vx1
+
+* indicates a Dynamic VLAN

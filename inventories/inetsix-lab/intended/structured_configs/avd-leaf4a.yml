@@ -278,3 +278,10 @@ management_ssh:
   vrfs:
     MGT:
       enable: true
+access_lists:
+  ACL_GNMI:
+    sequence_numbers:
+      10:
+        action: remark ACL to restrict access to GNMI service
+      20:
+        action: permit ip 10.0.0.0/8 any

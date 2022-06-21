@@ -1,4 +1,4 @@
-Last table change time   : 2:05:23 ago
+Last table change time   : 3:02:09 ago
 Number of table inserts  : 21
 Number of table deletes  : 1
 Number of table drops    : 0
@@ -11,18 +11,18 @@ Et2           avd-spine2               Ethernet11          120
 Et7           avd-l2leaf02             Ethernet7           120
 Et8           avd-l2leaf02             Ethernet8           120
 Ma0           srv-pod01                Management0         120
-Ma0           srv-pod03                Management0         120
 Ma0           srv-pod02                Management0         120
-Ma0           avd-rs01                 Management0         120
-Ma0           avd-leaf2a               Management0         120
-Ma0           avd-leaf1b               Management0         120
 Ma0           avd-leaf1a               Management0         120
-Ma0           avd-agg01                Management0         120
-Ma0           avd-rs02                 Management0         120
+Ma0           avd-rs01                 Management0         120
+Ma0           avd-cl01b                Management0         120
+Ma0           srv-pod03                Management0         120
 Ma0           avd-agg02                Management0         120
-Ma0           avd-spine1               Management0         120
-Ma0           avd-leaf3a               Management0         120
-Ma0           avd-l2leaf02             Management0         120
-Ma0           avd-leaf2b               Management0         120
-Ma0           avd-bl01a                Management0         120
+Ma0           avd-agg01                Management0         120
+Ma0           avd-spine2               Management0         120
 Ma0           avd-leaf4a               Management0         120
+Ma0           avd-rs02                 Management0         120
+Ma0           avd-l2leaf02             Management0         120
+Ma0           avd-cl01a                Management0         120
+Ma0           avd-spine1               Management0         120
+Ma0           avd-leaf2a               Management0         120
+Ma0           avd-leaf3a               Management0         120

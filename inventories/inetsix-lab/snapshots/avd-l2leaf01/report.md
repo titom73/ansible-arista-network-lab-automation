@@ -24,10 +24,10 @@
 ```
 VRF name: default
 -----------------
-DstAddr          MyDisc  YourDisc Interface/Transport     Type          LastUp 
------------- ---------- --------- ------------------- --------- ---------------
-192.168.0.26 3044436233 489106413                  NA multihop  06/21/22 09:11 
-192.168.0.27 4037208146 362073257                  NA multihop  06/21/22 09:11 
+DstAddr          MyDisc   YourDisc Interface/Transport     Type         LastUp 
+------------ ---------- ---------- ------------------- -------- ---------------
+192.168.0.26 3067643567 3479648580                  NA multihop 06/21/22 12:33 
+192.168.0.27  875462199  186080421                  NA multihop 06/21/22 12:34 
 
    LastDown            LastDiag    State
 -------------- ------------------- -----
@@ -41,8 +41,8 @@ BGP summary information for VRF default
 Router identifier 192.168.253.22, local AS number 65107
 Neighbor Status Codes: m - Under maintenance
   Description              Neighbor     V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
-  avd-rs01                 192.168.0.26 4 65000            366       274    0    0 02:16:41 Estab   90     90
-  avd-rs02                 192.168.0.27 4 65000            366       294    0    0 02:16:32 Estab   90     90
+  avd-rs01                 192.168.0.26 4 65000            339       295    0    0 03:28:44 Estab   94     94
+  avd-rs02                 192.168.0.27 4 65000            346       306    0    0 03:28:40 Estab   94     94
 ```
 ## show bgp evpn
 
@@ -88,18 +88,34 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
                                  192.168.254.18        -       100     0       65000 65104 i
  *  ec   RD: 192.168.254.18:1 auto-discovery 0000:0000:0303:0202:0101
                                  192.168.254.18        -       100     0       65000 65104 i
- * >Ec   RD: 192.168.255.17:11 mac-ip 10110 001c.736f.041d
+ * >Ec   RD: 192.168.255.17:11 mac-ip 10110 001c.73a4.f92c
                                  192.168.254.17        -       100     0       65000 65103 i
- *  ec   RD: 192.168.255.17:11 mac-ip 10110 001c.736f.041d
+ *  ec   RD: 192.168.255.17:11 mac-ip 10110 001c.73a4.f92c
                                  192.168.254.17        -       100     0       65000 65103 i
- * >Ec   RD: 192.168.255.17:11 mac-ip 10110 001c.736f.041d 10.1.10.3
+ * >Ec   RD: 192.168.255.17:11 mac-ip 10110 001c.73a4.f92c 10.1.10.3
                                  192.168.254.17        -       100     0       65000 65103 i
- *  ec   RD: 192.168.255.17:11 mac-ip 10110 001c.736f.041d 10.1.10.3
+ *  ec   RD: 192.168.255.17:11 mac-ip 10110 001c.73a4.f92c 10.1.10.3
                                  192.168.254.17        -       100     0       65000 65103 i
- * >Ec   RD: 192.168.255.18:11 mac-ip 10110 001c.736f.041d 10.1.10.3
+ * >Ec   RD: 192.168.255.18:11 mac-ip 10110 001c.73a4.f92c 10.1.10.3
                                  192.168.254.18        -       100     0       65000 65104 i
- *  ec   RD: 192.168.255.18:11 mac-ip 10110 001c.736f.041d 10.1.10.3
+ *  ec   RD: 192.168.255.18:11 mac-ip 10110 001c.73a4.f92c 10.1.10.3
                                  192.168.254.18        -       100     0       65000 65104 i
+ * >Ec   RD: 192.168.255.15:11 mac-ip 10112 001c.7339.f7ae
+                                 192.168.254.15        -       100     0       65000 65102 i
+ *  ec   RD: 192.168.255.15:11 mac-ip 10112 001c.7339.f7ae
+                                 192.168.254.15        -       100     0       65000 65102 i
+ * >Ec   RD: 192.168.255.16:11 mac-ip 10112 001c.7339.f7ae
+                                 192.168.254.15        -       100     0       65000 65102 i
+ *  ec   RD: 192.168.255.16:11 mac-ip 10112 001c.7339.f7ae
+                                 192.168.254.15        -       100     0       65000 65102 i
+ * >Ec   RD: 192.168.255.15:11 mac-ip 10112 001c.7339.f7ae 10.1.12.2
+                                 192.168.254.15        -       100     0       65000 65102 i
+ *  ec   RD: 192.168.255.15:11 mac-ip 10112 001c.7339.f7ae 10.1.12.2
+                                 192.168.254.15        -       100     0       65000 65102 i
+ * >Ec   RD: 192.168.255.16:11 mac-ip 10112 001c.7339.f7ae 10.1.12.2
+                                 192.168.254.15        -       100     0       65000 65102 i
+ *  ec   RD: 192.168.255.16:11 mac-ip 10112 001c.7339.f7ae 10.1.12.2
+                                 192.168.254.15        -       100     0       65000 65102 i
  * >Ec   RD: 192.168.255.13:11 imet 10110 192.168.254.13
                                  192.168.254.13        -       100     0       65000 65101 i
  *  ec   RD: 192.168.255.13:11 imet 10110 192.168.254.13
@@ -443,8 +459,8 @@ BGP summary information for VRF default
 Router identifier 192.168.253.22, local AS number 65107
 Neighbor Status Codes: m - Under maintenance
   Description              Neighbor      V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
-  avd-spine1_Ethernet11    172.31.251.80 4 65001            181       180    0    0 02:16:43 Estab   20     20
-  avd-spine2_Ethernet11    172.31.251.82 4 65001            192       187    0    0 02:16:38 Estab   20     20
+  avd-spine1_Ethernet11    172.31.251.80 4 65001            268       263    0    0 03:28:45 Estab   20     20
+  avd-spine2_Ethernet11    172.31.251.82 4 65001            263       259    0    0 03:28:45 Estab   20     20
 ```
 ## show ip interface brief
 
@@ -546,7 +562,7 @@ Gateway of last resort is not reachable
 ## show lldp neighbors
 
 ```
-Last table change time   : 2:05:23 ago
+Last table change time   : 3:02:09 ago
 Number of table inserts  : 21
 Number of table deletes  : 1
 Number of table drops    : 0
@@ -559,21 +575,21 @@ Et2           avd-spine2               Ethernet11          120
 Et7           avd-l2leaf02             Ethernet7           120
 Et8           avd-l2leaf02             Ethernet8           120
 Ma0           srv-pod01                Management0         120
-Ma0           srv-pod03                Management0         120
 Ma0           srv-pod02                Management0         120
-Ma0           avd-rs01                 Management0         120
-Ma0           avd-leaf2a               Management0         120
-Ma0           avd-leaf1b               Management0         120
 Ma0           avd-leaf1a               Management0         120
-Ma0           avd-agg01                Management0         120
-Ma0           avd-rs02                 Management0         120
+Ma0           avd-rs01                 Management0         120
+Ma0           avd-cl01b                Management0         120
+Ma0           srv-pod03                Management0         120
 Ma0           avd-agg02                Management0         120
-Ma0           avd-spine1               Management0         120
-Ma0           avd-leaf3a               Management0         120
-Ma0           avd-l2leaf02             Management0         120
-Ma0           avd-leaf2b               Management0         120
-Ma0           avd-bl01a                Management0         120
+Ma0           avd-agg01                Management0         120
+Ma0           avd-spine2               Management0         120
 Ma0           avd-leaf4a               Management0         120
+Ma0           avd-rs02                 Management0         120
+Ma0           avd-l2leaf02             Management0         120
+Ma0           avd-cl01a                Management0         120
+Ma0           avd-spine1               Management0         120
+Ma0           avd-leaf2a               Management0         120
+Ma0           avd-leaf3a               Management0         120
 ```
 ## show mac address-table
 
@@ -583,15 +599,15 @@ Mac Address Table
 
 Vlan    Mac Address       Type        Ports      Moves   Last Move
 ----    -----------       ----        -----      -----   ---------
-1198    021c.7308.8835    DYNAMIC     Vx1        1       2:16:30 ago
-1198    021c.7361.f9e3    DYNAMIC     Vx1        1       2:16:31 ago
-1198    021c.73ab.8d61    DYNAMIC     Vx1        1       2:16:27 ago
-1199    001c.732a.51e3    DYNAMIC     Vx1        1       2:16:46 ago
-1199    001c.7391.0a17    DYNAMIC     Vx1        1       2:16:46 ago
-1199    021c.7308.8835    DYNAMIC     Vx1        1       2:16:30 ago
-1199    021c.7361.f9e3    DYNAMIC     Vx1        1       2:16:31 ago
-1199    021c.7394.e2ca    DYNAMIC     Vx1        1       2:16:30 ago
-1199    021c.73ab.8d61    DYNAMIC     Vx1        1       2:16:27 ago
+1198    021c.730e.779e    DYNAMIC     Vx1        1       3:28:32 ago
+1198    021c.736d.9c01    DYNAMIC     Vx1        1       3:28:24 ago
+1198    021c.7375.ed7d    DYNAMIC     Vx1        1       3:28:43 ago
+1199    001c.732a.2e9d    DYNAMIC     Vx1        1       3:28:49 ago
+1199    001c.7370.81be    DYNAMIC     Vx1        1       3:28:37 ago
+1199    021c.730e.779e    DYNAMIC     Vx1        1       3:28:32 ago
+1199    021c.7317.766b    DYNAMIC     Vx1        1       3:28:24 ago
+1199    021c.736d.9c01    DYNAMIC     Vx1        1       3:28:24 ago
+1199    021c.7375.ed7d    DYNAMIC     Vx1        1       3:28:43 ago
 Total Mac Addresses for this criterion: 9
 
           Multicast Mac Address Table
@@ -675,9 +691,9 @@ Fan Status  Speed  Speed Uptime Stability Uptime
 ```
 Arista cEOSLab
 Hardware version: 
-Serial number: 9A053FA3BC0AC0FDF438D1E7AF23EC1D
-Hardware MAC address: 001c.73d8.412d
-System MAC address: 001c.73d8.412d
+Serial number: 9579D973FF6AFED1A3B961B26E28567E
+Hardware MAC address: 001c.731c.9948
+System MAC address: 001c.731c.9948
 
 Software image version: 4.27.2F-26069621.4272F (engineering build)
 Architecture: i686
@@ -689,9 +705,9 @@ Image optimization: None
 cEOS tools version: 1.1
 Kernel version: 5.13.0-51-generic
 
-Uptime: 2 hours and 19 minutes
+Uptime: 3 hours and 32 minutes
 Total memory: 41085292 kB
-Free memory: 12000936 kB
+Free memory: 8619776 kB
 ```
 ## show vlan
 
@@ -714,15 +730,15 @@ Vxlan Mac Address Table
 
 VLAN  Mac Address     Type      Prt  VTEP             Moves   Last Move
 ----  -----------     ----      ---  ----             -----   ---------
-1198  021c.7308.8835  EVPN      Vx1  192.168.254.15   1       2:16:27 ago
-1198  021c.7361.f9e3  EVPN      Vx1  192.168.254.13   1       2:16:29 ago
-1198  021c.73ab.8d61  EVPN      Vx1  192.168.254.21   1       2:16:25 ago
-1199  001c.732a.51e3  EVPN      Vx1  192.168.254.18   1       2:16:43 ago
-1199  001c.7391.0a17  EVPN      Vx1  192.168.254.17   1       2:16:43 ago
-1199  021c.7308.8835  EVPN      Vx1  192.168.254.15   1       2:16:27 ago
-1199  021c.7361.f9e3  EVPN      Vx1  192.168.254.13   1       2:16:29 ago
-1199  021c.7394.e2ca  EVPN      Vx1  192.168.254.19   1       2:16:27 ago
-1199  021c.73ab.8d61  EVPN      Vx1  192.168.254.21   1       2:16:25 ago
+1198  021c.730e.779e  EVPN      Vx1  192.168.254.13   1       3:28:29 ago
+1198  021c.736d.9c01  EVPN      Vx1  192.168.254.15   1       3:28:21 ago
+1198  021c.7375.ed7d  EVPN      Vx1  192.168.254.21   1       3:28:40 ago
+1199  001c.732a.2e9d  EVPN      Vx1  192.168.254.18   1       3:28:47 ago
+1199  001c.7370.81be  EVPN      Vx1  192.168.254.17   1       3:28:34 ago
+1199  021c.730e.779e  EVPN      Vx1  192.168.254.13   1       3:28:29 ago
+1199  021c.7317.766b  EVPN      Vx1  192.168.254.19   1       3:28:22 ago
+1199  021c.736d.9c01  EVPN      Vx1  192.168.254.15   1       3:28:21 ago
+1199  021c.7375.ed7d  EVPN      Vx1  192.168.254.21   1       3:28:40 ago
 Total Remote Mac Addresses for this criterion: 9
 ```
 ## show vxlan vni

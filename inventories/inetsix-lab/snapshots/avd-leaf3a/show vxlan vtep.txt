@@ -1,0 +1,11 @@
+Remote VTEPS for Vxlan1:
+
+VTEP                 Tunnel Type(s)
+-------------------- --------------
+192.168.254.13       flood, unicast
+192.168.254.15       flood, unicast
+192.168.254.18       flood, unicast
+192.168.254.19       flood, unicast
+192.168.254.21       flood, unicast
+
+Total number of remote VTEPS:  5

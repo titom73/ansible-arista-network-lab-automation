@@ -1,0 +1,4 @@
+Address
+Interface       IP Address          Status      Protocol         MTU    Owner  
+--------------- ------------------- ----------- ------------- --------- -------
+Management0     10.73.252.21/24     up          up              1500
