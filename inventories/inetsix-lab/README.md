@@ -1,6 +1,6 @@
 # CLAB Topology
 
-![](./clab-topology.png)
+![](medias/topology.png)
 
 ## Credentials
 
