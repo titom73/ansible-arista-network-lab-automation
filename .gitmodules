@@ -1,0 +1,3 @@
+[submodule "docker-network-toolkit"]
+	path = docker-network-toolkit
+	url = https://github.com/titom73/docker-network-toolkit.git
