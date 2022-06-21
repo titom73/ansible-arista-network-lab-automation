@@ -35,6 +35,10 @@ $ make <command> INVENTORY=<your inventory>
 
 - Github CLI
 
+### Cloud deployment
+
+In case, you need to deploy VM in the cloud, you can check this terraform content: [__cloud-stacks/modules/aws-single-vm/vars.init.tf__](cloud-stacks/modules/aws-single-vm/vars.init.tf)
+
 ## Inventory Information
 
 ### Inetsix eAPI Inventory
