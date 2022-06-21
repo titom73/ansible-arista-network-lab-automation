@@ -1,3 +1,0 @@
-No global configuration inconsistencies found.
-
-No per interface configuration inconsistencies found.

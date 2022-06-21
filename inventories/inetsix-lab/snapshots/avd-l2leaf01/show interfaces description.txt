@@ -1,0 +1,11 @@
+Interface                      Status         Protocol           Description
+Et1                            up             up                 P2P_LINK_TO_AVD-SPINE1_Ethernet11
+Et2                            up             up                 P2P_LINK_TO_AVD-SPINE2_Ethernet11
+Et7                            up             up                 
+Et8                            up             up                 
+Lo0                            up             up                 EVPN_Overlay_Peering
+Lo1                            up             up                 VTEP_VXLAN_Tunnel_Source
+Ma0                            up             up                 oob_management
+Vl1198                         up             up                 
+Vl1199                         up             up                 
+Vx1                            up             up                 avd-l2leaf01_VTEP

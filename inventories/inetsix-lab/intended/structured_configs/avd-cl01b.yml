@@ -12,6 +12,7 @@ router_bgp:
       type: ipv4
       remote_as: '65106'
       next_hop_self: true
+      description: avd-cl01a
       maximum_routes: 12000
       send_community: all
       route_map_in: RM-MLAG-PEER-IN
@@ -396,33 +397,10 @@ vxlan_interface:
           vni: 11
 aaa_authorization:
   exec:
-    default: group radius local
-  commands:
-    all_default: group radius local
-aaa_authentication:
-  login:
-    default: group radius local
-    console: local
-  enable:
-    default: group radius local
-  policies:
-    on_failure_log: true
-    on_success_log: false
-    local:
-      allow_nopassword: true
-ip_radius_source_interfaces:
-- name: Management0
-  vrf: MGMT
-aaa_server_groups:
-- name: LAB_AAA
-  type: radius
-  servers:
-  - server: 10.73.252.252
-    vrf: MGMT
-radius_servers:
-- host: 10.73.252.252
-  vrf: MGMT
-  key: 14031718180D242C757A60
+    default: local
 management_ssh:
   idle_timeout: 0
   enable: true
+  vrfs:
+    MGT:
+      enable: true

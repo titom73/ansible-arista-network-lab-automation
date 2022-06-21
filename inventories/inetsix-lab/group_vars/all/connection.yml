@@ -1,11 +1,12 @@
 ansible_connection: httpapi
-# ansible_httpapi_port: '{{ansible_port }}'
+ansible_port: '{{ansible_httpapi_port }}'
 ansible_httpapi_host: '{{ ansible_host }}'
 ansible_httpapi_use_ssl: true
 ansible_httpapi_validate_certs: false
 
 ansible_network_os: eos
 ansible_user: ansible
+# ansible_password: ansible
 ansible_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   65373961643964383738653538336361346635613864666230366262616563313064336665316261

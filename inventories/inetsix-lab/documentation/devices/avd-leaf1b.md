@@ -63,13 +63,13 @@
 
 | Management Interface | description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management0 | oob_management | oob | default | 10.73.254.12/24 | 10.73.254.253 |
+| Management0 | oob_management | oob | MGMT | 10.73.252.12/24 | 10.73.254.1 |
 
 #### IPv6
 
 | Management Interface | description | Type | VRF | IPv6 Address | IPv6 Gateway |
 | -------------------- | ----------- | ---- | --- | ------------ | ------------ |
-| Management0 | oob_management | oob | default | -  | - |
+| Management0 | oob_management | oob | MGMT | -  | - |
 
 ### Management Interfaces Device Configuration
 
@@ -78,7 +78,8 @@
 interface Management0
    description oob_management
    no shutdown
-   ip address 10.73.254.12/24
+   vrf MGMT
+   ip address 10.73.252.12/24
 ```
 
 ## Name Servers
@@ -87,12 +88,12 @@ interface Management0
 
 | Name Server | Source VRF |
 | ----------- | ---------- |
-| 10.73.1.251 | default |
+| 10.73.1.251 | MGMT |
 
 ### Name Servers Device Configuration
 
 ```eos
-ip name-server vrf default 10.73.1.251
+ip name-server vrf MGMT 10.73.1.251
 ```
 
 ## Clock Settings
@@ -134,7 +135,7 @@ ntp server vrf MGMT 10.73.254.253
 
 | Idle Timeout | SSH Management |
 | ------------ | -------------- |
-| 0 |  Enabled  |
+| 0 | Enabled |
 
 ### Max number of SSH sessions limit and per-host limit
 
@@ -148,6 +149,11 @@ ntp server vrf MGMT 10.73.254.253
 |---------|----------------------|----------------|---------------------------|
 | default | default | default | default |
 
+### VRFs
+
+| VRF | Status |
+| --- | ------ |
+| MGT | Enabled |
 
 ### Management SSH Configuration
 
@@ -156,21 +162,24 @@ ntp server vrf MGMT 10.73.254.253
 management ssh
    idle-timeout 0
    no shutdown
+   vrf MGT
+      no shutdown
 ```
 
 ## Management API HTTP
 
 ### Management API HTTP Summary
 
-| HTTP | HTTPS |
-| ---- | ----- |
-| False | True |
+| HTTP | HTTPS | Default Services |
+| ---- | ----- | ---------------- |
+| False | True | - |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
 | default | - | - |
+| MGMT | - | - |
 
 ### Management API HTTP Configuration
 
@@ -181,6 +190,9 @@ management api http-commands
    no shutdown
    !
    vrf default
+      no shutdown
+   !
+   vrf MGMT
       no shutdown
 ```
 
@@ -220,7 +232,6 @@ Authorization for configuration commands is disabled.
 ### AAA Authorization Device Configuration
 
 ```eos
-!
 aaa authorization exec default local
 !
 ```
@@ -233,14 +244,14 @@ aaa authorization exec default local
 
 | CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
 | -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
-| gzip | 10.73.254.254:9910 | default | key,telarista | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | False |
+| gzip | 10.73.1.239:9910 | MGMT | key,telarista | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | False |
 
 ### TerminAttr Daemon Device Configuration
 
 ```eos
 !
 daemon TerminAttr
-   exec /usr/bin/TerminAttr -cvaddr=10.73.254.254:9910 -cvauth=key,telarista -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
+   exec /usr/bin/TerminAttr -cvaddr=10.73.1.239:9910 -cvauth=key,telarista -cvvrf=MGMT -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
    no shutdown
 ```
 
@@ -510,14 +521,14 @@ interface Loopback1
 
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
-| Vlan110 |  pr01-demo  |  tenant_a_project01  |  -  |  false  |
-| Vlan111 |  pr01-trust  |  tenant_a_project01  |  -  |  false  |
-| Vlan112 |  pr01-trust  |  tenant_a_project01  |  -  |  false  |
-| Vlan131 |  vl131_no_vni  |  pure_type5  |  -  |  false  |
-| Vlan3010 |  MLAG_PEER_L3_iBGP: vrf tenant_a_project01  |  tenant_a_project01  |  1500  |  false  |
-| Vlan3012 |  MLAG_PEER_L3_iBGP: vrf pure_type5  |  pure_type5  |  1500  |  false  |
-| Vlan4093 |  MLAG_PEER_L3_PEERING  |  default  |  1500  |  false  |
-| Vlan4094 |  MLAG_PEER  |  default  |  1500  |  false  |
+| Vlan110 | pr01-demo | tenant_a_project01 | - | false |
+| Vlan111 | pr01-trust | tenant_a_project01 | - | false |
+| Vlan112 | pr01-trust | tenant_a_project01 | - | false |
+| Vlan131 | vl131_no_vni | pure_type5 | - | false |
+| Vlan3010 | MLAG_PEER_L3_iBGP: vrf tenant_a_project01 | tenant_a_project01 | 1500 | false |
+| Vlan3012 | MLAG_PEER_L3_iBGP: vrf pure_type5 | pure_type5 | 1500 | false |
+| Vlan4093 | MLAG_PEER_L3_PEERING | default | 1500 | false |
+| Vlan4094 | MLAG_PEER | default | 1500 | false |
 
 #### IPv4
 
@@ -531,7 +542,6 @@ interface Loopback1
 | Vlan3012 |  pure_type5  |  172.31.253.23/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  172.31.253.23/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  172.31.253.21/31  |  -  |  -  |  -  |  -  |  -  |
-
 
 ### VLAN Interfaces Device Configuration
 
@@ -547,8 +557,8 @@ interface Vlan111
    description pr01-trust
    no shutdown
    vrf tenant_a_project01
-   ip address virtual 10.1.11.254/24
    ip helper-address 1.1.1.1 vrf test source-interface lo100
+   ip address virtual 10.1.11.254/24
 !
 interface Vlan112
    description pr01-trust
@@ -594,11 +604,11 @@ interface Vlan4094
 
 ### VXLAN Interface Summary
 
-#### Source Interface: Loopback1
-
-#### UDP port: 4789
-
-#### EVPN MLAG Shared Router MAC : mlag-system-id
+| Setting | Value |
+| ------- | ----- |
+| Source Interface | Loopback1 |
+| UDP port | 4789 |
+| EVPN MLAG Shared Router MAC | mlag-system-id |
 
 #### VLAN to VNI, Flood List and Multicast Group Mappings
 
@@ -663,7 +673,7 @@ ip virtual-router mac-address 00:1c:73:00:dc:01
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | true |
-| default | false |
+| MGMT | false |
 | pure_type5 | true |
 | tenant_a_project01 | true |
 
@@ -672,6 +682,7 @@ ip virtual-router mac-address 00:1c:73:00:dc:01
 ```eos
 !
 ip routing
+no ip routing vrf MGMT
 ip routing vrf pure_type5
 ip routing vrf tenant_a_project01
 ```
@@ -682,7 +693,7 @@ ip routing vrf tenant_a_project01
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | false |
-| default | false |
+| MGMT | false |
 | pure_type5 | false |
 | tenant_a_project01 | false |
 
@@ -692,13 +703,13 @@ ip routing vrf tenant_a_project01
 
 | VRF | Destination Prefix | Next Hop IP             | Exit interface      | Administrative Distance       | Tag               | Route Name                    | Metric         |
 | --- | ------------------ | ----------------------- | ------------------- | ----------------------------- | ----------------- | ----------------------------- | -------------- |
-| default  | 0.0.0.0/0 |  10.73.254.253  |  -  |  1  |  -  |  -  |  - |
+| MGMT | 0.0.0.0/0 | 10.73.254.1 | - | 1 | - | - | - |
 
 ### Static Routes Device Configuration
 
 ```eos
 !
-ip route 0.0.0.0/0 10.73.254.253
+ip route vrf MGMT 0.0.0.0/0 10.73.254.1
 ```
 
 ## Router BGP
@@ -725,7 +736,7 @@ ip route 0.0.0.0/0 10.73.254.253
 | -------- | ----- |
 | Address Family | evpn |
 | Source | Loopback0 |
-| BFD | true |
+| BFD | True |
 | Ebgp multihop | 3 |
 | Send community | all |
 | Maximum routes | 0 (no limit) |
@@ -750,15 +761,15 @@ ip route 0.0.0.0/0 10.73.254.253
 
 ### BGP Neighbors
 
-| Neighbor | Remote AS | VRF | Send-community | Maximum-routes | Allowas-in | BFD |
-| -------- | --------- | --- | -------------- | -------------- | ---------- | --- |
-| 172.31.253.22 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - |
-| 172.31.255.44 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 172.31.255.46 | 65001 | default | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - |
-| 192.168.0.26 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 192.168.0.27 | 65000 | default | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS |
-| 172.31.253.22 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | pure_type5 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - |
-| 172.31.253.22 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | tenant_a_project01 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - |
+| Neighbor | Remote AS | VRF | Shutdown | Send-community | Maximum-routes | Allowas-in | BFD | RIB Pre-Policy Retain |
+| -------- | --------- | --- | -------- | -------------- | -------------- | ---------- | --- | --------------------- |
+| 172.31.253.22 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | default | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - |
+| 172.31.255.44 | 65001 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
+| 172.31.255.46 | 65001 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - |
+| 192.168.0.26 | 65000 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 192.168.0.27 | 65000 | default | - | Inherited from peer group EVPN-OVERLAY-PEERS | Inherited from peer group EVPN-OVERLAY-PEERS | - | Inherited from peer group EVPN-OVERLAY-PEERS | - |
+| 172.31.253.22 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | pure_type5 | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - |
+| 172.31.253.22 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | tenant_a_project01 | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - |
 
 ### Router BGP EVPN Address Family
 
@@ -805,6 +816,7 @@ router bgp 65101
    neighbor MLAG-IPv4-UNDERLAY-PEER peer group
    neighbor MLAG-IPv4-UNDERLAY-PEER remote-as 65101
    neighbor MLAG-IPv4-UNDERLAY-PEER next-hop-self
+   neighbor MLAG-IPv4-UNDERLAY-PEER description avd-leaf1a
    neighbor MLAG-IPv4-UNDERLAY-PEER send-community
    neighbor MLAG-IPv4-UNDERLAY-PEER maximum-routes 12000
    neighbor MLAG-IPv4-UNDERLAY-PEER route-map RM-MLAG-PEER-IN in
@@ -886,13 +898,16 @@ router bfd
 
 ### IP IGMP Snooping Summary
 
-IGMP snooping is globally enabled.
+| IGMP Snooping | Fast Leave | Interface Restart Query | Proxy | Restart Query Interval | Robustness Variable |
+| ------------- | ---------- | ----------------------- | ----- | ---------------------- | ------------------- |
+| Enabled | - | - | - | - | - |
 
+#### IP IGMP Snooping Vlan Summary
 
-| VLAN | IGMP Snooping |
-| --- | --------------- |
-| 111 | disabled |
-| 112 | disabled |
+| Vlan | IGMP Snooping | Fast Leave | Max Groups | Proxy |
+| ---- | ------------- | ---------- | ---------- | ----- |
+| 111 | False | - | - | - |
+| 112 | False | - | - | - |
 
 ### IP IGMP Snooping Device Configuration
 
@@ -960,13 +975,15 @@ route-map RM-MLAG-PEER-IN permit 10
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
-| default | disabled |
+| MGMT | disabled |
 | pure_type5 | enabled |
 | tenant_a_project01 | enabled |
 
 ## VRF Instances Device Configuration
 
 ```eos
+!
+vrf instance MGMT
 !
 vrf instance pure_type5
 !

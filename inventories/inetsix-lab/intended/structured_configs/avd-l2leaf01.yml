@@ -194,33 +194,10 @@ vxlan_interface:
           vni: 30302
 aaa_authorization:
   exec:
-    default: group radius local
-  commands:
-    all_default: group radius local
-aaa_authentication:
-  login:
-    default: group radius local
-    console: local
-  enable:
-    default: group radius local
-  policies:
-    on_failure_log: true
-    on_success_log: false
-    local:
-      allow_nopassword: true
-ip_radius_source_interfaces:
-- name: Management0
-  vrf: MGMT
-aaa_server_groups:
-- name: LAB_AAA
-  type: radius
-  servers:
-  - server: 10.73.252.252
-    vrf: MGMT
-radius_servers:
-- host: 10.73.252.252
-  vrf: MGMT
-  key: 14031718180D242C757A60
+    default: local
 management_ssh:
   idle_timeout: 0
   enable: true
+  vrfs:
+    MGT:
+      enable: true

@@ -48,13 +48,13 @@
 
 | Management Interface | description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management0 | oob_management | oob | default | 10.73.254.22/24 | 10.73.254.253 |
+| Management0 | oob_management | oob | MGMT | 10.73.252.22/24 | 10.73.254.1 |
 
 #### IPv6
 
 | Management Interface | description | Type | VRF | IPv6 Address | IPv6 Gateway |
 | -------------------- | ----------- | ---- | --- | ------------ | ------------ |
-| Management0 | oob_management | oob | default | -  | - |
+| Management0 | oob_management | oob | MGMT | -  | - |
 
 ### Management Interfaces Device Configuration
 
@@ -63,7 +63,8 @@
 interface Management0
    description oob_management
    no shutdown
-   ip address 10.73.254.22/24
+   vrf MGMT
+   ip address 10.73.252.22/24
 ```
 
 ## Name Servers
@@ -72,12 +73,12 @@ interface Management0
 
 | Name Server | Source VRF |
 | ----------- | ---------- |
-| 10.73.1.251 | default |
+| 10.73.1.251 | MGMT |
 
 ### Name Servers Device Configuration
 
 ```eos
-ip name-server vrf default 10.73.1.251
+ip name-server vrf MGMT 10.73.1.251
 ```
 
 ## Clock Settings
@@ -119,7 +120,7 @@ ntp server vrf MGMT 10.73.254.253
 
 | Idle Timeout | SSH Management |
 | ------------ | -------------- |
-| 0 |  Enabled  |
+| 0 | Enabled |
 
 ### Max number of SSH sessions limit and per-host limit
 
@@ -133,6 +134,11 @@ ntp server vrf MGMT 10.73.254.253
 |---------|----------------------|----------------|---------------------------|
 | default | default | default | default |
 
+### VRFs
+
+| VRF | Status |
+| --- | ------ |
+| MGT | Enabled |
 
 ### Management SSH Configuration
 
@@ -141,21 +147,24 @@ ntp server vrf MGMT 10.73.254.253
 management ssh
    idle-timeout 0
    no shutdown
+   vrf MGT
+      no shutdown
 ```
 
 ## Management API HTTP
 
 ### Management API HTTP Summary
 
-| HTTP | HTTPS |
-| ---- | ----- |
-| False | True |
+| HTTP | HTTPS | Default Services |
+| ---- | ----- | ---------------- |
+| False | True | - |
 
 ### Management API VRF Access
 
 | VRF Name | IPv4 ACL | IPv6 ACL |
 | -------- | -------- | -------- |
 | default | - | - |
+| MGMT | - | - |
 
 ### Management API HTTP Configuration
 
@@ -166,6 +175,9 @@ management api http-commands
    no shutdown
    !
    vrf default
+      no shutdown
+   !
+   vrf MGMT
       no shutdown
 ```
 
@@ -205,7 +217,6 @@ Authorization for configuration commands is disabled.
 ### AAA Authorization Device Configuration
 
 ```eos
-!
 aaa authorization exec default local
 !
 ```
@@ -218,14 +229,14 @@ aaa authorization exec default local
 
 | CV Compression | CloudVision Servers | VRF | Authentication | Smash Excludes | Ingest Exclude | Bypass AAA |
 | -------------- | ------------------- | --- | -------------- | -------------- | -------------- | ---------- |
-| gzip | 10.73.254.254:9910 | default | key,telarista | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | False |
+| gzip | 10.73.1.239:9910 | MGMT | key,telarista | ale,flexCounter,hardware,kni,pulse,strata | /Sysdb/cell/1/agent,/Sysdb/cell/2/agent | False |
 
 ### TerminAttr Daemon Device Configuration
 
 ```eos
 !
 daemon TerminAttr
-   exec /usr/bin/TerminAttr -cvaddr=10.73.254.254:9910 -cvauth=key,telarista -cvvrf=default -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
+   exec /usr/bin/TerminAttr -cvaddr=10.73.1.239:9910 -cvauth=key,telarista -cvvrf=MGMT -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
    no shutdown
 ```
 
@@ -330,9 +341,9 @@ interface Ethernet2
 interface Ethernet3
    description srv-pod02_Ethernet1
    no shutdown
-   switchport
    switchport trunk allowed vlan 1-4000
    switchport mode trunk
+   switchport
 ```
 
 ## Port-Channel Interfaces
@@ -374,13 +385,14 @@ service routing protocols model multi-agent
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | true |
-| default | false |
+| MGMT | false |
 
 ### IP Routing Device Configuration
 
 ```eos
 !
 ip routing
+no ip routing vrf MGMT
 ```
 ## IPv6 Routing
 
@@ -389,7 +401,7 @@ ip routing
 | VRF | Routing Enabled |
 | --- | --------------- |
 | default | false |
-| default | false |
+| MGMT | false |
 
 ## Static Routes
 
@@ -397,13 +409,13 @@ ip routing
 
 | VRF | Destination Prefix | Next Hop IP             | Exit interface      | Administrative Distance       | Tag               | Route Name                    | Metric         |
 | --- | ------------------ | ----------------------- | ------------------- | ----------------------------- | ----------------- | ----------------------------- | -------------- |
-| default  | 0.0.0.0/0 |  10.73.254.253  |  -  |  1  |  -  |  -  |  - |
+| MGMT | 0.0.0.0/0 | 10.73.254.1 | - | 1 | - | - | - |
 
 ### Static Routes Device Configuration
 
 ```eos
 !
-ip route 0.0.0.0/0 10.73.254.253
+ip route vrf MGMT 0.0.0.0/0 10.73.254.1
 ```
 
 # Multicast
@@ -412,13 +424,16 @@ ip route 0.0.0.0/0 10.73.254.253
 
 ### IP IGMP Snooping Summary
 
-IGMP snooping is globally enabled.
+| IGMP Snooping | Fast Leave | Interface Restart Query | Proxy | Restart Query Interval | Robustness Variable |
+| ------------- | ---------- | ----------------------- | ----- | ---------------------- | ------------------- |
+| Enabled | - | - | - | - | - |
 
+#### IP IGMP Snooping Vlan Summary
 
-| VLAN | IGMP Snooping |
-| --- | --------------- |
-| 111 | disabled |
-| 112 | disabled |
+| Vlan | IGMP Snooping | Fast Leave | Max Groups | Proxy |
+| ---- | ------------- | ---------- | ---------- | ----- |
+| 111 | False | - | - | - |
+| 112 | False | - | - | - |
 
 ### IP IGMP Snooping Device Configuration
 
@@ -438,11 +453,13 @@ no ip igmp snooping vlan 112
 
 | VRF Name | IP Routing |
 | -------- | ---------- |
-| default | disabled |
+| MGMT | disabled |
 
 ## VRF Instances Device Configuration
 
 ```eos
+!
+vrf instance MGMT
 ```
 
 # Quality Of Service

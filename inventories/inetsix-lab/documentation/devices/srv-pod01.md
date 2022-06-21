@@ -10,6 +10,10 @@
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
   - [Local Users](#local-users)
+  - [RADIUS Servers](#radius-servers)
+  - [IP RADIUS Source Interfaces](#ip-radius-source-interfaces)
+  - [AAA Server Groups](#aaa-server-groups)
+  - [AAA Authentication](#aaa-authentication)
   - [AAA Authorization](#aaa-authorization)
 - [Monitoring](#monitoring)
 - [Internal VLAN Allocation Policy](#internal-vlan-allocation-policy)
@@ -45,7 +49,7 @@
 
 | Management Interface | description | Type | VRF | IP Address | Gateway |
 | -------------------- | ----------- | ---- | --- | ---------- | ------- |
-| Management0 | oob_management | oob | default | 10.73.254.41/24 | 10.73.254.1 |
+| Management0 | oob_management | oob | default | 10.73.252.41/24 | 10.73.254.1 |
 
 #### IPv6
 
@@ -60,7 +64,7 @@
 interface Management0
    description oob_management
    no shutdown
-   ip address 10.73.254.41/24
+   ip address 10.73.252.41/24
 ```
 
 ## Name Servers
@@ -99,7 +103,7 @@ clock timezone Europe/Paris
 
 | Idle Timeout | SSH Management |
 | ------------ | -------------- |
-| default |  Enabled  |
+| default | Enabled |
 
 ### Max number of SSH sessions limit and per-host limit
 
@@ -117,7 +121,7 @@ clock timezone Europe/Paris
 
 | VRF | Status |
 | --- | ------ |
-| MGMT |  Enabled  |
+| MGMT | Enabled |
 
 ### Management SSH Configuration
 
@@ -147,9 +151,9 @@ management console
 
 ### Management API HTTP Summary
 
-| HTTP | HTTPS |
-| ---- | ----- |
-| False | True |
+| HTTP | HTTPS | Default Services |
+| ---- | ----- | ---------------- |
+| False | True | - |
 
 ### Management API VRF Access
 
@@ -192,21 +196,97 @@ username cvpadmin privilege 15 role network-admin secret sha512 $6$rZKcbIZ7iWGAW
 username demo privilege 15 role network-admin secret sha512 $6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/
 ```
 
+## RADIUS Servers
+
+### RADIUS Servers
+
+| VRF | RADIUS Servers |
+| --- | ---------------|
+| MGMT | 10.73.252.252 |
+
+### RADIUS Servers Device Configuration
+
+```eos
+!
+radius-server host 10.73.252.252 vrf MGMT key 7 14031718180D242C757A60
+```
+
+## IP RADIUS Source Interfaces
+
+### IP RADIUS Source Interfaces
+
+| VRF | Source Interface Name |
+| --- | --------------- |
+| MGMT | Management0 |
+
+### IP SOURCE Source Interfaces Device Configuration
+
+```eos
+!
+ip radius vrf MGMT source-interface Management0
+```
+
+## AAA Server Groups
+
+### AAA Server Groups Summary
+
+| Server Group Name | Type  | VRF | IP address |
+| ------------------| ----- | --- | ---------- |
+| LAB_AAA | radius | MGMT | 10.73.252.252 |
+
+### AAA Server Groups Device Configuration
+
+```eos
+!
+aaa group server radius LAB_AAA
+   server 10.73.252.252 vrf MGMT
+```
+
+## AAA Authentication
+
+### AAA Authentication Summary
+
+| Type | Sub-type | User Stores |
+| ---- | -------- | ---------- |
+| Login | default | group radius local |
+| Login | console | local |
+
+AAA Authentication on-failure log has been enabled
+
+Policy local allow-nopassword-remote-login has been enabled.
+
+### AAA Authentication Device Configuration
+
+```eos
+aaa authentication login default group radius local
+aaa authentication login console local
+aaa authentication enable default group radius local
+aaa authentication policy on-failure log
+aaa authentication policy local allow-nopassword-remote-login
+!
+```
+
 ## AAA Authorization
 
 ### AAA Authorization Summary
 
 | Type | User Stores |
 | ---- | ----------- |
-| Exec | local |
+| Exec | group radius local |
 
 Authorization for configuration commands is disabled.
+
+### AAA Authorization Privilege Levels Summary
+
+| Privilege Level | User Stores |
+| --------------- | ----------- |
+| all | group radius local |
 
 ### AAA Authorization Device Configuration
 
 ```eos
-!
-aaa authorization exec default local
+aaa authorization exec default group radius local
+aaa authorization commands all default group radius local
 !
 ```
 
@@ -281,7 +361,7 @@ vlan 302
 
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
-| Ethernet1 |   | trunk | 1-4000 | 1 | - | - |
+| Ethernet1 |  - | trunk | 1-4000 | 1 | - | - |
 
 *Inherited from Port-Channel Interface
 
@@ -290,12 +370,12 @@ vlan 302
 ```eos
 !
 interface Ethernet1
-   logging event link-status
    no shutdown
-   switchport
-   switchport trunk allowed vlan 1-4000
+   logging event link-status
    switchport trunk native vlan 1
+   switchport trunk allowed vlan 1-4000
    switchport mode trunk
+   switchport
    spanning-tree portfast
 ```
 
@@ -305,10 +385,10 @@ interface Ethernet1
 
 | Interface | Description | VRF |  MTU | Shutdown |
 | --------- | ----------- | --- | ---- | -------- |
-| Vlan110 |  SVI for Tenant A vlan 110  |  tenant_a_110  |  -  |  false  |
-| Vlan112 |  SVI for Tenant A vlan 112  |  tenant_a_112  |  -  |  false  |
-| Vlan131 |  SVI for Pure Type 05 vlan 131  |  pure_type5  |  -  |  false  |
-| Vlan201 |  SVI for Tenant B vlan 201  |  tenant_b_201  |  -  |  false  |
+| Vlan110 | SVI for Tenant A vlan 110 | tenant_a_110 | - | false |
+| Vlan112 | SVI for Tenant A vlan 112 | tenant_a_112 | - | false |
+| Vlan131 | SVI for Pure Type 05 vlan 131 | pure_type5 | - | false |
+| Vlan201 | SVI for Tenant B vlan 201 | tenant_b_201 | - | false |
 
 #### IPv4
 
@@ -318,7 +398,6 @@ interface Ethernet1
 | Vlan112 |  tenant_a_112  |  10.1.12.1/24  |  -  |  -  |  -  |  -  |  -  |
 | Vlan131 |  pure_type5  |  10.1.31.1/24  |  -  |  -  |  -  |  -  |  -  |
 | Vlan201 |  tenant_b_201  |  10.2.1.1/24  |  -  |  -  |  -  |  -  |  -  |
-
 
 ### VLAN Interfaces Device Configuration
 
@@ -402,9 +481,9 @@ ip routing vrf tenant_b_201
 
 | VRF | Destination Prefix | Next Hop IP             | Exit interface      | Administrative Distance       | Tag               | Route Name                    | Metric         |
 | --- | ------------------ | ----------------------- | ------------------- | ----------------------------- | ----------------- | ----------------------------- | -------------- |
-| tenant_a_110  | 0.0.0.0/0 |  10.1.10.254  |  -  |  1  |  -  |  -  |  - |
-| tenant_a_112  | 0.0.0.0/0 |  10.1.12.254  |  -  |  1  |  -  |  -  |  - |
-| pure_type5  | 0.0.0.0/0 |  10.1.31.254  |  -  |  1  |  -  |  -  |  - |
+| tenant_a_110 | 0.0.0.0/0 | 10.1.10.254 | - | 1 | - | - | - |
+| tenant_a_112 | 0.0.0.0/0 | 10.1.12.254 | - | 1 | - | - | - |
+| pure_type5 | 0.0.0.0/0 | 10.1.31.254 | - | 1 | - | - | - |
 
 ### Static Routes Device Configuration
 
@@ -421,8 +500,9 @@ ip route vrf pure_type5 0.0.0.0/0 10.1.31.254
 
 ### IP IGMP Snooping Summary
 
-IGMP snooping is globally enabled.
-
+| IGMP Snooping | Fast Leave | Interface Restart Query | Proxy | Restart Query Interval | Robustness Variable |
+| ------------- | ---------- | ----------------------- | ----- | ---------------------- | ------------------- |
+| Enabled | - | - | - | - | - |
 
 ### IP IGMP Snooping Device Configuration
 

@@ -1,4 +1,4 @@
-Type, Node,Node Interface,Leaf IP Address,Peer Type,Peer Node,Peer Interface,Peer IP Address
+Type,Node,Node Interface,Leaf IP Address,Peer Type,Peer Node,Peer Interface,Peer IP Address
 l3leaf,avd-bl01a,Ethernet1,172.31.255.65/31,spine,avd-spine1,Ethernet5,172.31.255.64/31
 l3leaf,avd-bl01a,Ethernet2,172.31.255.67/31,spine,avd-spine2,Ethernet5,172.31.255.66/31
 l3leaf,avd-bl01b,Ethernet1,172.31.255.69/31,spine,avd-spine1,Ethernet6,172.31.255.68/31
