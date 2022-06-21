@@ -1,5 +1,6 @@
 ### Generic Variables
 SHELL := /bin/zsh
+# Github CLI tool
 GH_CLI := $(which gh)
 
 ### Ansible variables
@@ -19,7 +20,6 @@ EMAIL ?=
 CLAB_TOPO ?= containerlabs.yml
 # EAPI NAT Host
 JUMP ?= 10.73.1.27
-
 # Ansible Execution builder
 EE_FILE ?= docker-images/ansible-ee-avd/execution-environment-default.yml
 EE_IMAGE ?= titom73/ansible-ee-avd
@@ -35,56 +35,59 @@ help: ## Display help message (*: main entry points / []: part of an entry point
 ################################################################################
 
 .PHONY: build
-build: build-avd build-tooling build-clab ## Build AVD topology, tooling configuration and Containerlab topology
+build: avd-build tooling-build clab-build ## Build AVD topology, tooling configuration and Containerlab topology
 
 .PHONY: push
-push: push-clab ## Alias to push configuration to default lab
+push: clab-push ## Alias to push configuration to default lab
 
 .PHONY: clean
-clean: clab-clean clean-avd  ## Cleanup local environment (AVD and Containerlab)
+clean: clab-clean avd-clean  ## Cleanup local environment (AVD and Containerlab)
 
-.PHONE: deploy
-deploy: deploy-clab
+.PHONY: deploy
+deploy: clab-deploy  ## Power UP containerlab topology
+
+.PHONY: destroy
+destroy: clab-destroy  ## Shutdown containerlab topology
 
 ################################################################################
 ### AVD build & deploy
 ################################################################################
 
-.PHONY: build-avd
-build-avd: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
+.PHONY: avd-build
+avd-build: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
 	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags build --skip-tags documentation --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
-.PHONY: build-tooling
-build-tooling: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
+.PHONY: tooling-build
+tooling-build: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
 	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags build --skip-tags documentation --limit tooling -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
-.PHONY: build-avd-complete
-build-avd-complete: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
+.PHONY: avd-build-complete
+avd-build-complete: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
 	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags build --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
-.PHONY: push-clab
-push-clab: ## Run ansible playbook to push previsouly generated configurations via eAPI
+.PHONY: clab-push
+clab-push: ## Run ansible playbook to push previsouly generated configurations via eAPI
 	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags "deploy_eapi" --extra-vars "ansible_httpapi_port=443" --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
-.PHONY: push-jump
-push-jump: ## Run ansible playbook to push previsouly generated configurations via eAPI
+.PHONY: jump-push
+jump-push: ## Run ansible playbook to push previsouly generated configurations via eAPI
 	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags "deploy_eapi"  --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) --skip-tags debug --diff --extra-vars "ansible_host=$(JUMP)" $(ANSIBLE_ARGS)
 
-.PHONY: clean-avd
-clean-avd: ## Clenup Build environment
+.PHONY: avd-clean
+avd-clean: ## Clenup Build environment
 	cd $(INVENTORY) && rm -rf intended && rm -rf documentation && rm -rf config_backup && rm -f .$(CLAB_TOPO)
 
 ################################################################################
 ### AVD Tools
 ################################################################################
 
-# .PHONY: eos-backup
-# eos-backup: ## Backup current running configuration
-# 	ansible-playbook playbooks/eos-configuration-backup.yml --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+.PHONY: eos-backup
+eos-backup: ## Backup current running configuration
+	ansible-playbook playbooks/eos-configuration-backup.yml --vault-password-file=$(VAULT_FILE) --limit $(SCOPE) --extra-vars "ansible_httpapi_port=443" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
-# .PHONY: eos-snapshot
-# eos-snapshot: ## Extract commands outputs
-# 	ansible-playbook playbooks/eos-snapshot.yml --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+.PHONY: eos-snapshot
+eos-snapshot: ## Extract commands outputs
+	ansible-playbook playbooks/topology/eos-snapshot.yml --vault-password-file=$(VAULT_FILE) --limit $(SCOPE) --extra-vars "ansible_httpapi_port=443" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
 # .PHONY: eos-states-validation
 # eapi-states-validation: ## eapi-states-validation description
@@ -94,28 +97,28 @@ clean-avd: ## Clenup Build environment
 ### Containerlab Tools
 ################################################################################
 
-.PHONY: build-clab
-build-clab:
+.PHONY: clab-build
+clab-build:
 	ansible-playbook playbooks/topology/containerlab-build-topology-file.yml -i $(INVENTORY)/$(INVENTORY_FILE) --skip-tags debug --diff --vault-password-file=$(VAULT_FILE)
 
-.PHONY: deploy-clab
-deploy-clab: ## Deploy containerlab topology
+.PHONY: clab-deploy
+clab-deploy: ## Deploy containerlab topology
 	cd ${INVENTORY} && sudo -E containerlab deploy --topo ${CLAB_TOPO} --reconfigure
 
-.PHONY: destroy-clab
-destroy-clab:  ## Destroy Containerlab topology
+.PHONY: clab-destroy
+clab-destroy:  ## Destroy Containerlab topology
 	cd ${INVENTORY} && sudo containerlab destroy --topo ${CLAB_TOPO}
 
 .PHONY: clab-clean
-clab-clean: destroy-clab ## Cleanup Containerlab previous builds
+clab-clean: clab-destroy ## Cleanup Containerlab previous builds
 	cd ${INVENTORY} && sudo rm -rf clab-*/*
 
 .PHONY: mysocket-login
 mysocket-login: ## Login Mysocket.io with Containerlab
 	cd ${INVENTORY} && sudo -E containerlab tools mysocketio login -e ${EMAIL}
 
-.PHONY: reload-clab
-reload-clab: clab-clean build-clab deploy-clab
+.PHONY: clab-reload
+clab-reload: clab-destroy clab-build clab-deploy
 
 ################################################################################
 ### Installation process
