@@ -18,10 +18,12 @@ ANSIBLE_ARGS ?= --skip-tags debug --diff
 EMAIL ?=
 # Topology file generated for containerlab
 CLAB_TOPO ?= containerlabs.yml
+# Network used by CLAB to expose containers
+CLAB_NETWORK ?= mgmt-fabric
 # EAPI NAT Host
 JUMP ?= 10.73.1.27
 # Ansible Execution builder
-EE_FILE ?= docker-images/ansible-ee-avd/execution-environment-default.yml
+EE_FILE ?= ansible-ee-avd/execution-environment-default.yml
 EE_IMAGE ?= titom73/ansible-ee-avd
 EE_TAG ?= stable-2.12-devel
 
@@ -150,9 +152,6 @@ ee-build-latest: ## Build Ansible Execution Builder
 .PHONY: ee-runner
 ee-runner: ## Execute ansible EE runner in interactive mode
 	docker run -it --rm -v ${PWD}:/runner \
-		-v ${PWD}/../ansible-avd:/ansible-avd \
-		-v ${PWD}/../ansible-cvp:/ansible-cvp \
-		-v ${PWD}../ansible-inetsix:/ansible-inetsix \
-		$(EE_IMAGE):$(EE_TAG) $(EE_CMD)
-
+		--network ${CLAB_NETWORK} \
+		$(EE_IMAGE):$(EE_TAG) zsh
 
