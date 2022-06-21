@@ -100,7 +100,7 @@ eos-snapshot: ## Extract commands outputs
 ################################################################################
 
 .PHONY: clab-build
-clab-build:
+clab-build:  ## Build AVD configuration for EOS device in Fabric
 	ansible-playbook playbooks/topology/containerlab-build-topology-file.yml -i $(INVENTORY)/$(INVENTORY_FILE) --skip-tags debug --diff --vault-password-file=$(VAULT_FILE)
 
 .PHONY: clab-deploy
@@ -120,7 +120,7 @@ mysocket-login: ## Login Mysocket.io with Containerlab
 	cd ${INVENTORY} && sudo -E containerlab tools mysocketio login -e ${EMAIL}
 
 .PHONY: clab-reload
-clab-reload: clab-destroy clab-build clab-deploy
+clab-reload: clab-destroy clab-build clab-deploy ## Destroy lab, build configuration and deploy lab.
 
 ################################################################################
 ### Installation process

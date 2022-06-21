@@ -22,7 +22,7 @@
 - Install required collections with `ansible-galaxy collection install --force -r collections.yml`
 - Ansible playbook debugger activated in ansible.cfg
 - Execution time configured
-- Default inventory is set to [`inventories/inetsix-eapi/`](inventories/inetsix-eapi/inventory.yml)
+- Default inventory is set to [`inventories/inetsix-lab/`](inventories/inetsix-lab/inventory.yml)
 - Playbooks are all saved under [playbooks](playbooks/)
 - AVD outputs are generated under each `inventory`: directory
 
@@ -44,34 +44,48 @@ $ make <command> INVENTORY=<your inventory>
   - Username: ansible
   - Password: ansible
 
-Available [here](inventories/inetsix-eapi/README.md)
+Available [here](inventories/inetsix-lab/README.md)
 
 > A Jumphost and Iptables can be used in this inventory and must be configured prior any test.
 
 ## Make commands
 
+### Generic commands
+
+- `build             `:  Build AVD topology, tooling configuration and Containerlab topology
+- `clean             `:  Cleanup local environment (AVD and Containerlab)
+- `deploy            `:  Power UP containerlab topology
+- `destroy           `:  Shutdown containerlab topology
+- `push              `:  Alias to push configuration to default lab
+
+### AVD Specifics
+
 - `avd-build-complete`:  Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
 - `avd-build         `:  Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
 - `avd-clean         `:  Clenup Build environment
-- `build             `:  Build AVD topology, tooling configuration and Containerlab topology
+- `eos-backup        `:  Backup current running configuration
+- `eos-snapshot      `:  Extract commands outputs
+- `jump-push         `:  Run ansible playbook to push previsouly generated configurations via eAPI
+
+### Containerlab Specifics
+
 - `clab-build        `:  Build AVD configuration for EOS device in Fabric
 - `clab-clean        `:  Cleanup Containerlab previous builds
 - `clab-deploy       `:  Deploy containerlab topology
 - `clab-destroy      `:  Destroy Containerlab topology
 - `clab-push         `:  Run ansible playbook to push previsouly generated configurations via eAPI
 - `clab-reload       `:  Destroy lab, build configuration and deploy lab.
-- `clean             `:  Cleanup local environment (AVD and Containerlab)
-- `deploy            `:  Power UP containerlab topology
-- `destroy           `:  Shutdown containerlab topology
+- `mysocket-login    `:  Login Mysocket.io with Containerlab
+
+### Ansible Execution Engine Specifics
+
 - `ee-build-latest   `:  Build Ansible Execution Builder
 - `ee-build          `:  Build Ansible Execution Builder
 - `ee-runner         `:  Execute ansible EE runner in interactive mode
-- `eos-backup        `:  Backup current running configuration
-- `eos-snapshot      `:  Extract commands outputs
+
+### Misc commands
+
 - `help              `:  Display help message (*: main entry points / []: part of an entry point)
-- `jump-push         `:  Run ansible playbook to push previsouly generated configurations via eAPI
-- `mysocket-login    `:  Login Mysocket.io with Containerlab
-- `push              `:  Alias to push configuration to default lab
 - `setup-development `:  Setup development environment
 - `setup-galaxy      `:  Install arista collections using ansible galaxy
 - `tooling-build     `:  Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
