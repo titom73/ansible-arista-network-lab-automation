@@ -35,19 +35,11 @@ variable "availability_zone" {
 }
 
 variable "public_key_path" {
-  default     = "~/.ssh/id-tom-aws.pub"
   type        = string
   description = "Path to public key to deploy in EC2 instance"
 }
 
 variable "private_key_path" {
-  default     = "~/.ssh/id-tom-aws"
   type        = string
   description = "Path to private key to deploy in EC2 instance"
-}
-
-variable "ec2_user" {
-  default     = "ubuntu"
-  type        = string
-  description = "EC2 user"
 }

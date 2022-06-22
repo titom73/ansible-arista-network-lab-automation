@@ -4,7 +4,7 @@ Some terraform content to provision topologies in the cloud.
 
 ## Containerlab in AWS
 
-Module path: [modules/aws-single-vm](modules/aws-single-vm/)
+Module path: [aws-containerlab-vm](https://github.com/titom73/aws-containerlab-vm/)
 
 The VM comes with following tools:
 
@@ -19,41 +19,12 @@ The VM comes with following tools:
 mkdir -p <region>/<country>/
 cd <region>/<country>/
 
-# Create terraform file
-tee -a main.tf <<EOF
-module "webserver" {
-    source = "../../modules/aws-single-vm"
-}
-EOF
+# Copy variable definition
+ln -s ../../variables.tf variables.tf
 
-# Create output
-tee -a outputs.tf <<EOF
-output "instance_public_ip" {
-  description = "Public IP of EC2 instance"
-  value       = "${module.webserver.instance_public_ip}"
-}
-
-output "ssh_connection" {
-  description = "Connection information"
-  value = "${module.webserver.ssh_connection}"
-}
-
-output "aws-region" {
-  description = "Region where VM is running on"
-  value = "${module.webserver.aws-region}"
-}
-EOF
-
-# Create tfvars
-tee -a terraform.tfvars <<EOF
-aws_region="eu-west-3"
-availability_zone="eu-west-3a"
-project="containerlab-demo"
-instance_type="t2.micro"
-EOF
+# Create your tfvar file
+vim terraform.tfvars
 ```
-
-> Be sure to edit tfvars file to hit your setup.
 
 ### Supported variables
 
@@ -67,7 +38,7 @@ EOF
 - `private_key_path`
 - `ec2_user`
 
-All these options are described with their default values in the module file [`modules/aws-single-vm/vars.init.tf`](modules/aws-single-vm/vars.init.tf)
+All these options are described with their default values in the module file [`aws-containerlab-vm/variables.init.tf`](https://github.com/titom73/aws-containerlab-vm/tree/main/aws-containerlab-vm/variables.init.tf)
 
 ### Execute terraform
 
