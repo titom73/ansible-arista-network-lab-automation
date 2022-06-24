@@ -1,1 +1,1 @@
-Command not applicable for inactive MLAG state.
+not supported command
