@@ -52,7 +52,6 @@ clab_nodes:
   graphite:
     kind: linux
     image: netreplica/graphite
-    mgmt_ipv4: 172.16.0.23
     env:
       GRAPHITE_DEFAULT_TYPE: clab
       GRAPHITE_DEFAULT_TOPO: fabric
