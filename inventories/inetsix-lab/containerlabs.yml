@@ -256,24 +256,24 @@ topology:
     radius:
       binds:
       - radius_authorize:/etc/raddb/mods-config/files/authorize
-      graphite:
-          binds:
-          - .:/htdocs/clab
-          env:
-              GRAPHITE_DEFAULT_TOPO: fabric
-              GRAPHITE_DEFAULT_TYPE: clab
-          exec:
-          - sh -c 'graphite_motd.sh 80'
-          image: netreplica/graphite
-          kind: linux
-          labels:
-              graph-hide: true
-          mgmt_ipv4: 172.16.0.23
-          ports:
-          - 80:80
       image: titom73/radius:0.3.0
       kind: linux
       mgmt_ipv4: 10.73.252.252
+    graphite:
+      binds:
+      - .:/htdocs/clab
+      env:
+          GRAPHITE_DEFAULT_TOPO: fabric
+          GRAPHITE_DEFAULT_TYPE: clab
+      exec:
+      - sh -c 'graphite_motd.sh 80'
+      image: netreplica/graphite
+      kind: linux
+      labels:
+          graph-hide: true
+      mgmt_ipv4: 172.16.0.23
+      ports:
+      - 80:80
     oob-management:
       image: titom73/mysocket-io-ssh-client:0.3.0
       kind: linux
