@@ -62,7 +62,7 @@ management_interfaces:
     description: oob_management
     shutdown: false
     ip_address: "{{ansible_host}}/24"
-    gateway: 10.73.254.1
+    gateway: '{{ default_mgt_gateway }}'
     type: oob
 
 clock:

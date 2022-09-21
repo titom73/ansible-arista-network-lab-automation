@@ -61,7 +61,7 @@ router_bgp:
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
-  gateway: 10.73.254.1
+  gateway: 10.73.252.1
 service_routing_protocols_model: multi-agent
 ip_routing: true
 daemon_terminattr:
@@ -117,7 +117,7 @@ management_interfaces:
     shutdown: false
     vrf: MGMT
     ip_address: 10.73.252.32/24
-    gateway: 10.73.254.1
+    gateway: 10.73.252.1
     type: oob
 management_api_http:
   enable_vrfs:
