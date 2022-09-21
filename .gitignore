@@ -13,7 +13,8 @@ collections/*
 *.DS_Store
 
 context/*
-.containerlabs.yaml
+*.containerlabs.yaml
+inventories/inetsix-lab/.containerlabs.yml.bak
 clab-*
 
 # Byte-compiled / optimized / DLL files

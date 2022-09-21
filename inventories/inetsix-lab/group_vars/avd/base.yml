@@ -46,7 +46,7 @@ cvp_ingestauth_key: !vault |
 #     token_file: "/tmp/token"
 
 # OOB Management network default gateway.
-mgmt_gateway: 10.73.254.1
+mgmt_gateway: '{{ default_mgt_gateway }}'
 mgmt_interface_vrf: "{{ default_mgmt_interface_vrf }}"
 
 # dns servers.
@@ -59,8 +59,6 @@ ntp:
   #   name: Management1
   #   vrf: MGMT
   servers:
-  - name: 10.73.254.253
-    vrf: MGMT
   - name: 10.73.1.254
     vrf: MGMT
     preferred: true
