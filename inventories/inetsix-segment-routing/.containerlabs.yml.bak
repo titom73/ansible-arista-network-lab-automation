@@ -1,0 +1,81 @@
+---
+name: segment-routing
+
+mgmt:
+  network: 'mgmt-sr-lab'
+  ipv4_subnet: 10.73.252.0/24
+
+topology:
+  kinds:
+    ceos:
+      image: arista/ceos:4.27.2F
+      env:
+        CLAB_MGMT_VRF: MGMT
+        TMODE: lacp
+      binds:
+        - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+  nodes:
+    sr-core01:
+      mgmt_ipv4: 10.73.252.101
+      kind: ceos
+      # startup-config: intended/configs/avd-agg01.cfg
+
+    sr-core02:
+      mgmt_ipv4: 10.73.252.102
+      kind: ceos
+      # startup-config: intended/configs/avd-agg01.cfg
+
+    sr-core03:
+      mgmt_ipv4: 10.73.252.103
+      kind: ceos
+      # startup-config: intended/configs/avd-agg01.cfg
+
+    sr-core04:
+      mgmt_ipv4: 10.73.252.104
+      kind: ceos
+      # startup-config: intended/configs/avd-agg01.cfg
+
+    sr-core05:
+      mgmt_ipv4: 10.73.252.105
+      kind: ceos
+      # startup-config: intended/configs/avd-agg01.cfg
+
+    sr-core06:
+      mgmt_ipv4: 10.73.252.106
+      kind: ceos
+      # startup-config: intended/configs/avd-agg01.cfg
+
+    sr-core07:
+      mgmt_ipv4: 10.73.252.107
+      kind: ceos
+      # startup-config: intended/configs/avd-agg01.cfg
+
+    sr-core08:
+      mgmt_ipv4: 10.73.252.108
+      kind: ceos
+      # startup-config: intended/configs/avd-agg01.cfg
+
+  links:
+    - endpoints: ["sr-core01:eth2", "sr-core02:eth1"]
+    - endpoints: ["sr-core01:eth4", "sr-core04:eth1"]
+    - endpoints: ["sr-core01:eth3", "sr-core03:eth1"]
+    - endpoints: ["sr-core01:eth5", "sr-core05:eth1"]
+
+    - endpoints: ["sr-core03:eth2", "sr-core02:eth3"]
+    - endpoints: ["sr-core03:eth4", "sr-core04:eth3"]
+    - endpoints: ["sr-core03:eth6", "sr-core06:eth3"]
+    - endpoints: ["sr-core03:eth5", "sr-core05:eth3"]
+
+    - endpoints: ["sr-core05:eth4", "sr-core04:eth5"]
+    - endpoints: ["sr-core05:eth6", "sr-core06:eth5"]
+    - endpoints: ["sr-core05:eth8", "sr-core08:eth5"]
+
+    - endpoints: ["sr-core07:eth5", "sr-core05:eth7"]
+    - endpoints: ["sr-core07:eth6", "sr-core06:eth7"]
+    - endpoints: ["sr-core07:eth8", "sr-core08:eth7"]
+
+    - endpoints: ["sr-core02:eth4", "sr-core04:eth2"]
+    - endpoints: ["sr-core04:eth6", "sr-core06:eth4"]
+    - endpoints: ["sr-core04:eth8", "sr-core08:eth4"]
+    - endpoints: ["sr-core06:eth8", "sr-core08:eth6"]
+

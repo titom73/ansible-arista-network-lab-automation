@@ -1,0 +1,92 @@
+! Startup-config last modified at Fri Oct  7 10:35:25 2022 by root
+! device: sr-core01 (cEOSLab, EOS-4.27.2F-26069621.4272F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$pqP5lXv77V7YaXz7$Ip/ikU45eItkrBb8qcumZva3klAXx1X8.tTmpDtpe0z8NGCywLftYNu9gJScBO6rFSV.kyUl1S6Lv6003JxYh.
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname sr-core01
+!
+spanning-tree mode mstp
+!
+vrf instance MGMT
+!
+management api http-commands
+   no shutdown
+!
+management api gnmi
+   transport grpc default
+      vrf MGMT
+!
+management api netconf
+   transport ssh default
+      vrf MGMT
+!
+interface Ethernet2
+   description to sr-core02 eth1
+   no switchport
+   ip address 10.0.0.0/31
+   isis enable 100
+   isis circuit-type level-2
+   isis network point-to-point
+!
+interface Ethernet3
+   description to sr-core03 eth1
+   no switchport
+   ip address 10.0.0.4/31
+   isis enable 100
+   isis circuit-type level-2
+   isis network point-to-point
+!
+interface Ethernet4
+   description to sr-core04 eth1
+   no switchport
+   ip address 10.0.0.2/31
+   isis enable 100
+   isis circuit-type level-2
+   isis network point-to-point
+!
+interface Ethernet5
+   description to sr-core05 eth1
+   no switchport
+   ip address 10.0.0.6/31
+   isis enable 100
+   isis circuit-type level-2
+   isis network point-to-point
+!
+interface Loopback0
+   description rid
+   ip address 10.255.0.1/32
+   node-segment ipv4 index 1
+   isis enable 100
+   isis passive
+!
+interface Management0
+   vrf MGMT
+   ip address 10.73.252.101/24
+!
+ip routing
+no ip routing vrf MGMT
+!
+ip route vrf MGMT 0.0.0.0/0 10.73.252.1
+!
+mpls ip
+!
+router isis 100
+   net 49.1111.0000.0001.00
+   is-type level-2
+   timers local-convergence-delay protected-prefixes
+   advertise passive-only
+   !
+   address-family ipv4 unicast
+      fast-reroute ti-lfa mode link-protection level-2
+   !
+   segment-routing mpls
+      router-id 10.255.0.1
+      no shutdown
+!
+end

@@ -1,0 +1,20 @@
+all:
+  children:
+    ceos:
+      hosts:
+        clab-segment-routing-sr-core01:
+          ansible_host: 10.73.252.101
+        clab-segment-routing-sr-core02:
+          ansible_host: 10.73.252.102
+        clab-segment-routing-sr-core03:
+          ansible_host: 10.73.252.103
+        clab-segment-routing-sr-core04:
+          ansible_host: 10.73.252.104
+        clab-segment-routing-sr-core05:
+          ansible_host: 10.73.252.105
+        clab-segment-routing-sr-core06:
+          ansible_host: 10.73.252.106
+        clab-segment-routing-sr-core07:
+          ansible_host: 10.73.252.107
+        clab-segment-routing-sr-core08:
+          ansible_host: 10.73.252.108

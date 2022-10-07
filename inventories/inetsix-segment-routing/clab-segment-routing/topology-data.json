@@ -1,0 +1,489 @@
+{
+  "name": "segment-routing",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "clab",
+      "mgmt": {
+        "network": "mgmt-sr-lab",
+        "bridge": "br-4c5afaaba0a9",
+        "ipv4-subnet": "10.73.252.0/24",
+        "ipv4-gw": "10.73.252.1",
+        "mtu": "1500",
+        "external-access": true
+      }
+    }
+  },
+  "nodes": {
+    "sr-core01": {
+      "index": "0",
+      "shortname": "sr-core01",
+      "longname": "clab-segment-routing-sr-core01",
+      "fqdn": "sr-core01.segment-routing.io",
+      "group": "",
+      "labdir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core01",
+      "kind": "ceos",
+      "image": "arista/ceos:4.27.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "10.73.252.101",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "00:1c:73:64:b4:c2",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-4c5afaaba0a9",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core01",
+        "clab-node-name": "sr-core01",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/containerlabs.yml",
+        "containerlab": "segment-routing"
+      }
+    },
+    "sr-core02": {
+      "index": "1",
+      "shortname": "sr-core02",
+      "longname": "clab-segment-routing-sr-core02",
+      "fqdn": "sr-core02.segment-routing.io",
+      "group": "",
+      "labdir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core02",
+      "kind": "ceos",
+      "image": "arista/ceos:4.27.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "10.73.252.102",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "00:1c:73:2b:fb:70",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-4c5afaaba0a9",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core02",
+        "clab-node-name": "sr-core02",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/containerlabs.yml",
+        "containerlab": "segment-routing"
+      }
+    },
+    "sr-core03": {
+      "index": "2",
+      "shortname": "sr-core03",
+      "longname": "clab-segment-routing-sr-core03",
+      "fqdn": "sr-core03.segment-routing.io",
+      "group": "",
+      "labdir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core03",
+      "kind": "ceos",
+      "image": "arista/ceos:4.27.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "10.73.252.103",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "00:1c:73:19:79:34",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-4c5afaaba0a9",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core03",
+        "clab-node-name": "sr-core03",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/containerlabs.yml",
+        "containerlab": "segment-routing"
+      }
+    },
+    "sr-core04": {
+      "index": "3",
+      "shortname": "sr-core04",
+      "longname": "clab-segment-routing-sr-core04",
+      "fqdn": "sr-core04.segment-routing.io",
+      "group": "",
+      "labdir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core04",
+      "kind": "ceos",
+      "image": "arista/ceos:4.27.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "10.73.252.104",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "00:1c:73:d4:d4:fd",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-4c5afaaba0a9",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core04",
+        "clab-node-name": "sr-core04",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/containerlabs.yml",
+        "containerlab": "segment-routing"
+      }
+    },
+    "sr-core05": {
+      "index": "4",
+      "shortname": "sr-core05",
+      "longname": "clab-segment-routing-sr-core05",
+      "fqdn": "sr-core05.segment-routing.io",
+      "group": "",
+      "labdir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core05",
+      "kind": "ceos",
+      "image": "arista/ceos:4.27.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "10.73.252.105",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "00:1c:73:f9:12:6e",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-4c5afaaba0a9",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core05",
+        "clab-node-name": "sr-core05",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/containerlabs.yml",
+        "containerlab": "segment-routing"
+      }
+    },
+    "sr-core06": {
+      "index": "5",
+      "shortname": "sr-core06",
+      "longname": "clab-segment-routing-sr-core06",
+      "fqdn": "sr-core06.segment-routing.io",
+      "group": "",
+      "labdir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core06",
+      "kind": "ceos",
+      "image": "arista/ceos:4.27.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "10.73.252.106",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "00:1c:73:1c:42:9a",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-4c5afaaba0a9",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core06",
+        "clab-node-name": "sr-core06",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/containerlabs.yml",
+        "containerlab": "segment-routing"
+      }
+    },
+    "sr-core07": {
+      "index": "6",
+      "shortname": "sr-core07",
+      "longname": "clab-segment-routing-sr-core07",
+      "fqdn": "sr-core07.segment-routing.io",
+      "group": "",
+      "labdir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core07",
+      "kind": "ceos",
+      "image": "arista/ceos:4.27.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "10.73.252.107",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "00:1c:73:ad:61:74",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-4c5afaaba0a9",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core07",
+        "clab-node-name": "sr-core07",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/containerlabs.yml",
+        "containerlab": "segment-routing"
+      }
+    },
+    "sr-core08": {
+      "index": "7",
+      "shortname": "sr-core08",
+      "longname": "clab-segment-routing-sr-core08",
+      "fqdn": "sr-core08.segment-routing.io",
+      "group": "",
+      "labdir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core08",
+      "kind": "ceos",
+      "image": "arista/ceos:4.27.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "10.73.252.108",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "00:1c:73:a5:67:e2",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-4c5afaaba0a9",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/clab-segment-routing/sr-core08",
+        "clab-node-name": "sr-core08",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/tom/Projects/avd-stack/avd-lab-validation/inventories/inetsix-segment-routing/containerlabs.yml",
+        "containerlab": "segment-routing"
+      }
+    }
+  },
+  "links": [
+    {
+      "a": {
+        "node": "sr-core01",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:15:0d:99",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core02",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:33:28:fa",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core01",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:a5:fc:93",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core04",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:be:ca:62",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core01",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:d4:4e:c8",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core03",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:85:c2:ba",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core01",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:14:d7:00",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core05",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:cf:ff:e1",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core03",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:20:44:17",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core02",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:04:c3:17",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core03",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:24:62:aa",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core04",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:a0:b7:f4",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core03",
+        "interface": "eth6",
+        "mac": "aa:c1:ab:a4:d2:47",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core06",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:75:3a:a5",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core03",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:46:5f:42",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core05",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:9d:59:42",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core05",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:e0:e5:ed",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core04",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:95:32:c6",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core05",
+        "interface": "eth6",
+        "mac": "aa:c1:ab:b8:c2:02",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core06",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:8f:a2:e5",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core05",
+        "interface": "eth8",
+        "mac": "aa:c1:ab:69:21:f7",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core08",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:cb:cd:d6",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core07",
+        "interface": "eth5",
+        "mac": "aa:c1:ab:44:39:26",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core05",
+        "interface": "eth7",
+        "mac": "aa:c1:ab:ab:84:9f",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core07",
+        "interface": "eth6",
+        "mac": "aa:c1:ab:2a:26:fe",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core06",
+        "interface": "eth7",
+        "mac": "aa:c1:ab:88:d9:bf",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core07",
+        "interface": "eth8",
+        "mac": "aa:c1:ab:ec:8a:24",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core08",
+        "interface": "eth7",
+        "mac": "aa:c1:ab:4e:9c:37",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core02",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:ae:e7:eb",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core04",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:d4:9b:87",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core04",
+        "interface": "eth6",
+        "mac": "aa:c1:ab:5f:c1:66",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core06",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:b7:59:64",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core04",
+        "interface": "eth8",
+        "mac": "aa:c1:ab:42:f9:f3",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core08",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:3d:66:7c",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "sr-core06",
+        "interface": "eth8",
+        "mac": "aa:c1:ab:ec:e8:fc",
+        "peer": "z"
+      },
+      "z": {
+        "node": "sr-core08",
+        "interface": "eth6",
+        "mac": "aa:c1:ab:5a:0f:11",
+        "peer": "a"
+      }
+    }
+  ]
+}
