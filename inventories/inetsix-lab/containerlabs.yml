@@ -331,3 +331,5 @@ topology:
     - endpoints: ['srv-pod02:eth1', 'avd-agg02:eth3']
     - endpoints: ['srv-pod03:eth1', 'avd-leaf3a:eth5']
     - endpoints: ['srv-pod03:eth2', 'avd-leaf4a:eth5']
+    - endpoints: ['srv-pod03:eth3', 'avd-leaf3a:eth6']
+    - endpoints: ['srv-pod03:eth4', 'avd-leaf4a:eth6']

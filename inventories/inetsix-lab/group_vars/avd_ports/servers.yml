@@ -19,8 +19,8 @@ servers:
   srv-pod03:
     rack: pod03
     adapters:
-      - server_ports: [ Ethernet1, Ethernet2 ]
-        switch_ports: [ Ethernet5, Ethernet5 ]
+      - server_ports: [ Ethernet3, Ethernet4 ]
+        switch_ports: [ Ethernet6, Ethernet6 ]
         switches: [ avd-leaf3a, avd-leaf4a ]
         profile: all
         port_channel:

@@ -1,0 +1,89 @@
+router_bgp:
+  as: '65300'
+  router_id: 192.168.255.203
+  bgp_defaults:
+  - no bgp default ipv4-unicast
+  - distance bgp 20 200 200
+  - graceful-restart restart-time 300
+  - graceful-restart
+  - maximum-paths 4 ecmp 4
+  peer_groups:
+    IPv4-UNDERLAY-PEERS:
+      type: ipv4
+      maximum_routes: 12000
+      send_community: all
+    EVPN-OVERLAY-PEERS:
+      type: evpn
+      update_source: Loopback0
+      bfd: true
+      ebgp_multihop: '15'
+      send_community: all
+      maximum_routes: 0
+  address_family_ipv4:
+    peer_groups:
+      IPv4-UNDERLAY-PEERS:
+        activate: true
+      EVPN-OVERLAY-PEERS:
+        activate: false
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
+  neighbors:
+    172.31.252.0:
+      remote_as: '65103'
+      description: avd-leaf3a
+      peer_group: IPv4-UNDERLAY-PEERS
+    172.31.252.2:
+      remote_as: '65104'
+      description: avd-leaf4a
+      peer_group: IPv4-UNDERLAY-PEERS
+    192.168.255.17:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: avd-leaf03a
+      remote_as: '65103'
+    192.168.255.18:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: avd-leaf04a
+      remote_as: '65104'
+  redistribute_routes:
+    connected:
+      route_map: RM-CONN-2-BGP
+
+prefix_lists:
+  PL-LOOPBACKS-EVPN-OVERLAY:
+    sequence_numbers:
+      10:
+        action: permit 192.168.255.0/24 eq 32
+      20:
+        action: permit 192.168.254.0/24 eq 32
+route_maps:
+  RM-CONN-2-BGP:
+    sequence_numbers:
+      10:
+        type: permit
+        match:
+        - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+
+vlan_internal_order:
+  allocation: ascending
+  range:
+    beginning: 1006
+    ending: 1199
+
+vxlan_interface:
+  Vxlan1:
+    description: avd-leaf3a_VTEP
+    vxlan:
+      source_interface: Loopback1
+      udp_port: 4789
+      vlans:
+        110:
+          vni: 10110
+        113:
+          vni: 10113
+        201:
+          vni: 20201
+      vrfs:
+        tenant_a_project01:
+          vni: 11
