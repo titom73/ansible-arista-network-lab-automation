@@ -32,6 +32,11 @@ tooling:
           ansible_port: 9025
           ansible_host: 10.73.252.43
           type: endpoint
+        evpn-core:
+          ansible_httpapi_port: 9027
+          ansible_port: 9025
+          ansible_host: 10.73.252.44
+          type: endpoint
         # dci-rtr:
         #   ansible_port: 9026
         # srv-pod05-23:

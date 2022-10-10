@@ -4,18 +4,23 @@
   - [Topology](#topology)
   - [Setup](#setup)
     - [Required tools:](#required-tools)
+    - [Cloud deployment](#cloud-deployment)
+  - [Inventory Information](#inventory-information)
+    - [Inetsix eAPI Inventory](#inetsix-eapi-inventory)
   - [Make commands](#make-commands)
+    - [Generic commands](#generic-commands)
+    - [AVD Specifics](#avd-specifics)
+    - [Containerlab Specifics](#containerlab-specifics)
+    - [Ansible Execution Engine Specifics](#ansible-execution-engine-specifics)
+    - [Misc commands](#misc-commands)
   - [Make Options](#make-options)
   - [Ansible Execution Engine](#ansible-execution-engine)
     - [Build Image](#build-image)
     - [Run Execution Engine](#run-execution-engine)
-  - [Inventory Information](#inventory-information)
-    - [Inetsix eAPI Inventory](#inetsix-eapi-inventory)
-  - [Make commands](#make-commands-1)
 
 ## Topology
 
-![Topology](inventories/inetsix-lab/medias/topology.png)
+![Topology](inventories/inetsix-lab/clab-topology.png)
 
 ## Setup
 

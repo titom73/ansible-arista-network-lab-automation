@@ -1,0 +1,32 @@
+
+loopback_interfaces:
+  Loopback0:
+    description: EVPN_Overlay_Peering
+    shutdown: false
+    ip_address: 192.168.255.204/32
+  Loopback1:
+    description: VTEP_VXLAN_Tunnel_Source
+    shutdown: false
+    ip_address: 192.168.254.204/32
+
+ethernet_interfaces:
+  # Layer 3 fot EVPN Gateway
+  Ethernet1:
+    peer: avd-leaf3a
+    peer_interface: Ethernet5
+    peer_type: other
+    description: P2P_LINK_TO_avd-leaf3a_Ethernet5
+    type: routed
+    shutdown: false
+    mtu: 1500
+    ip_address: 172.31.252.1/31
+
+  Ethernet2:
+    peer: avd-leaf4a
+    peer_interface: Ethernet5
+    peer_type: other
+    description: P2P_LINK_TO_avd-leaf4a_Ethernet5
+    type: routed
+    shutdown: false
+    mtu: 1500
+    ip_address: 172.31.252.3/31

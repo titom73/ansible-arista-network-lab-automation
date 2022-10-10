@@ -1,0 +1,50 @@
+vrfs:
+  MGMT:
+    ip_routing: false
+  tenant_a_110:
+    ip_routing: true
+    ipv6_routing: false
+  tenant_a_113:
+    ip_routing: true
+    ipv6_routing: false
+  tenant_b_201:
+    ip_routing: true
+    ipv6_routing: false
+
+prefix_lists:
+  PL-LOOPBACKS-EVPN-OVERLAY:
+    sequence_numbers:
+      10:
+        action: permit 192.168.255.0/24 eq 32
+      20:
+        action: permit 192.168.254.0/24 eq 32
+route_maps:
+  RM-CONN-2-BGP:
+    sequence_numbers:
+      10:
+        type: permit
+        match:
+        - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+
+vlan_internal_order:
+  allocation: ascending
+  range:
+    beginning: 1006
+    ending: 1199
+
+vxlan_interface:
+  Vxlan1:
+    description: avd-leaf3a_VTEP
+    vxlan:
+      source_interface: Loopback1
+      udp_port: 4789
+      vlans:
+        110:
+          vni: 10110
+        113:
+          vni: 10113
+        201:
+          vni: 20201
+      vrfs:
+        tenant_a_project01:
+          vni: 11

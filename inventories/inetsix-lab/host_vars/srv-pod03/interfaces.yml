@@ -22,27 +22,6 @@ loopback_interfaces:
     ip_address: 192.168.254.203/32
 
 ethernet_interfaces:
-  # Layer 3 fot EVPN Gateway
-  Ethernet1:
-    peer: avd-leaf3a
-    peer_interface: Ethernet5
-    peer_type: other
-    description: P2P_LINK_TO_avd-leaf3a_Ethernet5
-    type: routed
-    shutdown: false
-    mtu: 1500
-    ip_address: 172.31.252.1/31
-
-  Ethernet2:
-    peer: avd-leaf4a
-    peer_interface: Ethernet5
-    peer_type: other
-    description: P2P_LINK_TO_avd-leaf4a_Ethernet5
-    type: routed
-    shutdown: false
-    mtu: 1500
-    ip_address: 172.31.252.3/31
-
   # Layer 2 for ESI
   Ethernet3:
     description: to AVD2-LEAF3A - eth5

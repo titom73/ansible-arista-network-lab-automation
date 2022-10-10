@@ -20,7 +20,7 @@ servers:
     rack: pod03
     adapters:
       - server_ports: [ Ethernet3, Ethernet4 ]
-        switch_ports: [ Ethernet6, Ethernet6 ]
+        switch_ports: [ Ethernet5, Ethernet5 ]
         switches: [ avd-leaf3a, avd-leaf4a ]
         profile: all
         port_channel:

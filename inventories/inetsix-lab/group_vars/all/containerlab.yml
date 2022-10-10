@@ -32,6 +32,16 @@ clab_nodes:
     binds:
         - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
 
+  evpn-core:
+    kind: ceos
+    image: "{{ clab_runner_eos }}"
+    startup-config: intended/configs/evpn-core.cfg
+    mgmt_ipv4: 10.73.252.44
+    env:
+      TMODE: lacp
+    binds:
+        - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+
   # ------------------------- #
   # --- Network Services ---- #
   # ------------------------- #
@@ -82,9 +92,9 @@ clab_nodes:
 clab_links:
  - endpoints: ["srv-pod01:eth1", "avd-agg01:eth3"]
  - endpoints: ["srv-pod02:eth1", "avd-agg02:eth3"]
-# EVPN Gateway Links
- - endpoints: ["srv-pod03:eth1", "avd-leaf3a:eth5"]
- - endpoints: ["srv-pod03:eth2", "avd-leaf4a:eth5"]
 # ESI links
- - endpoints: ["srv-pod03:eth3", "avd-leaf3a:eth6"]
- - endpoints: ["srv-pod03:eth4", "avd-leaf4a:eth6"]
+ - endpoints: ["srv-pod03:eth3", "avd-leaf3a:eth5"]
+ - endpoints: ["srv-pod03:eth4", "avd-leaf4a:eth5"]
+# EVPN Gateway Links
+ - endpoints: ["evpn-core:eth1", "avd-bl01a:eth5"]
+ - endpoints: ["evpn-core:eth2", "avd-bl01b:eth5"]

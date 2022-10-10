@@ -19,20 +19,11 @@ router_bgp:
       ebgp_multihop: '3'
       send_community: all
       maximum_routes: 0
-    EVPN-OVERLAY-CORE:
-      type: evpn
-      update_source: Loopback0
-      bfd: true
-      ebgp_multihop: '15'
-      send_community: all
-      maximum_routes: 0
   address_family_ipv4:
     peer_groups:
       IPv4-UNDERLAY-PEERS:
         activate: true
       EVPN-OVERLAY-PEERS:
-        activate: false
-      EVPN-OVERLAY-CORE:
         activate: false
   redistribute_routes:
     connected:
@@ -54,25 +45,10 @@ router_bgp:
       peer_group: EVPN-OVERLAY-PEERS
       description: avd-rs02
       remote_as: '65000'
-    192.168.255.203:
-      peer_group: EVPN-OVERLAY-CORE
-      description: srv-pod03
-      remote_as: '65300'
-    172.31.252.3:
-      remote_as: '65300'
-      description: srv-pod03
-      peer_group: IPv4-UNDERLAY-PEERS
   address_family_evpn:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
-      EVPN-OVERLAY-CORE:
-        domain_remote: true
-        activate: true
-    neighbor_default:
-      next_hop_self_received_evpn_routes:
-        enable: true
-        inter_domain: true
   vrfs:
     tenant_a_project01:
       router_id: 192.168.255.18
@@ -90,30 +66,18 @@ router_bgp:
   vlan_aware_bundles:
     tenant_a_project01:
       rd: 192.168.255.18:11
-      rd_evpn_domain:
-        domain: remote
-        rd: 192.168.255.18:11
       route_targets:
         both:
         - '11:11'
-        import_export_evpn_domains:
-        - domain: remote
-          route_target: '11:11'
       redistribute_routes:
       - learned
       vlan: 110,113
     b-elan-201:
       tenant: tenant_b
       rd: 192.168.255.18:20201
-      rd_evpn_domain:
-        domain: remote
-        rd: 192.168.255.18:20201
       route_targets:
         both:
         - 20201:20201
-        import_export_evpn_domains:
-        - domain: remote
-          route_target: 20201:20201
       redistribute_routes:
       - learned
       vlan: 201
@@ -208,15 +172,6 @@ ethernet_interfaces:
     ip_address: 172.31.255.63/31
   Ethernet5:
     peer: srv-pod03
-    peer_interface: Ethernet2
-    peer_type: other
-    description: P2P_LINK_TO_srv-pod03_Ethernet2
-    type: routed
-    shutdown: false
-    mtu: 1500
-    ip_address: 172.31.252.2/31
-  Ethernet6:
-    peer: srv-pod03
     peer_interface: Ethernet4
     peer_type: server
     description: srv-pod03_Ethernet4
@@ -225,7 +180,7 @@ ethernet_interfaces:
     mode: trunk
     vlans: 1-4000
     channel_group:
-      id: 6
+      id: 5
       mode: active
 loopback_interfaces:
   Loopback0:
@@ -305,7 +260,7 @@ vxlan_interface:
         tenant_a_project01:
           vni: 11
 port_channel_interfaces:
-  Port-Channel6:
+  Port-Channel5:
     description: srv-pod03_portchanne1
     type: switched
     shutdown: false

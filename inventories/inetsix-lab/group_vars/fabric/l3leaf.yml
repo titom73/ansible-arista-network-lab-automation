@@ -50,15 +50,6 @@ l3leaf:
           uplink_switch_interfaces: [Ethernet4, Ethernet4]
     avd_leaf_esi:
       mlag: false
-      evpn_gateway:
-        remote_peers:
-        - hostname: srv-pod03
-          ip_address: 192.168.255.203
-          bgp_as: 65300
-        evpn_l2:
-          enabled: true
-        evpn_l3:
-          enabled: true
       filter:
         tenants: [ 'tenant_a', 'tenant_b' ]
         tags: [ 'pod03', 'dc1' ]
@@ -80,6 +71,15 @@ l3leaf:
       filter:
         tenants: [ 'tenant_a', 'tenant_b' ]
         tags: [ 'border', 'dc1' ]
+      evpn_gateway:
+        remote_peers:
+        - hostname: evpn-core-simulation
+          ip_address: 192.168.255.204
+          bgp_as: 64500
+        evpn_l2:
+          enabled: true
+        evpn_l3:
+          enabled: true
       nodes:
         avd-bl01a:
           id: 17
