@@ -51,6 +51,12 @@ deploy: clab-deploy  ## Power UP containerlab topology
 .PHONY: destroy
 destroy: clab-destroy  ## Shutdown containerlab topology
 
+.PHONY: pause
+pause: clab-pause  ## Save configuration and Shutdown containerlab topology
+
+.PHONY: unpause
+unpause: clab-unpause  ## Deploy containerlab with no reconfigure
+
 ################################################################################
 ### AVD build & deploy
 ################################################################################
@@ -121,6 +127,15 @@ mysocket-login: ## Login Mysocket.io with Containerlab
 
 .PHONY: clab-reload
 clab-reload: clab-destroy clab-build clab-deploy ## Destroy lab, build configuration and deploy lab.
+
+
+.PHONY: clab-unpause
+clab-unpause: ## Deploy containerlab topology without reconfigure
+	cd ${INVENTORY} && sudo -E containerlab deploy --topo ${CLAB_TOPO}
+
+.PHONY: clab-pause
+clab-pause:  ## Save configurations and destroy Containerlab topology
+	cd ${INVENTORY} && sudo containerlab save --topo ${CLAB_TOPO} && sudo containerlab destroy --topo ${CLAB_TOPO}
 
 ################################################################################
 ### Installation process
