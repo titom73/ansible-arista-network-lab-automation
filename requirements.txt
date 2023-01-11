@@ -38,7 +38,6 @@ docker
 docutils
 enrich
 eos-downloader
-eve-ng-toolset
 filelock
 flake8
 fpyutils

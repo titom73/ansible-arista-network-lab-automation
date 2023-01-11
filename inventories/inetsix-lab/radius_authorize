@@ -22,3 +22,19 @@ ansible Cleartext-Password := "ansible"
         Arista-Command += 'permit command .*',
         Arista-AVpair += "shell:cvp-roles=network-admin",
         Service-Type := NAS-Prompt-User
+
+tom     Cleartext-Password := "arista"
+        Auth-Type := Accept,
+        Arista-AVPair := "shell:priv-lvl=15",
+        Arista-AVpair += "shell:roles=network-admin",
+        Arista-Command += 'permit command .*',
+        Arista-AVpair += "shell:cvp-roles=network-admin",
+        Service-Type := NAS-Prompt-User
+
+arista Cleartext-Password := "arista"
+        Auth-Type := Accept,
+        Arista-AVPair := "shell:priv-lvl=15",
+        Arista-AVpair += "shell:roles=network-admin",
+        Arista-Command += 'permit command .*',
+        Arista-AVpair += "shell:cvp-roles=network-admin",
+        Service-Type := NAS-Prompt-User

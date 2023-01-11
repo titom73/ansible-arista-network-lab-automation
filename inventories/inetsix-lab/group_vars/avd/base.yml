@@ -16,34 +16,36 @@ local_users:
   ansible:
     privilege: 15
     role: network-admin
+    # password: ansible
     sha512_password: "$6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/"
 
-  demo:
+  arista:
     privilege: 15
     role: network-admin
-    sha512_password: "$6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/"
+    # password: arista
+    sha512_password: "$6$7WhvEi5Ce5f5Ut3z$Ethmha7rb710RKsaVteusVOuNP1Utfjzse58xxbgiZp4MF0fp7BX5lAw8yBgv/HWCihVomuCSrsJx8wKnJ7Tm1"
+
+  tom:
+    privilege: 15
+    role: network-admin
+    # password: arista123
+    sha512_password: "$6$TyWn7NeXe/vBRl1t$S4fEOkPmpTGz7TLHCzDNP8D2UfpO3ciC2MuGmCaFMVF3B7zt9KSnt9yq99y69XBIY1HV/kO4QjOk32yRQOru5."
 
 
 # Cloud Vision server information
-cvp_instance_ips:
-  - 10.73.1.239
-cvp_ingestauth_key: !vault |
-  $ANSIBLE_VAULT;1.1;AES256
-  30363163626631663738643137643331323131633236303036363537323334633934666632306435
-  3033623163313265633364623439393765343934343162390a633262303232316434666636386265
-  34393363663338623238653563393038313638653761396438663063646536643234303161363066
-  3936383565393030300a323866643030343231613331386134363335303065613239653464656163
-  6636
-
-### Example to use token Auth with eos_designs
-# cvp_instance_ip: 10.73.1.239
-# cvp_ingestauth_key: telarista
-
-# # Cloud Vision server information
-# custom_structured_configuration_daemon_terminattr:
-#   cvauth:
-#     mEthernetod: "token"
-#     token_file: "/tmp/token"
+daemon_terminattr:
+  cvaddrs:
+    - 10.73.1.238:9910
+  cvauth:
+    method: token
+    token_file: "/tmp/token"
+  cvobscurekeyfile: false
+  cvsourceip: '{{ ansible_host }}'
+  cvvrf: "{{ default_mgmt_interface_vrf }}"
+  cvgnmi: true
+  disable_aaa: false
+  ingestexclude: '/Sysdb/cell/1/agent,/Sysdb/cell/2/agent'
+  smashexcludes: 'ale,flexCounter,hardware,kni,pulse,strata'
 
 # OOB Management network default gateway.
 mgmt_gateway: '{{ default_mgt_gateway }}'
@@ -52,6 +54,7 @@ mgmt_interface_vrf: "{{ default_mgmt_interface_vrf }}"
 # dns servers.
 name_servers:
   - 10.73.1.251
+  - 10.73.1.252
 
 # NTP Servers IP or DNS name, first NTP server will be prefered, and sourced from Managment VRF
 ntp:

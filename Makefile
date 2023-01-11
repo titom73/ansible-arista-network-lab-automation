@@ -82,8 +82,17 @@ jump-push: ## Run ansible playbook to push previsouly generated configurations v
 	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags "deploy_eapi"  --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) --skip-tags debug --diff --extra-vars "ansible_host=$(JUMP)" $(ANSIBLE_ARGS)
 
 .PHONY: avd-clean
-avd-clean: ## Clenup Build environment
+avd-clean: ## Cleanup Build environment
 	cd $(INVENTORY) && rm -rf intended && rm -rf documentation && rm -rf config_backup && rm -f .$(CLAB_TOPO)
+
+.PHONY: cvp-provision
+cvp-provision: ## Provision CVP with AVD topology
+	ansible-playbook playbooks/cvp/avd-deploy-cvp.yml --vault-password-file=$(VAULT_FILE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
+.PHONY: cvp-tags
+cvp-tags: ## Provision CVP with AVD topology
+	ansible-playbook playbooks/cvp/avd-deploy-tags.yml --vault-password-file=$(VAULT_FILE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
+
 
 ################################################################################
 ### AVD Tools
@@ -111,7 +120,7 @@ clab-build:  ## Build AVD configuration for EOS device in Fabric
 
 .PHONY: clab-deploy
 clab-deploy: ## Deploy containerlab topology
-	cd ${INVENTORY} && sudo -E containerlab deploy --topo ${CLAB_TOPO} --reconfigure
+	cd ${INVENTORY} && sudo -E containerlab deploy --topo ${CLAB_TOPO}
 
 .PHONY: clab-destroy
 clab-destroy:  ## Destroy Containerlab topology
@@ -136,6 +145,14 @@ clab-unpause: ## Deploy containerlab topology without reconfigure
 .PHONY: clab-pause
 clab-pause:  ## Save configurations and destroy Containerlab topology
 	cd ${INVENTORY} && sudo containerlab save --topo ${CLAB_TOPO} && sudo containerlab destroy --topo ${CLAB_TOPO}
+
+################################################################################
+### AVD Tools
+################################################################################
+
+.PHONY: nrfu
+nrfu:  ## Run Network testing based on ANTA
+	cd network-tests && check-devices.py -i anta-inventory.yml -c tests-bases.yml -u tom -p arista123 --table --tags fabric
 
 ################################################################################
 ### Installation process

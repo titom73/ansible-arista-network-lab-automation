@@ -1,0 +1,139 @@
+---
+CVP_DEVICES:
+  avd-agg01:
+    name: avd-agg01
+    parentContainerName: avd_edge_leaf1
+    configlets:
+      - avd__avd-agg01
+    imageBundle: []
+  avd-agg02:
+    name: avd-agg02
+    parentContainerName: avd_edge_leaf2
+    configlets:
+      - avd__avd-agg02
+    imageBundle: []
+  avd-bl01a:
+    name: avd-bl01a
+    parentContainerName: avd_bl01
+    configlets:
+      - avd__avd-bl01a
+    imageBundle: []
+  avd-bl01b:
+    name: avd-bl01b
+    parentContainerName: avd_bl01
+    configlets:
+      - avd__avd-bl01b
+    imageBundle: []
+  avd-cl01a:
+    name: avd-cl01a
+    parentContainerName: avd_cl01
+    configlets:
+      - avd__avd-cl01a
+    imageBundle: []
+  avd-cl01b:
+    name: avd-cl01b
+    parentContainerName: avd_cl01
+    configlets:
+      - avd__avd-cl01b
+    imageBundle: []
+  avd-l2leaf01:
+    name: avd-l2leaf01
+    parentContainerName: avd_l2leaf1
+    configlets:
+      - avd__avd-l2leaf01
+    imageBundle: []
+  avd-l2leaf02:
+    name: avd-l2leaf02
+    parentContainerName: avd_l2leaf1
+    configlets:
+      - avd__avd-l2leaf02
+    imageBundle: []
+  avd-leaf1a:
+    name: avd-leaf1a
+    parentContainerName: avd_leaf1
+    configlets:
+      - avd__avd-leaf1a
+    imageBundle: []
+  avd-leaf1b:
+    name: avd-leaf1b
+    parentContainerName: avd_leaf1
+    configlets:
+      - avd__avd-leaf1b
+    imageBundle: []
+  avd-leaf2a:
+    name: avd-leaf2a
+    parentContainerName: avd_leaf2
+    configlets:
+      - avd__avd-leaf2a
+    imageBundle: []
+  avd-leaf2b:
+    name: avd-leaf2b
+    parentContainerName: avd_leaf2
+    configlets:
+      - avd__avd-leaf2b
+    imageBundle: []
+  avd-leaf3a:
+    name: avd-leaf3a
+    parentContainerName: avd_leaf_esi
+    configlets:
+      - avd__avd-leaf3a
+    imageBundle: []
+  avd-leaf4a:
+    name: avd-leaf4a
+    parentContainerName: avd_leaf_esi
+    configlets:
+      - avd__avd-leaf4a
+    imageBundle: []
+  avd-rs01:
+    name: avd-rs01
+    parentContainerName: avd_route_servers
+    configlets:
+      - avd__avd-rs01
+    imageBundle: []
+  avd-rs02:
+    name: avd-rs02
+    parentContainerName: avd_route_servers
+    configlets:
+      - avd__avd-rs02
+    imageBundle: []
+  avd-spine1:
+    name: avd-spine1
+    parentContainerName: avd_spines
+    configlets:
+      - avd__avd-spine1
+    imageBundle: []
+  avd-spine2:
+    name: avd-spine2
+    parentContainerName: avd_spines
+    configlets:
+      - avd__avd-spine2
+    imageBundle: []
+CVP_CONTAINERS:
+  avd_bl01:
+    parent_container: avd_l3leafs
+  avd_cl01:
+    parent_container: avd_l3leafs
+  avd_edge:
+    parent_container: fabric
+  avd_edge_leaf1:
+    parent_container: avd_edge
+  avd_edge_leaf2:
+    parent_container: avd_edge
+  avd_l2leaf1:
+    parent_container: avd_l2leafs
+  avd_l2leafs:
+    parent_container: fabric
+  avd_l3leafs:
+    parent_container: fabric
+  avd_leaf1:
+    parent_container: avd_l3leafs
+  avd_leaf2:
+    parent_container: avd_l3leafs
+  avd_leaf_esi:
+    parent_container: avd_l3leafs
+  avd_route_servers:
+    parent_container: fabric
+  avd_spines:
+    parent_container: fabric
+  fabric:
+    parent_container: Tenant

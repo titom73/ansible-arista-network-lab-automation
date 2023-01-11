@@ -8,10 +8,10 @@ mgmt:
 topology:
   kinds:
     ceos:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
   nodes:
     avd-agg01:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.21
       kind: ceos
       startup-config: intended/configs/avd-agg01.cfg
@@ -23,7 +23,7 @@ topology:
       env:
         TMODE: lacp
     avd-agg02:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.22
       kind: ceos
       startup-config: intended/configs/avd-agg02.cfg
@@ -35,7 +35,7 @@ topology:
       env:
         TMODE: lacp
     avd-l2leaf01:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.31
       kind: ceos
       startup-config: intended/configs/avd-l2leaf01.cfg
@@ -47,7 +47,7 @@ topology:
       env:
         TMODE: lacp
     avd-l2leaf02:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.32
       kind: ceos
       startup-config: intended/configs/avd-l2leaf02.cfg
@@ -59,7 +59,7 @@ topology:
       env:
         TMODE: lacp
     avd-bl01a:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.15
       kind: ceos
       startup-config: intended/configs/avd-bl01a.cfg
@@ -71,7 +71,7 @@ topology:
       env:
         TMODE: lacp
     avd-bl01b:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.16
       kind: ceos
       startup-config: intended/configs/avd-bl01b.cfg
@@ -83,7 +83,7 @@ topology:
       env:
         TMODE: lacp
     avd-cl01a:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.19
       kind: ceos
       startup-config: intended/configs/avd-cl01a.cfg
@@ -95,7 +95,7 @@ topology:
       env:
         TMODE: lacp
     avd-cl01b:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.20
       kind: ceos
       startup-config: intended/configs/avd-cl01b.cfg
@@ -107,7 +107,7 @@ topology:
       env:
         TMODE: lacp
     avd-leaf1a:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.11
       kind: ceos
       startup-config: intended/configs/avd-leaf1a.cfg
@@ -119,7 +119,7 @@ topology:
       env:
         TMODE: lacp
     avd-leaf1b:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.12
       kind: ceos
       startup-config: intended/configs/avd-leaf1b.cfg
@@ -131,7 +131,7 @@ topology:
       env:
         TMODE: lacp
     avd-leaf2a:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.13
       kind: ceos
       startup-config: intended/configs/avd-leaf2a.cfg
@@ -143,7 +143,7 @@ topology:
       env:
         TMODE: lacp
     avd-leaf2b:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.14
       kind: ceos
       startup-config: intended/configs/avd-leaf2b.cfg
@@ -155,7 +155,7 @@ topology:
       env:
         TMODE: lacp
     avd-leaf3a:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.17
       kind: ceos
       startup-config: intended/configs/avd-leaf3a.cfg
@@ -167,7 +167,7 @@ topology:
       env:
         TMODE: lacp
     avd-leaf4a:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.18
       kind: ceos
       startup-config: intended/configs/avd-leaf4a.cfg
@@ -179,7 +179,7 @@ topology:
       env:
         TMODE: lacp
     avd-rs01:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.51
       kind: ceos
       startup-config: intended/configs/avd-rs01.cfg
@@ -191,7 +191,7 @@ topology:
       env:
         TMODE: lacp
     avd-rs02:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.52
       kind: ceos
       startup-config: intended/configs/avd-rs02.cfg
@@ -203,7 +203,7 @@ topology:
       env:
         TMODE: lacp
     avd-spine1:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.101
       kind: ceos
       startup-config: intended/configs/avd-spine1.cfg
@@ -215,7 +215,7 @@ topology:
       env:
         TMODE: lacp
     avd-spine2:
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.102
       kind: ceos
       startup-config: intended/configs/avd-spine2.cfg
@@ -231,7 +231,7 @@ topology:
       - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       env:
           TMODE: lacp
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       kind: ceos
       mgmt_ipv4: 10.73.252.41
       startup-config: intended/configs/srv-pod01.cfg
@@ -240,7 +240,7 @@ topology:
       - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       env:
           TMODE: lacp
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       kind: ceos
       mgmt_ipv4: 10.73.252.42
       startup-config: intended/configs/srv-pod02.cfg
@@ -249,7 +249,7 @@ topology:
       - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       env:
           TMODE: lacp
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       kind: ceos
       mgmt_ipv4: 10.73.252.43
       startup-config: intended/configs/srv-pod03.cfg
@@ -258,7 +258,7 @@ topology:
       - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       env:
           TMODE: lacp
-      image: arista/ceos:4.27.2F
+      image: arista/ceos:4.28.3M
       kind: ceos
       mgmt_ipv4: 10.73.252.44
       startup-config: intended/configs/evpn-core.cfg
@@ -268,30 +268,6 @@ topology:
       image: titom73/radius:0.3.0
       kind: linux
       mgmt_ipv4: 10.73.252.252
-    graphite:
-      binds:
-      - .:/htdocs/clab
-      env:
-          GRAPHITE_DEFAULT_TOPO: fabric
-          GRAPHITE_DEFAULT_TYPE: clab
-      exec:
-      - sh -c 'graphite_motd.sh 80'
-      image: netreplica/graphite
-      kind: linux
-      labels:
-          graph-hide: true
-      ports:
-      - 80:80
-    oob-management:
-      image: titom73/mysocket-io-ssh-client:0.3.0
-      kind: linux
-      publish:
-      - tcp/22/arista.com
-    mysocketio:
-      binds:
-      - .mysocketio_token:/root/.mysocketio_token
-      image: ghcr.io/hellt/mysocketctl:0.5.0
-      kind: mysocketio
 
   links:
     - endpoints: ["avd-agg01:eth1", "avd-leaf1a:eth5"]

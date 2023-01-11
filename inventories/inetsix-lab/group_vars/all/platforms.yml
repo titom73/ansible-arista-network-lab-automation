@@ -28,6 +28,9 @@ platform_settings:
          vrf default
             no shutdown
       !
+      interface Management0
+         no lldp transmit
+
   - platforms: [ 'VEOS', 'vEOS', 'veos', 'vEOSLab', 'VEOS-LAB', 'veos-lab' ]
     management_interface: Management1
     reload_delay:
@@ -36,3 +39,6 @@ platform_settings:
     feature_support:
       queue_monitor_length_notify: false
       interface_storm_control: false
+    raw_eos_cli: |
+      interface Management0
+         no lldp transmit

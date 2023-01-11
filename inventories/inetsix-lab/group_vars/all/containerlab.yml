@@ -1,4 +1,4 @@
-clab_runner_eos: arista/ceos:4.27.2F
+clab_runner_eos: arista/ceos:4.28.3M
 clab_management_network: 10.73.252.0/24
 
 clab_nodes:
@@ -59,35 +59,29 @@ clab_nodes:
   # ability to connect to nodes in the      #
   # topology via a web/ssh session          #
   # --------------------------------------- #
-  graphite:
-    kind: linux
-    image: netreplica/graphite
-    env:
-      GRAPHITE_DEFAULT_TYPE: clab
-      GRAPHITE_DEFAULT_TOPO: fabric
-      # CLAB_SSH_CONNECTION: ${SSH_CONNECTION}
-    binds:
-      # - .:/var/www/localhost/htdocs/clab   <----  This is the old path in docker image netreplica/graphite:webssh2
-      - .:/htdocs/clab    # New path required for latest version
-    ports:
-      - 80:80
-    exec:
-      # - sh -c 'generate_offline_graph.sh'   # used to generate offline graphs
-      - sh -c 'graphite_motd.sh 80'
-    labels:
-      graph-hide: yes
+  # graphite:
+  #   kind: linux
+  #   image: netreplica/graphite
+  #   env:
+  #     GRAPHITE_DEFAULT_TYPE: clab
+  #     GRAPHITE_DEFAULT_TOPO: fabric
+  #     # CLAB_SSH_CONNECTION: ${SSH_CONNECTION}
+  #   binds:
+  #     # - .:/var/www/localhost/htdocs/clab   <----  This is the old path in docker image netreplica/graphite:webssh2
+  #     - .:/htdocs/clab    # New path required for latest version
+  #   ports:
+  #     - 80:80
+  #   exec:
+  #     # - sh -c 'generate_offline_graph.sh'   # used to generate offline graphs
+  #     - sh -c 'graphite_motd.sh 80'
+  #   labels:
+  #     graph-hide: yes
 
-  oob-management:
-      image: titom73/mysocket-io-ssh-client:0.3.0
-      kind: linux
-      publish:
-      - tcp/22/arista.com
-
-  mysocketio:
-    kind: mysocketio
-    image: ghcr.io/hellt/mysocketctl:0.5.0
-    binds:
-      - .mysocketio_token:/root/.mysocketio_token
+  # mysocketio:
+  #   kind: mysocketio
+  #   image: ghcr.io/hellt/mysocketctl:0.5.0
+  #   binds:
+  #     - .mysocketio_token:/root/.mysocketio_token
 
 clab_links:
  - endpoints: ["srv-pod01:eth1", "avd-agg01:eth3"]

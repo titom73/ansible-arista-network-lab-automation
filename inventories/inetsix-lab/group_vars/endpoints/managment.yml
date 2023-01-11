@@ -32,3 +32,5 @@ radius_servers:
   - host: 10.73.252.252
     vrf: "{{ default_mgmt_interface_vrf }}"
     key: 14031718180D242C757A60
+
+eos_cli: "!\ninterface Management0\n   no lldp transmit\n"

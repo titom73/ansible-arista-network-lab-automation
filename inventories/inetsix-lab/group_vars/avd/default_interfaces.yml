@@ -1,0 +1,16 @@
+default_interfaces:
+  - types: [ l3leaf ]
+    platforms: [ cEOS-LAB ]
+    uplink_interfaces: [ Ethernet1, Ethernet2 ]
+    mlag_interfaces:  [ Ethernet7, Ethernet8]
+    downlink_interfaces: [ Ethernet3-7 ]
+
+  - types: [ l2leaf, edge ]
+    platforms: [ cEOS-LAB ]
+    uplink_interfaces: [ Ethernet1, Ethernet2 ]
+    mlag_interfaces:  [ Ethernet7, Ethernet8]
+    downlink_interfaces: [ Ethernet3-7 ]
+
+  - types: [ route_server ]
+    platforms: [ cEOS-LAB ]
+    uplink_interfaces: [ Ethernet1 ]

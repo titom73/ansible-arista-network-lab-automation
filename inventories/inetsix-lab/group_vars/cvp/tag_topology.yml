@@ -1,0 +1,213 @@
+topology_tags:
+  - device: avd-rs01
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_type
+        value: spine
+  - device: avd-rs02
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_type
+        value: spine
+
+  - device: avd-spine1
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_type
+        value: spine
+  - device: avd-spine2
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_type
+        value: spine
+
+  - device: avd-leaf1a
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: ANYCAST
+      - name: topology_rack
+        value: RACK01
+      - name: topology_type
+        value: leaf
+  - device: avd-leaf1b
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: ANYCAST
+      - name: topology_rack
+        value: RACK01
+      - name: topology_type
+        value: leaf
+
+  - device: avd-agg01
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: ANYCAST
+      - name: topology_rack
+        value: RACK01
+      - name: topology_type
+        value: leaf
+
+
+  - device: avd-leaf2a
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: ANYCAST
+      - name: topology_rack
+        value: RACK02
+      - name: topology_type
+        value: leaf
+  - device: avd-leaf2b
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: ANYCAST
+      - name: topology_rack
+        value: RACK02
+      - name: topology_type
+        value: leaf
+
+  - device: avd-agg01
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: ANYCAST
+      - name: topology_rack
+        value: RACK02
+      - name: topology_type
+        value: leaf
+
+  - device: avd-leaf3a
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: ANYCAST
+      - name: topology_rack
+        value: RACK03
+      - name: topology_type
+        value: leaf
+  - device: avd-leaf4a
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: ANYCAST
+      - name: topology_rack
+        value: RACK03
+      - name: topology_type
+        value: leaf
+
+
+  - device: avd-bl01a
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: ANYCAST
+      - name: topology_rack
+        value: NETWORK
+      - name: topology_type
+        value: leaf
+  - device: avd-bl01b
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: ANYCAST
+      - name: topology_rack
+        value: NETWORK
+      - name: topology_type
+        value: leaf
+
+
+  - device: avd-cl01a
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: CENTRAL
+      - name: topology_rack
+        value: CENTRAL_ROUTING
+      - name: topology_type
+        value: leaf
+  - device: avd-cl01b
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: CENTRAL
+      - name: topology_rack
+        value: CENTRAL_ROUTING
+      - name: topology_type
+        value: leaf
+
+  - device: avd-l2leaf01
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: CENTRAL
+      - name: topology_rack
+        value: RACK04
+      - name: topology_type
+        value: leaf
+  - device: avd-l2leaf01
+    device_tags:
+      - name: topology_datacenter
+        value: datacenter
+      - name: topology_hint_datacenter
+        value: AVD
+      - name: topology_pod
+        value: CENTRAL
+      - name: topology_rack
+        value: RACK04
+      - name: topology_type
+        value: leaf
