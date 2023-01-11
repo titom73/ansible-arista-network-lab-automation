@@ -1,0 +1,51 @@
+---
+anta_inventory:
+  hosts:
+  ########################################################
+  # Core
+  ########################################################
+  - host: clab-fabric-avd-rs01
+    tags: ['fabric','core', 'rs']
+  - host: clab-fabric-avd-rs02
+    tags: ['fabric','core' , 'rs']
+  - host: clab-fabric-avd-spine1
+    tags: ['fabric', 'core','spine']
+  - host: clab-fabric-avd-spine2
+    tags: ['fabric', 'core','spine']
+
+  ########################################################
+  # POD ANYCAST Gateway
+  ########################################################
+  - host: clab-fabric-avd-leaf1a
+    tags: ['fabric', 'pod_anycast', 'leaf', 'rack01']
+  - host: clab-fabric-avd-leaf1b
+    tags: ['fabric', 'pod_anycast', 'leaf', 'rack01']
+  - host: clab-fabric-avd-leaf2a
+    tags: ['fabric', 'pod_anycast', 'leaf', 'rack02']
+  - host: clab-fabric-avd-leaf2b
+    tags: ['fabric', 'pod_anycast', 'leaf', 'rack02']
+  - host: clab-fabric-avd-leaf3a
+    tags: ['fabric', 'pod_anycast', 'leaf', 'rack03', 'esi']
+  - host: clab-fabric-avd-leaf4a
+    tags: ['fabric', 'pod_anycast', 'leaf', 'rack03', 'esi']
+  - host: clab-fabric-avd-bl01a
+    tags: ['fabric', 'pod_anycast', 'leaf', 'border']
+  - host: clab-fabric-avd-bl01b
+    tags: ['fabric', 'pod_anycast', 'leaf', 'border']
+  - host: clab-fabric-avd-l2leaf01
+    tags: ['fabric', 'pod_anycast', 'edge']
+  - host: clab-fabric-avd-l2leaf02
+    tags: ['fabric', 'pod_anycast', 'edge']
+
+  ########################################################
+  # POD Central Routing
+  ########################################################
+  - host: clab-fabric-avd-cl01a
+    tags: ['fabric', 'pod_central', 'cenrtral_l3leaf']
+  - host: clab-fabric-avd-cl01b
+    tags: ['fabric', 'pod_central', 'cenrtral_l3leaf']
+  - host: clab-fabric-avd-l2leaf01
+    tags: ['fabric', 'pod_central', 'cenrtral_l2leaf']
+  - host: clab-fabric-avd-l2leaf02
+    tags: ['fabric', 'pod_central', 'cenrtral_l2leaf']
+

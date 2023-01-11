@@ -1,0 +1,66 @@
+---
+# Load anta.tests.software
+anta.tests.software:
+  - verify_eos_version: # Verifies the device is running one of the allowed EOS version.
+      versions: # List of allowed EOS versions.
+        - 4.25.4M
+        - 4.26.1F
+        - '4.28.3M-28837868.4283M (engineering build)'
+  - verify_terminattr_version:
+      versions:
+        - v1.22.1
+
+anta.tests.system:
+  - verify_uptime: # Verifies the device uptime is higher than a value.
+      minimum: 1
+  - verify_ntp:
+  - verify_syslog:
+
+anta.tests.mlag:
+  - verify_mlag_status:
+  - verify_mlag_interfaces:
+  - verify_mlag_config_sanity:
+
+anta.tests.configuration:
+  - verify_zerotouch: # Verifies ZeroTouch is disabled.
+  - verify_running_config_diffs:
+
+anta.tests.interfaces:
+  - verify_interface_utilization:
+  - verify_interface_errors:
+  - verify_interface_discards:
+  - verify_interface_errdisabled:
+  - verify_interfaces_status:
+      minimum: 1 # Expected minimum number of Ethernet interfaces up/up.
+  - verify_storm_control_drops:
+  - verify_portchannels:
+  - verify_illegal_lacp:
+  - verify_loopback_count:
+      number: 1 # Number of loopback interfaces expected to be present.
+  - verify_svi:
+  - verify_spanning_tree_blocked_ports:
+
+
+anta.tests.vxlan:
+ - verify_vxlan: # Verifies the interface vxlan 1 status is up/up.
+ - verify_vxlan_config_sanity: # Verifies there is no VXLAN config-sanity warnings.
+
+
+anta.tests.routing:
+  generic:
+    - verify_routing_protocol_model:
+        model: multi-agent
+    - verify_routing_table_size:
+        minimum: 2
+        maximum: 100
+  bgp:
+    - verify_bgp_ipv4_unicast_state:
+    - verify_bgp_ipv4_unicast_count:
+        number: 2
+        vrf: default
+    - verify_bgp_evpn_state:
+    - verify_bgp_evpn_count:
+        number: 2 # The expected number of BGP EVPN neighbors in the default VRF.
+    - verify_bgp_rtc_state:
+    - verify_bgp_rtc_count:
+        number: 2 # The expected number of BGP RTC neighbors (default VRF).
