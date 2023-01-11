@@ -1,0 +1,12 @@
+- name: Deploy configuration to CLoudvision
+  hosts: [cvp]
+  tasks:
+    - name: "provision Cloudvision with devices configuration"
+      # tags: [deploy_cvp, never]
+      import_role:
+        name: arista.avd.eos_config_deploy_cvp
+      vars:
+        container_root: "fabric"
+        configlets_prefix: 'avd_'
+        execute_tasks: false
+        state: present

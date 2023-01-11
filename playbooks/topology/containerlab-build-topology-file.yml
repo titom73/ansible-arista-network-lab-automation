@@ -15,3 +15,4 @@
         ceos_version: '{{clab_runner_eos}}'
         # https://docs.google.com/document/d/1Q3-ccu2tCFn6FzOaGrERxSsFtImm9lmrxBfgsZvj8cI/edit#
         fs_inotify_fix: True
+        eapi_base: 10000
