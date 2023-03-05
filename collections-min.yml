@@ -1,6 +1,0 @@
-collections:
-  - arista.eos
-  - ansible.netcommon
-  - community.general
-  # For generic Callbacks
-  - ansible.posix
