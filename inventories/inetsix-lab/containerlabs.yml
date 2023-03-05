@@ -9,6 +9,8 @@ topology:
   kinds:
     ceos:
       image: arista/ceos:4.28.3M
+    linux:
+      image: titom73/multitool:latest
   nodes:
     avd-agg01:
       image: arista/ceos:4.28.3M
@@ -269,52 +271,108 @@ topology:
       kind: linux
       mgmt_ipv4: 10.73.252.252
 
+    # Multitools
+    # client-rack01:
+    #   kind: linux
+    #   mgmt_ipv4: 10.73.252.111
+    #   exec:
+    #     - ifconfig eth1 10.1.10.101 netmask 255.255.255.0
+    #     - ip route del default
+    #     - ip route add default via 10.1.10.1
+    #   env:
+    #     TMODE: none
+    # client-rack02:
+    #   kind: linux
+    #   mgmt_ipv4: 10.73.252.112
+    #   exec:
+    #     - ifconfig eth1 10.1.10.102 netmask 255.255.255.0
+    #     - ip route del default
+    #     - ip route add default via 10.1.10.1
+    #     - iperf3 -s &
+    #   env:
+    #     TMODE: none
+
   links:
-    - endpoints: ["avd-agg01:eth1", "avd-leaf1a:eth5"]
-    - endpoints: ["avd-agg01:eth2", "avd-leaf1b:eth5"]
-    - endpoints: ["avd-agg02:eth1", "avd-leaf2a:eth5"]
-    - endpoints: ["avd-agg02:eth2", "avd-leaf2b:eth5"]
-    - endpoints: ["avd-l2leaf01:eth1", "avd-spine1:eth11"]
-    - endpoints: ["avd-l2leaf01:eth2", "avd-spine2:eth11"]
-    - endpoints: ["avd-l2leaf01:eth7", "avd-l2leaf02:eth7"]
-    - endpoints: ["avd-l2leaf01:eth8", "avd-l2leaf02:eth8"]
-    - endpoints: ["avd-l2leaf02:eth1", "avd-spine1:eth12"]
-    - endpoints: ["avd-l2leaf02:eth2", "avd-spine2:eth12"]
-    - endpoints: ["avd-bl01a:eth1", "avd-spine1:eth5"]
-    - endpoints: ["avd-bl01a:eth2", "avd-spine2:eth5"]
-    - endpoints: ["avd-bl01a:eth7", "avd-bl01b:eth7"]
-    - endpoints: ["avd-bl01a:eth8", "avd-bl01b:eth8"]
-    - endpoints: ["avd-bl01b:eth1", "avd-spine1:eth6"]
-    - endpoints: ["avd-bl01b:eth2", "avd-spine2:eth6"]
-    - endpoints: ["avd-cl01a:eth1", "avd-spine1:eth9"]
-    - endpoints: ["avd-cl01a:eth2", "avd-spine2:eth9"]
-    - endpoints: ["avd-cl01a:eth7", "avd-cl01b:eth7"]
-    - endpoints: ["avd-cl01a:eth8", "avd-cl01b:eth8"]
-    - endpoints: ["avd-cl01b:eth1", "avd-spine1:eth10"]
-    - endpoints: ["avd-cl01b:eth2", "avd-spine2:eth10"]
+    #########################################################
+    # POD ASYMETRIC
+    #########################################################
+    ## Rack 01
     - endpoints: ["avd-leaf1a:eth1", "avd-spine1:eth1"]
     - endpoints: ["avd-leaf1a:eth2", "avd-spine2:eth1"]
     - endpoints: ["avd-leaf1a:eth7", "avd-leaf1b:eth7"]
     - endpoints: ["avd-leaf1a:eth8", "avd-leaf1b:eth8"]
     - endpoints: ["avd-leaf1b:eth1", "avd-spine1:eth2"]
     - endpoints: ["avd-leaf1b:eth2", "avd-spine2:eth2"]
+    - endpoints: ["avd-agg01:eth1", "avd-leaf1a:eth5"]
+    - endpoints: ["avd-agg01:eth2", "avd-leaf1b:eth5"]
+
+    ## Rack 02
     - endpoints: ["avd-leaf2a:eth1", "avd-spine1:eth3"]
     - endpoints: ["avd-leaf2a:eth2", "avd-spine2:eth3"]
     - endpoints: ["avd-leaf2a:eth7", "avd-leaf2b:eth7"]
     - endpoints: ["avd-leaf2a:eth8", "avd-leaf2b:eth8"]
     - endpoints: ["avd-leaf2b:eth1", "avd-spine1:eth4"]
     - endpoints: ["avd-leaf2b:eth2", "avd-spine2:eth4"]
+    - endpoints: ["avd-agg02:eth1", "avd-leaf2a:eth5"]
+    - endpoints: ["avd-agg02:eth2", "avd-leaf2b:eth5"]
+
+    ## Rack 03 - ESI
     - endpoints: ["avd-leaf3a:eth1", "avd-spine1:eth7"]
     - endpoints: ["avd-leaf3a:eth2", "avd-spine2:eth7"]
     - endpoints: ["avd-leaf3a:eth7", "avd-leaf4a:eth7"]
     - endpoints: ["avd-leaf3a:eth8", "avd-leaf4a:eth8"]
     - endpoints: ["avd-leaf4a:eth1", "avd-spine1:eth8"]
     - endpoints: ["avd-leaf4a:eth2", "avd-spine2:eth8"]
+
+    ## Rack 04 - Border Leaf devices
+    - endpoints: ["avd-bl01a:eth1", "avd-spine1:eth5"]
+    - endpoints: ["avd-bl01a:eth2", "avd-spine2:eth5"]
+    - endpoints: ["avd-bl01a:eth7", "avd-bl01b:eth7"]
+    - endpoints: ["avd-bl01a:eth8", "avd-bl01b:eth8"]
+    - endpoints: ["avd-bl01b:eth1", "avd-spine1:eth6"]
+    - endpoints: ["avd-bl01b:eth2", "avd-spine2:eth6"]
+
+    #########################################################
+    # Central Routing POD
+    #########################################################
+    ## Central Gateway
+    - endpoints: ["avd-cl01a:eth1", "avd-spine1:eth9"]
+    - endpoints: ["avd-cl01a:eth2", "avd-spine2:eth9"]
+    - endpoints: ["avd-cl01a:eth7", "avd-cl01b:eth7"]
+    - endpoints: ["avd-cl01a:eth8", "avd-cl01b:eth8"]
+    - endpoints: ["avd-cl01b:eth1", "avd-spine1:eth10"]
+    - endpoints: ["avd-cl01b:eth2", "avd-spine2:eth10"]
+
+    ## L2Leaf devices
+    - endpoints: ["avd-l2leaf01:eth1", "avd-spine1:eth11"]
+    - endpoints: ["avd-l2leaf01:eth2", "avd-spine2:eth11"]
+    - endpoints: ["avd-l2leaf01:eth7", "avd-l2leaf02:eth7"]
+    - endpoints: ["avd-l2leaf01:eth8", "avd-l2leaf02:eth8"]
+    - endpoints: ["avd-l2leaf02:eth1", "avd-spine1:eth12"]
+    - endpoints: ["avd-l2leaf02:eth2", "avd-spine2:eth12"]
+
+    #########################################################
+    # Route Servers
+    #########################################################
     - endpoints: ["avd-rs01:eth1", "avd-spine1:eth13"]
     - endpoints: ["avd-rs02:eth1", "avd-spine2:eth13"]
+
+    #########################################################
+    # Endpoint management
+    #########################################################
     - endpoints: ['srv-pod01:eth1', 'avd-agg01:eth3']
     - endpoints: ['srv-pod02:eth1', 'avd-agg02:eth3']
     - endpoints: ['srv-pod03:eth3', 'avd-leaf3a:eth5']
     - endpoints: ['srv-pod03:eth4', 'avd-leaf4a:eth5']
+
+    #########################################################
+    # Core connectivity
+    #########################################################
     - endpoints: ['evpn-core:eth1', 'avd-bl01a:eth5']
     - endpoints: ['evpn-core:eth2', 'avd-bl01b:eth5']
+
+    #########################################################
+    # Multitool connection
+    #########################################################
+    # - endpoints: ['client-rack01:eth1', 'avd-agg01:eth4']
+    # - endpoints: ['client-rack02:eth1', 'avd-agg02:eth4']

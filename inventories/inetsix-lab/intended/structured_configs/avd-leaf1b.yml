@@ -24,9 +24,9 @@ router_bgp:
       type: evpn
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: '3'
       send_community: all
       maximum_routes: 0
+      ebgp_multihop: 3
   address_family_ipv4:
     peer_groups:
       MLAG-IPv4-UNDERLAY-PEER:
@@ -36,7 +36,7 @@ router_bgp:
       EVPN-OVERLAY-PEERS:
         activate: false
   neighbors:
-    172.31.253.22:
+    172.31.253.148:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
       description: avd-leaf1a
     172.31.255.44:
@@ -73,11 +73,11 @@ router_bgp:
         export:
           evpn:
           - '13:13'
-      neighbors:
-        172.31.253.22:
-          peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
+      neighbors:
+        172.31.253.148:
+          peer_group: MLAG-IPv4-UNDERLAY-PEER
     tenant_a_project01:
       router_id: 192.168.255.14
       rd: 192.168.255.14:11
@@ -88,12 +88,12 @@ router_bgp:
         export:
           evpn:
           - '11:11'
-      neighbors:
-        172.31.253.22:
-          peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
       - static
+      neighbors:
+        172.31.253.148:
+          peer_group: MLAG-IPv4-UNDERLAY-PEER
   vlan_aware_bundles:
     tenant_a_project01:
       rd: 192.168.255.14:11
@@ -111,7 +111,7 @@ router_bgp:
         - 20201:20201
       redistribute_routes:
       - learned
-      vlan: 201
+      vlan: '201'
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
@@ -221,8 +221,8 @@ vlan_interfaces:
   Vlan4093:
     description: MLAG_PEER_L3_PEERING
     shutdown: false
-    ip_address: 172.31.253.23/31
     mtu: 1500
+    ip_address: 172.31.253.149/31
   Vlan4094:
     description: MLAG_PEER
     shutdown: false
@@ -235,24 +235,24 @@ vlan_interfaces:
     - pod01
     description: vl131_no_vni
     shutdown: false
-    vrf: pure_type5
     ip_address_virtual: 10.1.31.254/24
+    vrf: pure_type5
   Vlan3012:
     tenant: tenant_a
     type: underlay_peering
     shutdown: false
     description: 'MLAG_PEER_L3_iBGP: vrf pure_type5'
     vrf: pure_type5
-    ip_address: 172.31.253.23/31
     mtu: 1500
+    ip_address: 172.31.253.149/31
   Vlan110:
     tenant: tenant_a
     tags:
     - dc1
     description: pr01-demo
     shutdown: false
-    vrf: tenant_a_project01
     ip_address_virtual: 10.1.10.254/24
+    vrf: tenant_a_project01
   Vlan111:
     tenant: tenant_a
     tags:
@@ -260,8 +260,8 @@ vlan_interfaces:
     - pod02
     description: pr01-trust
     shutdown: false
-    vrf: tenant_a_project01
     ip_address_virtual: 10.1.11.254/24
+    vrf: tenant_a_project01
     ip_helpers:
       1.1.1.1:
         source_interface: lo100
@@ -273,16 +273,16 @@ vlan_interfaces:
     - pod02
     description: pr01-trust
     shutdown: false
-    vrf: tenant_a_project01
     ip_address_virtual: 10.1.12.254/24
+    vrf: tenant_a_project01
   Vlan3010:
     tenant: tenant_a
     type: underlay_peering
     shutdown: false
     description: 'MLAG_PEER_L3_iBGP: vrf tenant_a_project01'
     vrf: tenant_a_project01
-    ip_address: 172.31.253.23/31
     mtu: 1500
+    ip_address: 172.31.253.149/31
 port_channel_interfaces:
   Port-Channel7:
     description: MLAG_PEER_avd-leaf1a_Po7
@@ -297,8 +297,8 @@ port_channel_interfaces:
     description: AVD-AGG01_Po1
     type: switched
     shutdown: false
-    vlans: 110-112,131,201
     mode: trunk
+    vlans: 110-112,131,201
     mlag: 5
 ethernet_interfaces:
   Ethernet7:
@@ -326,26 +326,26 @@ ethernet_interfaces:
     peer_interface: Ethernet2
     peer_type: spine
     description: P2P_LINK_TO_AVD-SPINE1_Ethernet2
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.45/31
   Ethernet2:
     peer: avd-spine2
     peer_interface: Ethernet2
     peer_type: spine
     description: P2P_LINK_TO_AVD-SPINE2_Ethernet2
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.47/31
   Ethernet5:
     peer: avd-agg01
     peer_interface: Ethernet2
     peer_type: edge
     description: AVD-AGG01_Ethernet2
-    type: switched
     shutdown: false
+    type: switched
     channel_group:
       id: 5
       mode: active
@@ -403,9 +403,9 @@ vxlan_interface:
   Vxlan1:
     description: avd-leaf1b_VTEP
     vxlan:
+      udp_port: 4789
       source_interface: Loopback1
       virtual_router_encapsulation_mac_address: mlag-system-id
-      udp_port: 4789
       vlans:
         110:
           vni: 10110

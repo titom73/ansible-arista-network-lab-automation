@@ -16,9 +16,9 @@ router_bgp:
       type: evpn
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: '3'
       send_community: all
       maximum_routes: 0
+      ebgp_multihop: 3
   address_family_ipv4:
     peer_groups:
       IPv4-UNDERLAY-PEERS:
@@ -126,18 +126,18 @@ ethernet_interfaces:
     peer_interface: Ethernet11
     peer_type: spine
     description: P2P_LINK_TO_AVD-SPINE1_Ethernet11
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.251.81/31
   Ethernet2:
     peer: avd-spine2
     peer_interface: Ethernet11
     peer_type: spine
     description: P2P_LINK_TO_AVD-SPINE2_Ethernet11
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.251.83/31
 loopback_interfaces:
   Loopback0:
@@ -180,8 +180,8 @@ vxlan_interface:
   Vxlan1:
     description: avd-l2leaf01_VTEP
     vxlan:
-      source_interface: Loopback1
       udp_port: 4789
+      source_interface: Loopback1
       vlans:
         301:
           vni: 30301

@@ -16,9 +16,9 @@ router_bgp:
       type: evpn
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: '3'
       send_community: all
       maximum_routes: 0
+      ebgp_multihop: 3
   address_family_ipv4:
     peer_groups:
       IPv4-UNDERLAY-PEERS:
@@ -80,7 +80,7 @@ router_bgp:
         - 20201:20201
       redistribute_routes:
       - learned
-      vlan: 201
+      vlan: '201'
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
@@ -152,18 +152,18 @@ ethernet_interfaces:
     peer_interface: Ethernet7
     peer_type: spine
     description: P2P_LINK_TO_AVD-SPINE1_Ethernet7
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.57/31
   Ethernet2:
     peer: avd-spine2
     peer_interface: Ethernet7
     peer_type: spine
     description: P2P_LINK_TO_AVD-SPINE2_Ethernet7
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.59/31
   Ethernet5:
     peer: srv-pod03
@@ -228,22 +228,22 @@ vlan_interfaces:
     - dc1
     description: pr01-demo
     shutdown: false
-    vrf: tenant_a_project01
     ip_address_virtual: 10.1.10.254/24
+    vrf: tenant_a_project01
   Vlan113:
     tenant: tenant_a
     tags:
     - pod03
     description: pr01-dmz
     shutdown: false
-    vrf: tenant_a_project01
     ip_address_virtual: 10.1.13.254/24
+    vrf: tenant_a_project01
 vxlan_interface:
   Vxlan1:
     description: avd-leaf3a_VTEP
     vxlan:
-      source_interface: Loopback1
       udp_port: 4789
+      source_interface: Loopback1
       vlans:
         110:
           vni: 10110

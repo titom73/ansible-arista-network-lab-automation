@@ -24,9 +24,9 @@ router_bgp:
       type: evpn
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: '3'
       send_community: all
       maximum_routes: 0
+      ebgp_multihop: 3
   address_family_ipv4:
     peer_groups:
       MLAG-IPv4-UNDERLAY-PEER:
@@ -36,7 +36,7 @@ router_bgp:
       EVPN-OVERLAY-PEERS:
         activate: false
   neighbors:
-    172.31.253.38:
+    172.31.253.164:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
       description: avd-cl01a
     172.31.255.76:
@@ -73,11 +73,11 @@ router_bgp:
         export:
           evpn:
           - '13:13'
-      neighbors:
-        172.31.253.38:
-          peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
+      neighbors:
+        172.31.253.164:
+          peer_group: MLAG-IPv4-UNDERLAY-PEER
     tenant_a_project01:
       router_id: 192.168.255.22
       rd: 192.168.255.22:11
@@ -88,12 +88,12 @@ router_bgp:
         export:
           evpn:
           - '11:11'
-      neighbors:
-        172.31.253.38:
-          peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
       - static
+      neighbors:
+        172.31.253.164:
+          peer_group: MLAG-IPv4-UNDERLAY-PEER
   vlan_aware_bundles:
     central_routing:
       rd: 192.168.255.22:13
@@ -110,7 +110,7 @@ router_bgp:
         - '11:11'
       redistribute_routes:
       - learned
-      vlan: 110
+      vlan: '110'
     b-elan-201:
       tenant: tenant_b
       rd: 192.168.255.22:20201
@@ -119,7 +119,7 @@ router_bgp:
         - 20201:20201
       redistribute_routes:
       - learned
-      vlan: 201
+      vlan: '201'
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
@@ -226,8 +226,8 @@ vlan_interfaces:
   Vlan4093:
     description: MLAG_PEER_L3_PEERING
     shutdown: false
-    ip_address: 172.31.253.39/31
     mtu: 1500
+    ip_address: 172.31.253.165/31
   Vlan4094:
     description: MLAG_PEER
     shutdown: false
@@ -240,8 +240,8 @@ vlan_interfaces:
     - pod05_node01
     description: central_lan_01
     shutdown: false
-    vrf: central_routing
     ip_address_virtual: 10.3.1.254/24
+    vrf: central_routing
   Vlan302:
     tenant: central_routing_lab
     tags:
@@ -249,32 +249,32 @@ vlan_interfaces:
     - pod05_node01
     description: central_lan_02
     shutdown: false
-    vrf: central_routing
     ip_address_virtual: 10.3.2.254/24
+    vrf: central_routing
   Vlan3012:
     tenant: central_routing_lab
     type: underlay_peering
     shutdown: false
     description: 'MLAG_PEER_L3_iBGP: vrf central_routing'
     vrf: central_routing
-    ip_address: 172.31.253.39/31
     mtu: 1500
+    ip_address: 172.31.253.165/31
   Vlan110:
     tenant: tenant_a
     tags:
     - dc1
     description: pr01-demo
     shutdown: false
-    vrf: tenant_a_project01
     ip_address_virtual: 10.1.10.254/24
+    vrf: tenant_a_project01
   Vlan3010:
     tenant: tenant_a
     type: underlay_peering
     shutdown: false
     description: 'MLAG_PEER_L3_iBGP: vrf tenant_a_project01'
     vrf: tenant_a_project01
-    ip_address: 172.31.253.39/31
     mtu: 1500
+    ip_address: 172.31.253.165/31
 port_channel_interfaces:
   Port-Channel7:
     description: MLAG_PEER_avd-cl01a_Po7
@@ -311,18 +311,18 @@ ethernet_interfaces:
     peer_interface: Ethernet10
     peer_type: spine
     description: P2P_LINK_TO_AVD-SPINE1_Ethernet10
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.77/31
   Ethernet2:
     peer: avd-spine2
     peer_interface: Ethernet10
     peer_type: spine
     description: P2P_LINK_TO_AVD-SPINE2_Ethernet10
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.79/31
 mlag_configuration:
   domain_id: avd_cl01
@@ -373,9 +373,9 @@ vxlan_interface:
   Vxlan1:
     description: avd-cl01b_VTEP
     vxlan:
+      udp_port: 4789
       source_interface: Loopback1
       virtual_router_encapsulation_mac_address: mlag-system-id
-      udp_port: 4789
       vlans:
         301:
           vni: 30301

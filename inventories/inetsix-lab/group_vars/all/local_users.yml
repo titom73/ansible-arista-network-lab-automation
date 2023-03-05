@@ -1,0 +1,30 @@
+# local users
+local_users:
+  admin:
+    privilege: 15
+    role: network-admin
+    no_password: true
+    # sha512_password: "$6$Df86J4/SFMDE3/1K$Hef4KstdoxNDaami37cBquTWOTplC.miMPjXVgQxMe92.e5wxlnXOLlebgPj8Fz1KO0za/RCO7ZIs4Q6Eiq1g1"
+
+  cvpadmin:
+    privilege: 15
+    role: network-admin
+    sha512_password: "$6$rZKcbIZ7iWGAWTUM$TCgDn1KcavS0s.OV8lacMTUkxTByfzcGlFlYUWroxYuU7M/9bIodhRO7nXGzMweUxvbk8mJmQl8Bh44cRktUj."
+
+  ansible:
+    privilege: 15
+    role: network-admin
+    # password: ansible
+    sha512_password: "$6$Dzu11L7yp9j3nCM9$FSptxMPyIL555OMO.ldnjDXgwZmrfMYwHSr0uznE5Qoqvd9a6UdjiFcJUhGLtvXVZR1r.A/iF5aAt50hf/EK4/"
+
+  arista:
+    privilege: 15
+    role: network-admin
+    # password: arista
+    sha512_password: "$6$7WhvEi5Ce5f5Ut3z$Ethmha7rb710RKsaVteusVOuNP1Utfjzse58xxbgiZp4MF0fp7BX5lAw8yBgv/HWCihVomuCSrsJx8wKnJ7Tm1"
+
+  tom:
+    privilege: 15
+    role: network-admin
+    # password: arista123
+    sha512_password: "$6$TyWn7NeXe/vBRl1t$S4fEOkPmpTGz7TLHCzDNP8D2UfpO3ciC2MuGmCaFMVF3B7zt9KSnt9yq99y69XBIY1HV/kO4QjOk32yRQOru5."

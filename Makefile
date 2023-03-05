@@ -20,12 +20,11 @@ EMAIL ?=
 CLAB_TOPO ?= containerlabs.yml
 # Network used by CLAB to expose containers
 CLAB_NETWORK ?= mgmt-fabric
-# EAPI NAT Host
-JUMP ?= 10.73.1.27
 # Ansible Execution builder
-EE_FILE ?= ansible-ee-avd/execution-environment-default.yml
-EE_IMAGE ?= titom73/ansible-ee-avd
-EE_TAG ?= stable-2.12-devel
+# EE_FILE ?= ansible-ee-avd/execution-environment-default.yml
+# EE_IMAGE ?= titom73/ansible-ee-avd
+# EE_TAG ?= stable-2.12-devel
+
 
 .PHONY: help
 help: ## Display help message (*: main entry points / []: part of an entry point)
@@ -37,10 +36,10 @@ help: ## Display help message (*: main entry points / []: part of an entry point
 ################################################################################
 
 .PHONY: build
-build: avd-build tooling-build clab-build ## Build AVD topology, tooling configuration and Containerlab topology
+build: avd-build tooling-build ## Build AVD topology, tooling configuration and Containerlab topology
 
 .PHONY: push
-push: clab-push ## Alias to push configuration to default lab
+push: avd-push ## Alias to push configuration to default lab
 
 .PHONY: clean
 clean: clab-clean avd-clean  ## Cleanup local environment (AVD and Containerlab)
@@ -73,13 +72,9 @@ tooling-build: ## Run ansible playbook to build EVPN SCOPE configuration for gen
 avd-build-complete: ## Run ansible playbook to build EVPN SCOPE configuration for generic EOS AVD topology and NO CV (No Documentation)
 	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags build --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
-.PHONY: clab-push
-clab-push: ## Run ansible playbook to push previsouly generated configurations via eAPI
+.PHONY: avd-push
+avd-push: ## Run ansible playbook to push previsouly generated configurations via eAPI
 	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags "deploy_eapi" --extra-vars "ansible_httpapi_port=443" --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
-
-.PHONY: jump-push
-jump-push: ## Run ansible playbook to push previsouly generated configurations via eAPI
-	ansible-playbook playbooks/topology/avd-build-and-deploy.yml --vault-password-file=$(VAULT_FILE) --tags "deploy_eapi"  --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) --skip-tags debug --diff --extra-vars "ansible_host=$(JUMP)" $(ANSIBLE_ARGS)
 
 .PHONY: avd-clean
 avd-clean: ## Cleanup Build environment
@@ -106,17 +101,9 @@ eos-backup: ## Backup current running configuration
 eos-snapshot: ## Extract commands outputs
 	ansible-playbook playbooks/topology/eos-snapshot.yml --vault-password-file=$(VAULT_FILE) --limit $(SCOPE) --extra-vars "ansible_httpapi_port=443" -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
 
-# .PHONY: eos-states-validation
-# eapi-states-validation: ## eapi-states-validation description
-# 	ansible-playbook playbooks/eos-states-validation.yml --limit $(SCOPE) -i $(INVENTORY)/$(INVENTORY_FILE) $(ANSIBLE_ARGS)
-
 ################################################################################
 ### Containerlab Tools
 ################################################################################
-
-.PHONY: clab-build
-clab-build:  ## Build AVD configuration for EOS device in Fabric
-	ansible-playbook playbooks/topology/containerlab-build-topology-file.yml -i $(INVENTORY)/$(INVENTORY_FILE) --skip-tags debug --diff --vault-password-file=$(VAULT_FILE)
 
 .PHONY: clab-deploy
 clab-deploy: ## Deploy containerlab topology
@@ -130,13 +117,8 @@ clab-destroy:  ## Destroy Containerlab topology
 clab-clean: clab-destroy ## Cleanup Containerlab previous builds
 	cd ${INVENTORY} && sudo rm -rf clab-*/*
 
-.PHONY: mysocket-login
-mysocket-login: ## Login Mysocket.io with Containerlab
-	cd ${INVENTORY} && sudo -E containerlab tools mysocketio login -e ${EMAIL}
-
 .PHONY: clab-reload
-clab-reload: clab-destroy clab-build clab-deploy ## Destroy lab, build configuration and deploy lab.
-
+clab-reload: clab-destroy clab-deploy ## Destroy lab, build configuration and deploy lab.
 
 .PHONY: clab-unpause
 clab-unpause: ## Deploy containerlab topology without reconfigure
@@ -144,46 +126,35 @@ clab-unpause: ## Deploy containerlab topology without reconfigure
 
 .PHONY: clab-pause
 clab-pause:  ## Save configurations and destroy Containerlab topology
-	cd ${INVENTORY} && sudo containerlab save --topo ${CLAB_TOPO} && sudo containerlab destroy --topo ${CLAB_TOPO}
-
-################################################################################
-### AVD Tools
-################################################################################
-
-.PHONY: nrfu
-nrfu:  ## Run Network testing based on ANTA
-	cd network-tests && check-devices.py -i anta-inventory.yml -c tests-bases.yml -u tom -p arista123 --table --tags fabric
+	cd ${INVENTORY} && sudo -E containerlab save --topo ${CLAB_TOPO} && sudo containerlab destroy --topo ${CLAB_TOPO}
 
 ################################################################################
 ### Installation process
 ################################################################################
 
-.PHONY: install
-setup-galaxy: ## Install arista collections using ansible galaxy
+.PHONY: ansible-requirements
+ansible-requirements: ## Install arista collections using ansible galaxy
 	ansible-galaxy collection install -r collections.yml
 
-.PHONY: setup-development
-setup-development: ## Setup development environment
-	cd ../ && gh repo clone titom73/ansible-cvp
-	cd ../ && gh repo clone titom73/ansible-avd
-	cd ../ && gh repo clone titom73/ansible-inetsix
-
+.PHONY: py-requirements
+py-requirements:
+	pip3 install -r requirements.txt
+	export ARISTA_AVD_DIR=$(ansible-galaxy collection list arista.avd --format yaml | head -1 | cut -d: -f1) && pip3 install -r ${ARISTA_AVD_DIR}/arista/avd/requirements.txt
 
 ################################################################################
 ### Ansible Executor Engine
 ################################################################################
 
-.PHONY: ee-build
-ee-build: ## Build Ansible Execution Builder
-	ansible-builder build --tag $(EE_IMAGE):$(EE_TAG) --container-runtime docker -f $(EE_FILE) --build-arg EE_BASE_IMAGE=quay.io/ansible/ansible-runner:$(EE_TAG)
+# .PHONY: ee-build
+# ee-build: ## Build Ansible Execution Builder
+# 	ansible-builder build --tag $(EE_IMAGE):$(EE_TAG) --container-runtime docker -f $(EE_FILE) --build-arg EE_BASE_IMAGE=quay.io/ansible/ansible-runner:$(EE_TAG)
 
-.PHONY: ee-build-latest
-ee-build-latest: ## Build Ansible Execution Builder
-	ansible-builder build --tag $(EE_IMAGE):latest --container-runtime docker -f $(EE_FILE) --build-arg EE_BASE_IMAGE=quay.io/ansible/ansible-runner:latest
+# .PHONY: ee-build-latest
+# ee-build-latest: ## Build Ansible Execution Builder
+# 	ansible-builder build --tag $(EE_IMAGE):latest --container-runtime docker -f $(EE_FILE) --build-arg EE_BASE_IMAGE=quay.io/ansible/ansible-runner:latest
 
-.PHONY: ee-runner
-ee-runner: ## Execute ansible EE runner in interactive mode
-	docker run -it --rm -v ${PWD}:/runner \
-		--network ${CLAB_NETWORK} \
-		$(EE_IMAGE):$(EE_TAG) zsh
-
+# .PHONY: ee-runner
+# ee-runner: ## Execute ansible EE runner in interactive mode
+# 	docker run -it --rm -v ${PWD}:/runner \
+# 		--network ${CLAB_NETWORK} \
+# 		$(EE_IMAGE):$(EE_TAG) zsh

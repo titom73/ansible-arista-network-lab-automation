@@ -137,117 +137,117 @@ ethernet_interfaces:
     peer_interface: Ethernet1
     peer_type: l3leaf
     description: P2P_LINK_TO_AVD-LEAF1A_Ethernet1
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.40/31
   Ethernet2:
     peer: avd-leaf1b
     peer_interface: Ethernet1
     peer_type: l3leaf
     description: P2P_LINK_TO_AVD-LEAF1B_Ethernet1
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.44/31
   Ethernet3:
     peer: avd-leaf2a
     peer_interface: Ethernet1
     peer_type: l3leaf
     description: P2P_LINK_TO_AVD-LEAF2A_Ethernet1
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.48/31
   Ethernet4:
     peer: avd-leaf2b
     peer_interface: Ethernet1
     peer_type: l3leaf
     description: P2P_LINK_TO_AVD-LEAF2B_Ethernet1
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.52/31
   Ethernet5:
     peer: avd-bl01a
     peer_interface: Ethernet1
     peer_type: l3leaf
     description: P2P_LINK_TO_AVD-BL01A_Ethernet1
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.64/31
   Ethernet6:
     peer: avd-bl01b
     peer_interface: Ethernet1
     peer_type: l3leaf
     description: P2P_LINK_TO_AVD-BL01B_Ethernet1
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.68/31
   Ethernet7:
     peer: avd-leaf3a
     peer_interface: Ethernet1
     peer_type: l3leaf
     description: P2P_LINK_TO_AVD-LEAF3A_Ethernet1
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.56/31
   Ethernet8:
     peer: avd-leaf4a
     peer_interface: Ethernet1
     peer_type: l3leaf
     description: P2P_LINK_TO_AVD-LEAF4A_Ethernet1
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.60/31
   Ethernet9:
     peer: avd-cl01a
     peer_interface: Ethernet1
     peer_type: l3leaf
     description: P2P_LINK_TO_AVD-CL01A_Ethernet1
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.72/31
   Ethernet10:
     peer: avd-cl01b
     peer_interface: Ethernet1
     peer_type: l3leaf
     description: P2P_LINK_TO_AVD-CL01B_Ethernet1
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.76/31
   Ethernet11:
     peer: avd-l2leaf01
     peer_interface: Ethernet1
     peer_type: l2leaf
     description: P2P_LINK_TO_AVD-L2LEAF01_Ethernet1
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.251.80/31
   Ethernet12:
     peer: avd-l2leaf02
     peer_interface: Ethernet1
     peer_type: l2leaf
     description: P2P_LINK_TO_AVD-L2LEAF02_Ethernet1
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.251.84/31
   Ethernet13:
     peer: avd-rs01
     peer_interface: Ethernet1
     peer_type: route_server
     description: P2P_LINK_TO_AVD-RS01_Ethernet1
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.250.48/31
 loopback_interfaces:
   Loopback0:

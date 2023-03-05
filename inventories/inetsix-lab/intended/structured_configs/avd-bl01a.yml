@@ -24,16 +24,16 @@ router_bgp:
       type: evpn
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: '3'
       send_community: all
       maximum_routes: 0
+      ebgp_multihop: 3
     EVPN-OVERLAY-CORE:
       type: evpn
       update_source: Loopback0
       bfd: true
-      ebgp_multihop: '15'
       send_community: all
       maximum_routes: 0
+      ebgp_multihop: 15
   address_family_ipv4:
     peer_groups:
       MLAG-IPv4-UNDERLAY-PEER:
@@ -45,7 +45,7 @@ router_bgp:
       EVPN-OVERLAY-CORE:
         activate: false
   neighbors:
-    172.31.253.35:
+    172.31.253.161:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
       description: avd-bl01b
     172.31.255.64:
@@ -76,16 +76,16 @@ router_bgp:
     connected:
       route_map: RM-CONN-2-BGP
   address_family_evpn:
+    neighbor_default:
+      next_hop_self_received_evpn_routes:
+        enable: true
+        inter_domain: true
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
       EVPN-OVERLAY-CORE:
         domain_remote: true
         activate: true
-    neighbor_default:
-      next_hop_self_received_evpn_routes:
-        enable: true
-        inter_domain: true
   vrfs:
     tenant_a_project01:
       router_id: 192.168.255.19
@@ -97,18 +97,15 @@ router_bgp:
         export:
           evpn:
           - '11:11'
-      neighbors:
-        172.31.253.35:
-          peer_group: MLAG-IPv4-UNDERLAY-PEER
       redistribute_routes:
       - connected
       - static
+      neighbors:
+        172.31.253.161:
+          peer_group: MLAG-IPv4-UNDERLAY-PEER
   vlan_aware_bundles:
     tenant_a_project01:
       rd: 192.168.255.19:11
-      rd_evpn_domain:
-        domain: remote
-        rd: 192.168.255.19:11
       route_targets:
         both:
         - '11:11'
@@ -117,13 +114,13 @@ router_bgp:
           route_target: '11:11'
       redistribute_routes:
       - learned
-      vlan: 110
+      vlan: '110'
+      rd_evpn_domain:
+        domain: remote
+        rd: 192.168.255.19:11
     b-elan-201:
       tenant: tenant_b
       rd: 192.168.255.19:20201
-      rd_evpn_domain:
-        domain: remote
-        rd: 192.168.255.19:20201
       route_targets:
         both:
         - 20201:20201
@@ -132,7 +129,10 @@ router_bgp:
           route_target: 20201:20201
       redistribute_routes:
       - learned
-      vlan: 201
+      rd_evpn_domain:
+        domain: remote
+        rd: 192.168.255.19:20201
+      vlan: '201'
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
@@ -225,8 +225,8 @@ vlan_interfaces:
   Vlan4093:
     description: MLAG_PEER_L3_PEERING
     shutdown: false
-    ip_address: 172.31.253.34/31
     mtu: 1500
+    ip_address: 172.31.253.160/31
   Vlan4094:
     description: MLAG_PEER
     shutdown: false
@@ -239,16 +239,16 @@ vlan_interfaces:
     - dc1
     description: pr01-demo
     shutdown: false
-    vrf: tenant_a_project01
     ip_address_virtual: 10.1.10.254/24
+    vrf: tenant_a_project01
   Vlan3010:
     tenant: tenant_a
     type: underlay_peering
     shutdown: false
     description: 'MLAG_PEER_L3_iBGP: vrf tenant_a_project01'
     vrf: tenant_a_project01
-    ip_address: 172.31.253.34/31
     mtu: 1500
+    ip_address: 172.31.253.160/31
 port_channel_interfaces:
   Port-Channel7:
     description: MLAG_PEER_avd-bl01b_Po7
@@ -285,18 +285,18 @@ ethernet_interfaces:
     peer_interface: Ethernet5
     peer_type: spine
     description: P2P_LINK_TO_AVD-SPINE1_Ethernet5
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.65/31
   Ethernet2:
     peer: avd-spine2
     peer_interface: Ethernet5
     peer_type: spine
     description: P2P_LINK_TO_AVD-SPINE2_Ethernet5
+    shutdown: false
     mtu: 1500
     type: routed
-    shutdown: false
     ip_address: 172.31.255.67/31
   Ethernet5:
     peer: evpn-core
@@ -356,9 +356,9 @@ vxlan_interface:
   Vxlan1:
     description: avd-bl01a_VTEP
     vxlan:
+      udp_port: 4789
       source_interface: Loopback1
       virtual_router_encapsulation_mac_address: mlag-system-id
-      udp_port: 4789
       vlans:
         110:
           vni: 10110
