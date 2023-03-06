@@ -1,3 +1,5 @@
+fabric_name: fabric
+
 vrfs:
   MGMT:
     ip_routing: false

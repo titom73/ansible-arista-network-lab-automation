@@ -12,54 +12,62 @@ topology:
     linux:
       image: titom73/multitool:latest
   nodes:
-    avd-agg01:
-      image: arista/ceos:4.28.3M
-      mgmt_ipv4: 10.73.252.21
-      kind: ceos
-      startup-config: intended/configs/avd-agg01.cfg
-      binds:
-        - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
-      ports:
-        - 8021:443/tcp
-        - 9021:22/tcp
-      env:
-        TMODE: lacp
-    avd-agg02:
-      image: arista/ceos:4.28.3M
-      mgmt_ipv4: 10.73.252.22
-      kind: ceos
-      startup-config: intended/configs/avd-agg02.cfg
-      binds:
-        - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
-      ports:
-        - 8022:443/tcp
-        - 9022:22/tcp
-      env:
-        TMODE: lacp
-    avd-l2leaf01:
-      image: arista/ceos:4.28.3M
-      mgmt_ipv4: 10.73.252.31
-      kind: ceos
-      startup-config: intended/configs/avd-l2leaf01.cfg
-      binds:
-        - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
-      ports:
-        - 8029:443/tcp
-        - 9029:22/tcp
-      env:
-        TMODE: lacp
-    avd-l2leaf02:
-      image: arista/ceos:4.28.3M
-      mgmt_ipv4: 10.73.252.32
-      kind: ceos
-      startup-config: intended/configs/avd-l2leaf02.cfg
-      binds:
-        - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
-      ports:
-        - 8030:443/tcp
-        - 9030:22/tcp
-      env:
-        TMODE: lacp
+
+    #########################################################
+    # POD CENTRAL ROUTING
+    #########################################################
+    # avd-cl01a:
+    #   image: arista/ceos:4.28.3M
+    #   mgmt_ipv4: 10.73.252.19
+    #   kind: ceos
+    #   startup-config: intended/configs/avd-cl01a.cfg
+    #   binds:
+    #     - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+    #   ports:
+    #     - 8027:443/tcp
+    #     - 9027:22/tcp
+    #   env:
+    #     TMODE: lacp
+    # avd-cl01b:
+    #   image: arista/ceos:4.28.3M
+    #   mgmt_ipv4: 10.73.252.20
+    #   kind: ceos
+    #   startup-config: intended/configs/avd-cl01b.cfg
+    #   binds:
+    #     - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+    #   ports:
+    #     - 8028:443/tcp
+    #     - 9028:22/tcp
+    #   env:
+    #     TMODE: lacp
+    # avd-l2leaf01:
+    #   image: arista/ceos:4.28.3M
+    #   mgmt_ipv4: 10.73.252.31
+    #   kind: ceos
+    #   startup-config: intended/configs/avd-l2leaf01.cfg
+    #   binds:
+    #     - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+    #   ports:
+    #     - 8029:443/tcp
+    #     - 9029:22/tcp
+    #   env:
+    #     TMODE: lacp
+    # avd-l2leaf02:
+    #   image: arista/ceos:4.28.3M
+    #   mgmt_ipv4: 10.73.252.32
+    #   kind: ceos
+    #   startup-config: intended/configs/avd-l2leaf02.cfg
+    #   binds:
+    #     - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+    #   ports:
+    #     - 8030:443/tcp
+    #     - 9030:22/tcp
+    #   env:
+    #     TMODE: lacp
+
+    #########################################################
+    # BORDER
+    #########################################################
     avd-bl01a:
       image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.15
@@ -84,30 +92,10 @@ topology:
         - 9016:22/tcp
       env:
         TMODE: lacp
-    avd-cl01a:
-      image: arista/ceos:4.28.3M
-      mgmt_ipv4: 10.73.252.19
-      kind: ceos
-      startup-config: intended/configs/avd-cl01a.cfg
-      binds:
-        - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
-      ports:
-        - 8027:443/tcp
-        - 9027:22/tcp
-      env:
-        TMODE: lacp
-    avd-cl01b:
-      image: arista/ceos:4.28.3M
-      mgmt_ipv4: 10.73.252.20
-      kind: ceos
-      startup-config: intended/configs/avd-cl01b.cfg
-      binds:
-        - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
-      ports:
-        - 8028:443/tcp
-        - 9028:22/tcp
-      env:
-        TMODE: lacp
+
+    #########################################################
+    # POD ANYCAST
+    #########################################################
     avd-leaf1a:
       image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.11
@@ -180,6 +168,10 @@ topology:
         - 9018:22/tcp
       env:
         TMODE: lacp
+
+    #########################################################
+    # Route Servers
+    #########################################################
     avd-rs01:
       image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.51
@@ -204,6 +196,9 @@ topology:
         - 9034:22/tcp
       env:
         TMODE: lacp
+    #########################################################
+    # Spines
+    #########################################################
     avd-spine1:
       image: arista/ceos:4.28.3M
       mgmt_ipv4: 10.73.252.101
@@ -228,6 +223,38 @@ topology:
         - 9002:22/tcp
       env:
         TMODE: lacp
+
+    #########################################################
+    # Aggregation Switches
+    #########################################################
+    avd-agg01:
+      image: arista/ceos:4.28.3M
+      mgmt_ipv4: 10.73.252.21
+      kind: ceos
+      startup-config: intended/configs/avd-agg01.cfg
+      binds:
+        - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+      ports:
+        - 8021:443/tcp
+        - 9021:22/tcp
+      env:
+        TMODE: lacp
+    avd-agg02:
+      image: arista/ceos:4.28.3M
+      mgmt_ipv4: 10.73.252.22
+      kind: ceos
+      startup-config: intended/configs/avd-agg02.cfg
+      binds:
+        - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+      ports:
+        - 8022:443/tcp
+        - 9022:22/tcp
+      env:
+        TMODE: lacp
+
+    #########################################################
+    # Endpoint management
+    #########################################################
     srv-pod01:
       binds:
       - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
@@ -255,15 +282,32 @@ topology:
       kind: ceos
       mgmt_ipv4: 10.73.252.43
       startup-config: intended/configs/srv-pod03.cfg
-    evpn-core:
+
+    #########################################################
+    # Core connectivity
+    #########################################################
+    evpn-core01a:
       binds:
       - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
       env:
           TMODE: lacp
       image: arista/ceos:4.28.3M
       kind: ceos
-      mgmt_ipv4: 10.73.252.44
-      startup-config: intended/configs/evpn-core.cfg
+      mgmt_ipv4: 10.73.252.45
+      startup-config: intended/configs/evpn-core01a.cfg
+    evpn-core01b:
+      binds:
+      - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+      env:
+          TMODE: lacp
+      image: arista/ceos:4.28.3M
+      kind: ceos
+      mgmt_ipv4: 10.73.252.46
+      startup-config: intended/configs/evpn-core01b.cfg
+
+    #########################################################
+    # Services
+    #########################################################
     radius:
       binds:
       - radius_authorize:/etc/raddb/mods-config/files/authorize
@@ -294,7 +338,7 @@ topology:
 
   links:
     #########################################################
-    # POD ASYMETRIC
+    # POD ANYCAST
     #########################################################
     ## Rack 01
     - endpoints: ["avd-leaf1a:eth1", "avd-spine1:eth1"]
@@ -335,21 +379,21 @@ topology:
     #########################################################
     # Central Routing POD
     #########################################################
-    ## Central Gateway
-    - endpoints: ["avd-cl01a:eth1", "avd-spine1:eth9"]
-    - endpoints: ["avd-cl01a:eth2", "avd-spine2:eth9"]
-    - endpoints: ["avd-cl01a:eth7", "avd-cl01b:eth7"]
-    - endpoints: ["avd-cl01a:eth8", "avd-cl01b:eth8"]
-    - endpoints: ["avd-cl01b:eth1", "avd-spine1:eth10"]
-    - endpoints: ["avd-cl01b:eth2", "avd-spine2:eth10"]
+    # ## Central Gateway
+    # - endpoints: ["avd-cl01a:eth1", "avd-spine1:eth9"]
+    # - endpoints: ["avd-cl01a:eth2", "avd-spine2:eth9"]
+    # - endpoints: ["avd-cl01a:eth7", "avd-cl01b:eth7"]
+    # - endpoints: ["avd-cl01a:eth8", "avd-cl01b:eth8"]
+    # - endpoints: ["avd-cl01b:eth1", "avd-spine1:eth10"]
+    # - endpoints: ["avd-cl01b:eth2", "avd-spine2:eth10"]
 
-    ## L2Leaf devices
-    - endpoints: ["avd-l2leaf01:eth1", "avd-spine1:eth11"]
-    - endpoints: ["avd-l2leaf01:eth2", "avd-spine2:eth11"]
-    - endpoints: ["avd-l2leaf01:eth7", "avd-l2leaf02:eth7"]
-    - endpoints: ["avd-l2leaf01:eth8", "avd-l2leaf02:eth8"]
-    - endpoints: ["avd-l2leaf02:eth1", "avd-spine1:eth12"]
-    - endpoints: ["avd-l2leaf02:eth2", "avd-spine2:eth12"]
+    # ## L2Leaf devices
+    # - endpoints: ["avd-l2leaf01:eth1", "avd-spine1:eth11"]
+    # - endpoints: ["avd-l2leaf01:eth2", "avd-spine2:eth11"]
+    # - endpoints: ["avd-l2leaf01:eth7", "avd-l2leaf02:eth7"]
+    # - endpoints: ["avd-l2leaf01:eth8", "avd-l2leaf02:eth8"]
+    # - endpoints: ["avd-l2leaf02:eth1", "avd-spine1:eth12"]
+    # - endpoints: ["avd-l2leaf02:eth2", "avd-spine2:eth12"]
 
     #########################################################
     # Route Servers
@@ -368,8 +412,10 @@ topology:
     #########################################################
     # Core connectivity
     #########################################################
-    - endpoints: ['evpn-core:eth1', 'avd-bl01a:eth5']
-    - endpoints: ['evpn-core:eth2', 'avd-bl01b:eth5']
+    - endpoints: ['evpn-core01a:eth5', 'avd-bl01a:eth5']
+    - endpoints: ['evpn-core01b:eth5', 'avd-bl01b:eth5']
+    - endpoints: ['evpn-core01b:eth7', 'evpn-core01a:eth7']
+    - endpoints: ['evpn-core01b:eth8', 'evpn-core01a:eth8']
 
     #########################################################
     # Multitool connection

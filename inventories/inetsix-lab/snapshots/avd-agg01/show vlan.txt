@@ -1,8 +1,0 @@
-VLAN  Name                             Status    Ports
------ -------------------------------- --------- -------------------------------
-1     default                          active    Et3
-110   pr01-demo                        active    Et3, Po1
-111   pr01-trust                       active    Et3, Po1
-112   pr01-trust                       active    Et3, Po1
-131   vl131_no_vni                     active    Et3, Po1
-201   b-elan-201                       active    Et3, Po1

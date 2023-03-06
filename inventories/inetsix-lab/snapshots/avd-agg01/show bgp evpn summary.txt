@@ -1,1 +1,0 @@
-BGP is disabled for VRF default

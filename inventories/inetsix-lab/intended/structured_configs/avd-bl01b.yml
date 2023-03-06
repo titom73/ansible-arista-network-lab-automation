@@ -27,13 +27,7 @@ router_bgp:
       send_community: all
       maximum_routes: 0
       ebgp_multihop: 3
-    EVPN-OVERLAY-CORE:
-      type: evpn
-      update_source: Loopback0
-      bfd: true
-      send_community: all
-      maximum_routes: 0
-      ebgp_multihop: 15
+      next_hop_unchanged: true
   address_family_ipv4:
     peer_groups:
       MLAG-IPv4-UNDERLAY-PEER:
@@ -41,8 +35,6 @@ router_bgp:
       IPv4-UNDERLAY-PEERS:
         activate: true
       EVPN-OVERLAY-PEERS:
-        activate: false
-      EVPN-OVERLAY-CORE:
         activate: false
   neighbors:
     172.31.253.160:
@@ -64,28 +56,27 @@ router_bgp:
       peer_group: EVPN-OVERLAY-PEERS
       description: avd-rs02
       remote_as: '65000'
-    192.168.255.204:
-      peer_group: EVPN-OVERLAY-CORE
-      description: evpn-core-simulation
-      remote_as: '64500'
+    192.169.255.2:
+      peer_group: EVPN-OVERLAY-PEERS
+      description: evpn-core01b
+      remote_as: '65201'
     172.31.252.3:
-      remote_as: '64500'
-      description: evpn-core
+      remote_as: '65201'
+      description: evpn-core01b
       peer_group: IPv4-UNDERLAY-PEERS
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP
   address_family_evpn:
-    neighbor_default:
-      next_hop_self_received_evpn_routes:
-        enable: true
-        inter_domain: true
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
-      EVPN-OVERLAY-CORE:
-        domain_remote: true
+  address_family_rtc:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
         activate: true
+        default_route_target:
+          only: true
   vrfs:
     tenant_a_project01:
       router_id: 192.168.255.20
@@ -103,36 +94,23 @@ router_bgp:
       neighbors:
         172.31.253.160:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
-  vlan_aware_bundles:
-    tenant_a_project01:
-      rd: 192.168.255.20:11
+  vlans:
+    110:
+      tenant: tenant_a
+      rd: 192.168.255.20:10110
       route_targets:
         both:
-        - '11:11'
-        import_export_evpn_domains:
-        - domain: remote
-          route_target: '11:11'
+        - 10110:10110
       redistribute_routes:
       - learned
-      vlan: '110'
-      rd_evpn_domain:
-        domain: remote
-        rd: 192.168.255.20:11
-    b-elan-201:
+    201:
       tenant: tenant_b
       rd: 192.168.255.20:20201
       route_targets:
         both:
         - 20201:20201
-        import_export_evpn_domains:
-        - domain: remote
-          route_target: 20201:20201
       redistribute_routes:
       - learned
-      rd_evpn_domain:
-        domain: remote
-        rd: 192.168.255.20:20201
-      vlan: '201'
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
@@ -177,6 +155,8 @@ local_users:
     privilege: 15
     role: network-admin
     sha512_password: $6$TyWn7NeXe/vBRl1t$S4fEOkPmpTGz7TLHCzDNP8D2UfpO3ciC2MuGmCaFMVF3B7zt9KSnt9yq99y69XBIY1HV/kO4QjOk32yRQOru5.
+    ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCttKrjJA6nzUk5TXmvpiXOK7cZwNx979ImxOyeRNdZ+rx2mCYQ7BlR5eoD01aMetulA6MYA/RXCcINmOTLvhlPFSK3GMzU78ekOIWVWcjHFA8JwKaNE467Dn5Z23F4mb5smrXshcGdI5sdQWXAG6Zjw8gbiNuZJkXf6jMa98C1YOcnCOsQKN+p5HNhJFbDyNJFwamFcxlMlfdUOSL4PuW7u9Zx2VxYU6+M6WADu3+t2wa0Fy5VD5+MpQuIU4dF50FQr1UNTwVgS394u10FCg53SlpJwa5DvOmqIXRttU1Rxq3VP22LbbBrpMT5CHjk0X06s0URwdpg1SpqN5n6guMTqFt5aemAXiZnIGtlVLS9+EmZ6RGwjT7IlIh/ky+Tr9afAVQti0lFDmUnYsQD/q+dWSxVYPlPm+BW4IglDOAaTal02sYRN0BrE6cG2byqUN9M/bX8p+8t2nuQ1Zz8H8d1OELxw4iRMbbAF8iEpv04sE1YVf6SdOzsiUTVqRqpAuE=
+      tgrimonet@arista-laptop.as73.inetsix.net
 clock:
   timezone: Europe/Paris
 vrfs:
@@ -236,7 +216,7 @@ vlan_interfaces:
   Vlan110:
     tenant: tenant_a
     tags:
-    - dc1
+    - fabric
     description: pr01-demo
     shutdown: false
     ip_address_virtual: 10.1.10.254/24
@@ -299,10 +279,10 @@ ethernet_interfaces:
     type: routed
     ip_address: 172.31.255.71/31
   Ethernet5:
-    peer: evpn-core
-    peer_interface: Ethernet2
-    peer_type: other
-    description: P2P_LINK_TO_evpn-core_Ethernet2
+    peer: evpn-core01b
+    peer_interface: Ethernet5
+    peer_type: fake_core
+    description: P2P_LINK_TO_evpn-core01b_Ethernet5
     type: routed
     shutdown: false
     mtu: 1500

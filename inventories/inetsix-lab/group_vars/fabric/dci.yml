@@ -4,13 +4,13 @@ l3_edge:
   p2p_links:
     - id: 1
       ip_pool: dci_evpn_gateway
-      nodes: [avd-bl01a, evpn-core]
-      interfaces: [Ethernet5 , Ethernet1]
-      as: [65105, 64500]
+      nodes: [avd-bl01a, evpn-core01a]
+      interfaces: [Ethernet5 , Ethernet5]
+      as: [65105, 65201]
       include_in_underlay_protocol: true
     - id: 2
       ip_pool: dci_evpn_gateway
-      nodes: [avd-bl01b, evpn-core]
-      interfaces: [Ethernet5 , Ethernet2]
-      as: [65105, 64500]
+      nodes: [avd-bl01b, evpn-core01b]
+      interfaces: [Ethernet5 , Ethernet5]
+      as: [65105, 65201]
       include_in_underlay_protocol: true

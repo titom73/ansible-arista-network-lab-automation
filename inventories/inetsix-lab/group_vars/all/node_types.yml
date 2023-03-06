@@ -1,8 +1,10 @@
 ---
 node_type_keys:
+  # Underlay router
   spine:
     type: spine
     default_evpn_role: none
+  # L3/L2 VTEP
   l3leaf:
     type: l3leaf
     connected_endpoints: true
@@ -12,6 +14,7 @@ node_type_keys:
       l2: true
       l3: true
     vtep: true
+  # L2 Only VTEP used in context of Centralised routing
   l2leaf:
     type: l2leaf
     connected_endpoints: true
@@ -21,6 +24,7 @@ node_type_keys:
       l2: true
       l3: false
     vtep: true
+  # Aggregation switch attached to VTEP
   edge:
     type: edge
     connected_endpoints: true
@@ -29,6 +33,17 @@ node_type_keys:
       l2: true
     underlay_router: false
     uplink_type: port-channel
+  # BGP Route server
   route_server:
     type: route_server
     default_evpn_role: server
+  # L3/L2 VTEP to emaulate remote DC
+  fake_core:
+    type: fake_core
+    connected_endpoints: true
+    default_evpn_role: client
+    mlag_support: true
+    network_services:
+      l2: true
+      l3: true
+    vtep: true

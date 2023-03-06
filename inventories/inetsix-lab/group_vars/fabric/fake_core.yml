@@ -1,0 +1,53 @@
+fake_core:
+  defaults:
+    platform: "{{ lab_platform }}"
+    loopback_ipv4_pool: 192.169.255.0/24
+    loopback_ipv4_offset: 0
+    vtep_loopback_ipv4_pool: 192.169.254.0/24
+    uplink_ipv4_pool: 172.31.255.0/24
+    mlag_peer_ipv4_pool: '{{default_mlag_peer_ipv4_pool}}'
+    mlag_peer_l3_ipv4_pool: '{{default_mlag_peer_l3_ipv4_pool}}'
+    mlag_interfaces: '{{ default_mlag_interfaces }}'
+    virtual_router_mac_address: '{{default_virtual_router_mac_address}}'
+    bgp_defaults: '{{ bgp_default_settings }}'
+    spanning_tree_priority: 4096
+    spanning_tree_mode: mstp
+  node_groups:
+    evpn_core01:
+      bgp_as: 65201
+      filter:
+        tenants: [ 'tenant_a', 'tenant_b' ]
+        tags: [ 'dc2_pod01', 'dc2', 'fabric' ]
+      nodes:
+        evpn-core01a:
+          id: 1
+          mgmt_ip: 10.73.252.45/24
+          uplink_switch_interfaces: [Ethernet1, Ethernet1]
+          # Non Gateway extension
+          evpn_route_servers: ['avd-bl01a']
+          # EVPN Gateway extension
+          # evpn_gateway:
+          #   remote_peers:
+          #   - hostname: avd-bl01a
+          #     # ip_address: 172.31.252.0
+          #     bgp_as: 65105
+          #   evpn_l2:
+          #     enabled: false
+          #   evpn_l3:
+          #     enabled: false
+        evpn-core01b:
+          id: 2
+          mgmt_ip: 10.73.252.46/24
+          uplink_switch_interfaces: [Ethernet2, Ethernet2]
+          # Non Gateway extension
+          evpn_route_servers: ['avd-bl01b']
+          # EVPN Gateway extension
+          # evpn_gateway:
+          #   remote_peers:
+          #   - hostname: avd-bl01b
+          #     # ip_address: 172.31.252.2
+          #     bgp_as: 65105
+          #   evpn_l2:
+          #     enabled: false
+          #   evpn_l3:
+          #     enabled: false

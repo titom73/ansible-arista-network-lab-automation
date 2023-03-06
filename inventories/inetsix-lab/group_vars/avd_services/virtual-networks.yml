@@ -24,7 +24,7 @@ tenants:
         svis:
           110:
             name: 'pr01-demo'
-            tags: ['dc1']
+            tags: ['fabric']
             enabled: true
             ip_address_virtual: 10.1.10.254/24
             # structured_config:
@@ -36,17 +36,17 @@ tenants:
           111:
             name: 'pr01-trust'
             enabled: true
-            tags: ['pod01', 'pod02']
+            tags: ['dc1_pod01', 'pod02']
             profile: 'with_dhcp_01_snooping'
           112:
             name: 'pr01-trust'
             enabled: true
-            tags: ['pod01', 'pod02']
+            tags: ['dc1_pod01', 'pod02']
             ip_address_virtual: 10.1.12.254/24
             igmp_snooping_enabled: false
           113:
             name: 'pr01-dmz'
-            tags: [pod03]
+            tags: [dc1_pod03]
             enabled: true
             ip_address_virtual: 10.1.13.254/24
             igmp_snooping_enabled: true
@@ -79,13 +79,13 @@ tenants:
         svis:
           131:
             name: vl131_no_vni
-            tags: ['pod01']
+            tags: ['dc1_pod01']
             enabled: true
             ip_address_virtual: 10.1.31.254/24
             vxlan: false
           132:
             name: vl132_no_vni
-            tags: ['pod02']
+            tags: ['dc1_pod02']
             enabled: true
             ip_address_virtual: 10.1.32.254/24
             vxlan: false
@@ -108,7 +108,7 @@ tenants:
         svis:
           301:
             name: 'central_lan_01'
-            tags: ['pod05_node01']
+            tags: ['dc1_pod05_node01']
             enabled: true
             ip_address_virtual: 10.3.1.254/24
             # ip_virtual_router_address: 10.3.1.254
@@ -119,7 +119,7 @@ tenants:
             #     ip_address: 10.3.1.252/24
           302:
             name: 'central_lan_02'
-            tags: ['pod05_node02', 'pod05_node01']
+            tags: ['dc1_pod05_node02', 'pod05_node01']
             enabled: true
             ip_address_virtual: 10.3.2.254/24
             # ip_virtual_router_address: 10.3.2.254

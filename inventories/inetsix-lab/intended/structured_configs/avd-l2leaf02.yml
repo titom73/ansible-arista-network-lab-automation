@@ -49,15 +49,10 @@ router_bgp:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
-  vlan_aware_bundles:
-    central_routing:
-      rd: 192.168.253.23:13
-      route_targets:
-        both:
-        - '13:13'
-      redistribute_routes:
-      - learned
-      vlan: '302'
+  address_family_rtc:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
@@ -101,6 +96,8 @@ local_users:
     privilege: 15
     role: network-admin
     sha512_password: $6$TyWn7NeXe/vBRl1t$S4fEOkPmpTGz7TLHCzDNP8D2UfpO3ciC2MuGmCaFMVF3B7zt9KSnt9yq99y69XBIY1HV/kO4QjOk32yRQOru5.
+    ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCttKrjJA6nzUk5TXmvpiXOK7cZwNx979ImxOyeRNdZ+rx2mCYQ7BlR5eoD01aMetulA6MYA/RXCcINmOTLvhlPFSK3GMzU78ekOIWVWcjHFA8JwKaNE467Dn5Z23F4mb5smrXshcGdI5sdQWXAG6Zjw8gbiNuZJkXf6jMa98C1YOcnCOsQKN+p5HNhJFbDyNJFwamFcxlMlfdUOSL4PuW7u9Zx2VxYU6+M6WADu3+t2wa0Fy5VD5+MpQuIU4dF50FQr1UNTwVgS394u10FCg53SlpJwa5DvOmqIXRttU1Rxq3VP22LbbBrpMT5CHjk0X06s0URwdpg1SpqN5n6guMTqFt5aemAXiZnIGtlVLS9+EmZ6RGwjT7IlIh/ky+Tr9afAVQti0lFDmUnYsQD/q+dWSxVYPlPm+BW4IglDOAaTal02sYRN0BrE6cG2byqUN9M/bX8p+8t2nuQ1Zz8H8d1OELxw4iRMbbAF8iEpv04sE1YVf6SdOzsiUTVqRqpAuE=
+      tgrimonet@arista-laptop.as73.inetsix.net
 clock:
   timezone: Europe/Paris
 vrfs:
@@ -167,10 +164,6 @@ router_bfd:
     interval: 1200
     min_rx: 1200
     multiplier: 3
-vlans:
-  302:
-    tenant: central_routing_lab
-    name: central_lan_02
 ip_igmp_snooping:
   globally_enabled: true
 vxlan_interface:
@@ -179,9 +172,6 @@ vxlan_interface:
     vxlan:
       udp_port: 4789
       source_interface: Loopback1
-      vlans:
-        302:
-          vni: 30302
 aaa_authorization:
   exec:
     default: local

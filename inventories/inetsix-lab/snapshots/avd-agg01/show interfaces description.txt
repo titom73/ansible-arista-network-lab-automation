@@ -1,6 +1,0 @@
-Interface                      Status         Protocol           Description
-Et1                            up             up                 AVD-LEAF1A_Ethernet5
-Et2                            up             up                 AVD-LEAF1B_Ethernet5
-Et3                            up             up                 srv-pod01_Ethernet1
-Ma0                            up             up                 oob_management
-Po1                            up             up                 AVD_LEAF1_Po5

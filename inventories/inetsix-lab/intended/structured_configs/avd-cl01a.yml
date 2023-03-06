@@ -62,6 +62,10 @@ router_bgp:
     peer_groups:
       EVPN-OVERLAY-PEERS:
         activate: true
+  address_family_rtc:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
   vrfs:
     central_routing:
       router_id: 192.168.255.21
@@ -94,24 +98,32 @@ router_bgp:
       neighbors:
         172.31.253.165:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
-  vlan_aware_bundles:
-    central_routing:
-      rd: 192.168.255.21:13
+  vlans:
+    301:
+      tenant: central_routing_lab
+      rd: 192.168.255.21:30301
       route_targets:
         both:
-        - '13:13'
+        - 30301:30301
       redistribute_routes:
       - learned
-      vlan: 301-302
-    tenant_a_project01:
-      rd: 192.168.255.21:11
+    302:
+      tenant: central_routing_lab
+      rd: 192.168.255.21:30302
       route_targets:
         both:
-        - '11:11'
+        - 30302:30302
       redistribute_routes:
       - learned
-      vlan: '110'
-    b-elan-201:
+    110:
+      tenant: tenant_a
+      rd: 192.168.255.21:10110
+      route_targets:
+        both:
+        - 10110:10110
+      redistribute_routes:
+      - learned
+    201:
       tenant: tenant_b
       rd: 192.168.255.21:20201
       route_targets:
@@ -119,7 +131,6 @@ router_bgp:
         - 20201:20201
       redistribute_routes:
       - learned
-      vlan: '201'
 static_routes:
 - vrf: MGMT
   destination_address_prefix: 0.0.0.0/0
@@ -164,6 +175,8 @@ local_users:
     privilege: 15
     role: network-admin
     sha512_password: $6$TyWn7NeXe/vBRl1t$S4fEOkPmpTGz7TLHCzDNP8D2UfpO3ciC2MuGmCaFMVF3B7zt9KSnt9yq99y69XBIY1HV/kO4QjOk32yRQOru5.
+    ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCttKrjJA6nzUk5TXmvpiXOK7cZwNx979ImxOyeRNdZ+rx2mCYQ7BlR5eoD01aMetulA6MYA/RXCcINmOTLvhlPFSK3GMzU78ekOIWVWcjHFA8JwKaNE467Dn5Z23F4mb5smrXshcGdI5sdQWXAG6Zjw8gbiNuZJkXf6jMa98C1YOcnCOsQKN+p5HNhJFbDyNJFwamFcxlMlfdUOSL4PuW7u9Zx2VxYU6+M6WADu3+t2wa0Fy5VD5+MpQuIU4dF50FQr1UNTwVgS394u10FCg53SlpJwa5DvOmqIXRttU1Rxq3VP22LbbBrpMT5CHjk0X06s0URwdpg1SpqN5n6guMTqFt5aemAXiZnIGtlVLS9+EmZ6RGwjT7IlIh/ky+Tr9afAVQti0lFDmUnYsQD/q+dWSxVYPlPm+BW4IglDOAaTal02sYRN0BrE6cG2byqUN9M/bX8p+8t2nuQ1Zz8H8d1OELxw4iRMbbAF8iEpv04sE1YVf6SdOzsiUTVqRqpAuE=
+      tgrimonet@arista-laptop.as73.inetsix.net
 clock:
   timezone: Europe/Paris
 vrfs:
@@ -237,7 +250,7 @@ vlan_interfaces:
   Vlan301:
     tenant: central_routing_lab
     tags:
-    - pod05_node01
+    - dc1_pod05_node01
     description: central_lan_01
     shutdown: false
     ip_address_virtual: 10.3.1.254/24
@@ -245,7 +258,7 @@ vlan_interfaces:
   Vlan302:
     tenant: central_routing_lab
     tags:
-    - pod05_node02
+    - dc1_pod05_node02
     - pod05_node01
     description: central_lan_02
     shutdown: false
@@ -262,7 +275,7 @@ vlan_interfaces:
   Vlan110:
     tenant: tenant_a
     tags:
-    - dc1
+    - fabric
     description: pr01-demo
     shutdown: false
     ip_address_virtual: 10.1.10.254/24

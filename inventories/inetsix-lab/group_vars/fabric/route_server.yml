@@ -14,14 +14,12 @@ route_server:
     avd-rs01:
       id: 25
       mgmt_ip: 10.73.252.51/24
-      mac_address: '50:01:00:19:00:00'
       uplink_interfaces: ['Ethernet1']
       uplink_switch_interfaces: [Ethernet13]
       uplink_switches: ['avd-spine1']
     avd-rs02:
       id: 26
       mgmt_ip: 10.73.252.52/24
-      mac_address: '50:01:00:1a:00:00'
       uplink_interfaces: ['Ethernet1']
       uplink_switch_interfaces: [Ethernet13]
       uplink_switches: ['avd-spine2']
